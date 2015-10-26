@@ -1,0 +1,79 @@
+* {
+   -colour-unseen: #F5F9FF;
+   -colour-known: #EBFFF0;
+   -colour-unknown: #FFF0ED;
+}
+
+.mainWord {
+    -fx-font-size: 40;
+}
+.mainWordPane { /* This corresponds to the pseudo-class "unseen" */
+    -fx-background-color: -colour-unseen;
+}
+.mainWordPane:known {
+    -fx-background-color: -colour-known;
+}
+.mainWordPane:unknown {
+    -fx-background-color: -colour-unknown;
+}
+.wordList .list-cell:selected {
+    -fx-text-fill: black;
+    -fx-font-weight: bold;
+    -fx-border-color: black;
+}
+.wordList .list-cell {
+    -fx-border-color: white;
+    -fx-border-width: 1 0 1 0;
+}
+.wordList .list-cell:unseen {
+    -fx-background-color: -colour-unseen;
+}
+.wordList .list-cell:known {
+    -fx-background-color: -colour-known;
+}
+.wordList .list-cell:unknown {
+    -fx-background-color: -colour-unknown;
+}
+.buttonSave {
+    -fx-graphic: url("images/buttonSave.png");
+}
+.buttonOpen {
+    -fx-graphic: url("images/buttonOpen.png");
+}
+.buttonNew {
+    -fx-graphic: url("images/buttonNew.png");
+}
+.buttonExport {
+    -fx-graphic: url("images/buttonExport.png");
+}
+.buttonKnown {
+    -fx-graphic: url("images/known.png");
+    -fx-base: #EBFFF0;
+}
+.buttonUnknown {
+    -fx-graphic: url("images/unknown.png");
+    -fx-base: #FFF0ED;
+}
+.buttonUnseen {
+    -fx-graphic: url("images/unseen.png");
+    -fx-background-color: transparent;
+}
+.noSession {
+    -fx-font-size: 16;
+}
+.noSession .title {
+    -fx-font-size: 28;
+    -fx-padding: 0 0 10 0;
+}
+.noSession .new {
+    -fx-graphic: url("images/buttonNew.png");
+    -fx-padding: 10 0 10 5;
+}
+.noSession .open {
+    -fx-graphic: url("images/buttonOpen.png");
+    -fx-padding: 10 0 0 5;
+}
+.wordUse {
+    -fx-font-weight: bold;
+    -fx-fill: darkblue;
+}

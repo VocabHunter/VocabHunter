@@ -1,0 +1,52 @@
+/*
+ * Open Source Software published under the Apache Licence, Version 2.0.
+ */
+
+allprojects {
+    group 'io.github.vocabhunter'
+    version '1.0-SNAPSHOT'
+}
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '2.8'
+}
+
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+
+    dependencies {
+        classpath 'com.github.ben-manes:gradle-versions-plugin:0.11.1'
+    }
+}
+
+subprojects {
+
+    apply plugin: 'java'
+    apply plugin: 'pmd'
+    apply plugin: 'checkstyle'
+    apply plugin: 'com.github.ben-manes.versions'
+
+    sourceCompatibility = 1.8
+
+    repositories {
+        mavenCentral()
+    }
+
+    dependencies {
+        testCompile 'junit:junit:4.12'
+        runtime 'ch.qos.logback:logback-classic:1.1.3'
+    }
+
+    pmd {
+        toolVersion = '5.4.0'
+        ruleSetFiles = files("$rootProject.projectDir/config/pmd/ruleset.xml")
+    }
+
+    checkstyle {
+        toolVersion = '6.11.2'
+        configFile = file("$rootProject.projectDir/config/checkstyle/checkstyle.xml")
+    }
+}
+

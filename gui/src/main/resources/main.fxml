@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<!--
+  ~ Open Source Software published under the Apache Licence, Version 2.0.
+  -->
+
+<BorderPane fx:id="mainBorderPane" prefHeight="500.0" prefWidth="700.0" stylesheets="@main.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="io.github.vocabhunter.gui.controller.MainController">
+    <top>
+        <VBox>
+            <children>
+                <MenuBar useSystemMenuBar="true">
+                    <menus>
+                        <Menu mnemonicParsing="false" text="File">
+                            <items>
+                                <MenuItem fx:id="menuNew" mnemonicParsing="false" text="New..." />
+                                <MenuItem fx:id="menuOpen" mnemonicParsing="false" text="Open..." />
+                                <MenuItem fx:id="menuSave" mnemonicParsing="false" text="Save" />
+                                <MenuItem fx:id="menuSaveAs" mnemonicParsing="false" text="Save As..." />
+                            </items>
+                        </Menu>
+                        <Menu mnemonicParsing="false" text="Selection">
+                            <items>
+                                <RadioMenuItem fx:id="menuEditOn" mnemonicParsing="false" text="Select Words" />
+                                <RadioMenuItem fx:id="menuEditOff" mnemonicParsing="false" text="Show Selection" />
+                                <SeparatorMenuItem mnemonicParsing="false" />
+                                <MenuItem fx:id="menuExport" mnemonicParsing="false" text="Export Selection..." />
+                            </items>
+                        </Menu>
+                        <Menu mnemonicParsing="false" text="Help">
+                            <items>
+                                <MenuItem fx:id="menuAbout" mnemonicParsing="false" text="About" />
+                            </items>
+                        </Menu>
+                    </menus>
+                </MenuBar>
+                <ToolBar>
+                    <items>
+                        <Button fx:id="buttonNew" mnemonicParsing="false" styleClass="buttonNew" text="New" >
+                            <tooltip>
+                                <Tooltip text="Analyse a document and start a new session"/>
+                            </tooltip>
+                        </Button>
+                        <Button fx:id="buttonOpen" mnemonicParsing="false" styleClass="buttonOpen" text="Open" >
+                            <tooltip>
+                                <Tooltip text="Open a saved session"/>
+                            </tooltip>
+                        </Button>
+                        <Button fx:id="buttonSave" mnemonicParsing="false" styleClass="buttonSave" text="Save" >
+                            <tooltip>
+                                <Tooltip text="Save the session"/>
+                            </tooltip>
+                        </Button>
+                        <Button fx:id="buttonExport" mnemonicParsing="false" styleClass="buttonExport" text="Export Selection" >
+                            <tooltip>
+                                <Tooltip text="Export the list of words marked as unknown to a file"/>
+                            </tooltip>
+                        </Button>
+                        <Separator orientation="VERTICAL" />
+                        <RadioButton fx:id="buttonEditOn" mnemonicParsing="false" text="Select Words" >
+                            <tooltip>
+                                <Tooltip text="Mark words as known and unknown"/>
+                            </tooltip>
+                        </RadioButton>
+                        <RadioButton fx:id="buttonEditOff" mnemonicParsing="false" text="Show Selection" >
+                            <tooltip>
+                                <Tooltip text="Show a list of all the words marked as unknown"/>
+                            </tooltip>
+                        </RadioButton>
+                    </items>
+                </ToolBar>
+            </children>
+        </VBox>
+    </top>
+   <center>
+      <HBox alignment="CENTER" BorderPane.alignment="CENTER" styleClass="noSession">
+         <children>
+            <VBox alignment="CENTER_LEFT">
+               <children>
+                   <Label text="There is no session open" styleClass="title" />
+                   <Label text="Choose 'New' to analyse a document and start a new session." styleClass="new" />
+                   <Label text="Choose 'Open' to load a saved session." styleClass="open" />
+               </children>
+            </VBox>
+         </children>
+      </HBox>
+   </center>
+</BorderPane>

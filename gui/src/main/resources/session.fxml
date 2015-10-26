@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.geometry.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<!--
+  ~ Open Source Software published under the Apache Licence, Version 2.0.
+  -->
+
+<SplitPane dividerPositions="0.55" orientation="VERTICAL" prefHeight="500.0" prefWidth="700.0" stylesheets="@main.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="io.github.vocabhunter.gui.controller.SessionController">
+    <items>
+        <AnchorPane>
+            <children>
+                <SplitPane dividerPositions="0.65" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                    <items>
+                        <AnchorPane>
+                            <children>
+                                <BorderPane fx:id="mainWordPane" styleClass="mainWordPane" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                    <center>
+                                        <VBox alignment="CENTER">
+                                            <children>
+                                                <Label fx:id="mainWord" styleClass="mainWord" text="Main Word" />
+                                                <Label fx:id="useCountLabel" styleClass="useCount" text="(110 uses)" />
+                                            </children>
+                                        </VBox>
+                                    </center>
+                                    <bottom>
+                                        <HBox alignment="CENTER" BorderPane.alignment="CENTER">
+                                            <children>
+                                                <Button fx:id="buttonUnknown" mnemonicParsing="false" styleClass="buttonUnknown" text="Don't Know">
+                                                    <tooltip>
+                                                        <Tooltip text="I don't know this word (press x)" />
+                                                    </tooltip>
+                                                    <HBox.margin>
+                                                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                                    </HBox.margin>
+                                                </Button>
+                                                <Button fx:id="buttonKnown" mnemonicParsing="false" styleClass="buttonKnown" text="Know">
+                                                    <tooltip>
+                                                        <Tooltip text="I know this word (press k)" />
+                                                    </tooltip>
+                                                    <HBox.margin>
+                                                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                                    </HBox.margin>
+                                                </Button>
+                                            </children>
+                                        </HBox>
+                                    </bottom>
+                                    <top>
+                                        <Button fx:id="buttonUnseen" mnemonicParsing="false" styleClass="buttonUnseen" BorderPane.alignment="TOP_LEFT">
+                                            <tooltip>
+                                                <Tooltip text="Reset word (press r)" />
+                                            </tooltip>
+                                        </Button>
+                                    </top>
+                                </BorderPane>
+                            </children>
+                        </AnchorPane>
+                        <AnchorPane>
+                            <children>
+                                <ListView fx:id="wordListView" styleClass="wordList" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                            </children>
+                        </AnchorPane>
+                    </items>
+                </SplitPane>
+            </children>
+        </AnchorPane>
+        <AnchorPane>
+            <children>
+                <ListView fx:id="useListView" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+            </children>
+        </AnchorPane>
+    </items>
+</SplitPane>
