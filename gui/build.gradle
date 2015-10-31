@@ -29,6 +29,8 @@ startScripts {
     doLast {
         unixScript.text = unixScript.text
                 .replaceAll('(?m)^APP_HOME=', 'export APP_HOME=')
+        windowsScript.text = windowsScript.text
+                .replaceAll(/(set CLASSPATH=%APP_HOME%\\lib\\).*/, { "${it[1]}*" })
     }
 }
 
