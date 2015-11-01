@@ -4,10 +4,12 @@
 
 package io.github.vocabhunter.gui.controller;
 
+import io.github.vocabhunter.analysis.core.VocabHunterException;
 import io.github.vocabhunter.analysis.file.SelectionExportTool;
 import io.github.vocabhunter.analysis.session.FileNameTool;
 import io.github.vocabhunter.analysis.session.SessionSerialiser;
 import io.github.vocabhunter.analysis.session.SessionState;
+import io.github.vocabhunter.gui.common.GuiConstants;
 import io.github.vocabhunter.gui.dialogues.AboutDialogue;
 import io.github.vocabhunter.gui.dialogues.ErrorDialogue;
 import io.github.vocabhunter.gui.dialogues.FileDialogue;
@@ -19,7 +21,12 @@ import io.github.vocabhunter.gui.model.SessionModel;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.MenuItem;
+import javafx.scene.control.RadioButton;
+import javafx.scene.control.RadioMenuItem;
+import javafx.scene.control.Toggle;
+import javafx.scene.control.ToggleGroup;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
@@ -27,6 +34,8 @@ import javafx.stage.WindowEvent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.awt.*;
+import java.net.URI;
 import java.nio.file.Path;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
@@ -49,6 +58,10 @@ public class MainController {
     public RadioMenuItem menuEditOff;
 
     public MenuItem menuExport;
+
+    public MenuItem menuWebsite;
+
+    public MenuItem menuHowTo;
 
     public MenuItem menuAbout;
 
@@ -99,6 +112,8 @@ public class MainController {
         buttonExport.disableProperty().bind(not(model.selectionAvailableProperty()));
         menuExport.disableProperty().bind(not(model.selectionAvailableProperty()));
 
+        menuWebsite.setOnAction(e -> processShowWebPage(GuiConstants.WEBSITE));
+        menuHowTo.setOnAction(e -> processShowWebPage(GuiConstants.WEBPAGE_HELP));
         menuAbout.setOnAction(e -> processAbout());
 
         prepareTitleHandler(stage);
@@ -256,6 +271,14 @@ public class MainController {
         keyPressHandler = controller.getKeyPressHandler();
 
         return sessionModel;
+    }
+
+    private void processShowWebPage(final String page) {
+        try {
+            Desktop.getDesktop().browse(new URI(page));
+        } catch (final Exception e) {
+            throw new VocabHunterException(String.format("Unable to open page %s", page), e);
+        }
     }
 
     private void processAbout() {
