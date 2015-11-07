@@ -1,7 +1,11 @@
 * {
    -colour-unseen: #F5F9FF;
    -colour-known: #EBFFF0;
+   -colour-known-end: #008000;
+   -gradient-known: linear-gradient(from 0% 0% to 100% 200%, repeat, -colour-known 0%, -colour-known-end 90%);
    -colour-unknown: #FFF0ED;
+   -colour-unknown-end: #a43030;
+   -gradient-unknown: linear-gradient(from 0% 0% to 100% 200%, repeat, -colour-unknown 0%, -colour-unknown-end 90%);
 }
 
 .mainWord {
@@ -29,10 +33,10 @@
     -fx-background-color: -colour-unseen;
 }
 .wordList .list-cell:known {
-    -fx-background-color: -colour-known;
+    -fx-background-color: -gradient-known;
 }
 .wordList .list-cell:unknown {
-    -fx-background-color: -colour-unknown;
+    -fx-background-color: -gradient-unknown;
 }
 .buttonSave {
     -fx-graphic: url("images/buttonSave.png");
@@ -61,9 +65,28 @@
 .noSession {
     -fx-font-size: 16;
 }
-.noSession .title {
-    -fx-font-size: 28;
-    -fx-padding: 0 0 10 0;
+.title {
+    -fx-font-size: 90;
+    -fx-font-family: sans-serif;
+    -fx-font-style: italic;
+    -fx-stroke: black;
+    -fx-stroke-width: 1;
+}
+.title.left {
+    -fx-fill: -gradient-known;
+}
+.title.right {
+    -fx-fill: -gradient-unknown;
+}
+.about BorderPane {
+    -fx-padding: 10 20 10 10;
+    -fx-border-insets: 10 10 10 10;
+    -fx-border-color: lightgrey;
+    -fx-border-style: dashed;
+}
+.about Label, .about Hyperlink {
+    -fx-font-size: 20;
+    -fx-padding: 7 0 7 0;
 }
 .noSession .new {
     -fx-graphic: url("images/buttonNew.png");

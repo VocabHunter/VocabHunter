@@ -5,9 +5,14 @@
 package io.github.vocabhunter.gui.main;
 
 import io.github.vocabhunter.analysis.core.VocabHunterException;
+import io.github.vocabhunter.gui.controller.AboutController;
 import io.github.vocabhunter.gui.controller.MainController;
 import io.github.vocabhunter.gui.controller.SessionController;
-import io.github.vocabhunter.gui.dialogues.*;
+import io.github.vocabhunter.gui.dialogues.AboutDialogue;
+import io.github.vocabhunter.gui.dialogues.ErrorDialogue;
+import io.github.vocabhunter.gui.dialogues.FileDialogue;
+import io.github.vocabhunter.gui.dialogues.FileDialogueType;
+import io.github.vocabhunter.gui.dialogues.UnsavedChangesDialogue;
 import io.github.vocabhunter.gui.factory.ControllerAndView;
 import io.github.vocabhunter.gui.factory.FileDialogueFactory;
 import io.github.vocabhunter.gui.factory.GuiFactory;
@@ -26,6 +31,8 @@ public class GuiFactoryImpl implements GuiFactory {
 
     private static final String FXML_SESSION = "session.fxml";
 
+    private static final String FXML_ABOUT = "about.fxml";
+
     private final FileDialogueFactory fileDialogueFactory;
 
     private final Stage stage;
@@ -39,7 +46,7 @@ public class GuiFactoryImpl implements GuiFactory {
     public ControllerAndView<MainController, Parent> mainWindow() {
         FXMLLoader loader = loader(FXML_MAIN);
         Parent root = loadNode(loader, FXML_MAIN);
-        MainController controller = loader.<MainController>getController();
+        MainController controller = loader.getController();
 
         controller.initialise(stage, this);
 
@@ -50,7 +57,7 @@ public class GuiFactoryImpl implements GuiFactory {
     public ControllerAndView<SessionController, Node> session(final SessionModel model) {
         FXMLLoader loader = loader(FXML_SESSION);
         Node root = loadNode(loader, FXML_SESSION);
-        SessionController controller = loader.<SessionController>getController();
+        SessionController controller = loader.getController();
 
         controller.initialise(model);
 
@@ -101,6 +108,10 @@ public class GuiFactoryImpl implements GuiFactory {
 
     @Override
     public AboutDialogue aboutDialogue() {
-        return new AboutDialogue();
+        FXMLLoader loader = loader(FXML_ABOUT);
+        Parent root = loadNode(loader, FXML_ABOUT);
+        AboutController controller = loader.getController();
+
+        return new AboutDialogue(controller, root);
     }
 }

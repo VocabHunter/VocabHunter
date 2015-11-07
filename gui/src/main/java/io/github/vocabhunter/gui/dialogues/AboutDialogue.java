@@ -4,24 +4,31 @@
 
 package io.github.vocabhunter.gui.dialogues;
 
-import io.github.vocabhunter.gui.common.BuildInfo;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
+import io.github.vocabhunter.gui.controller.AboutController;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 public class AboutDialogue {
-    private final Alert alert;
+    private final AboutController controller;
 
-    public AboutDialogue() {
-        alert = new Alert(AlertType.INFORMATION);
-        alert.setTitle("About VocabHunter");
-        alert.setHeaderText(String.format("VocabHunter Version: %s", BuildInfo.version()));
-        alert.setContentText("Copyright (c) 2015 Adam Carroll.\n\n"
-                + "VocabHunter is Open Source Software, published under the Apache Licence, Version 2.0.\n\n"
-                + "http://vocabhunter.github.io/");
+    private final Parent root;
+
+    public AboutDialogue(final AboutController controller, final Parent root) {
+        this.controller = controller;
+        this.root = root;
     }
 
     public void show() {
+        Stage stage = new Stage();
 
-        alert.showAndWait();
+        controller.initialise(stage);
+
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.initStyle(StageStyle.UNDECORATED);
+        stage.setScene(new Scene(root));
+        stage.show();
     }
 }

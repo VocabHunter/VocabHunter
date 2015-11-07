@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+  ~ Open Source Software published under the Apache Licence, Version 2.0.
+  -->
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<Pane styleClass="about" stylesheets="@main.css" xmlns="http://javafx.com/javafx/8" fx:controller="io.github.vocabhunter.gui.controller.AboutController" xmlns:fx="http://javafx.com/fxml/1">
+    <children>
+        <BorderPane>
+            <top>
+                <HBox>
+                    <children>
+                        <Text styleClass="title,left" text="Vocab" />
+                        <Text styleClass="title,right" text="Hunter" />
+                    </children>
+                </HBox>
+            </top>
+            <left>
+                <VBox>
+                    <children>
+                        <Label text="VocabHunter is Open Source Software,&#10;published under the Apache Licence, Version 2.0." />
+                        <Label text="VocabHunter Version: %s." fx:id="labelVersion" />
+                        <Label text="Copyright (c) 2015 Adam Carroll." />
+                        <Hyperlink fx:id="linkWebsite" text="http://vocabhunter.github.io/" />
+                    </children>
+                </VBox>
+            </left>
+            <right>
+                <Button mnemonicParsing="false" text="Close" fx:id="buttonClose" BorderPane.alignment="BOTTOM_RIGHT" />
+            </right>
+        </BorderPane>
+    </children>
+</Pane>
