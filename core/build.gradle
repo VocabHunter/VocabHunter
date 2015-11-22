@@ -20,5 +20,5 @@ dependencies {
     compile 'com.fasterxml.jackson.core:jackson-databind:2.6.3'
     compile 'commons-io:commons-io:2.4'
     compile 'org.apache.tika:tika-parsers:1.11'
-    compile 'org.slf4j:slf4j-api:1.7.12'
+    compile 'org.slf4j:slf4j-api:1.7.13'
 }
