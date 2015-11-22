@@ -1,0 +1,49 @@
+/*
+ * Open Source Software published under the Apache Licence, Version 2.0.
+ */
+
+// This is all very Mac-specific at the moment.  The script will be updated to work with Linux and Windows too.
+
+ant.importBuild 'mac-bundle-ant.xml'
+
+dependencies {
+    compile project(':gui')
+}
+
+def alljars = configurations.runtime
+
+jar {
+    manifest {
+        attributes 'Main-Class': 'io.github.vocabhunter.gui.distribution.PackagedVocabHunter'
+        attributes 'Class-Path': alljars.collect { it.getName() }.join(' ')
+    }
+}
+
+task recreateIconMacApp(type: Exec) {
+    description 'Regenerate the Mac application icon'
+    commandLine 'sh', file('bin/mac-icon.sh'), file('icons/App1024.png'), file('icons/mac'), 'VocabHunter'
+}
+
+task recreateIconMacSession(type: Exec) {
+    description 'Regenerate the Mac session file icon'
+    commandLine 'sh', file('bin/mac-icon.sh'), file('icons/Doc1024.png'), file('icons/mac'), 'VocabHunterSession'
+}
+
+task recreateIcons(dependsOn: [recreateIconMacApp, recreateIconMacSession]) {
+    description 'Regenerate all the Mac application bundle icons'
+}
+
+task copyJars(type: Copy) {
+    description 'Copy all of the JARs for the bundled version of the application'
+    into "$buildDir/libs"
+    from alljars
+}
+
+jfxbundle.doLast {
+    FileTree tree = fileTree(dir: 'build/bundles').include('**/*.cfg')
+    tree.each {File file ->
+        String content = file.text.replaceAll('(?m)^app\\.runtime=.*$\n', '')
+        file.write(content)
+    }
+}
+jfxbundle.dependsOn jar, copyJars

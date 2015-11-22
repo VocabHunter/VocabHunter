@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<project name="VocabHunter Packaging" basedir=""
+         xmlns:fx="javafx:com.sun.javafx.tools.ant">
+
+    <property environment="env"/>
+    <property name="JAVA_HOME" value="${env.JAVA_HOME}"/>
+
+    <target name="jfxbundle" description="Build the application bundle">
+
+        <taskdef resource="com/sun/javafx/tools/ant/antlib.xml"
+                 uri="javafx:com.sun.javafx.tools.ant"
+                 classpath="${JAVA_HOME}/lib/ant-javafx.jar"/>
+
+        <fx:application id="VocabHunterId"
+                        name="VocabHunter"
+                        mainClass="io.github.vocabhunter.gui.distribution.PackagedVocabHunter"/>
+
+        <fx:resources id="applicationResourcesId">
+            <fx:fileset dir="${basedir}/build/libs"/>
+        </fx:resources>
+
+        <fx:deploy outdir="${basedir}/build"
+                   nativeBundles="image">
+
+            <fx:platform basedir=""/>
+
+            <fx:application refId="VocabHunterId"/>
+
+            <fx:resources refid="applicationResourcesId"/>
+
+            <fx:info title="VocabHunter">
+                <fx:association description="VocabHunter session"
+                                extension="wordy"
+                                mimetype="application/x-vnd.VocabHunterSession"
+                                icon="${basedir}/icons/mac/VocabHunterSession.icns"/>
+            </fx:info>
+
+            <fx:bundleArgument arg="icon"
+                               value="${basedir}/icons/mac/VocabHunter.icns"/>
+
+        </fx:deploy>
+
+    </target>
+
+</project>
