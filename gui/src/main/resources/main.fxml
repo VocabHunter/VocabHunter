@@ -35,6 +35,7 @@
                             <items>
                                 <MenuItem fx:id="menuWebsite" mnemonicParsing="false" text="VocabHunter Website" />
                                 <MenuItem fx:id="menuHowTo" mnemonicParsing="false" text="How to Use VocabHunter" />
+                                <MenuItem fx:id="menuIssue" mnemonicParsing="false" text="How to Report a Bug" />
                                 <MenuItem fx:id="menuAbout" mnemonicParsing="false" text="About" />
                             </items>
                         </Menu>

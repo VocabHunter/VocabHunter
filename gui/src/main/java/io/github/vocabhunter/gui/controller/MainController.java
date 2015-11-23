@@ -61,6 +61,8 @@ public class MainController {
 
     public MenuItem menuHowTo;
 
+    public MenuItem menuIssue;
+
     public MenuItem menuAbout;
 
     public Button buttonNew;
@@ -112,6 +114,7 @@ public class MainController {
 
         menuWebsite.setOnAction(e -> WebPageTool.showWebPage(GuiConstants.WEBSITE));
         menuHowTo.setOnAction(e -> WebPageTool.showWebPage(GuiConstants.WEBPAGE_HELP));
+        menuIssue.setOnAction(e -> WebPageTool.showWebPage(GuiConstants.WEBPAGE_ISSUE));
         menuAbout.setOnAction(e -> processAbout());
 
         prepareTitleHandler(stage);
