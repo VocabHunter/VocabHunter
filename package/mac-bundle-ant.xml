@@ -39,6 +39,9 @@
             <fx:bundleArgument arg="icon"
                                value="${basedir}/icons/mac/VocabHunter.icns"/>
 
+            <fx:bundleArgument arg="launcher-cfg-format"
+                               value="prop"/>
+
         </fx:deploy>
 
     </target>

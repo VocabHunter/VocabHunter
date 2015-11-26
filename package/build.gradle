@@ -39,11 +39,4 @@ task copyJars(type: Copy) {
     from alljars
 }
 
-jfxbundle.doLast {
-    FileTree tree = fileTree(dir: 'build/bundles').include('**/*.cfg')
-    tree.each {File file ->
-        String content = file.text.replaceAll('(?m)^app\\.runtime=.*$\n', '')
-        file.write(content)
-    }
-}
 jfxbundle.dependsOn jar, copyJars
