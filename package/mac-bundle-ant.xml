@@ -21,7 +21,7 @@
         </fx:resources>
 
         <fx:deploy outdir="${basedir}/build"
-                   nativeBundles="image">
+                   nativeBundles="dmg">
 
             <fx:platform basedir=""/>
 
