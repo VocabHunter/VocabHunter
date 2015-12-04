@@ -4,6 +4,7 @@
 
 // This is all very Mac-specific at the moment.  The script will be updated to work with Linux and Windows too.
 
+ant.version = project.version
 ant.importBuild 'mac-bundle-ant.xml'
 
 dependencies {

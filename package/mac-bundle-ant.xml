@@ -25,7 +25,8 @@
 
             <fx:platform basedir=""/>
 
-            <fx:application refId="VocabHunterId"/>
+            <fx:application refId="VocabHunterId"
+                            version="${version}"/>
 
             <fx:resources refid="applicationResourcesId"/>
 
@@ -38,6 +39,9 @@
 
             <fx:bundleArgument arg="icon"
                                value="${basedir}/icons/mac/VocabHunter.icns"/>
+
+            <fx:bundleArgument arg="mac.CFBundleVersion"
+                               value="${version}"/>
 
             <fx:bundleArgument arg="launcher-cfg-format"
                                value="prop"/>
