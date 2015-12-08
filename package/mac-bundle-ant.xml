@@ -14,7 +14,7 @@
 
         <fx:application id="VocabHunterId"
                         name="VocabHunter"
-                        mainClass="io.github.vocabhunter.gui.distribution.PackagedVocabHunter"/>
+                        mainClass="io.github.vocabhunter.osx.distribution.OsxPackagedVocabHunter"/>
 
         <fx:resources id="applicationResourcesId">
             <fx:fileset dir="${basedir}/build/libs"/>

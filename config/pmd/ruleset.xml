@@ -46,6 +46,6 @@
 
     <exclude-pattern>.*/VocabHunter.java</exclude-pattern>
     <exclude-pattern>.*/TestGuiApplication.java</exclude-pattern>
-    <exclude-pattern>.*/PackagedVocabHunter.java</exclude-pattern>
+    <exclude-pattern>.*/*PackagedVocabHunter.java</exclude-pattern>
 
 </ruleset>

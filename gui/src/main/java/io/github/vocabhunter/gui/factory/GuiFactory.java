@@ -10,6 +10,7 @@ import io.github.vocabhunter.gui.dialogues.AboutDialogue;
 import io.github.vocabhunter.gui.dialogues.ErrorDialogue;
 import io.github.vocabhunter.gui.dialogues.FileDialogue;
 import io.github.vocabhunter.gui.dialogues.UnsavedChangesDialogue;
+import io.github.vocabhunter.gui.event.ExternalEventSource;
 import io.github.vocabhunter.gui.model.MainModel;
 import io.github.vocabhunter.gui.model.SessionModel;
 import javafx.scene.Node;
@@ -33,4 +34,6 @@ public interface GuiFactory {
     ErrorDialogue errorDialogue(String title, String message, Throwable e);
 
     AboutDialogue aboutDialogue();
+
+    ExternalEventSource getExternalEventSource();
 }

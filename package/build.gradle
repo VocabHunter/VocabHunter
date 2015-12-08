@@ -2,6 +2,8 @@
  * Open Source Software published under the Apache Licence, Version 2.0.
  */
 
+import org.gradle.internal.os.OperatingSystem;
+
 // This is all very Mac-specific at the moment.  The script will be updated to work with Linux and Windows too.
 
 ant.version = project.version
@@ -9,13 +11,31 @@ ant.importBuild 'mac-bundle-ant.xml'
 
 dependencies {
     compile project(':gui')
+    if (OperatingSystem.current().isMacOsX()) {
+        compile project(':osx')
+    }
+}
+
+if (OperatingSystem.current().isMacOsX()) {
+    sourceSets {
+        main {
+            java {
+                srcDir 'src/main/java'
+                srcDir 'src/osx/java'
+            }
+        }
+    }
 }
 
 def alljars = configurations.runtime
 
 jar {
     manifest {
-        attributes 'Main-Class': 'io.github.vocabhunter.gui.distribution.PackagedVocabHunter'
+        if (OperatingSystem.current().isMacOsX()) {
+            attributes 'Main-Class': 'io.github.vocabhunter.osx.distribution.OsxPackagedVocabHunter'
+        } else {
+            attributes 'Main-Class': 'io.github.vocabhunter.gui.distribution.PackagedVocabHunter'
+        }
         attributes 'Class-Path': alljars.collect { it.getName() }.join(' ')
     }
 }

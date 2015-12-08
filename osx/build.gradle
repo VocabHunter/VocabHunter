@@ -1,0 +1,25 @@
+/*
+ * Open Source Software published under the Apache Licence, Version 2.0.
+ */
+
+import org.gradle.internal.os.OperatingSystem;
+
+if (OperatingSystem.current().isMacOsX()) {
+    sourceSets {
+        main {
+            java {
+                srcDir 'src/osx/java'
+            }
+        }
+    }
+
+    compileJava {
+        options.fork = true
+        options.forkOptions.executable = 'javac'
+        options.compilerArgs << "-XDignore.symbol.file=true"
+    }
+
+    dependencies {
+        compile project(':gui')
+    }
+}

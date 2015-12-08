@@ -117,6 +117,8 @@ public class MainController {
         menuIssue.setOnAction(e -> WebPageTool.showWebPage(GuiConstants.WEBPAGE_ISSUE));
         menuAbout.setOnAction(e -> processAbout());
 
+        factory.getExternalEventSource().setListener(e -> processOpenWithCheck(e.getFile()));
+
         prepareTitleHandler(stage);
     }
 
@@ -144,6 +146,14 @@ public class MainController {
 
         if (isProcessRequired) {
             processFile(chooserFactory, processor);
+        }
+    }
+
+    private void processOpenWithCheck(final Path file) {
+        boolean isProcessRequired = unsavedChangesCheck();
+
+        if (isProcessRequired) {
+            processOpen(file);
         }
     }
 
@@ -178,6 +188,10 @@ public class MainController {
     private void processOpen(final FileDialogue chooser) {
         Path file = chooser.getSelectedFile();
 
+        processOpen(file);
+    }
+
+    private void processOpen(final Path file) {
         try {
             LOG.info("Opening file '{}'", file);
             SessionState state = SessionSerialiser.read(file);

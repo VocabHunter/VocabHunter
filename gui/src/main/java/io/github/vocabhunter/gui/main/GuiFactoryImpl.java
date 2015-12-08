@@ -13,6 +13,7 @@ import io.github.vocabhunter.gui.dialogues.ErrorDialogue;
 import io.github.vocabhunter.gui.dialogues.FileDialogue;
 import io.github.vocabhunter.gui.dialogues.FileDialogueType;
 import io.github.vocabhunter.gui.dialogues.UnsavedChangesDialogue;
+import io.github.vocabhunter.gui.event.ExternalEventSource;
 import io.github.vocabhunter.gui.factory.ControllerAndView;
 import io.github.vocabhunter.gui.factory.FileDialogueFactory;
 import io.github.vocabhunter.gui.factory.GuiFactory;
@@ -37,9 +38,12 @@ public class GuiFactoryImpl implements GuiFactory {
 
     private final Stage stage;
 
-    public GuiFactoryImpl(final FileDialogueFactory fileDialogueFactory, final Stage stage) {
+    private final ExternalEventSource externalEventSource;
+
+    public GuiFactoryImpl(final FileDialogueFactory fileDialogueFactory, final Stage stage, final ExternalEventSource externalEventSource) {
         this.fileDialogueFactory = fileDialogueFactory;
         this.stage = stage;
+        this.externalEventSource = externalEventSource;
     }
 
     @Override
@@ -70,6 +74,11 @@ public class GuiFactoryImpl implements GuiFactory {
         } catch (final IOException e) {
             throw new VocabHunterException(String.format("Unable to load FXML_SESSION '%s'", fxml), e);
         }
+    }
+
+    @Override
+    public ExternalEventSource getExternalEventSource() {
+        return externalEventSource;
     }
 
     private FXMLLoader loader(final String fxml) {
