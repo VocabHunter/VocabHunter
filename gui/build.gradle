@@ -40,4 +40,5 @@ dependencies {
     testCompile project(path: ':core', configuration: 'tests')
     testCompile 'org.testfx:testfx-core:4.0.1-alpha'
     testCompile 'org.mockito:mockito-all:1.10.19'
+    runtime 'org.codehaus.janino:janino:2.7.8'
 }
