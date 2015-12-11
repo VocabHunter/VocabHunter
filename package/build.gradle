@@ -40,4 +40,12 @@ task copyJars(type: Copy) {
     from alljars
 }
 
+jfxbundle.doLast {
+    FileTree tree = fileTree(dir: 'build/bundles').include('**/*.dmg')
+    tree.each {File f ->
+        def name = f.getName().replace('-1.0.dmg', "-${project.version}.dmg")
+        f.renameTo(file("build/bundles/$name"))
+    }
+}
+
 jfxbundle.dependsOn jar, copyJars
