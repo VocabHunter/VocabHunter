@@ -10,7 +10,6 @@ import io.github.vocabhunter.gui.event.ExternalEventSource;
 import io.github.vocabhunter.gui.factory.ControllerAndView;
 import io.github.vocabhunter.gui.factory.FileDialogueFactory;
 import io.github.vocabhunter.gui.factory.GuiFactory;
-
 import javafx.application.Application;
 import javafx.scene.Parent;
 import javafx.scene.Scene;

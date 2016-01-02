@@ -6,7 +6,6 @@ package io.github.vocabhunter.osx;
 
 import com.apple.eawt.AppEvent.OpenFilesEvent;
 import com.apple.eawt.OpenFilesHandler;
-
 import io.github.vocabhunter.gui.event.ExternalEventListener;
 import io.github.vocabhunter.gui.event.ExternalOpenFileEvent;
 

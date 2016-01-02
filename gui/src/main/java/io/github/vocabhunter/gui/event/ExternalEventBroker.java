@@ -5,7 +5,6 @@
 package io.github.vocabhunter.gui.event;
 
 import io.github.vocabhunter.analysis.core.VocabHunterException;
-
 import javafx.application.Platform;
 
 import java.util.concurrent.BlockingQueue;

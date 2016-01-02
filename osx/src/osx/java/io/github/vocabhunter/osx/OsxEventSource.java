@@ -5,7 +5,6 @@
 package io.github.vocabhunter.osx;
 
 import com.apple.eawt.Application;
-
 import io.github.vocabhunter.gui.event.ExternalEventListener;
 import io.github.vocabhunter.gui.event.ExternalEventSource;
 
