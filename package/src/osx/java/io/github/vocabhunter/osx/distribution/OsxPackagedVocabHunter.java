@@ -4,15 +4,17 @@
 
 package io.github.vocabhunter.osx.distribution;
 
+import io.github.vocabhunter.gui.event.CommandLineEventSource;
 import io.github.vocabhunter.gui.main.VocabHunterGuiExecutable;
 import io.github.vocabhunter.osx.OsxEventSource;
 
-import static java.util.Collections.singletonList;
+import static java.util.Arrays.asList;
 
 public class OsxPackagedVocabHunter extends VocabHunterGuiExecutable {
     public static void main(final String... args) {
-        OsxEventSource eventSource = new OsxEventSource();
+        OsxEventSource osxEventSource = new OsxEventSource();
+        CommandLineEventSource commandLineEventSource = new CommandLineEventSource(args);
 
-        VocabHunterGuiExecutable.runApp(args, singletonList(eventSource), a -> launch(a));
+        VocabHunterGuiExecutable.runApp(args, asList(commandLineEventSource, osxEventSource), a -> launch(a));
     }
 }

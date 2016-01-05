@@ -25,9 +25,9 @@ public final class SessionSerialiser {
         }
     }
 
-    public static SessionState read(final Path file) {
+    public static EnrichedSessionState read(final Path file) {
         try {
-            return MAPPER.readValue(file.toFile(), SessionState.class);
+            return new EnrichedSessionState(MAPPER.readValue(file.toFile(), SessionState.class), file);
         } catch (final IOException e) {
             throw new VocabHunterException(String.format("Unable to load file '%s'", file), e);
         }

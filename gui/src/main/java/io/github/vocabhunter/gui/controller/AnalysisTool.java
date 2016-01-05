@@ -5,8 +5,7 @@
 package io.github.vocabhunter.gui.controller;
 
 import io.github.vocabhunter.analysis.file.FileStreamer;
-import io.github.vocabhunter.analysis.session.SessionState;
-import io.github.vocabhunter.analysis.simple.SimpleAnalyser;
+import io.github.vocabhunter.analysis.session.EnrichedSessionState;
 
 import java.nio.file.Path;
 
@@ -19,9 +18,11 @@ public final class AnalysisTool {
         // Prevent instantiation - all methods are static
     }
 
-    public static SessionState analyse(final Path file) {
-        SimpleAnalyser analyser = new SimpleAnalyser();
+    public static EnrichedSessionState createNewSession(final Path file) {
+        return FileStreamer.createNewSession(file, MIN_LETTERS, MAX_WORDS);
+    }
 
-        return FileStreamer.createNewSession(analyser, file, MIN_LETTERS, MAX_WORDS);
+    public static EnrichedSessionState createOrOpenSession(final Path file) {
+        return FileStreamer.createOrOpenSession(file, MIN_LETTERS, MAX_WORDS);
     }
 }

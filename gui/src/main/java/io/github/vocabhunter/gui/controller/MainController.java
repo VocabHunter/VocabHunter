@@ -5,6 +5,7 @@
 package io.github.vocabhunter.gui.controller;
 
 import io.github.vocabhunter.analysis.file.SelectionExportTool;
+import io.github.vocabhunter.analysis.session.EnrichedSessionState;
 import io.github.vocabhunter.analysis.session.FileNameTool;
 import io.github.vocabhunter.analysis.session.SessionSerialiser;
 import io.github.vocabhunter.analysis.session.SessionState;
@@ -36,6 +37,7 @@ import org.slf4j.LoggerFactory;
 
 import java.nio.file.Path;
 import java.util.function.Consumer;
+import java.util.function.Function;
 import java.util.function.Supplier;
 
 import static javafx.beans.binding.Bindings.not;
@@ -91,8 +93,8 @@ public class MainController {
         buildToggleGroup(buttonEditOn, buttonEditOff);
         buildToggleGroup(menuEditOn, menuEditOff);
 
-        handler(buttonOpen, menuOpen, e -> processFileWithCheck(factory::openSessionChooser, this::processOpen));
-        handler(buttonNew, menuNew, e -> processFileWithCheck(factory::newSessionChooser, this::processNew));
+        handler(buttonOpen, menuOpen, e -> processFileWithCheck(factory::openSessionChooser, this::processOpenSession));
+        handler(buttonNew, menuNew, e -> processFileWithCheck(factory::newSessionChooser, this::processNewSession));
         handler(buttonSave, menuSave, e -> processSave());
         menuSaveAs.setOnAction(e -> processSaveAs());
         handler(buttonExport, menuExport, e -> processFile(factory::exportSelectionChooser, this::processExport));
@@ -117,7 +119,7 @@ public class MainController {
         menuIssue.setOnAction(e -> WebPageTool.showWebPage(GuiConstants.WEBPAGE_ISSUE));
         menuAbout.setOnAction(e -> processAbout());
 
-        factory.getExternalEventSource().setListener(e -> processOpenWithCheck(e.getFile()));
+        factory.getExternalEventSource().setListener(e -> processOpenOrNew(e.getFile()));
 
         prepareTitleHandler(stage);
     }
@@ -149,11 +151,12 @@ public class MainController {
         }
     }
 
-    private void processOpenWithCheck(final Path file) {
+    private void processOpenOrNew(final Path file) {
         boolean isProcessRequired = unsavedChangesCheck();
 
         if (isProcessRequired) {
-            processOpen(file);
+            LOG.info("Opening file '{}'", file);
+            processOpen(file, AnalysisTool::createOrOpenSession);
         }
     }
 
@@ -185,21 +188,29 @@ public class MainController {
         }
     }
 
-    private void processOpen(final FileDialogue chooser) {
+    private void processOpenSession(final FileDialogue chooser) {
         Path file = chooser.getSelectedFile();
 
-        processOpen(file);
+        LOG.info("Opening session file '{}'", file);
+        processOpen(file, SessionSerialiser::read);
     }
 
-    private void processOpen(final Path file) {
+    private void processNewSession(final FileDialogue chooser) {
+        Path file = chooser.getSelectedFile();
+
+        LOG.info("New session from '{}'", file);
+        processOpen(file, AnalysisTool::createNewSession);
+    }
+
+    private void processOpen(final Path file, final Function<Path, EnrichedSessionState> opener) {
         try {
-            LOG.info("Opening file '{}'", file);
-            SessionState state = SessionSerialiser.read(file);
+            EnrichedSessionState enrichedState = opener.apply(file);
+            SessionState state = enrichedState.getState();
             SessionModel sessionModel = addSession(state);
 
-            model.replaceSessionModel(state, sessionModel, file);
+            model.replaceSessionModel(state, sessionModel, enrichedState.getFile().orElse(null));
         } catch (final RuntimeException e) {
-            handleFileError(file, e, "Open File Error", "Couldn't open file '%s'", "Unable to open session file '{}'");
+            handleFileError(file, e, "Open File Error", "Couldn't open file '%s'", "Unable to open file '{}'");
         }
     }
 
@@ -209,20 +220,6 @@ public class MainController {
         ErrorDialogue dialogue = factory.errorDialogue(title, String.format(message, file.getFileName()), e);
 
         dialogue.showError();
-    }
-
-    private void processNew(final FileDialogue chooser) {
-        Path file = chooser.getSelectedFile();
-
-        try {
-            LOG.info("New session from '{}'", file);
-            SessionState state = AnalysisTool.analyse(file);
-            SessionModel sessionModel = addSession(state);
-
-            model.replaceSessionModel(state, sessionModel);
-        } catch (final RuntimeException e) {
-            handleFileError(file, e, "New Session Error", "Couldn't open file '%s'", "Unable to open document file '{}'");
-        }
     }
 
     private boolean processSave() {

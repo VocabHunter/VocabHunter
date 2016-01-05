@@ -7,13 +7,18 @@ package io.github.vocabhunter.analysis.file;
 import io.github.vocabhunter.analysis.core.VocabHunterException;
 import io.github.vocabhunter.analysis.model.Analyser;
 import io.github.vocabhunter.analysis.model.AnalysisResult;
+import io.github.vocabhunter.analysis.session.EnrichedSessionState;
+import io.github.vocabhunter.analysis.session.SessionSerialiser;
 import io.github.vocabhunter.analysis.session.SessionState;
+import io.github.vocabhunter.analysis.simple.SimpleAnalyser;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.tika.exception.TikaException;
 import org.apache.tika.metadata.Metadata;
 import org.apache.tika.parser.AutoDetectParser;
 import org.apache.tika.parser.ParseContext;
 import org.apache.tika.sax.BodyContentHandler;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.xml.sax.ContentHandler;
 import org.xml.sax.SAXException;
 
@@ -28,6 +33,10 @@ import java.util.Locale;
 import java.util.stream.Stream;
 
 public final class FileStreamer {
+    private static final Analyser ANALYSER = new SimpleAnalyser();
+
+    private static final Logger LOG = LoggerFactory.getLogger(FileStreamer.class);
+
     private FileStreamer() {
         // Prevent instantiation - all methods are static
     }
@@ -73,21 +82,30 @@ public final class FileStreamer {
         return list;
     }
 
-    public static AnalysisResult analyse(final Analyser analyser, final Path file, final int minLetters, final int maxWords) {
+    public static AnalysisResult analyse(final Path file, final int minLetters, final int maxWords) {
         try (InputStream in = Files.newInputStream(file)) {
             Stream<String> stream = stream(in, file);
 
-            return analyser.analyse(stream, file.getFileName().toString(), minLetters, maxWords);
+            return ANALYSER.analyse(stream, file.getFileName().toString(), minLetters, maxWords);
 
         } catch (final IOException e) {
             throw readError(file, e);
         }
     }
 
-    public static SessionState createNewSession(final Analyser analyser, final Path file, final int minLetters, final int maxWords) {
-        AnalysisResult model = analyse(analyser, file, minLetters, maxWords);
+    public static EnrichedSessionState createNewSession(final Path file, final int minLetters, final int maxWords) {
+        AnalysisResult model = analyse(file, minLetters, maxWords);
 
-        return new SessionState(model);
+        return new EnrichedSessionState(new SessionState(model));
+    }
+
+    public static EnrichedSessionState createOrOpenSession(final Path file, final int minLetters, final int maxWords) {
+        try {
+            return SessionSerialiser.read(file);
+        } catch (final VocabHunterException e) {
+            LOG.debug("{} is not a session file", file, e);
+            return createNewSession(file, minLetters, maxWords);
+        }
     }
 
     private static VocabHunterException readError(final Path file, final Exception e) {

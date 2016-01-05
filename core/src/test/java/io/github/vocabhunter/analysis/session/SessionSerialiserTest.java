@@ -73,7 +73,7 @@ public class SessionSerialiserTest {
     private SessionState writeAndReadBackState1() {
         SessionSerialiser.write(file, state1);
 
-        return SessionSerialiser.read(file);
+        return SessionSerialiser.read(file).getState();
     }
 
     private SessionState state(final String name) {

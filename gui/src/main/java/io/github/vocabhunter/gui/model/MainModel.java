@@ -34,10 +34,6 @@ public class MainModel {
 
     private final SimpleBooleanProperty changesSaved = new SimpleBooleanProperty(true);
 
-    public void replaceSessionModel(final SessionState sessionState, final SessionModel sessionModel) {
-        replaceSessionModel(sessionState, sessionModel, null);
-    }
-
     public void replaceSessionModel(final SessionState sessionState, final SessionModel sessionModel, final Path sessionFile) {
         unbindOldSession();
 

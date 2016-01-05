@@ -5,6 +5,7 @@
 package io.github.vocabhunter.gui.main;
 
 import io.github.vocabhunter.gui.controller.MainController;
+import io.github.vocabhunter.gui.event.CommandLineEventSource;
 import io.github.vocabhunter.gui.event.ExternalEventBroker;
 import io.github.vocabhunter.gui.event.ExternalEventSource;
 import io.github.vocabhunter.gui.factory.ControllerAndView;
@@ -20,7 +21,7 @@ import java.util.List;
 import java.util.function.Consumer;
 
 import static io.github.vocabhunter.gui.main.ExecutableLogTool.*;
-import static java.util.Collections.emptyList;
+import static java.util.Collections.singletonList;
 
 public class VocabHunterGuiExecutable extends Application {
     private static final double WINDOW_SIZE_FACTOR = 0.80;
@@ -57,7 +58,9 @@ public class VocabHunterGuiExecutable extends Application {
     }
 
     public static void main(final String... args) {
-        runApp(args, emptyList(), a -> launch(a));
+        CommandLineEventSource eventSource = new CommandLineEventSource(args);
+
+        runApp(args, singletonList(eventSource), a -> launch(a));
     }
 
     public static void runApp(final String[] args, final List<ExternalEventSource> eventSources, final Consumer<String[]> launcher) {

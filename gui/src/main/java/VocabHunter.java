@@ -2,9 +2,10 @@
  * Open Source Software published under the Apache Licence, Version 2.0.
  */
 
+import io.github.vocabhunter.gui.event.CommandLineEventSource;
 import io.github.vocabhunter.gui.main.VocabHunterGuiExecutable;
 
-import static java.util.Collections.emptyList;
+import static java.util.Collections.singletonList;
 
 /**
  * This class is used instead of VocabHunterGuiExecutable to avoid showing the package name in the JavaFX menu.
@@ -12,6 +13,8 @@ import static java.util.Collections.emptyList;
  */
 public class VocabHunter extends VocabHunterGuiExecutable {
     public static void main(final String... args) {
-        VocabHunterGuiExecutable.runApp(args, emptyList(), a -> launch(a));
+        CommandLineEventSource eventSource = new CommandLineEventSource(args);
+
+        VocabHunterGuiExecutable.runApp(args, singletonList(eventSource), a -> launch(a));
     }
 }

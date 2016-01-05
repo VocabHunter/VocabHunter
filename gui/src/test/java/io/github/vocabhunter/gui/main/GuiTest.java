@@ -5,8 +5,8 @@
 package io.github.vocabhunter.gui.main;
 
 import io.github.vocabhunter.analysis.core.VocabHunterException;
+import io.github.vocabhunter.analysis.session.EnrichedSessionState;
 import io.github.vocabhunter.analysis.session.SessionSerialiser;
-import io.github.vocabhunter.analysis.session.SessionState;
 import io.github.vocabhunter.gui.dialogues.FileDialogue;
 import io.github.vocabhunter.gui.dialogues.FileDialogueType;
 import io.github.vocabhunter.gui.factory.FileDialogueFactory;
@@ -35,10 +35,9 @@ import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.any;
 import static org.mockito.Mockito.when;
 import static org.testfx.api.FxAssert.verifyThat;
-import static org.testfx.api.FxToolkit.*;
-import static org.testfx.matcher.base.NodeMatchers.hasText;
-import static org.testfx.matcher.base.NodeMatchers.isInvisible;
-import static org.testfx.matcher.base.NodeMatchers.isVisible;
+import static org.testfx.api.FxToolkit.registerPrimaryStage;
+import static org.testfx.api.FxToolkit.setupApplication;
+import static org.testfx.matcher.base.NodeMatchers.*;
 
 @RunWith(MockitoJUnitRunner.class)
 public class GuiTest extends FxRobot {
@@ -162,9 +161,9 @@ public class GuiTest extends FxRobot {
     }
 
     private void validateSavedSession(final String name) {
-        SessionState state = SessionSerialiser.read(sessionFile);
+        EnrichedSessionState state = SessionSerialiser.read(sessionFile);
 
-        assertEquals("Session state name", name, state.getName());
+        assertEquals("Session state name", name, state.getState().getName());
     }
 
     private Path getResource(final String file) throws Exception {
