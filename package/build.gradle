@@ -4,10 +4,29 @@
 
 import org.gradle.internal.os.OperatingSystem;
 
-// This is all very Mac-specific at the moment.  The script will be updated to work with Linux and Windows too.
+ext {
+    mainClass = 'io.github.vocabhunter.gui.distribution.PackagedVocabHunter'
+    operatingSystem = OperatingSystem.current()
+    if (operatingSystem.isMacOsX()) {
+        packageType = 'dmg'
+        mainClass = 'io.github.vocabhunter.osx.distribution.OsxPackagedVocabHunter'
+        appIcon = file('icons/mac/VocabHunter.icns')
+        sessionIcon = file('icons/mac/VocabHunterSession.icns')
+    } else if (operatingSystem.isLinux()) {
+        packageType = 'deb'
+        appIcon = file('icons/App1024.png')
+        sessionIcon = file('icons/Doc1024.png')
+    } else if (operatingSystem.isWindows()) {
+        packageType = 'exe'
+    }
+}
 
 ant.version = project.version
-ant.importBuild 'mac-bundle-ant.xml'
+ant.mainClass = mainClass
+ant.packageType = packageType
+ant.appIcon = appIcon
+ant.sessionIcon = sessionIcon
+ant.importBuild 'bundle-ant.xml'
 
 dependencies {
     compile project(':gui')
@@ -16,7 +35,7 @@ dependencies {
     }
 }
 
-if (OperatingSystem.current().isMacOsX()) {
+if (operatingSystem.isMacOsX()) {
     sourceSets {
         main {
             java {
@@ -31,11 +50,7 @@ def alljars = configurations.runtime
 
 jar {
     manifest {
-        if (OperatingSystem.current().isMacOsX()) {
-            attributes 'Main-Class': 'io.github.vocabhunter.osx.distribution.OsxPackagedVocabHunter'
-        } else {
-            attributes 'Main-Class': 'io.github.vocabhunter.gui.distribution.PackagedVocabHunter'
-        }
+        attributes 'Main-Class': mainClass
         attributes 'Class-Path': alljars.collect { it.getName() }.join(' ')
     }
 }
@@ -51,7 +66,7 @@ task recreateIconMacSession(type: Exec) {
 }
 
 task recreateIcons(dependsOn: [recreateIconMacApp, recreateIconMacSession]) {
-    description 'Regenerate all the Mac application bundle icons'
+    description 'Regenerate all the application bundle icons'
 }
 
 task copyJars(type: Copy) {
@@ -61,9 +76,9 @@ task copyJars(type: Copy) {
 }
 
 jfxbundle.doLast {
-    FileTree tree = fileTree(dir: 'build/bundles').include('**/*.dmg')
+    FileTree tree = fileTree(dir: 'build/bundles').include("**/*.${packageType}")
     tree.each {File f ->
-        def name = f.getName().replace('-1.0.dmg', "-${project.version}.dmg")
+        def name = f.getName().replace("-1.0.${packageType}", "-${project.version}.${packageType}")
         f.renameTo(file("build/bundles/$name"))
     }
 }

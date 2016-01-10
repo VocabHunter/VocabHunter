@@ -14,14 +14,14 @@
 
         <fx:application id="VocabHunterId"
                         name="VocabHunter"
-                        mainClass="io.github.vocabhunter.osx.distribution.OsxPackagedVocabHunter"/>
+                        mainClass="${mainClass}"/>
 
         <fx:resources id="applicationResourcesId">
             <fx:fileset dir="${basedir}/build/libs"/>
         </fx:resources>
 
         <fx:deploy outdir="${basedir}/build"
-                   nativeBundles="dmg">
+                   nativeBundles="${packageType}">
 
             <fx:platform basedir=""/>
 
@@ -34,11 +34,11 @@
                 <fx:association description="VocabHunter session"
                                 extension="wordy"
                                 mimetype="application/x-vnd.VocabHunterSession"
-                                icon="${basedir}/icons/mac/VocabHunterSession.icns"/>
+                                icon="${sessionIcon}"/>
             </fx:info>
 
             <fx:bundleArgument arg="icon"
-                               value="${basedir}/icons/mac/VocabHunter.icns"/>
+                               value="${appIcon}"/>
 
             <fx:bundleArgument arg="mac.CFBundleVersion"
                                value="${version}"/>
