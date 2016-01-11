@@ -4,12 +4,12 @@
 
 package io.github.vocabhunter.gui.event;
 
+import io.github.vocabhunter.analysis.core.ThreadPoolTool;
 import io.github.vocabhunter.analysis.core.VocabHunterException;
 import javafx.application.Platform;
 
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 import java.util.concurrent.LinkedBlockingQueue;
 
 /**
@@ -39,17 +39,9 @@ public final class ExternalEventBroker implements ExternalEventListener, Externa
 
     @Override
     public void setListener(final ExternalEventListener listener) {
-        ExecutorService executorService = Executors.newFixedThreadPool(1, this::newDaemonThread);
+        ExecutorService executorService = ThreadPoolTool.singleDaemonExecutor("External Event Broker");
 
         executorService.submit(() -> refireEvents(listener));
-    }
-
-    private Thread newDaemonThread(final Runnable r) {
-        Thread thread = new Thread(r);
-
-        thread.setDaemon(true);
-
-        return thread;
     }
 
     private void refireEvents(final ExternalEventListener listener) {
