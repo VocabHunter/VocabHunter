@@ -24,7 +24,7 @@
                     <children>
                         <Label text="VocabHunter is Open Source Software,&#10;published under the Apache Licence, Version 2.0." />
                         <Label text="VocabHunter Version: %s." fx:id="labelVersion" />
-                        <Label text="Copyright (c) 2015 Adam Carroll." />
+                        <Label text="Copyright (c) 2015 - 2016 Adam Carroll." />
                         <Hyperlink fx:id="linkWebsite" text="http://vocabhunter.github.io/" />
                     </children>
                 </VBox>
