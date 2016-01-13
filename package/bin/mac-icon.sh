@@ -9,7 +9,7 @@ NAME=$3
 SCRATCH="$DESTINATION_DIR/$NAME".iconset
 
 mkdir -p "$SCRATCH"
-sips -z 16 16     "$SOURCE_FILE" --out "$SCRATCH"/icon_16x16.png >/dev/null >/dev/null
+sips -z 16 16     "$SOURCE_FILE" --out "$SCRATCH"/icon_16x16.png >/dev/null
 sips -z 32 32     "$SOURCE_FILE" --out "$SCRATCH"/icon_16x16@2x.png >/dev/null
 sips -z 32 32     "$SOURCE_FILE" --out "$SCRATCH"/icon_32x32.png >/dev/null
 sips -z 64 64     "$SOURCE_FILE" --out "$SCRATCH"/icon_32x32@2x.png >/dev/null
