@@ -18,6 +18,8 @@ ext {
         sessionIcon = file('icons/Doc1024.png')
     } else if (operatingSystem.isWindows()) {
         packageType = 'exe'
+        appIcon = file('icons/windows/VocabHunter.ico')
+        sessionIcon = file('icons/windows/VocabHunterSession.ico')
     }
 }
 
@@ -65,7 +67,17 @@ task recreateIconMacSession(type: Exec) {
     commandLine 'sh', file('bin/mac-icon.sh'), file('icons/Doc1024.png'), file('icons/mac'), 'VocabHunterSession'
 }
 
-task recreateIcons(dependsOn: [recreateIconMacApp, recreateIconMacSession]) {
+task recreateIconWindowsApp(type: Exec) {
+    description 'Regenerate the Windows application icon'
+    commandLine 'sh', file('bin/windows-icon.sh'), file('icons/App1024.png'), file('icons/windows'), 'VocabHunter'
+}
+
+task recreateIconWindowsSession(type: Exec) {
+    description 'Regenerate the Windows session file icon'
+    commandLine 'sh', file('bin/windows-icon.sh'), file('icons/Doc1024.png'), file('icons/windows'), 'VocabHunterSession'
+}
+
+task recreateIcons(dependsOn: [recreateIconMacApp, recreateIconMacSession, recreateIconWindowsApp, recreateIconWindowsSession]) {
     description 'Regenerate all the application bundle icons'
 }
 
