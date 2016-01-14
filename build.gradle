@@ -4,7 +4,6 @@
 
 allprojects {
     group 'io.github.vocabhunter'
-    version '1.0-SNAPSHOT'
 }
 
 task wrapper(type: Wrapper) {
@@ -15,12 +14,19 @@ task wrapper(type: Wrapper) {
 buildscript {
     repositories {
         mavenCentral()
+        maven {
+            url 'https://plugins.gradle.org/m2/'
+        }
     }
 
     dependencies {
         classpath 'com.github.ben-manes:gradle-versions-plugin:0.11.1'
+        classpath 'net.researchgate:gradle-release:2.3.4'
     }
 }
+
+apply plugin: 'base'
+apply plugin: 'net.researchgate.release'
 
 subprojects {
 
