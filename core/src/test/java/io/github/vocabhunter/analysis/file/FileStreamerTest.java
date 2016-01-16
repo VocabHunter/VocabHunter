@@ -69,17 +69,17 @@ public class FileStreamerTest {
     }
 
     @Test
-    public void testCreateNewSessionFromText() {
+    public void testCreateNewSessionFromText() throws Exception {
         validateSession(FILE_TEXT, FILE_TEXT, this::createNewSession);
     }
 
     @Test
-    public void testCreateOrOpenSessionFromText() {
+    public void testCreateOrOpenSessionFromText() throws Exception {
         validateSession(FILE_TEXT, FILE_TEXT, this::createOrOpenSession);
     }
 
     @Test
-    public void testCreateOrOpenSessionFromSession() {
+    public void testCreateOrOpenSessionFromSession() throws Exception {
         validateSession(SESSION_FILE, SESSION_NAME, this::createOrOpenSession);
     }
 
@@ -93,9 +93,9 @@ public class FileStreamerTest {
         }
     }
 
-    private void validateSession(final String fileName, final String sessionName, final Function<Path, EnrichedSessionState> targetMethod) {
+    private void validateSession(final String fileName, final String sessionName, final Function<Path, EnrichedSessionState> targetMethod) throws Exception {
         URL resource = getResource(fileName);
-        Path file = Paths.get(resource.getPath());
+        Path file = Paths.get(resource.toURI());
         EnrichedSessionState session = targetMethod.apply(file);
 
         assertEquals("Session name", sessionName, session.getState().getName());
