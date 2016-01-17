@@ -5,6 +5,7 @@
 import org.gradle.internal.os.OperatingSystem;
 
 ext {
+    publishedVersion = project.version
     mainClass = 'io.github.vocabhunter.gui.distribution.PackagedVocabHunter'
     operatingSystem = OperatingSystem.current()
     if (operatingSystem.isMacOsX()) {
@@ -12,6 +13,9 @@ ext {
         mainClass = 'io.github.vocabhunter.osx.distribution.OsxPackagedVocabHunter'
         appIcon = file('icons/mac/VocabHunter.icns')
         sessionIcon = file('icons/mac/VocabHunterSession.icns')
+        if (publishedVersion.endsWith('-SNAPSHOT')) {
+            publishedVersion = '1.0.0'
+        }
     } else if (operatingSystem.isLinux()) {
         packageType = 'deb'
         appIcon = file('icons/App1024.png')
@@ -23,7 +27,7 @@ ext {
     }
 }
 
-ant.version = project.version
+ant.version = publishedVersion
 ant.mainClass = mainClass
 ant.packageType = packageType
 ant.appIcon = appIcon
@@ -90,7 +94,7 @@ task copyJars(type: Copy) {
 jfxbundle.doLast {
     FileTree tree = fileTree(dir: 'build/bundles').include("**/*.${packageType}")
     tree.each {File f ->
-        def name = f.getName().replace("-1.0.${packageType}", "-${project.version}.${packageType}")
+        def name = f.getName().replace("-1.0.${packageType}", "-${publishedVersion}.${packageType}")
         f.renameTo(file("build/bundles/$name"))
     }
 }
