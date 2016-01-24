@@ -11,6 +11,7 @@ import io.github.vocabhunter.gui.event.ExternalEventSource;
 import io.github.vocabhunter.gui.factory.ControllerAndView;
 import io.github.vocabhunter.gui.factory.FileDialogueFactory;
 import io.github.vocabhunter.gui.factory.GuiFactory;
+import io.github.vocabhunter.gui.settings.SettingsManagerImpl;
 import javafx.application.Application;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -29,7 +30,7 @@ public class VocabHunterGuiExecutable extends Application {
     private final FileDialogueFactory fileDialogueFactory;
 
     public VocabHunterGuiExecutable() {
-        this(new FileDialogueFactoryImpl());
+        this(new FileDialogueFactoryImpl(new SettingsManagerImpl()));
     }
 
     public VocabHunterGuiExecutable(final FileDialogueFactory fileDialogueFactory) {

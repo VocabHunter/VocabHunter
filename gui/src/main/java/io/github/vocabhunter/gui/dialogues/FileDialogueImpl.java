@@ -4,9 +4,9 @@
 
 package io.github.vocabhunter.gui.dialogues;
 
+import io.github.vocabhunter.gui.settings.SettingsManager;
 import javafx.stage.Stage;
 
-import java.io.File;
 import java.nio.file.Path;
 
 public class FileDialogueImpl implements FileDialogue {
@@ -14,20 +14,19 @@ public class FileDialogueImpl implements FileDialogue {
 
     private final Stage stage;
 
+    private final SettingsManager settingsManager;
+
     private Path selectedFile;
 
-    public FileDialogueImpl(final FileDialogueType type, final Stage stage) {
+    public FileDialogueImpl(final FileDialogueType type, final Stage stage, final SettingsManager settingsManager) {
         this.stage = stage;
         this.type = type;
+        this.settingsManager = settingsManager;
     }
 
     @Override
     public void showChooser() {
-        File file = type.showChooser(stage);
-
-        if (file != null) {
-            selectedFile = file.toPath();
-        }
+        selectedFile = type.showChooser(stage, settingsManager);
     }
 
     @Override
