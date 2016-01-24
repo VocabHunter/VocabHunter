@@ -4,11 +4,14 @@
 
 package io.github.vocabhunter.gui.dialogues;
 
+import javafx.application.Platform;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.DialogPane;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
@@ -23,9 +26,18 @@ public class ErrorDialogue {
 
         TextArea textArea = new TextArea(exceptionText(e));
         VBox expContent = new VBox();
+        DialogPane dialogPane = alert.getDialogPane();
 
         expContent.getChildren().setAll(new Label("Error details:"), textArea);
-        alert.getDialogPane().setExpandableContent(expContent);
+        dialogPane.setExpandableContent(expContent);
+        dialogPane.expandedProperty().addListener(p -> Platform.runLater(() -> resizeAlert()));
+    }
+
+    private void resizeAlert() {
+        alert.getDialogPane().requestLayout();
+        
+        Stage stage = (Stage)alert.getDialogPane().getScene().getWindow();
+        stage.sizeToScene();
     }
 
     private String exceptionText(final Throwable e) {
