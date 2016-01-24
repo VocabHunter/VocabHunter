@@ -18,7 +18,19 @@ During the build you will see the automated GUI tests run.  The VocabHunter GUI 
 # How To Run VocabHunter
 
 To try the system out, you can run it directly from the command line as follows:
-
 ~~~
 $ ./gradlew :gui:run
 ~~~
+
+# How To Build An Installable Bundle
+
+VocabHunter is distributed as an installable bundle, with everything the user needs packed into the file.  On Mac this is a `.dmg` file, on Windows an `.exe` installer and on Linux a `.deb` package.  To generate this file you first need to ensure the following:
+* The `JAVA_HOME` environment variable must be set.
+* On Windows you need to install [Inno Setup](http://www.jrsoftware.org/isdl.php).
+
+You can then launch the following command to create the bundle:
+~~~
+$ ./gradlew clean build jfxbundle
+~~~
+
+When the build is complete, you will find the bundle file in the directory `package/build/bundles`.
