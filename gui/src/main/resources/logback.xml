@@ -5,11 +5,17 @@
 
 <configuration>
 
-    <property name="log_path" value="${APP_HOME:-.}/logs"/>
+    <property name="log_path" value="${user.home}/.VocabHunter/logs"/>
 
     <if condition='property("os.name").contains("OS X")'>
         <then>
-            <property name="log_path" value="${user.home}/Library/VocabHunter"/>
+            <property name="log_path" value="${user.home}/Library/VocabHunter/logs"/>
+        </then>
+    </if>
+
+    <if condition='property("os.name").contains("Windows")'>
+        <then>
+            <property name="log_path" value="${APPDATA}/VocabHunter/logs"/>
         </then>
     </if>
 
