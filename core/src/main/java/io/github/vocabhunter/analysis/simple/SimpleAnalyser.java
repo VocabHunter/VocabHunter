@@ -15,7 +15,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.function.Function;
-import java.util.regex.Pattern;
 import java.util.stream.Stream;
 
 import static java.util.Comparator.comparing;
@@ -23,8 +22,6 @@ import static java.util.stream.Collectors.*;
 
 public class SimpleAnalyser implements Analyser {
     private static final Logger LOG = LoggerFactory.getLogger(SimpleAnalyser.class);
-
-    private static final Pattern PATTERN = Pattern.compile("\\P{javaLetter}+");
 
     @Override
     public AnalysisResult analyse(final Stream<String> lines, final String name, final int minLetters, final int maxWords) {
@@ -45,8 +42,8 @@ public class SimpleAnalyser implements Analyser {
     }
 
     private Stream<WordUse> uses(final String line, final int minLetters) {
-        Map<String, Long> counts = PATTERN.splitAsStream(line)
-                .filter(w -> !w.isEmpty() && w.length() >= minLetters)
+        Map<String, Long> counts = WordStreamTool.words(line)
+                .filter(w -> w.length() >= minLetters)
                 .map(String::toLowerCase)
                 .collect(
                         groupingBy(Function.identity(), counting()));
