@@ -11,6 +11,8 @@ import java.io.IOException;
 import java.nio.file.Path;
 
 public final class SessionSerialiser {
+    private static final int MAX_SUPPORTED_VERSION = 1;
+
     private static final ObjectMapper MAPPER = new ObjectMapper();
 
     private SessionSerialiser() {
@@ -27,7 +29,16 @@ public final class SessionSerialiser {
 
     public static EnrichedSessionState read(final Path file) {
         try {
-            return new EnrichedSessionState(MAPPER.readValue(file.toFile(), SessionState.class), file);
+            SessionState state = MAPPER.readValue(file.toFile(), SessionState.class);
+            int formatVersion = state.getFormatVersion();
+
+            if (formatVersion < 1 || formatVersion > MAX_SUPPORTED_VERSION) {
+                throw new VocabHunterException("This file was created with a newer version of VocabHunter.  Please upgrade and try again.");
+            } else {
+                EnrichedSessionState enriched = new EnrichedSessionState(state, file);
+
+                return enriched;
+            }
         } catch (final IOException e) {
             throw new VocabHunterException(String.format("Unable to load file '%s'", file), e);
         }

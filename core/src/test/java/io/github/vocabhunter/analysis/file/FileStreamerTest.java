@@ -41,7 +41,7 @@ public class FileStreamerTest {
 
     private static final String SESSION_FILE = "format1.wordy";
 
-    private static final String SESSION_NAME = "sample-format1.txt";
+    private static final String SESSION_NAME = "test-sample.txt";
 
     @Test(expected = VocabHunterException.class)
     public void testStreamEmpty() throws Exception {

@@ -11,7 +11,7 @@ public final class WordStreamTool {
         // Prevent instantiation - all methods are private
     }
 
-    public static Stream<String> words(String line) {
+    public static Stream<String> words(final String line) {
         return PATTERN.splitAsStream(line)
             .filter(w -> !w.isEmpty());
     }

@@ -89,7 +89,7 @@ public class WordStreamToolTest {
         validate("I \"don't\" wait", "I", "don't", "wait");
     }
 
-    private void validate(String line, String... expected) {
+    private void validate(final String line, final String... expected) {
         List<String> actual = WordStreamTool.words(line)
             .collect(Collectors.toList());
 

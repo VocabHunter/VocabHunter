@@ -7,6 +7,8 @@ package io.github.vocabhunter.analysis.session;
 import io.github.vocabhunter.analysis.model.AnalysisResult;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -80,5 +82,14 @@ public class SessionState {
                 .append(name)
                 .append(orderedUses)
                 .toHashCode();
+    }
+
+    @Override
+    public String toString() {
+        return new ToStringBuilder(this, ToStringStyle.MULTI_LINE_STYLE)
+            .append("formatVersion", formatVersion)
+            .append("name", name)
+            .append("orderedUses", orderedUses)
+            .toString();
     }
 }
