@@ -156,7 +156,7 @@ public class GuiTest extends FxRobot {
 
         startStep("Re-open the old session");
         clickOn("#buttonOpen");
-        verifyThat("#mainWord", hasText("and"));
+        verifyThat("#mainWord", hasText("to"));
         endStep();
     }
 

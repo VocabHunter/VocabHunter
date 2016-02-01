@@ -29,7 +29,7 @@ public class WordListHandler {
     public void prepare() {
         wordListView.setItems(sessionModel.getWordList());
         wordListView.setCellFactory(p -> new WordListCell());
-        wordSelectionModel.selectFirst();
+        selectWord(sessionModel.getCurrentWord());
     }
 
     public void selectNextWord() {
@@ -46,8 +46,12 @@ public class WordListHandler {
         int oldIndex = sessionModel.getCurrentWord().getSequenceNo();
         WordModel closestWord = findClosestWord(oldIndex, isEditable);
 
-        wordSelectionModel.select(closestWord);
-        wordListView.scrollTo(closestWord);
+        selectWord(closestWord);
+    }
+
+    private void selectWord(final WordModel word) {
+        wordSelectionModel.select(word);
+        wordListView.scrollTo(word);
     }
 
     private WordModel findClosestWord(final int current, final boolean isEditable) {

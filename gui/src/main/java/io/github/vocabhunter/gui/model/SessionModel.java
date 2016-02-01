@@ -46,7 +46,7 @@ public final class SessionModel {
                 .collect(Collectors.toList()));
 
         updateEditState(true);
-        currentWord = new SimpleObjectProperty<>(allWords.get(0));
+        currentWord = new SimpleObjectProperty<>(InitialSelectionTool.nextWord(allWords));
     }
 
     public void addSelectedWord(final WordModel word) {
