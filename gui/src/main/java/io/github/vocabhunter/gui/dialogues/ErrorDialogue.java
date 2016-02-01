@@ -30,7 +30,7 @@ public class ErrorDialogue {
 
         expContent.getChildren().setAll(new Label("Error details:"), textArea);
         dialogPane.setExpandableContent(expContent);
-        dialogPane.expandedProperty().addListener(p -> Platform.runLater(() -> resizeAlert()));
+        dialogPane.expandedProperty().addListener(p -> Platform.runLater(this::resizeAlert));
     }
 
     private void resizeAlert() {

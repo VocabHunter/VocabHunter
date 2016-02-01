@@ -15,14 +15,14 @@ import java.util.concurrent.ExecutorService;
 public final class WebPageTool {
     private static final Logger LOG = LoggerFactory.getLogger(WebPageTool.class);
 
-    private static ExecutorService executorService = ThreadPoolTool.singleDaemonExecutor("Web Page Opener");
+    private static final ExecutorService EXECUTOR_SERVICE = ThreadPoolTool.singleDaemonExecutor("Web Page Opener");
 
     private WebPageTool() {
         // Prevent instantiation - all methods are static
     }
 
     public static void showWebPage(final String page) {
-        executorService.submit(() -> openPage(page));
+        EXECUTOR_SERVICE.submit(() -> openPage(page));
     }
 
     private static void openPage(final String page) {
