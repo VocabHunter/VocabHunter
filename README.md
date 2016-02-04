@@ -1,5 +1,7 @@
 # VocabHunter
 
+[![Build Status](https://travis-ci.org/VocabHunter/VocabHunter.svg?branch=master)](https://travis-ci.org/VocabHunter/VocabHunter)
+
 VocabHunter is a system to help learners of foreign languages.  You can find details of the system at [vocabhunter.github.io](http://vocabhunter.github.io/)
 
 # Prerequisites
