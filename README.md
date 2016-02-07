@@ -31,7 +31,18 @@ If you run the build, the GUI tests will run.  This will cause the display to be
 $ ./gradlew clean build -PskipGuiTests
 ~~~
 
-Alternatively, on Linux you can use the [XVFB](https://en.wikipedia.org/wiki/Xvfb) frame buffer to run the GUI tests.
+Alternatively, on Linux you can use the [XVFB](https://en.wikipedia.org/wiki/Xvfb) frame buffer to run the GUI tests.  If you're using a Debian-based Linux you can install XVFB as follows:
+~~~
+$ sudo apt-get install xvfb
+~~~
+
+Then, to run the build with the GUI tests in XVFB, use the following commands:
+~~~
+$ Xvfb :99 &>/dev/null &
+$ export DISPLAY=:99
+$ ./gradlew clean build
+~~~
+
 
 # How To Build An Installable Bundle
 
