@@ -24,14 +24,14 @@ To try the system out, you can run it directly from the command line as follows:
 $ ./gradlew :gui:run
 ~~~
 
-# Runing The Build Without The GUI Tests
+# Running The Build Without The GUI Tests
 
-If you run the build, the GUI tests will run.  This will cause the display to be briefly taken over.  To exclude just these tests but leave the other tests running as normal, run the build as follows:
+If you run the build, the GUI tests will run.  This will cause the display to be briefly taken over.  To exclude just these tests but leave the other tests running as normal, start the build as follows:
 ~~~
 $ ./gradlew clean build -PskipGuiTests
 ~~~
 
-Alternatively, on Linux you can make the GUI tests run using the [XVFB](https://en.wikipedia.org/wiki/Xvfb) frame buffer.
+Alternatively, on Linux you can use the [XVFB](https://en.wikipedia.org/wiki/Xvfb) frame buffer to run the GUI tests.
 
 # How To Build An Installable Bundle
 
