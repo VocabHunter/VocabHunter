@@ -55,5 +55,8 @@ subprojects {
         toolVersion = '6.15'
         configFile = file("$rootProject.projectDir/config/checkstyle/checkstyle.xml")
     }
-}
 
+    [checkstyleMain, checkstyleTest].each { task ->
+        task.logging.setLevel(LogLevel.LIFECYCLE)
+    }
+}
