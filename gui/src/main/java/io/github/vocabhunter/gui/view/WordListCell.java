@@ -17,7 +17,7 @@ public class WordListCell extends TextFieldListCell<WordModel> {
             setGraphic(null);
             StateClassTool.clearStateClasses(this);
         } else {
-            setText(item.getIdentifier());
+            setText(item.getWordIdentifier());
             StateClassTool.updateStateClasses(this, item.getState());
         }
     }

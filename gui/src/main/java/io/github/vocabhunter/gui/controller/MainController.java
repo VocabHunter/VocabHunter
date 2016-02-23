@@ -11,10 +11,7 @@ import io.github.vocabhunter.analysis.session.SessionSerialiser;
 import io.github.vocabhunter.analysis.session.SessionState;
 import io.github.vocabhunter.gui.common.GuiConstants;
 import io.github.vocabhunter.gui.common.WebPageTool;
-import io.github.vocabhunter.gui.dialogues.AboutDialogue;
-import io.github.vocabhunter.gui.dialogues.ErrorDialogue;
-import io.github.vocabhunter.gui.dialogues.FileDialogue;
-import io.github.vocabhunter.gui.dialogues.UnsavedChangesDialogue;
+import io.github.vocabhunter.gui.dialogues.*;
 import io.github.vocabhunter.gui.factory.ControllerAndView;
 import io.github.vocabhunter.gui.factory.GuiFactory;
 import io.github.vocabhunter.gui.model.MainModel;
@@ -59,6 +56,8 @@ public class MainController {
 
     public MenuItem menuExport;
 
+    public MenuItem menuSetupFilters;
+
     public MenuItem menuWebsite;
 
     public MenuItem menuHowTo;
@@ -74,6 +73,8 @@ public class MainController {
     public Button buttonSave;
 
     public Button buttonExport;
+
+    public Button buttonSetupFilters;
 
     public RadioButton buttonEditOn;
 
@@ -113,6 +114,8 @@ public class MainController {
         menuSaveAs.disableProperty().bind(not(model.sessionOpenProperty()));
         buttonExport.disableProperty().bind(not(model.selectionAvailableProperty()));
         menuExport.disableProperty().bind(not(model.selectionAvailableProperty()));
+
+        handler(buttonSetupFilters, menuSetupFilters, e -> processSetupFilters());
 
         menuWebsite.setOnAction(e -> WebPageTool.showWebPage(GuiConstants.WEBSITE));
         menuHowTo.setOnAction(e -> WebPageTool.showWebPage(GuiConstants.WEBPAGE_HELP));
@@ -283,6 +286,12 @@ public class MainController {
         keyPressHandler = controller.getKeyPressHandler();
 
         return sessionModel;
+    }
+
+    private void processSetupFilters() {
+        SettingsDialogue dialogue = factory.settingsDialogue();
+
+        dialogue.show();
     }
 
     private void processAbout() {

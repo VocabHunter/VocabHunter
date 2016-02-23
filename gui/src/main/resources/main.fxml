@@ -9,7 +9,7 @@
   ~ Open Source Software published under the Apache Licence, Version 2.0.
   -->
 
-<BorderPane fx:id="mainBorderPane" prefHeight="500.0" prefWidth="700.0" stylesheets="@main.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="io.github.vocabhunter.gui.controller.MainController">
+<BorderPane fx:id="mainBorderPane" prefHeight="500.0" prefWidth="1000.0" stylesheets="@main.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="io.github.vocabhunter.gui.controller.MainController">
     <top>
         <VBox>
             <children>
@@ -29,6 +29,12 @@
                                 <RadioMenuItem fx:id="menuEditOff" mnemonicParsing="false" text="Show Selection" />
                                 <SeparatorMenuItem mnemonicParsing="false" />
                                 <MenuItem fx:id="menuExport" mnemonicParsing="false" text="Export Selection..." />
+                            </items>
+                        </Menu>
+                        <Menu mnemonicParsing="false" text="Filters">
+                            <items>
+                                <MenuItem fx:id="menuSetupFilters" mnemonicParsing="false" text="Setup Filters..." />
+                                <CheckMenuItem fx:id="menuEnableFilters" mnemonicParsing="false" selected="true" text="Enable Filters" />
                             </items>
                         </Menu>
                         <Menu mnemonicParsing="false" text="Help">
@@ -64,6 +70,17 @@
                             </tooltip>
                         </Button>
                         <Separator orientation="VERTICAL" />
+                        <Button fx:id="buttonSetupFilters" mnemonicParsing="false" styleClass="buttonSetupFilters" text="Setup Filters">
+                            <tooltip>
+                                <Tooltip text="Define the filters that are used to hide words" />
+                            </tooltip>
+                        </Button>
+                        <CheckBox fx:id="buttonEnableFilters" mnemonicParsing="false" selected="true" text="Enable Filters">
+                            <tooltip>
+                                <Tooltip text="Hide words using the filters" />
+                            </tooltip>
+                        </CheckBox>
+                        <Separator orientation="VERTICAL" />
                         <RadioButton fx:id="buttonEditOn" mnemonicParsing="false" text="Select Words">
                             <tooltip>
                                 <Tooltip text="Mark words as known and unknown" />
@@ -84,16 +101,16 @@
            <children>
                <HBox alignment="CENTER">
                    <children>
-                       <Text styleClass="title,left" text="Vocab"/>
-                       <Text styleClass="title,right" text="Hunter"/>
+                       <Text styleClass="title,left" text="Vocab" />
+                       <Text styleClass="title,right" text="Hunter" />
                    </children>
                </HBox>
                <HBox alignment="CENTER">
                    <children>
                        <VBox>
                            <children>
-                               <Label styleClass="new" text="Choose 'New' to analyse a document and start a new session."/>
-                               <Label styleClass="open" text="Choose 'Open' to load a saved session."/>
+                               <Label styleClass="new" text="Choose 'New' to analyse a document and start a new session." />
+                               <Label styleClass="open" text="Choose 'Open' to load a saved session." />
                            </children>
                        </VBox>
                    </children>

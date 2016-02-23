@@ -4,6 +4,7 @@
 
 package io.github.vocabhunter.gui.model;
 
+import io.github.vocabhunter.analysis.model.AnalysisWord;
 import io.github.vocabhunter.analysis.session.WordState;
 import javafx.beans.Observable;
 import javafx.beans.property.SimpleObjectProperty;
@@ -13,7 +14,7 @@ import javafx.util.Callback;
 import java.util.Collections;
 import java.util.List;
 
-public class WordModel {
+public class WordModel implements AnalysisWord {
     public static final Callback<WordModel, Observable[]> PROPERTY_EXTRACTOR
             = w -> new Observable[] {w.identifier, w.state};
 
@@ -36,7 +37,8 @@ public class WordModel {
         return sequenceNo;
     }
 
-    public String getIdentifier() {
+    @Override
+    public String getWordIdentifier() {
         return identifier.get();
     }
 
@@ -54,5 +56,10 @@ public class WordModel {
 
     public List<String> getUses() {
         return Collections.unmodifiableList(uses);
+    }
+
+    @Override
+    public int getUseCount() {
+        return uses.size();
     }
 }

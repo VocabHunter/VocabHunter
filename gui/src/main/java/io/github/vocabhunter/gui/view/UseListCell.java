@@ -27,7 +27,7 @@ public class UseListCell extends TextFieldListCell<String> {
             setText(null);
             setGraphic(null);
         } else {
-            String word = currentWord.get().getIdentifier();
+            String word = currentWord.get().getWordIdentifier();
 
             setGraphic(flow(word, item));
             setText(null);

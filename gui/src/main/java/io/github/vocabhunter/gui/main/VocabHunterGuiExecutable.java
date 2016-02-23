@@ -11,6 +11,7 @@ import io.github.vocabhunter.gui.event.ExternalEventSource;
 import io.github.vocabhunter.gui.factory.ControllerAndView;
 import io.github.vocabhunter.gui.factory.FileDialogueFactory;
 import io.github.vocabhunter.gui.factory.GuiFactory;
+import io.github.vocabhunter.gui.settings.SettingsManager;
 import io.github.vocabhunter.gui.settings.SettingsManagerImpl;
 import javafx.application.Application;
 import javafx.scene.Parent;
@@ -27,13 +28,20 @@ import static java.util.Collections.singletonList;
 public class VocabHunterGuiExecutable extends Application {
     private static final double WINDOW_SIZE_FACTOR = 0.80;
 
+    private final SettingsManager settingsManager;
+
     private final FileDialogueFactory fileDialogueFactory;
 
     public VocabHunterGuiExecutable() {
-        this(new FileDialogueFactoryImpl(new SettingsManagerImpl()));
+        this(new SettingsManagerImpl());
     }
 
-    public VocabHunterGuiExecutable(final FileDialogueFactory fileDialogueFactory) {
+    private VocabHunterGuiExecutable(final SettingsManager settingsManager) {
+        this(settingsManager, new FileDialogueFactoryImpl(settingsManager));
+    }
+
+    public VocabHunterGuiExecutable(final SettingsManager settingsManager, final FileDialogueFactory fileDialogueFactory) {
+        this.settingsManager = settingsManager;
         this.fileDialogueFactory = fileDialogueFactory;
     }
 
@@ -42,7 +50,7 @@ public class VocabHunterGuiExecutable extends Application {
         Thread.currentThread().setUncaughtExceptionHandler((t, e) -> logError(e));
         try {
             Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-            GuiFactory factory = new GuiFactoryImpl(fileDialogueFactory, stage, ExternalEventBroker.getInstance());
+            GuiFactory factory = new GuiFactoryImpl(settingsManager, fileDialogueFactory, stage, ExternalEventBroker.getInstance());
             ControllerAndView<MainController, Parent> cav = factory.mainWindow();
             double width = screenSize.getWidth() * WINDOW_SIZE_FACTOR;
             double height = screenSize.getHeight() * WINDOW_SIZE_FACTOR;

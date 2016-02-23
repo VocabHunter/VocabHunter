@@ -8,17 +8,15 @@ import io.github.vocabhunter.analysis.core.VocabHunterException;
 import io.github.vocabhunter.gui.controller.AboutController;
 import io.github.vocabhunter.gui.controller.MainController;
 import io.github.vocabhunter.gui.controller.SessionController;
-import io.github.vocabhunter.gui.dialogues.AboutDialogue;
-import io.github.vocabhunter.gui.dialogues.ErrorDialogue;
-import io.github.vocabhunter.gui.dialogues.FileDialogue;
-import io.github.vocabhunter.gui.dialogues.FileDialogueType;
-import io.github.vocabhunter.gui.dialogues.UnsavedChangesDialogue;
+import io.github.vocabhunter.gui.controller.SettingsController;
+import io.github.vocabhunter.gui.dialogues.*;
 import io.github.vocabhunter.gui.event.ExternalEventSource;
 import io.github.vocabhunter.gui.factory.ControllerAndView;
 import io.github.vocabhunter.gui.factory.FileDialogueFactory;
 import io.github.vocabhunter.gui.factory.GuiFactory;
 import io.github.vocabhunter.gui.model.MainModel;
 import io.github.vocabhunter.gui.model.SessionModel;
+import io.github.vocabhunter.gui.settings.SettingsManager;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
@@ -34,13 +32,18 @@ public class GuiFactoryImpl implements GuiFactory {
 
     private static final String FXML_ABOUT = "about.fxml";
 
+    private static final String FXML_SETTINGS = "settings.fxml";
+
+    private final SettingsManager settingsManager;
+
     private final FileDialogueFactory fileDialogueFactory;
 
     private final Stage stage;
 
     private final ExternalEventSource externalEventSource;
 
-    public GuiFactoryImpl(final FileDialogueFactory fileDialogueFactory, final Stage stage, final ExternalEventSource externalEventSource) {
+    public GuiFactoryImpl(final SettingsManager settingsManager, final FileDialogueFactory fileDialogueFactory, final Stage stage, final ExternalEventSource externalEventSource) {
+        this.settingsManager = settingsManager;
         this.fileDialogueFactory = fileDialogueFactory;
         this.stage = stage;
         this.externalEventSource = externalEventSource;
@@ -122,5 +125,14 @@ public class GuiFactoryImpl implements GuiFactory {
         AboutController controller = loader.getController();
 
         return new AboutDialogue(controller, root);
+    }
+
+    @Override
+    public SettingsDialogue settingsDialogue() {
+        FXMLLoader loader = loader(FXML_SETTINGS);
+        Parent root = loadNode(loader, FXML_SETTINGS);
+        SettingsController controller = loader.getController();
+
+        return new SettingsDialogue(settingsManager, controller, root);
     }
 }

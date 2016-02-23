@@ -38,7 +38,7 @@ public class MainWordHandler {
         SimpleObjectProperty<WordModel> currentWordProperty = sessionModel.currentWordProperty();
 
         currentWordProperty.addListener((o, old, word) -> processWordUpdate(word));
-        mainWord.textProperty().bind(selectString(currentWordProperty, "identifier"));
+        mainWord.textProperty().bind(selectString(currentWordProperty, "wordIdentifier"));
         currentWordProperty.addListener(o -> updateMainWordStateClasses());
         wordStateProperty.addListener((o, old, state) -> updateMainWordStateClasses());
         useCountLabel.textProperty().bind(sessionModel.useCountProperty());

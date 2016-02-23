@@ -62,7 +62,7 @@ public final class SessionModel {
 
         useList.clear();
         useList.addAll(uses);
-        useCount.set(String.format("(%d uses)", uses.size()));
+        useCount.set(String.format("(%d uses)", word.getUseCount()));
     }
 
     public void updateEditState(final boolean isEditable) {

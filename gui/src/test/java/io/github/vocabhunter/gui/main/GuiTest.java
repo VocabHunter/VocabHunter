@@ -10,6 +10,8 @@ import io.github.vocabhunter.analysis.session.SessionSerialiser;
 import io.github.vocabhunter.gui.dialogues.FileDialogue;
 import io.github.vocabhunter.gui.dialogues.FileDialogueType;
 import io.github.vocabhunter.gui.factory.FileDialogueFactory;
+import io.github.vocabhunter.gui.settings.SettingsManager;
+import io.github.vocabhunter.gui.settings.SettingsManagerImpl;
 import io.github.vocabhunter.test.utils.TestFileManager;
 import javafx.stage.Stage;
 import org.apache.commons.io.FileUtils;
@@ -91,6 +93,12 @@ public class GuiTest extends FxRobot {
         setUpFileDialogue(FileDialogueType.OPEN_SESSION, openSessionDialogue, sessionFile);
         setUpFileDialogue(FileDialogueType.EXPORT_SELECTION, exportDialogue, exportFile);
 
+        Path settingsFile = manager.addFile("settings.json");
+        SettingsManager settingsManager = new SettingsManagerImpl(settingsFile);
+
+        settingsManager.setFilterMinimumLetters(1);
+        settingsManager.setFilterMinimumOccurrences(1);
+        TestGuiApplication.setSettingsManager(settingsManager);
         TestGuiApplication.setFileDialogueFactory(fileDialogueFactory);
         setupApplication(TestGuiApplication.class);
     }

@@ -6,10 +6,7 @@ package io.github.vocabhunter.gui.factory;
 
 import io.github.vocabhunter.gui.controller.MainController;
 import io.github.vocabhunter.gui.controller.SessionController;
-import io.github.vocabhunter.gui.dialogues.AboutDialogue;
-import io.github.vocabhunter.gui.dialogues.ErrorDialogue;
-import io.github.vocabhunter.gui.dialogues.FileDialogue;
-import io.github.vocabhunter.gui.dialogues.UnsavedChangesDialogue;
+import io.github.vocabhunter.gui.dialogues.*;
 import io.github.vocabhunter.gui.event.ExternalEventSource;
 import io.github.vocabhunter.gui.model.MainModel;
 import io.github.vocabhunter.gui.model.SessionModel;
@@ -34,6 +31,8 @@ public interface GuiFactory {
     ErrorDialogue errorDialogue(String title, String message, Throwable e);
 
     AboutDialogue aboutDialogue();
+
+    SettingsDialogue settingsDialogue();
 
     ExternalEventSource getExternalEventSource();
 }
