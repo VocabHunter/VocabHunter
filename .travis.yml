@@ -32,7 +32,7 @@ cache:
 install: true
 
 script:
-  - ./gradlew clean build -info
+  - ./gradlew clean build -info -PskipGuiTests
 
 deploy:
   provider: releases
