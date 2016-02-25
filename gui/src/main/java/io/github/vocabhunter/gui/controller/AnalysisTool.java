@@ -9,20 +9,22 @@ import io.github.vocabhunter.analysis.session.EnrichedSessionState;
 
 import java.nio.file.Path;
 
-public final class AnalysisTool {
+public class AnalysisTool {
     private static final int MIN_LETTERS = 2;
 
     private static final int MAX_WORDS = 100_000;
 
-    private AnalysisTool() {
-        // Prevent instantiation - all methods are static
+    private final FileStreamer fileStreamer;
+
+    public AnalysisTool(final FileStreamer fileStreamer) {
+        this.fileStreamer = fileStreamer;
     }
 
-    public static EnrichedSessionState createNewSession(final Path file) {
-        return FileStreamer.createNewSession(file, MIN_LETTERS, MAX_WORDS);
+    public EnrichedSessionState createNewSession(final Path file) {
+        return fileStreamer.createNewSession(file, MIN_LETTERS, MAX_WORDS);
     }
 
-    public static EnrichedSessionState createOrOpenSession(final Path file) {
-        return FileStreamer.createOrOpenSession(file, MIN_LETTERS, MAX_WORDS);
+    public EnrichedSessionState createOrOpenSession(final Path file) {
+        return fileStreamer.createOrOpenSession(file, MIN_LETTERS, MAX_WORDS);
     }
 }

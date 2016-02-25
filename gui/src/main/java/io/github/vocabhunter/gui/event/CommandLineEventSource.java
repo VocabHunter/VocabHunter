@@ -10,7 +10,7 @@ import java.util.List;
 
 import static java.util.stream.Collectors.toList;
 
-public class CommandLineEventSource implements ExternalEventSource {
+public class CommandLineEventSource implements SingleExternalEventSource {
     private final List<ExternalOpenFileEvent> events;
 
     public CommandLineEventSource(final String... args) {

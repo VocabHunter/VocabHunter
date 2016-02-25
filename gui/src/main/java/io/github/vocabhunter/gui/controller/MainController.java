@@ -84,12 +84,15 @@ public class MainController {
 
     private GuiFactory factory;
 
+    private AnalysisTool analysisTool;
+
     private EventHandler<KeyEvent> keyPressHandler;
 
     private final MainModel model = new MainModel();
 
-    public void initialise(final Stage stage, final GuiFactory factory) {
+    public void initialise(final Stage stage, final GuiFactory factory, final AnalysisTool analysisTool) {
         this.factory = factory;
+        this.analysisTool = analysisTool;
 
         buildToggleGroup(buttonEditOn, buttonEditOff);
         buildToggleGroup(menuEditOn, menuEditOff);
@@ -159,7 +162,7 @@ public class MainController {
 
         if (isProcessRequired) {
             LOG.info("Opening file '{}'", file);
-            processOpen(file, AnalysisTool::createOrOpenSession);
+            processOpen(file, analysisTool::createOrOpenSession);
         }
     }
 
@@ -202,7 +205,7 @@ public class MainController {
         Path file = chooser.getSelectedFile();
 
         LOG.info("New session from '{}'", file);
-        processOpen(file, AnalysisTool::createNewSession);
+        processOpen(file, analysisTool::createNewSession);
     }
 
     private void processOpen(final Path file, final Function<Path, EnrichedSessionState> opener) {

@@ -36,6 +36,7 @@ startScripts {
 
 dependencies {
     compile project(':core')
+    compile 'org.picocontainer:picocontainer:2.15'
     testCompile 'org.hamcrest:hamcrest-all:1.3'
     testCompile project(path: ':core', configuration: 'tests')
     testCompile 'org.testfx:testfx-core:4.0.1-alpha'

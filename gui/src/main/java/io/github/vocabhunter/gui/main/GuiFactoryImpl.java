@@ -5,11 +5,9 @@
 package io.github.vocabhunter.gui.main;
 
 import io.github.vocabhunter.analysis.core.VocabHunterException;
-import io.github.vocabhunter.gui.controller.AboutController;
-import io.github.vocabhunter.gui.controller.MainController;
-import io.github.vocabhunter.gui.controller.SessionController;
-import io.github.vocabhunter.gui.controller.SettingsController;
+import io.github.vocabhunter.gui.controller.*;
 import io.github.vocabhunter.gui.dialogues.*;
+import io.github.vocabhunter.gui.event.ExternalEventBroker;
 import io.github.vocabhunter.gui.event.ExternalEventSource;
 import io.github.vocabhunter.gui.factory.ControllerAndView;
 import io.github.vocabhunter.gui.factory.FileDialogueFactory;
@@ -21,6 +19,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.stage.Stage;
+import org.picocontainer.MutablePicoContainer;
 
 import java.io.IOException;
 import java.util.Optional;
@@ -34,19 +33,28 @@ public class GuiFactoryImpl implements GuiFactory {
 
     private static final String FXML_SETTINGS = "settings.fxml";
 
+    private final Stage stage;
+
     private final SettingsManager settingsManager;
 
     private final FileDialogueFactory fileDialogueFactory;
 
-    private final Stage stage;
+    private final ExternalEventBroker externalEventSource;
 
-    private final ExternalEventSource externalEventSource;
+    private final AnalysisTool analysisTool;
 
-    public GuiFactoryImpl(final SettingsManager settingsManager, final FileDialogueFactory fileDialogueFactory, final Stage stage, final ExternalEventSource externalEventSource) {
+    public GuiFactoryImpl(final Stage stage, final MutablePicoContainer pico) {
+        this(stage, pico.getComponent(SettingsManager.class), pico.getComponent(FileDialogueFactory.class),
+             pico.getComponent(ExternalEventBroker.class), pico.getComponent(AnalysisTool.class));
+    }
+
+    private GuiFactoryImpl(final Stage stage, final SettingsManager settingsManager, final FileDialogueFactory fileDialogueFactory,
+                           final ExternalEventBroker externalEventSource, final AnalysisTool analysisTool) {
+        this.stage = stage;
         this.settingsManager = settingsManager;
         this.fileDialogueFactory = fileDialogueFactory;
-        this.stage = stage;
         this.externalEventSource = externalEventSource;
+        this.analysisTool = analysisTool;
     }
 
     @Override
@@ -55,7 +63,7 @@ public class GuiFactoryImpl implements GuiFactory {
         Parent root = loadNode(loader, FXML_MAIN);
         MainController controller = loader.getController();
 
-        controller.initialise(stage, this);
+        controller.initialise(stage, this, analysisTool);
 
         return new ControllerAndView<>(controller, root);
     }
