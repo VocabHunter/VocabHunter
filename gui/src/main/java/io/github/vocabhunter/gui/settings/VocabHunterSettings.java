@@ -8,7 +8,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class VocabHunterSettings {
-    public static final int DEFAULT_MINIMUM_LETTERS = 4;
+    public static final int DEFAULT_MINIMUM_LETTERS = 2;
 
     public static final int DEFAULT_MINIMUM_OCCURRENCES = 2;
 
