@@ -81,27 +81,30 @@ public class SessionWord implements AnalysisWord {
         SessionWord that = (SessionWord) o;
 
         return new EqualsBuilder()
-                .append(wordIdentifier, that.wordIdentifier)
-                .append(uses, that.uses)
-                .append(state, that.state)
-                .isEquals();
+            .append(useCount, that.useCount)
+            .append(wordIdentifier, that.wordIdentifier)
+            .append(uses, that.uses)
+            .append(state, that.state)
+            .isEquals();
     }
 
     @Override
     public int hashCode() {
         return new HashCodeBuilder()
-                .append(wordIdentifier)
-                .append(uses)
-                .append(state)
-                .toHashCode();
+            .append(wordIdentifier)
+            .append(uses)
+            .append(useCount)
+            .append(state)
+            .toHashCode();
     }
 
     @Override
     public String toString() {
         return new ToStringBuilder(this, ToStringStyle.MULTI_LINE_STYLE)
             .append("wordIdentifier", wordIdentifier)
-            .append("state", state)
             .append("uses", uses)
+            .append("useCount", useCount)
+            .append("state", state)
             .toString();
     }
 }

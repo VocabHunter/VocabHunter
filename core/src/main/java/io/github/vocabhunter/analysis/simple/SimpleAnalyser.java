@@ -17,7 +17,6 @@ import java.util.Optional;
 import java.util.function.Function;
 import java.util.stream.Stream;
 
-import static java.util.Comparator.comparing;
 import static java.util.stream.Collectors.*;
 
 public class SimpleAnalyser implements Analyser {
@@ -31,7 +30,7 @@ public class SimpleAnalyser implements Analyser {
                                 WordUse::getWordIdentifier,
                                 collectingAndThen(reducing(this::combine), Optional::get)));
         List<WordUse> uses = map.values().stream()
-                .sorted(comparing(WordUse::getUseCount).reversed().thenComparing(WordUse::getWordIdentifier))
+                .sorted(WordStreamTool.WORD_COMPARATOR)
                 .collect(toList());
         AnalysisResult result = new AnalysisResult(name, uses);
 
