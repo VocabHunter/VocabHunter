@@ -5,6 +5,7 @@
 package io.github.vocabhunter.gui.main;
 
 import io.github.vocabhunter.analysis.core.VocabHunterException;
+import io.github.vocabhunter.analysis.file.FileStreamer;
 import io.github.vocabhunter.gui.controller.*;
 import io.github.vocabhunter.gui.dialogues.*;
 import io.github.vocabhunter.gui.event.ExternalEventBroker;
@@ -41,20 +42,20 @@ public class GuiFactoryImpl implements GuiFactory {
 
     private final ExternalEventBroker externalEventSource;
 
-    private final AnalysisTool analysisTool;
+    private final FileStreamer fileStreamer;
 
     public GuiFactoryImpl(final Stage stage, final MutablePicoContainer pico) {
         this(stage, pico.getComponent(SettingsManager.class), pico.getComponent(FileDialogueFactory.class),
-             pico.getComponent(ExternalEventBroker.class), pico.getComponent(AnalysisTool.class));
+             pico.getComponent(ExternalEventBroker.class), pico.getComponent(FileStreamer.class));
     }
 
     private GuiFactoryImpl(final Stage stage, final SettingsManager settingsManager, final FileDialogueFactory fileDialogueFactory,
-                           final ExternalEventBroker externalEventSource, final AnalysisTool analysisTool) {
+                           final ExternalEventBroker externalEventSource, final FileStreamer fileStreamer) {
         this.stage = stage;
         this.settingsManager = settingsManager;
         this.fileDialogueFactory = fileDialogueFactory;
         this.externalEventSource = externalEventSource;
-        this.analysisTool = analysisTool;
+        this.fileStreamer = fileStreamer;
     }
 
     @Override
@@ -63,7 +64,7 @@ public class GuiFactoryImpl implements GuiFactory {
         Parent root = loadNode(loader, FXML_MAIN);
         MainController controller = loader.getController();
 
-        controller.initialise(stage, this, analysisTool);
+        controller.initialise(stage, this, fileStreamer, settingsManager);
 
         return new ControllerAndView<>(controller, root);
     }
@@ -136,11 +137,11 @@ public class GuiFactoryImpl implements GuiFactory {
     }
 
     @Override
-    public SettingsDialogue settingsDialogue() {
+    public SettingsDialogue settingsDialogue(final MainModel model) {
         FXMLLoader loader = loader(FXML_SETTINGS);
         Parent root = loadNode(loader, FXML_SETTINGS);
         SettingsController controller = loader.getController();
 
-        return new SettingsDialogue(settingsManager, controller, root);
+        return new SettingsDialogue(model, controller, root);
     }
 }

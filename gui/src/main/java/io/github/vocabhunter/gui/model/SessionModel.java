@@ -4,6 +4,7 @@
 
 package io.github.vocabhunter.gui.model;
 
+import io.github.vocabhunter.analysis.filter.WordFilter;
 import io.github.vocabhunter.analysis.session.WordState;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleObjectProperty;
@@ -16,6 +17,10 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.TreeSet;
 import java.util.stream.Collectors;
+
+import static io.github.vocabhunter.gui.model.FilterTool.applyFilter;
+import static io.github.vocabhunter.gui.model.FilterTool.filter;
+import static java.util.Collections.unmodifiableList;
 
 public final class SessionModel {
     private static final Comparator<WordModel> WORD_COMPARATOR = Comparator.comparing(WordModel::getSequenceNo);
@@ -38,15 +43,23 @@ public final class SessionModel {
 
     private final SimpleBooleanProperty changesSaved = new SimpleBooleanProperty(true);
 
-    public SessionModel(final String documentName, final List<WordModel> words) {
+    private final SimpleObjectProperty<FilterSettings> filterSettings;
+
+    private final SimpleBooleanProperty enableFilters;
+
+    public SessionModel(final String documentName, final List<WordModel> words, final FilterSettings filterSettings, final boolean isFilterEnabled) {
         this.documentName = new SimpleStringProperty(documentName);
+        this.filterSettings = new SimpleObjectProperty<>(filterSettings);
+        this.enableFilters = new SimpleBooleanProperty(isFilterEnabled);
         allWords = words;
         selectedWords.addAll(words.stream()
                 .filter(w -> w.getState().equals(WordState.UNKNOWN))
                 .collect(Collectors.toList()));
 
-        updateEditState(true);
-        currentWord = new SimpleObjectProperty<>(InitialSelectionTool.nextWord(allWords));
+        WordFilter filter = filter(filterSettings, isFilterEnabled);
+
+        updateWordList(true, filter);
+        currentWord = new SimpleObjectProperty<>(InitialSelectionTool.nextWord(applyFilter(filter, allWords)));
     }
 
     public void addSelectedWord(final WordModel word) {
@@ -65,10 +78,10 @@ public final class SessionModel {
         useCount.set(String.format("(%d uses)", word.getUseCount()));
     }
 
-    public void updateEditState(final boolean isEditable) {
+    public void updateWordList(final boolean isEditable, final WordFilter filter) {
         wordList.clear();
         if (isEditable) {
-            wordList.addAll(allWords);
+            wordList.addAll(applyFilter(filter, allWords));
         } else {
             wordList.addAll(selectedWords);
         }
@@ -100,6 +113,10 @@ public final class SessionModel {
         return editable;
     }
 
+    public boolean isEditable() {
+        return editable.get();
+    }
+
     public WordModel getCurrentWord() {
         return currentWord.get();
     }
@@ -110,6 +127,10 @@ public final class SessionModel {
 
     public int getWordListSize() {
         return wordList.size();
+    }
+
+    public List<WordModel> getAllWords() {
+        return unmodifiableList(allWords);
     }
 
     public int getAllWordsSize() {
@@ -130,5 +151,25 @@ public final class SessionModel {
 
     public void setChangesSaved(final boolean changesSaved) {
         this.changesSaved.set(changesSaved);
+    }
+
+    public SimpleObjectProperty<FilterSettings> filterSettingsProperty() {
+        return filterSettings;
+    }
+
+    public FilterSettings getFilterSettings() {
+        return filterSettings.get();
+    }
+
+    public SimpleBooleanProperty enableFiltersProperty() {
+        return enableFilters;
+    }
+
+    public void setEnableFilters(final boolean enableFilters) {
+        this.enableFilters.set(enableFilters);
+    }
+
+    public boolean isEnableFilters() {
+        return enableFilters.get();
     }
 }

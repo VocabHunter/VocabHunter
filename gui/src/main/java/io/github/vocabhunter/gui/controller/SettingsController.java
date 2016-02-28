@@ -4,8 +4,8 @@
 
 package io.github.vocabhunter.gui.controller;
 
-import io.github.vocabhunter.analysis.core.VocabHunterException;
-import io.github.vocabhunter.gui.settings.SettingsManager;
+import io.github.vocabhunter.gui.model.FilterSettings;
+import io.github.vocabhunter.gui.model.MainModel;
 import javafx.beans.property.ReadOnlyBooleanProperty;
 import javafx.beans.property.StringProperty;
 import javafx.scene.control.Button;
@@ -14,7 +14,6 @@ import javafx.stage.Stage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.function.BiConsumer;
 import java.util.function.Supplier;
 
 public class SettingsController {
@@ -28,39 +27,44 @@ public class SettingsController {
 
     public Button buttonCancel;
 
-    private SettingsManager settingsManager;
+    private MainModel model;
 
     private Stage stage;
 
-    public void initialise(final SettingsManager settingsManager, final Stage stage) {
-        this.settingsManager = settingsManager;
+    public void initialise(final MainModel model, final Stage stage) {
+        this.model = model;
         this.stage = stage;
 
         buttonOk.setOnAction(e -> exit(true));
         buttonCancel.setOnAction(e -> exit(false));
-        initialiseField(fieldMinimumLetters, settingsManager::getFilterMinimumLetters);
-        initialiseField(fieldMinimumOccurrences, settingsManager::getFilterMinimumOccurrences);
+
+        FilterSettings settings = model.getFilterSettings();
+        initialiseField(fieldMinimumLetters, settings::getMinimumLetters);
+        initialiseField(fieldMinimumOccurrences, settings::getMinimumOccurrences);
     }
 
     private void exit(final boolean isSaveRequested) {
         if (isSaveRequested) {
-            saveField(fieldMinimumLetters, SettingsManager::setFilterMinimumLetters);
-            saveField(fieldMinimumOccurrences, SettingsManager::setFilterMinimumOccurrences);
+            FilterSettings old = model.getFilterSettings();
+            int minimumLetters = valueOf(fieldMinimumLetters, old.getMinimumLetters());
+            int minimumOccurrences = valueOf(fieldMinimumOccurrences, old.getMinimumOccurrences());
+            FilterSettings settings = new FilterSettings(minimumLetters, minimumOccurrences);
+
+            model.setFilterSettings(settings);
+            model.setEnableFilters(true);
         }
         stage.close();
     }
 
-    private void saveField(final TextField field, final BiConsumer<SettingsManager, Integer> setter) {
+    private int valueOf(final TextField field, final int defaultValue) {
         String text = field.getText();
 
         try {
-            if (!text.isEmpty()) {
-                int value = Integer.parseInt(text);
-
-                setter.accept(settingsManager, value);
-            }
+            return Integer.parseInt(text);
         } catch (NumberFormatException e) {
-            throw new VocabHunterException(String.format("Unable to parse field value '%s'", text), e);
+            LOG.debug("Illegal field value", e);
+
+            return defaultValue;
         }
     }
 

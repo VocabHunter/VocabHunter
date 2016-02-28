@@ -98,7 +98,7 @@ public class GuiTest extends FxRobot {
         Path settingsFile = manager.addFile("settings.json");
         SettingsManager settingsManager = new SettingsManagerImpl(settingsFile);
 
-        settingsManager.setFilterMinimumLetters(1);
+        settingsManager.setFilterMinimumLetters(2);
         settingsManager.setFilterMinimumOccurrences(1);
 
         MutablePicoContainer pico = GuiContainerBuilder.createBaseContainer();

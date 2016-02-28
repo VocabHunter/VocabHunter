@@ -41,10 +41,6 @@ public class SimpleAnalyserTest {
 
     private static final String LINE_WITH_ACCENTS = String.join(" ", SPANISH_1, SPANISH_2, SPANISH_3, SPANISH_4);
 
-    private static final int MAX_WORDS = Integer.MAX_VALUE;
-
-    private static final int MIN_LETTERS = 0;
-
     private final Analyser target = new SimpleAnalyser();
 
     @Test
@@ -76,34 +72,6 @@ public class SimpleAnalyserTest {
     }
 
     @Test
-    public void testMinLettersWithoutCutoff() {
-        AnalysisResult result = analyse(3, MAX_WORDS, LINE_1, LINE_2);
-
-        validate(result, use(WORD_1, 3, LINE_1, LINE_2), use(WORD_3, 2, LINE_2), use(WORD_2, 2, LINE_1));
-    }
-
-    @Test
-    public void testMinLettersWithCutoff() {
-        AnalysisResult result = analyse(4, MAX_WORDS, LINE_1, LINE_2);
-
-        validate(result, use(WORD_3, 2, LINE_2));
-    }
-
-    @Test
-    public void testMaxWordsWithoutCutoff() {
-        AnalysisResult result = analyse(MIN_LETTERS, 3, LINE_1, LINE_2);
-
-        validate(result, use(WORD_1, 3, LINE_1, LINE_2), use(WORD_3, 2, LINE_2), use(WORD_2, 2, LINE_1));
-    }
-
-    @Test
-    public void testMaxWordsWithCutoff() {
-        AnalysisResult result = analyse(MIN_LETTERS, 2, LINE_1, LINE_2);
-
-        validate(result, use(WORD_1, 3, LINE_1, LINE_2), use(WORD_3, 2, LINE_2));
-    }
-
-    @Test
     public void testExtraSpaces() {
         AnalysisResult result = analyse(LINE_WITH_SPACES);
 
@@ -118,13 +86,9 @@ public class SimpleAnalyserTest {
     }
 
     private AnalysisResult analyse(final String... lines) {
-        return analyse(MIN_LETTERS, MAX_WORDS, lines);
-    }
-
-    private AnalysisResult analyse(final int minLetters, final int maxWords, final String... lines) {
         Stream<String> linesStream = Stream.of(lines);
 
-        return target.analyse(linesStream, NAME, minLetters, maxWords);
+        return target.analyse(linesStream, NAME);
     }
 
     private WordUse use(final String wordIdentifier, final int useCount, final String... uses) {

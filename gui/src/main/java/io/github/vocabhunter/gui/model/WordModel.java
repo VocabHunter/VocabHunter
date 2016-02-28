@@ -22,12 +22,15 @@ public class WordModel implements AnalysisWord {
 
     private final List<String> uses;
 
+    private final int useCount;
+
     private final SimpleStringProperty identifier;
 
     private final SimpleObjectProperty<WordState> state;
 
-    public WordModel(final int sequenceNo, final String word, final List<String> uses, final WordState state) {
+    public WordModel(final int sequenceNo, final String word, final List<String> uses, final int useCount, final WordState state) {
         this.uses = uses;
+        this.useCount = useCount;
         this.identifier = new SimpleStringProperty(word);
         this.sequenceNo = sequenceNo;
         this.state = new SimpleObjectProperty<>(state);
@@ -60,6 +63,6 @@ public class WordModel implements AnalysisWord {
 
     @Override
     public int getUseCount() {
-        return uses.size();
+        return useCount;
     }
 }

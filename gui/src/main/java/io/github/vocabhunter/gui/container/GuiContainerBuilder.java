@@ -6,7 +6,6 @@ package io.github.vocabhunter.gui.container;
 
 import io.github.vocabhunter.analysis.file.FileStreamer;
 import io.github.vocabhunter.analysis.simple.SimpleAnalyser;
-import io.github.vocabhunter.gui.controller.AnalysisTool;
 import io.github.vocabhunter.gui.event.CommandLineEventSource;
 import io.github.vocabhunter.gui.event.ExternalEventBroker;
 import io.github.vocabhunter.gui.main.FileDialogueFactoryImpl;
@@ -24,7 +23,6 @@ public final class GuiContainerBuilder {
         MutablePicoContainer pico = new DefaultPicoContainer(new Caching());
 
         pico.addComponent(SimpleAnalyser.class);
-        pico.addComponent(AnalysisTool.class);
         pico.addComponent(FileStreamer.class);
 
         pico.addComponent(new CommandLineEventSource(args));

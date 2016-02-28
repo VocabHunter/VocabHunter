@@ -81,29 +81,29 @@ public class FileStreamer {
         return list;
     }
 
-    public AnalysisResult analyse(final Path file, final int minLetters, final int maxWords) {
+    public AnalysisResult analyse(final Path file) {
         try (InputStream in = Files.newInputStream(file)) {
             Stream<String> stream = stream(in, file);
 
-            return analyser.analyse(stream, file.getFileName().toString(), minLetters, maxWords);
+            return analyser.analyse(stream, file.getFileName().toString());
 
         } catch (final IOException e) {
             throw readError(file, e);
         }
     }
 
-    public EnrichedSessionState createNewSession(final Path file, final int minLetters, final int maxWords) {
-        AnalysisResult model = analyse(file, minLetters, maxWords);
+    public EnrichedSessionState createNewSession(final Path file) {
+        AnalysisResult model = analyse(file);
 
         return new EnrichedSessionState(new SessionState(model));
     }
 
-    public EnrichedSessionState createOrOpenSession(final Path file, final int minLetters, final int maxWords) {
+    public EnrichedSessionState createOrOpenSession(final Path file) {
         try {
             return SessionSerialiser.read(file);
         } catch (final VocabHunterException e) {
             LOG.debug("{} is not a session file", file, e);
-            return createNewSession(file, minLetters, maxWords);
+            return createNewSession(file);
         }
     }
 

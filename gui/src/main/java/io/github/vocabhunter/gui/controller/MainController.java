@@ -4,6 +4,7 @@
 
 package io.github.vocabhunter.gui.controller;
 
+import io.github.vocabhunter.analysis.file.FileStreamer;
 import io.github.vocabhunter.analysis.file.SelectionExportTool;
 import io.github.vocabhunter.analysis.session.EnrichedSessionState;
 import io.github.vocabhunter.analysis.session.FileNameTool;
@@ -16,15 +17,12 @@ import io.github.vocabhunter.gui.factory.ControllerAndView;
 import io.github.vocabhunter.gui.factory.GuiFactory;
 import io.github.vocabhunter.gui.model.MainModel;
 import io.github.vocabhunter.gui.model.SessionModel;
+import io.github.vocabhunter.gui.settings.SettingsManager;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
-import javafx.scene.control.Button;
-import javafx.scene.control.MenuItem;
-import javafx.scene.control.RadioButton;
-import javafx.scene.control.RadioMenuItem;
-import javafx.scene.control.Toggle;
-import javafx.scene.control.ToggleGroup;
+import javafx.scene.control.*;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
@@ -58,6 +56,8 @@ public class MainController {
 
     public MenuItem menuSetupFilters;
 
+    public CheckMenuItem menuEnableFilters;
+
     public MenuItem menuWebsite;
 
     public MenuItem menuHowTo;
@@ -76,6 +76,8 @@ public class MainController {
 
     public Button buttonSetupFilters;
 
+    public CheckBox buttonEnableFilters;
+
     public RadioButton buttonEditOn;
 
     public RadioButton buttonEditOff;
@@ -84,15 +86,15 @@ public class MainController {
 
     private GuiFactory factory;
 
-    private AnalysisTool analysisTool;
+    private FileStreamer fileStreamer;
 
     private EventHandler<KeyEvent> keyPressHandler;
 
     private final MainModel model = new MainModel();
 
-    public void initialise(final Stage stage, final GuiFactory factory, final AnalysisTool analysisTool) {
+    public void initialise(final Stage stage, final GuiFactory factory, final FileStreamer fileStreamer, final SettingsManager settingsManager) {
         this.factory = factory;
-        this.analysisTool = analysisTool;
+        this.fileStreamer = fileStreamer;
 
         buildToggleGroup(buttonEditOn, buttonEditOff);
         buildToggleGroup(menuEditOn, menuEditOff);
@@ -128,6 +130,7 @@ public class MainController {
         factory.getExternalEventSource().setListener(e -> processOpenOrNew(e.getFile()));
 
         prepareTitleHandler(stage);
+        prepareFilterHandler(settingsManager);
     }
 
     private void prepareTitleHandler(final Stage stage) {
@@ -135,6 +138,14 @@ public class MainController {
 
         handler.prepare();
         stage.titleProperty().bind(model.titleProperty());
+    }
+
+    private void prepareFilterHandler(final SettingsManager settingsManager) {
+        FilterHandler handler = new FilterHandler(model, settingsManager);
+
+        handler.prepare();
+        buttonEnableFilters.selectedProperty().bindBidirectional(menuEnableFilters.selectedProperty());
+        buttonEnableFilters.selectedProperty().bindBidirectional(model.enableFiltersProperty());
     }
 
     private void handler(final Button button, final MenuItem menuItem, final EventHandler<ActionEvent> handler) {
@@ -162,7 +173,7 @@ public class MainController {
 
         if (isProcessRequired) {
             LOG.info("Opening file '{}'", file);
-            processOpen(file, analysisTool::createOrOpenSession);
+            processOpen(file, fileStreamer::createOrOpenSession);
         }
     }
 
@@ -205,7 +216,7 @@ public class MainController {
         Path file = chooser.getSelectedFile();
 
         LOG.info("New session from '{}'", file);
-        processOpen(file, analysisTool::createNewSession);
+        processOpen(file, fileStreamer::createNewSession);
     }
 
     private void processOpen(final Path file, final Function<Path, EnrichedSessionState> opener) {
@@ -280,7 +291,14 @@ public class MainController {
     }
 
     private SessionModel addSession(final SessionState state) {
-        SessionModelTool sessionTool = new SessionModelTool(state);
+        SessionModelTool sessionTool = new SessionModelTool(state, model.getFilterSettings(), model.isEnableFilters());
+        if (sessionTool.isFilterError()) {
+            model.setEnableFilters(false);
+            Platform.runLater(() -> {
+                AlertTool.filterErrorAlert();
+            });
+        }
+
         SessionModel sessionModel = sessionTool.buildModel();
         ControllerAndView<SessionController, Node> cav = factory.session(sessionModel);
         SessionController controller = cav.getController();
@@ -292,7 +310,7 @@ public class MainController {
     }
 
     private void processSetupFilters() {
-        SettingsDialogue dialogue = factory.settingsDialogue();
+        SettingsDialogue dialogue = factory.settingsDialogue(model);
 
         dialogue.show();
     }

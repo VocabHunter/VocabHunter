@@ -4,6 +4,7 @@
 
 package io.github.vocabhunter.analysis.session;
 
+import io.github.vocabhunter.analysis.model.AnalysisWord;
 import io.github.vocabhunter.analysis.model.WordUse;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
@@ -14,10 +15,12 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class SessionWord {
+public class SessionWord implements AnalysisWord {
     private String wordIdentifier;
 
     private List<String> uses;
+
+    private int useCount;
 
     private WordState state = WordState.UNSEEN;
 
@@ -28,8 +31,10 @@ public class SessionWord {
     public SessionWord(final WordUse use) {
         wordIdentifier = use.getWordIdentifier();
         uses = new ArrayList<>(use.getUses());
+        useCount = use.getUseCount();
     }
 
+    @Override
     public String getWordIdentifier() {
         return wordIdentifier;
     }
@@ -40,6 +45,15 @@ public class SessionWord {
 
     public List<String> getUses() {
         return Collections.unmodifiableList(uses);
+    }
+
+    @Override
+    public int getUseCount() {
+        return useCount;
+    }
+
+    public void setUseCount(final int useCount) {
+        this.useCount = useCount;
     }
 
     public void setUses(final List<String> uses) {

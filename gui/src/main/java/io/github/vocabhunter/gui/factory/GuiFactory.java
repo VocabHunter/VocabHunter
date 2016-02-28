@@ -32,7 +32,7 @@ public interface GuiFactory {
 
     AboutDialogue aboutDialogue();
 
-    SettingsDialogue settingsDialogue();
+    SettingsDialogue settingsDialogue(MainModel model);
 
     ExternalEventSource getExternalEventSource();
 }

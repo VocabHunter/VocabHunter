@@ -22,10 +22,6 @@ import java.util.stream.Collectors;
 import static org.junit.Assert.assertEquals;
 
 public class FileStreamerTest {
-    private static final int MIN_LETTERS = 2;
-
-    private static final int MAX_WORDS = 100_000;
-
     private static final List<String> LINES = Arrays.asList(
             "The quick brown fox jumped over the lazy dog's back.",
             "Now is the time for all good men to come to the aid of the party.",
@@ -108,11 +104,11 @@ public class FileStreamerTest {
     }
 
     private EnrichedSessionState createNewSession(final Path file) {
-        return target.createNewSession(file, MIN_LETTERS, MAX_WORDS);
+        return target.createNewSession(file);
     }
 
     private EnrichedSessionState createOrOpenSession(final Path file) {
-        return target.createOrOpenSession(file, MIN_LETTERS, MAX_WORDS);
+        return target.createOrOpenSession(file);
     }
 
     private URL getResource(final String file) {
