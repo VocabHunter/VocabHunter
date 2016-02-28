@@ -4,6 +4,9 @@
 
 package io.github.vocabhunter.gui.settings;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class VocabHunterSettings {
     public static final int DEFAULT_MINIMUM_LETTERS = 4;
 
