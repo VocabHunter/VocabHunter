@@ -18,4 +18,12 @@ public interface SettingsManager {
     Path getExportPath();
 
     void setExportPath(Path path);
+
+    int getFilterMinimumLetters();
+
+    void setFilterMinimumLetters(int count);
+
+    int getFilterMinimumOccurrences();
+
+    void setFilterMinimumOccurrences(int count);
 }

@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public final class WordUse {
+public final class WordUse implements AnalysisWord {
     private final String wordIdentifier;
 
     private final int useCount;
@@ -29,10 +29,12 @@ public final class WordUse {
         this.uses = new ArrayList<>(uses);
     }
 
+    @Override
     public String getWordIdentifier() {
         return wordIdentifier;
     }
 
+    @Override
     public int getUseCount() {
         return useCount;
     }

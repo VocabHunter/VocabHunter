@@ -7,5 +7,5 @@ package io.github.vocabhunter.analysis.model;
 import java.util.stream.Stream;
 
 public interface Analyser {
-    AnalysisResult analyse(Stream<String> lines, String name, int minLetters, int maxWords);
+    AnalysisResult analyse(Stream<String> lines, String name);
 }

@@ -51,6 +51,9 @@
 .buttonExport {
     -fx-graphic: url("images/buttonExport.png");
 }
+.buttonSetupFilters {
+    -fx-graphic: url("images/buttonFilter.png");
+}
 .buttonKnown {
     -fx-graphic: url("images/known.png");
     -fx-base: -colour-known;
@@ -78,6 +81,19 @@
 }
 .title.right {
     -fx-fill: -gradient-unknown;
+}
+.settings {
+    -fx-padding: 20 20 20 20;
+}
+.settings .description {
+    -fx-font-size: 18;
+    -fx-padding: 0 0 10 0;
+}
+.settings .fieldLabel {
+    -fx-padding: 10 5 10 5;
+}
+.settings .buttonBar {
+    -fx-padding: 20 0 0 0;
 }
 .about BorderPane {
     -fx-padding: 10 20 10 10;

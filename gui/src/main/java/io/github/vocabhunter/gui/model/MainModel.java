@@ -34,6 +34,10 @@ public class MainModel {
 
     private final SimpleBooleanProperty changesSaved = new SimpleBooleanProperty(true);
 
+    private final SimpleObjectProperty<FilterSettings> filterSettings = new SimpleObjectProperty<>();
+
+    private final SimpleBooleanProperty enableFilters = new SimpleBooleanProperty(true);
+
     public void replaceSessionModel(final SessionState sessionState, final SessionModel sessionModel, final Path sessionFile) {
         unbindOldSession();
 
@@ -43,6 +47,8 @@ public class MainModel {
         sessionOpen.set(true);
         selectionAvailable.bind(isNotEmpty(sessionModel.getSelectedWords()));
         editMode.bindBidirectional(sessionModel.editableProperty());
+        sessionModel.filterSettingsProperty().bindBidirectional(filterSettings);
+        sessionModel.enableFiltersProperty().bindBidirectional(enableFilters);
         documentName.bind(sessionModel.documentNameProperty());
         changesSaved.bindBidirectional(sessionModel.changesSavedProperty());
     }
@@ -53,6 +59,8 @@ public class MainModel {
         sessionModel.ifPresent(m -> {
             editMode.unbindBidirectional(m.editableProperty());
             changesSaved.unbindBidirectional(m.changesSavedProperty());
+            m.filterSettingsProperty().unbindBidirectional(filterSettings);
+            m.enableFiltersProperty().unbindBidirectional(enableFilters);
         });
     }
 
@@ -94,6 +102,30 @@ public class MainModel {
 
     public SimpleBooleanProperty editModeProperty() {
         return editMode;
+    }
+
+    public SimpleObjectProperty<FilterSettings> filterSettingsProperty() {
+        return filterSettings;
+    }
+
+    public void setFilterSettings(final FilterSettings filterSettings) {
+        this.filterSettings.set(filterSettings);
+    }
+
+    public FilterSettings getFilterSettings() {
+        return filterSettings.get();
+    }
+
+    public SimpleBooleanProperty enableFiltersProperty() {
+        return enableFilters;
+    }
+
+    public boolean isEnableFilters() {
+        return enableFilters.get();
+    }
+
+    public void setEnableFilters(final boolean enableFilters) {
+        this.enableFilters.set(enableFilters);
     }
 
     public void setSessionFile(final Path sessionFile) {

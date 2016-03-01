@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ButtonBar?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+
+<!--
+  ~ Open Source Software published under the Apache Licence, Version 2.0.
+  -->
+
+<BorderPane styleClass="settings" stylesheets="@main.css" xmlns="http://javafx.com/javafx/null" xmlns:fx="http://javafx.com/fxml/1" fx:controller="io.github.vocabhunter.gui.controller.SettingsController">
+   <top>
+      <Label styleClass="description" text="Choose the words you want to show" BorderPane.alignment="CENTER" />
+   </top>
+   <center>
+      <GridPane BorderPane.alignment="CENTER">
+         <columnConstraints>
+            <ColumnConstraints halignment="RIGHT" />
+            <ColumnConstraints />
+         </columnConstraints>
+         <rowConstraints>
+            <RowConstraints />
+            <RowConstraints />
+         </rowConstraints>
+         <children>
+            <Label styleClass="fieldLabel" text="Minimum number of letters in a word:" />
+            <TextField fx:id="fieldMinimumLetters" alignment="CENTER_RIGHT" prefColumnCount="4" text="9999" GridPane.columnIndex="1" />
+            <Label styleClass="fieldLabel" text="Minimum number of occurrences of a word:" GridPane.rowIndex="1" />
+            <TextField fx:id="fieldMinimumOccurrences" alignment="CENTER_RIGHT" prefColumnCount="4" text="9999" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+         </children>
+      </GridPane>
+   </center>
+   <bottom>
+       <ButtonBar styleClass="buttonBar" BorderPane.alignment="CENTER">
+           <buttons>
+               <Button fx:id="buttonOk" mnemonicParsing="false" text="Enable Filters" />
+               <Button fx:id="buttonCancel" mnemonicParsing="false" text="Cancel" />
+           </buttons>
+       </ButtonBar>
+   </bottom>
+</BorderPane>

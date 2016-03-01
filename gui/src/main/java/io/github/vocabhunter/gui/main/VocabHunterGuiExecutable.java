@@ -5,36 +5,30 @@
 package io.github.vocabhunter.gui.main;
 
 import io.github.vocabhunter.gui.controller.MainController;
-import io.github.vocabhunter.gui.event.CommandLineEventSource;
 import io.github.vocabhunter.gui.event.ExternalEventBroker;
-import io.github.vocabhunter.gui.event.ExternalEventSource;
+import io.github.vocabhunter.gui.event.SingleExternalEventSource;
 import io.github.vocabhunter.gui.factory.ControllerAndView;
-import io.github.vocabhunter.gui.factory.FileDialogueFactory;
 import io.github.vocabhunter.gui.factory.GuiFactory;
-import io.github.vocabhunter.gui.settings.SettingsManagerImpl;
 import javafx.application.Application;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import org.picocontainer.MutablePicoContainer;
 
 import java.awt.*;
 import java.util.List;
 import java.util.function.Consumer;
 
+import static io.github.vocabhunter.gui.container.GuiContainerBuilder.createGuiContainer;
 import static io.github.vocabhunter.gui.main.ExecutableLogTool.*;
-import static java.util.Collections.singletonList;
 
 public class VocabHunterGuiExecutable extends Application {
     private static final double WINDOW_SIZE_FACTOR = 0.80;
 
-    private final FileDialogueFactory fileDialogueFactory;
+    private static MutablePicoContainer pico;
 
-    public VocabHunterGuiExecutable() {
-        this(new FileDialogueFactoryImpl(new SettingsManagerImpl()));
-    }
-
-    public VocabHunterGuiExecutable(final FileDialogueFactory fileDialogueFactory) {
-        this.fileDialogueFactory = fileDialogueFactory;
+    public static void setPico(final MutablePicoContainer pico) {
+        VocabHunterGuiExecutable.pico = pico;
     }
 
     @Override
@@ -42,7 +36,7 @@ public class VocabHunterGuiExecutable extends Application {
         Thread.currentThread().setUncaughtExceptionHandler((t, e) -> logError(e));
         try {
             Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-            GuiFactory factory = new GuiFactoryImpl(fileDialogueFactory, stage, ExternalEventBroker.getInstance());
+            GuiFactory factory = new GuiFactoryImpl(stage, pico);
             ControllerAndView<MainController, Parent> cav = factory.mainWindow();
             double width = screenSize.getWidth() * WINDOW_SIZE_FACTOR;
             double height = screenSize.getHeight() * WINDOW_SIZE_FACTOR;
@@ -59,19 +53,22 @@ public class VocabHunterGuiExecutable extends Application {
     }
 
     public static void main(final String... args) {
-        CommandLineEventSource eventSource = new CommandLineEventSource(args);
-
-        runApp(args, singletonList(eventSource), a -> launch(a));
+        runApp(args, createGuiContainer(args), a -> launch(a));
     }
 
-    public static void runApp(final String[] args, final List<ExternalEventSource> eventSources, final Consumer<String[]> launcher) {
+    public static void runApp(final String[] args, final MutablePicoContainer pico, final Consumer<String[]> launcher) {
         logStartup();
         try {
             logSystemDetails();
-            eventSources.forEach(s -> s.setListener(ExternalEventBroker.getInstance()));
+            setPico(pico);
+            eventSources(pico).forEach(s -> s.setListener(pico.getComponent(ExternalEventBroker.class)));
             launcher.accept(args);
         } finally {
             logShutdown();
         }
+    }
+
+    private static List<SingleExternalEventSource> eventSources(final MutablePicoContainer pico) {
+        return pico.getComponents(SingleExternalEventSource.class);
     }
 }

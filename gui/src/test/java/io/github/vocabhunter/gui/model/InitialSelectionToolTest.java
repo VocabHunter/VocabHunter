@@ -70,7 +70,7 @@ public class InitialSelectionToolTest {
         int index = 0;
 
         for (WordState state : states) {
-            WordModel model = new WordModel(index, "word " + index, Collections.emptyList(), state);
+            WordModel model = new WordModel(index, "word " + index, Collections.emptyList(), 0, state);
             result.add(model);
             ++index;
         }

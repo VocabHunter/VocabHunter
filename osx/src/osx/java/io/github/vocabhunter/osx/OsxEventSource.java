@@ -6,9 +6,9 @@ package io.github.vocabhunter.osx;
 
 import com.apple.eawt.Application;
 import io.github.vocabhunter.gui.event.ExternalEventListener;
-import io.github.vocabhunter.gui.event.ExternalEventSource;
+import io.github.vocabhunter.gui.event.SingleExternalEventSource;
 
-public class OsxEventSource implements ExternalEventSource {
+public class OsxEventSource implements SingleExternalEventSource {
     @Override
     public void setListener(final ExternalEventListener listener) {
         Application application = Application.getApplication();

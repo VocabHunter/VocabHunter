@@ -75,6 +75,39 @@ public class SettingsManagerImpl implements SettingsManager {
         setPath(VocabHunterSettings::setExportPath, path);
     }
 
+    @Override
+    public int getFilterMinimumLetters() {
+        return getInt(VocabHunterSettings::getFilterMinimumLetters);
+    }
+
+    @Override
+    public void setFilterMinimumLetters(final int count) {
+        setInt(VocabHunterSettings::setFilterMinimumLetters, count);
+    }
+
+    @Override
+    public int getFilterMinimumOccurrences() {
+        return getInt(VocabHunterSettings::getFilterMinimumOccurrences);
+    }
+
+    @Override
+    public void setFilterMinimumOccurrences(final int count) {
+        setInt(VocabHunterSettings::setFilterMinimumOccurrences, count);
+    }
+
+    private int getInt(final Function<VocabHunterSettings, Integer> getter) {
+        VocabHunterSettings settings = readSettings();
+
+        return getter.apply(settings);
+    }
+
+    private void setInt(final BiConsumer<VocabHunterSettings, Integer> setter, final int value) {
+        VocabHunterSettings settings = readSettings();
+
+        setter.accept(settings, value);
+        writeSettings(settings);
+    }
+
     private Path getPath(final Function<VocabHunterSettings, String> getter) {
         VocabHunterSettings settings = readSettings();
         String pathName = getter.apply(settings);

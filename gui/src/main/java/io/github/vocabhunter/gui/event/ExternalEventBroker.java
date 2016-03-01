@@ -12,21 +12,8 @@ import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.LinkedBlockingQueue;
 
-/**
- * This class is a singleton to work around some limitations of the JavaFX startup mechanism.
- */
 public final class ExternalEventBroker implements ExternalEventListener, ExternalEventSource {
-    private static final ExternalEventBroker instance = new ExternalEventBroker();
-
     private final BlockingQueue<ExternalOpenFileEvent> openFileEvents = new LinkedBlockingQueue<>();
-
-    public static ExternalEventBroker getInstance() {
-        return instance;
-    }
-
-    private ExternalEventBroker() {
-        // Prevent instantiation - this class is a singleton (see Javadoc for explanation).
-    }
 
     @Override
     public void fireOpenFileEvent(final ExternalOpenFileEvent event) {

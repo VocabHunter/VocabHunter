@@ -7,9 +7,12 @@ package io.github.vocabhunter.gui.main;
 import io.github.vocabhunter.analysis.core.VocabHunterException;
 import io.github.vocabhunter.analysis.session.EnrichedSessionState;
 import io.github.vocabhunter.analysis.session.SessionSerialiser;
+import io.github.vocabhunter.gui.container.GuiContainerBuilder;
 import io.github.vocabhunter.gui.dialogues.FileDialogue;
 import io.github.vocabhunter.gui.dialogues.FileDialogueType;
 import io.github.vocabhunter.gui.factory.FileDialogueFactory;
+import io.github.vocabhunter.gui.settings.SettingsManager;
+import io.github.vocabhunter.gui.settings.SettingsManagerImpl;
 import io.github.vocabhunter.test.utils.TestFileManager;
 import javafx.stage.Stage;
 import org.apache.commons.io.FileUtils;
@@ -20,6 +23,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
+import org.picocontainer.MutablePicoContainer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testfx.api.FxRobot;
@@ -91,8 +95,18 @@ public class GuiTest extends FxRobot {
         setUpFileDialogue(FileDialogueType.OPEN_SESSION, openSessionDialogue, sessionFile);
         setUpFileDialogue(FileDialogueType.EXPORT_SELECTION, exportDialogue, exportFile);
 
-        TestGuiApplication.setFileDialogueFactory(fileDialogueFactory);
-        setupApplication(TestGuiApplication.class);
+        Path settingsFile = manager.addFile("settings.json");
+        SettingsManager settingsManager = new SettingsManagerImpl(settingsFile);
+
+        settingsManager.setFilterMinimumLetters(2);
+        settingsManager.setFilterMinimumOccurrences(1);
+
+        MutablePicoContainer pico = GuiContainerBuilder.createBaseContainer();
+        pico.addComponent(settingsManager);
+        pico.addComponent(fileDialogueFactory);
+        VocabHunterGuiExecutable.setPico(pico);
+
+        setupApplication(VocabHunterGuiExecutable.class);
     }
 
     private void setUpFileDialogue(final FileDialogueType type, final FileDialogue dialogue, final Path file1, final Path... files) {

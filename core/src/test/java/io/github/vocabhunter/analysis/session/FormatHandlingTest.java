@@ -21,6 +21,8 @@ public class FormatHandlingTest {
 
     private static final String FORMAT_1 = "format1.wordy";
 
+    private static final String FORMAT_2 = "format2.wordy";
+
     private static final String DOCUMENT_NAME = "test-sample.txt";
 
     private static final String LINE_1 = "The quick brown fox jumped over the lazy dog's back.";
@@ -37,8 +39,13 @@ public class FormatHandlingTest {
     }
 
     @Test
-    public void testVesion1() throws Exception {
+    public void testVersion1() throws Exception {
         validate(FORMAT_1);
+    }
+
+    @Test
+    public void testVersion2() throws Exception {
+        validate(FORMAT_2);
     }
 
     private void validate(final String filename) throws Exception {
@@ -71,44 +78,45 @@ public class FormatHandlingTest {
         state.setName(DOCUMENT_NAME);
         List<SessionWord> uses = new ArrayList<>();
 
-
-        use(uses, "the", KNOWN, LINE_1, LINE_2);
-        use(uses, "is", UNKNOWN, LINE_2, LINE_3);
-        use(uses, "to", KNOWN, LINE_2);
-        use(uses, "aid", UNKNOWN, LINE_2);
-        use(uses, "all", UNSEEN, LINE_2);
-        use(uses, "back", UNSEEN, LINE_1);
-        use(uses, "brown", UNSEEN, LINE_1);
-        use(uses, "come", UNSEEN, LINE_2);
-        use(uses, "document", UNSEEN, LINE_3);
-        use(uses, "dog's", UNSEEN, LINE_1);
-        use(uses, "for", UNSEEN, LINE_2);
-        use(uses, "fox", UNSEEN, LINE_1);
-        use(uses, "good", UNSEEN, LINE_2);
-        use(uses, "jumped", UNSEEN, LINE_1);
-        use(uses, "lazy", UNSEEN, LINE_1);
-        use(uses, "men", UNSEEN, LINE_2);
-        use(uses, "now", UNSEEN, LINE_2);
-        use(uses, "of", UNSEEN, LINE_2);
-        use(uses, "over", UNSEEN, LINE_1);
-        use(uses, "party", UNSEEN, LINE_2);
-        use(uses, "quick", UNSEEN, LINE_1);
-        use(uses, "simple", UNSEEN, LINE_3);
-        use(uses, "test", UNSEEN, LINE_3);
-        use(uses, "this", UNSEEN, LINE_3);
-        use(uses, "time", UNSEEN, LINE_2);
+        use(uses, "the", KNOWN, 5, LINE_1, LINE_2);
+        use(uses, "is", UNKNOWN, 2, LINE_2, LINE_3);
+        use(uses, "to", KNOWN, 2, LINE_2);
+        use(uses, "a", UNKNOWN, 1, LINE_3);
+        use(uses, "aid", UNSEEN, 1, LINE_2);
+        use(uses, "all", UNSEEN, 1, LINE_2);
+        use(uses, "back", UNSEEN, 1, LINE_1);
+        use(uses, "brown", UNSEEN, 1, LINE_1);
+        use(uses, "come", UNSEEN, 1, LINE_2);
+        use(uses, "document", UNSEEN, 1, LINE_3);
+        use(uses, "dog's", UNSEEN, 1, LINE_1);
+        use(uses, "for", UNSEEN, 1, LINE_2);
+        use(uses, "fox", UNSEEN, 1, LINE_1);
+        use(uses, "good", UNSEEN, 1, LINE_2);
+        use(uses, "jumped", UNSEEN, 1, LINE_1);
+        use(uses, "lazy", UNSEEN, 1, LINE_1);
+        use(uses, "men", UNSEEN, 1, LINE_2);
+        use(uses, "now", UNSEEN, 1, LINE_2);
+        use(uses, "of", UNSEEN, 1, LINE_2);
+        use(uses, "over", UNSEEN, 1, LINE_1);
+        use(uses, "party", UNSEEN, 1, LINE_2);
+        use(uses, "quick", UNSEEN, 1, LINE_1);
+        use(uses, "simple", UNSEEN, 1, LINE_3);
+        use(uses, "test", UNSEEN, 1, LINE_3);
+        use(uses, "this", UNSEEN, 1, LINE_3);
+        use(uses, "time", UNSEEN, 1, LINE_2);
 
         state.setOrderedUses(uses);
 
         return state;
     }
 
-    private static void use(final List<SessionWord> uses, final String word, final WordState state, final String... lines) {
+    private static void use(final List<SessionWord> uses, final String word, final WordState state, final int useCount, final String... lines) {
         SessionWord sw = new SessionWord();
 
         sw.setWordIdentifier(word);
         sw.setState(state);
         sw.setUses(Arrays.asList(lines));
+        sw.setUseCount(useCount);
 
         uses.add(sw);
     }

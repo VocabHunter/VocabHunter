@@ -17,6 +17,8 @@ import java.util.function.Consumer;
 import java.util.function.Supplier;
 
 public class SettingsManagerTest {
+    private static final int UPDATE_INT_VALUE = 12345;
+
     private final Path home = Paths.get(System.getProperty("user.home"));
 
     private TestFileManager files;
@@ -83,6 +85,26 @@ public class SettingsManagerTest {
         validateMissingPath(target::getExportPath, target::setExportPath);
     }
 
+    @Test
+    public void testUpdateFilterMinimumLetters() {
+        validateUpdateInt(target::getFilterMinimumLetters, target::setFilterMinimumLetters);
+    }
+
+    @Test
+    public void testMissingFilterMinimumLetters() {
+        validateMissingInt(target::getFilterMinimumLetters, VocabHunterSettings.DEFAULT_MINIMUM_LETTERS);
+    }
+
+    @Test
+    public void testUpdateFilterMinimumOcurrences() {
+        validateUpdateInt(target::getFilterMinimumOccurrences, target::setFilterMinimumOccurrences);
+    }
+
+    @Test
+    public void testMissingFilterMinimumOcurrences() {
+        validateMissingInt(target::getFilterMinimumOccurrences, VocabHunterSettings.DEFAULT_MINIMUM_OCCURRENCES);
+    }
+
     private void validateGetDefaultPath(final Supplier<Path> getter) {
         Path path = getter.get();
 
@@ -103,5 +125,18 @@ public class SettingsManagerTest {
         Path path = getter.get();
 
         Assert.assertEquals("Saved path", expected, path);
+    }
+
+    private void validateMissingInt(final Supplier<Integer> getter, final int expected) {
+        int actual = getter.get();
+
+        Assert.assertEquals("Default int", expected, actual);
+    }
+
+    private void validateUpdateInt(final Supplier<Integer> getter, final Consumer<Integer> setter) {
+        setter.accept(UPDATE_INT_VALUE);
+        int actual = getter.get();
+
+        Assert.assertEquals("Updated int", UPDATE_INT_VALUE, actual);
     }
 }

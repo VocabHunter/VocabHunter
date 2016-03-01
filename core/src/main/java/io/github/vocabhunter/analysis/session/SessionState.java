@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class SessionState {
-    private int formatVersion = 1;
+    private int formatVersion = FormatVersion.MAX_SUPPORTED_VERSION;
 
     private String name;
 
@@ -71,17 +71,19 @@ public class SessionState {
         SessionState that = (SessionState) o;
 
         return new EqualsBuilder()
-                .append(name, that.name)
-                .append(orderedUses, that.orderedUses)
-                .isEquals();
+            .append(formatVersion, that.formatVersion)
+            .append(name, that.name)
+            .append(orderedUses, that.orderedUses)
+            .isEquals();
     }
 
     @Override
     public int hashCode() {
         return new HashCodeBuilder()
-                .append(name)
-                .append(orderedUses)
-                .toHashCode();
+            .append(formatVersion)
+            .append(name)
+            .append(orderedUses)
+            .toHashCode();
     }
 
     @Override

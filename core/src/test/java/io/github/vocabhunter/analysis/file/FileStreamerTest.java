@@ -5,7 +5,9 @@
 package io.github.vocabhunter.analysis.file;
 
 import io.github.vocabhunter.analysis.core.VocabHunterException;
+import io.github.vocabhunter.analysis.model.Analyser;
 import io.github.vocabhunter.analysis.session.EnrichedSessionState;
+import io.github.vocabhunter.analysis.simple.SimpleAnalyser;
 import org.junit.Test;
 
 import java.io.InputStream;
@@ -20,10 +22,6 @@ import java.util.stream.Collectors;
 import static org.junit.Assert.assertEquals;
 
 public class FileStreamerTest {
-    private static final int MIN_LETTERS = 2;
-
-    private static final int MAX_WORDS = 100_000;
-
     private static final List<String> LINES = Arrays.asList(
             "The quick brown fox jumped over the lazy dog's back.",
             "Now is the time for all good men to come to the aid of the party.",
@@ -42,6 +40,10 @@ public class FileStreamerTest {
     private static final String SESSION_FILE = "format1.wordy";
 
     private static final String SESSION_NAME = "test-sample.txt";
+
+    private final Analyser analyser = new SimpleAnalyser();
+
+    private final FileStreamer target = new FileStreamer(analyser);
 
     @Test(expected = VocabHunterException.class)
     public void testStreamEmpty() throws Exception {
@@ -86,7 +88,7 @@ public class FileStreamerTest {
     private void validateStream(final String file) throws Exception {
         URL resource = getResource(file);
         try (InputStream in = resource.openStream()) {
-            List<String> result = FileStreamer.stream(in, Paths.get(file))
+            List<String> result = target.stream(in, Paths.get(file))
                     .collect(Collectors.toList());
 
             assertEquals("Lines from file", LINES, result);
@@ -102,11 +104,11 @@ public class FileStreamerTest {
     }
 
     private EnrichedSessionState createNewSession(final Path file) {
-        return FileStreamer.createNewSession(file, MIN_LETTERS, MAX_WORDS);
+        return target.createNewSession(file);
     }
 
     private EnrichedSessionState createOrOpenSession(final Path file) {
-        return FileStreamer.createOrOpenSession(file, MIN_LETTERS, MAX_WORDS);
+        return target.createOrOpenSession(file);
     }
 
     private URL getResource(final String file) {

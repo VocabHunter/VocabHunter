@@ -17,22 +17,20 @@ import java.util.Optional;
 import java.util.function.Function;
 import java.util.stream.Stream;
 
-import static java.util.Comparator.comparing;
 import static java.util.stream.Collectors.*;
 
 public class SimpleAnalyser implements Analyser {
     private static final Logger LOG = LoggerFactory.getLogger(SimpleAnalyser.class);
 
     @Override
-    public AnalysisResult analyse(final Stream<String> lines, final String name, final int minLetters, final int maxWords) {
-        Map<String, WordUse> map = lines.flatMap(l -> uses(l, minLetters))
+    public AnalysisResult analyse(final Stream<String> lines, final String name) {
+        Map<String, WordUse> map = lines.flatMap(l -> uses(l))
                 .collect(
                         groupingBy(
                                 WordUse::getWordIdentifier,
                                 collectingAndThen(reducing(this::combine), Optional::get)));
         List<WordUse> uses = map.values().stream()
-                .sorted(comparing(WordUse::getUseCount).reversed().thenComparing(WordUse::getWordIdentifier))
-                .limit(maxWords)
+                .sorted(WordStreamTool.WORD_COMPARATOR)
                 .collect(toList());
         AnalysisResult result = new AnalysisResult(name, uses);
 
@@ -41,9 +39,8 @@ public class SimpleAnalyser implements Analyser {
         return result;
     }
 
-    private Stream<WordUse> uses(final String line, final int minLetters) {
+    private Stream<WordUse> uses(final String line) {
         Map<String, Long> counts = WordStreamTool.words(line)
-                .filter(w -> w.length() >= minLetters)
                 .map(String::toLowerCase)
                 .collect(
                         groupingBy(Function.identity(), counting()));

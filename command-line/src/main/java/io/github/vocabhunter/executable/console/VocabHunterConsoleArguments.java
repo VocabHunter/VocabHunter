@@ -6,19 +6,17 @@ package io.github.vocabhunter.executable.console;
 
 import com.beust.jcommander.Parameter;
 
-import java.nio.file.Path;
-
 public class VocabHunterConsoleArguments {
     @Parameter(names = "-input", description = "Text input file", required = true)
-    private Path input;
+    private String input;
 
-    @Parameter(names = "-minletters", description = "Minimum number of letters for word to be analysed")
+    @Parameter(names = "-minletters", description = "Minimum number of letters in word for it to be shown")
     private int minLetters = 5;
 
-    @Parameter(names = "-maxwords", description = "Maximum number of words to output")
-    private int maxWords = 1000;
+    @Parameter(names = "-minoccurrences", description = "Minimum number of occurrences of word for it to be shown")
+    private int minOccurrences = 3;
 
-    public Path getInput() {
+    public String getInput() {
         return input;
     }
 
@@ -26,11 +24,11 @@ public class VocabHunterConsoleArguments {
         return minLetters;
     }
 
-    public int getMaxWords() {
-        return maxWords;
+    public int getMinOccurrences() {
+        return minOccurrences;
     }
 
-    public void setInput(final Path input) {
+    public void setInput(final String input) {
         this.input = input;
     }
 
@@ -38,7 +36,7 @@ public class VocabHunterConsoleArguments {
         this.minLetters = minLetters;
     }
 
-    public void setMaxWords(final int maxWords) {
-        this.maxWords = maxWords;
+    public void setMinOccurrences(final int minOccurrences) {
+        this.minOccurrences = minOccurrences;
     }
 }

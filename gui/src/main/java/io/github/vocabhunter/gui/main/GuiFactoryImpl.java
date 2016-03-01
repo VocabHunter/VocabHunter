@@ -5,24 +5,22 @@
 package io.github.vocabhunter.gui.main;
 
 import io.github.vocabhunter.analysis.core.VocabHunterException;
-import io.github.vocabhunter.gui.controller.AboutController;
-import io.github.vocabhunter.gui.controller.MainController;
-import io.github.vocabhunter.gui.controller.SessionController;
-import io.github.vocabhunter.gui.dialogues.AboutDialogue;
-import io.github.vocabhunter.gui.dialogues.ErrorDialogue;
-import io.github.vocabhunter.gui.dialogues.FileDialogue;
-import io.github.vocabhunter.gui.dialogues.FileDialogueType;
-import io.github.vocabhunter.gui.dialogues.UnsavedChangesDialogue;
+import io.github.vocabhunter.analysis.file.FileStreamer;
+import io.github.vocabhunter.gui.controller.*;
+import io.github.vocabhunter.gui.dialogues.*;
+import io.github.vocabhunter.gui.event.ExternalEventBroker;
 import io.github.vocabhunter.gui.event.ExternalEventSource;
 import io.github.vocabhunter.gui.factory.ControllerAndView;
 import io.github.vocabhunter.gui.factory.FileDialogueFactory;
 import io.github.vocabhunter.gui.factory.GuiFactory;
 import io.github.vocabhunter.gui.model.MainModel;
 import io.github.vocabhunter.gui.model.SessionModel;
+import io.github.vocabhunter.gui.settings.SettingsManager;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.stage.Stage;
+import org.picocontainer.MutablePicoContainer;
 
 import java.io.IOException;
 import java.util.Optional;
@@ -34,16 +32,30 @@ public class GuiFactoryImpl implements GuiFactory {
 
     private static final String FXML_ABOUT = "about.fxml";
 
-    private final FileDialogueFactory fileDialogueFactory;
+    private static final String FXML_SETTINGS = "settings.fxml";
 
     private final Stage stage;
 
-    private final ExternalEventSource externalEventSource;
+    private final SettingsManager settingsManager;
 
-    public GuiFactoryImpl(final FileDialogueFactory fileDialogueFactory, final Stage stage, final ExternalEventSource externalEventSource) {
-        this.fileDialogueFactory = fileDialogueFactory;
+    private final FileDialogueFactory fileDialogueFactory;
+
+    private final ExternalEventBroker externalEventSource;
+
+    private final FileStreamer fileStreamer;
+
+    public GuiFactoryImpl(final Stage stage, final MutablePicoContainer pico) {
+        this(stage, pico.getComponent(SettingsManager.class), pico.getComponent(FileDialogueFactory.class),
+             pico.getComponent(ExternalEventBroker.class), pico.getComponent(FileStreamer.class));
+    }
+
+    private GuiFactoryImpl(final Stage stage, final SettingsManager settingsManager, final FileDialogueFactory fileDialogueFactory,
+                           final ExternalEventBroker externalEventSource, final FileStreamer fileStreamer) {
         this.stage = stage;
+        this.settingsManager = settingsManager;
+        this.fileDialogueFactory = fileDialogueFactory;
         this.externalEventSource = externalEventSource;
+        this.fileStreamer = fileStreamer;
     }
 
     @Override
@@ -52,7 +64,7 @@ public class GuiFactoryImpl implements GuiFactory {
         Parent root = loadNode(loader, FXML_MAIN);
         MainController controller = loader.getController();
 
-        controller.initialise(stage, this);
+        controller.initialise(stage, this, fileStreamer, settingsManager);
 
         return new ControllerAndView<>(controller, root);
     }
@@ -122,5 +134,14 @@ public class GuiFactoryImpl implements GuiFactory {
         AboutController controller = loader.getController();
 
         return new AboutDialogue(controller, root);
+    }
+
+    @Override
+    public SettingsDialogue settingsDialogue(final MainModel model) {
+        FXMLLoader loader = loader(FXML_SETTINGS);
+        Parent root = loadNode(loader, FXML_SETTINGS);
+        SettingsController controller = loader.getController();
+
+        return new SettingsDialogue(model, controller, root);
     }
 }

@@ -4,11 +4,14 @@
 
 package io.github.vocabhunter.gui.controller;
 
+import io.github.vocabhunter.analysis.filter.WordFilter;
 import io.github.vocabhunter.gui.model.SessionModel;
 import io.github.vocabhunter.gui.model.WordModel;
 import io.github.vocabhunter.gui.view.WordListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.MultipleSelectionModel;
+
+import java.util.function.IntPredicate;
 
 public class WordListHandler {
     private static final int SCROLL_OFFSET = 4;
@@ -42,9 +45,9 @@ public class WordListHandler {
         }
     }
 
-    public void selectClosestWord(final boolean isEditable) {
+    public void selectClosestWord(final boolean isEditable, final WordFilter filter) {
         int oldIndex = sessionModel.getCurrentWord().getSequenceNo();
-        WordModel closestWord = findClosestWord(oldIndex, isEditable);
+        WordModel closestWord = findClosestWord(oldIndex, isEditable, filter);
 
         selectWord(closestWord);
     }
@@ -54,13 +57,15 @@ public class WordListHandler {
         wordListView.scrollTo(word);
     }
 
-    private WordModel findClosestWord(final int current, final boolean isEditable) {
+    private WordModel findClosestWord(final int current, final boolean isEditable, final WordFilter filter) {
+        IntPredicate test;
         if (isEditable) {
-            return sessionModel.getWord(current);
+            test = i -> filter.isShown(sessionModel.getWord(i));
         } else {
-            int index = IndexTool.findClosest(current, sessionModel.getAllWordsSize(), sessionModel::isSelected);
-
-            return sessionModel.getWord(index);
+            test = sessionModel::isSelected;
         }
+        int index = IndexTool.findClosest(current, sessionModel.getAllWordsSize(), test);
+
+        return sessionModel.getWord(index);
     }
 }
