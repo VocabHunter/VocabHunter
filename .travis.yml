@@ -24,4 +24,4 @@ cache:
 install: true
 
 script:
-  - ./gradlew clean build -PskipGuiTests -info
+  - ./gradlew clean build -info
