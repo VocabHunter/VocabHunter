@@ -16,12 +16,6 @@ addons:
     packages:
       - oracle-java8-installer
 
-before_install:
-  - "/sbin/start-stop-daemon --start --quiet --pidfile /tmp/custom_xvfb_99.pid --make-pidfile --background --exec /usr/bin/Xvfb -- :99 -ac -screen 0 1366x768x16"
-
-before_script:
-  - "export DISPLAY=:99.0"
-
 before_cache:
   - rm -f $HOME/.gradle/caches/modules-2/modules-2.lock
 
