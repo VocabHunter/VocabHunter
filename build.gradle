@@ -33,6 +33,7 @@ subprojects {
     apply plugin: 'java'
     apply plugin: 'pmd'
     apply plugin: 'checkstyle'
+    apply plugin: 'jacoco'
     apply plugin: 'com.github.ben-manes.versions'
 
     sourceCompatibility = 1.8
@@ -58,5 +59,9 @@ subprojects {
 
     [checkstyleMain, checkstyleTest].each { task ->
         task.logging.setLevel(LogLevel.LIFECYCLE)
+    }
+
+    jacoco {
+        toolVersion = '0.7.6.201602180812'
     }
 }

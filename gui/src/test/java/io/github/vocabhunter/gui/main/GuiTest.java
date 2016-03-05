@@ -28,6 +28,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testfx.api.FxRobot;
 
+import java.io.IOException;
 import java.net.URL;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -72,12 +73,16 @@ public class GuiTest extends FxRobot {
 
     private Path sessionFile;
 
-    private String step;
-
     private int stepNo;
 
     @BeforeClass
     public static void setupSpec() throws Exception {
+        if (Boolean.getBoolean("headless")) {
+            System.setProperty("testfx.robot", "glass");
+            System.setProperty("testfx.headless", "true");
+            System.setProperty("prism.order", "sw");
+            System.setProperty("prism.text", "t2k");
+        }
         registerPrimaryStage();
     }
 
@@ -97,9 +102,6 @@ public class GuiTest extends FxRobot {
 
         Path settingsFile = manager.addFile("settings.json");
         SettingsManager settingsManager = new SettingsManagerImpl(settingsFile);
-
-        settingsManager.setFilterMinimumLetters(2);
-        settingsManager.setFilterMinimumOccurrences(1);
 
         MutablePicoContainer pico = GuiContainerBuilder.createBaseContainer();
         pico.addComponent(settingsManager);
@@ -121,57 +123,95 @@ public class GuiTest extends FxRobot {
     }
 
     @Test
-    public void testWalkThrough() throws Exception {
-        startStep("Open application");
-        verifyThat("#mainBorderPane", isVisible());
-        endStep();
+    public void testWalkThrough() {
+        part1BasicWalkThrough();
+        part2StartNewSessionAndFilter();
+        part3ReopenFirstSession();
+    }
 
-        startStep("Start new session");
-        clickOn("#buttonNew");
-        verifyThat("#mainWordPane", isVisible());
-        verifyThat("#mainWord", hasText("and"));
-        endStep();
+    private void part1BasicWalkThrough() {
+        step("Open application", () -> {
+            verifyThat("#mainBorderPane", isVisible());
+        });
 
-        startStep("Mark word as known");
-        clickOn("#buttonKnown");
-        verifyThat("#mainWord", hasText("the"));
-        endStep();
+        step("Start new session", () -> {
+            clickOn("#buttonNew");
+            verifyThat("#mainWordPane", isVisible());
+            verifyThat("#mainWord", hasText("and"));
+        });
 
-        startStep("Mark word as unknown");
-        clickOn("#buttonUnknown");
-        verifyThat("#mainWord", hasText("to"));
-        endStep();
+        step("Mark word as known", () -> {
+            clickOn("#buttonKnown");
+            verifyThat("#mainWord", hasText("the"));
+        });
 
-        startStep("Show selection");
-        clickOn("#buttonEditOff");
-        verifyThat("#buttonKnown", isInvisible());
-        endStep();
+        step("Mark word as unknown", () -> {
+            clickOn("#buttonUnknown");
+            verifyThat("#mainWord", hasText("to"));
+        });
 
-        startStep("Return to edit mode");
-        clickOn("#buttonEditOn");
-        verifyThat("#buttonKnown", isVisible());
-        endStep();
+        step("Show selection", () -> {
+            clickOn("#buttonEditOff");
+            verifyThat("#buttonKnown", isInvisible());
+        });
 
-        startStep("Export the selection");
-        clickOn("#buttonExport");
-        String text = FileUtils.readFileToString(exportFile.toFile());
-        assertThat("Export file content", text, containsString("the"));
-        endStep();
+        step("Return to edit mode", () -> {
+            clickOn("#buttonEditOn");
+            verifyThat("#buttonKnown", isVisible());
+        });
 
-        startStep("Save the session");
-        clickOn("#buttonSave");
-        validateSavedSession(BOOK1);
-        endStep();
+        step("Export the selection", () -> {
+            clickOn("#buttonExport");
+            String text = null;
+            text = readFile(exportFile);
+            assertThat("Export file content", text, containsString("the"));
+        });
 
-        startStep("Open a new session for a different book");
-        clickOn("#buttonNew");
-        verifyThat("#mainWord", hasText("the"));
-        endStep();
+        step("Save the session", () -> {
+            clickOn("#buttonSave");
+            validateSavedSession(BOOK1);
+        });
+    }
 
-        startStep("Re-open the old session");
-        clickOn("#buttonOpen");
-        verifyThat("#mainWord", hasText("to"));
-        endStep();
+    private void part2StartNewSessionAndFilter() {
+        step("Open a new session for a different book", () -> {
+            clickOn("#buttonNew");
+            verifyThat("#mainWord", hasText("the"));
+        });
+
+        step("Define filter", () -> {
+            clickOn("#buttonSetupFilters");
+            doubleClickOn("#fieldMinimumLetters").write("7");
+            doubleClickOn("#fieldMinimumOccurrences").write("4");
+            clickOn("#buttonOk");
+            verifyThat("#mainWord", hasText("surgeon"));
+        });
+
+        step("Mark filtered word as known", () -> {
+            clickOn("#buttonKnown");
+            verifyThat("#mainWord", hasText("workhouse"));
+        });
+
+        step("Disable filter", () -> {
+            clickOn("#buttonEnableFilters");
+            verifyThat("#mainWord", hasText("workhouse"));
+        });
+    }
+
+    private void part3ReopenFirstSession() {
+        step("Re-open the old session", () -> {
+            clickOn("#buttonOpen");
+            clickOn("Discard");
+            verifyThat("#mainWord", hasText("a"));
+        });
+    }
+
+    private String readFile(final Path file) {
+        try {
+            return FileUtils.readFileToString(file.toFile());
+        } catch (IOException e) {
+            throw new VocabHunterException(String.format("Unable to read file %s", file), e);
+        }
     }
 
     private void validateSavedSession(final String name) {
@@ -190,14 +230,10 @@ public class GuiTest extends FxRobot {
         }
     }
 
-    private void startStep(final String step) {
+    private void step(final String step, final Runnable runnable) {
         ++stepNo;
-        this.step = step;
-
         LOG.info("STEP {}: Begin - {}", stepNo, step);
-    }
-
-    private void endStep() {
+        runnable.run();
         LOG.info("STEP {}:   End - {}", stepNo, step);
     }
 }

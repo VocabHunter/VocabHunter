@@ -15,34 +15,12 @@ You can build the entire system with the following command:
 $ ./gradlew clean build
 ~~~
 
-During the build you will see the automated GUI tests run.  The VocabHunter GUI will briefly appear and a few buttons will be pressed on it as a part of the test.
-
 # How To Run VocabHunter
 
 To try the system out, you can run it directly from the command line as follows:
 ~~~
 $ ./gradlew :gui:run
 ~~~
-
-# Running The Build Without The GUI Tests
-
-If you run the build, the GUI tests will run.  This will cause the display to be briefly taken over.  To exclude just these tests but leave the other tests running as normal, start the build as follows:
-~~~
-$ ./gradlew clean build -PskipGuiTests
-~~~
-
-Alternatively, on Linux you can use the [XVFB](https://en.wikipedia.org/wiki/Xvfb) frame buffer to run the GUI tests.  If you're using a Debian-based Linux you can install XVFB as follows:
-~~~
-$ sudo apt-get install xvfb
-~~~
-
-Then, to run the build with the GUI tests in XVFB, use the following commands:
-~~~
-$ Xvfb :99 &>/dev/null &
-$ export DISPLAY=:99
-$ ./gradlew clean build
-~~~
-
 
 # How To Build An Installable Bundle
 

@@ -41,6 +41,7 @@ dependencies {
     testCompile project(path: ':core', configuration: 'tests')
     testCompile 'org.testfx:testfx-core:4.0.2-alpha'
     testCompile 'org.mockito:mockito-all:1.10.19'
+    testRuntime 'org.jfxtras:openjfx-monocle:1.8.0_20'
     runtime 'org.codehaus.janino:janino:2.7.8'
 }
 
@@ -48,4 +49,5 @@ test {
     if (project.hasProperty("skipGuiTests")) {
         exclude 'io/github/vocabhunter/gui/main/GuiTest*'
     }
+    jvmArgs "-Dheadless=true"
 }
