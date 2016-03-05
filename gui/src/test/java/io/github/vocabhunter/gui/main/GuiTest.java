@@ -7,6 +7,7 @@ package io.github.vocabhunter.gui.main;
 import io.github.vocabhunter.analysis.core.VocabHunterException;
 import io.github.vocabhunter.analysis.session.EnrichedSessionState;
 import io.github.vocabhunter.analysis.session.SessionSerialiser;
+import io.github.vocabhunter.gui.common.ToolkitManager;
 import io.github.vocabhunter.gui.container.GuiContainerBuilder;
 import io.github.vocabhunter.gui.dialogues.FileDialogue;
 import io.github.vocabhunter.gui.dialogues.FileDialogueType;
@@ -28,6 +29,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testfx.api.FxRobot;
 
+import java.awt.*;
 import java.io.IOException;
 import java.net.URL;
 import java.nio.file.Path;
@@ -50,9 +52,16 @@ public class GuiTest extends FxRobot {
 
     private static final String BOOK2 = "oliver-twist.txt";
 
+    private static final int SCREEN_WIDTH = 1366;
+
+    private static final int SCREEN_HEIGHT = 768;
+
     private static final Logger LOG = LoggerFactory.getLogger(GuiTest.class);
 
     private TestFileManager manager;
+
+    @Mock
+    ToolkitManager toolkitManager;
 
     @Mock
     private FileDialogueFactory fileDialogueFactory;
@@ -82,12 +91,14 @@ public class GuiTest extends FxRobot {
             System.setProperty("testfx.headless", "true");
             System.setProperty("prism.order", "sw");
             System.setProperty("prism.text", "t2k");
+            System.setProperty("java.awt.headless", "true");
         }
         registerPrimaryStage();
     }
 
     @Before
     public void setUp() throws Exception {
+        when(toolkitManager.getScreenSize()).thenReturn(new Dimension(SCREEN_WIDTH, SCREEN_HEIGHT));
         manager = new TestFileManager(getClass());
         exportFile = manager.addFile("export.txt");
         sessionFile = manager.addFile("session.wordy");
@@ -106,6 +117,7 @@ public class GuiTest extends FxRobot {
         MutablePicoContainer pico = GuiContainerBuilder.createBaseContainer();
         pico.addComponent(settingsManager);
         pico.addComponent(fileDialogueFactory);
+        pico.addComponent(toolkitManager);
         VocabHunterGuiExecutable.setPico(pico);
 
         setupApplication(VocabHunterGuiExecutable.class);
