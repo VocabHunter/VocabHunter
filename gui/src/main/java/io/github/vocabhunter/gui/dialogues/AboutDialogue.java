@@ -4,27 +4,28 @@
 
 package io.github.vocabhunter.gui.dialogues;
 
-import io.github.vocabhunter.gui.controller.AboutController;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
+import java.util.function.Consumer;
+
 public class AboutDialogue {
-    private final AboutController controller;
+    private final Consumer<Stage> controllerInitialiser;
 
     private final Parent root;
 
-    public AboutDialogue(final AboutController controller, final Parent root) {
-        this.controller = controller;
+    public AboutDialogue(final Consumer<Stage> controllerInitialiser, final Parent root) {
+        this.controllerInitialiser = controllerInitialiser;
         this.root = root;
     }
 
     public void show() {
         Stage stage = new Stage();
 
-        controller.initialise(stage);
+        controllerInitialiser.accept(stage);
 
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.initStyle(StageStyle.UNDECORATED);

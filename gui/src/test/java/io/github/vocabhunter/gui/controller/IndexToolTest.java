@@ -8,7 +8,7 @@ import io.github.vocabhunter.analysis.core.VocabHunterException;
 import org.junit.Assert;
 import org.junit.Test;
 
-import java.util.Arrays;
+import static io.github.vocabhunter.analysis.core.CollectionTool.listOf;
 
 public class IndexToolTest {
     private static final int SIZE = 10;
@@ -90,7 +90,6 @@ public class IndexToolTest {
     }
 
     private int findClosest(final Integer... accepted) {
-
-        return IndexTool.findClosest(REQUESTED, SIZE, Arrays.asList(accepted)::contains);
+        return IndexTool.findClosest(REQUESTED, SIZE, listOf(accepted)::contains);
     }
 }

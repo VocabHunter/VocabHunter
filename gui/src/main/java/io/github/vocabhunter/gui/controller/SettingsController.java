@@ -4,6 +4,7 @@
 
 package io.github.vocabhunter.gui.controller;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import io.github.vocabhunter.gui.model.FilterSettings;
 import io.github.vocabhunter.gui.model.MainModel;
 import javafx.beans.property.ReadOnlyBooleanProperty;
@@ -16,6 +17,7 @@ import org.slf4j.LoggerFactory;
 
 import java.util.function.Supplier;
 
+@SuppressFBWarnings({"NP_UNWRITTEN_PUBLIC_OR_PROTECTED_FIELD", "UWF_UNWRITTEN_PUBLIC_OR_PROTECTED_FIELD"})
 public class SettingsController {
     private static final Logger LOG = LoggerFactory.getLogger(SettingsController.class);
 

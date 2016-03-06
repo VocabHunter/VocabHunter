@@ -16,7 +16,7 @@ import org.junit.Test;
 import java.nio.file.Path;
 import java.util.List;
 
-import static java.util.Arrays.asList;
+import static io.github.vocabhunter.analysis.core.CollectionTool.listOf;
 import static org.junit.Assert.assertEquals;
 
 public class SelectionExportToolTest {
@@ -57,13 +57,13 @@ public class SelectionExportToolTest {
         SelectionExportTool.exportSelection(state, file);
 
         List<String> actual = FileUtils.readLines(file.toFile());
-        assertEquals("File content", asList(expected), actual);
+        assertEquals("File content", listOf(expected), actual);
     }
 
     private SessionState state(final SessionWord... words) {
         SessionState bean = new SessionState();
 
-        bean.setOrderedUses(asList(words));
+        bean.setOrderedUses(listOf(words));
 
         return bean;
     }

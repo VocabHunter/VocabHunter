@@ -4,7 +4,7 @@
 
 import io.github.vocabhunter.gui.main.VocabHunterGuiExecutable;
 
-import static io.github.vocabhunter.gui.container.GuiContainerBuilder.createGuiContainer;
+import static io.github.vocabhunter.gui.main.GuiContainerBuilder.createGuiContainer;
 
 /**
  * This class is used instead of VocabHunterGuiExecutable to avoid showing the package name in the JavaFX menu.

@@ -9,7 +9,7 @@ import org.junit.Test;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static java.util.Arrays.asList;
+import static io.github.vocabhunter.analysis.core.CollectionTool.listOf;
 import static org.junit.Assert.assertEquals;
 
 public class WordStreamToolTest {
@@ -97,6 +97,6 @@ public class WordStreamToolTest {
         List<String> actual = WordStreamTool.words(line)
             .collect(Collectors.toList());
 
-        assertEquals("Words", asList(expected), actual);
+        assertEquals("Words", listOf(expected), actual);
     }
 }

@@ -33,6 +33,7 @@ subprojects {
     apply plugin: 'java'
     apply plugin: 'pmd'
     apply plugin: 'checkstyle'
+    apply plugin: 'findbugs'
     apply plugin: 'jacoco'
     apply plugin: 'com.github.ben-manes.versions'
 
@@ -59,6 +60,19 @@ subprojects {
 
     [checkstyleMain, checkstyleTest].each { task ->
         task.logging.setLevel(LogLevel.LIFECYCLE)
+    }
+
+    findbugs {
+        toolVersion = '3.0.1'
+        effort = 'max'
+        reportLevel = 'medium'
+    }
+
+    tasks.withType(FindBugs) {
+        reports {
+            xml.enabled = false
+            html.enabled = true
+        }
     }
 
     jacoco {

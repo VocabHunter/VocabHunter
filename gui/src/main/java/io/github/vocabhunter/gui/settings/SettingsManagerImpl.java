@@ -12,7 +12,7 @@ import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.function.BiConsumer;
 import java.util.function.Function;
@@ -22,7 +22,7 @@ public class SettingsManagerImpl implements SettingsManager {
 
     private static final Charset UTF_8 = Charset.forName("UTF-8");
 
-    private static final List<String> MINIMAL_JSON = Arrays.asList("{}");
+    private static final List<String> MINIMAL_JSON = Collections.singletonList("{}");
 
     private final Path settingsFile;
 
@@ -39,7 +39,9 @@ public class SettingsManagerImpl implements SettingsManager {
         Path parent = settingsFile.getParent();
 
         try {
-            Files.createDirectories(parent);
+            if (parent != null) {
+                Files.createDirectories(parent);
+            }
         } catch (final IOException e) {
             throw new VocabHunterException(String.format("Unable to create directory %s", parent), e);
         }

@@ -4,6 +4,8 @@
 
 package io.github.vocabhunter.analysis.session;
 
+import io.github.vocabhunter.analysis.core.VocabHunterException;
+
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
@@ -25,7 +27,7 @@ public final class FileNameTool {
     }
 
     private static Path ensureFileHasSuffix(final Path file, final String suffix) {
-        String filename = file.getFileName().toString();
+        String filename = filename(file);
 
         if (!filename.contains(".")) {
             String newFilename = filename + suffix;
@@ -39,5 +41,15 @@ public final class FileNameTool {
         }
 
         return file;
+    }
+
+    public static String filename(final Path file) {
+        Path fileName = file.getFileName();
+
+        if (fileName == null) {
+            throw new VocabHunterException("Empty file path");
+        } else {
+            return fileName.toString();
+        }
     }
 }

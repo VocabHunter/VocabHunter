@@ -6,7 +6,7 @@ package io.github.vocabhunter.gui.distribution;
 
 import io.github.vocabhunter.gui.main.VocabHunterGuiExecutable;
 
-import static io.github.vocabhunter.gui.container.GuiContainerBuilder.createGuiContainer;
+import static io.github.vocabhunter.gui.main.GuiContainerBuilder.createGuiContainer;
 
 public class PackagedVocabHunter extends VocabHunterGuiExecutable {
     public static void main(final String... args) {

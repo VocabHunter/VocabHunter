@@ -4,17 +4,18 @@
 
 package io.github.vocabhunter.gui.controller;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import io.github.vocabhunter.analysis.file.FileStreamer;
 import io.github.vocabhunter.analysis.file.SelectionExportTool;
 import io.github.vocabhunter.analysis.session.EnrichedSessionState;
 import io.github.vocabhunter.analysis.session.FileNameTool;
 import io.github.vocabhunter.analysis.session.SessionSerialiser;
 import io.github.vocabhunter.analysis.session.SessionState;
+import io.github.vocabhunter.gui.common.AlertTool;
+import io.github.vocabhunter.gui.common.ControllerAndView;
 import io.github.vocabhunter.gui.common.GuiConstants;
 import io.github.vocabhunter.gui.common.WebPageTool;
 import io.github.vocabhunter.gui.dialogues.*;
-import io.github.vocabhunter.gui.factory.ControllerAndView;
-import io.github.vocabhunter.gui.factory.GuiFactory;
 import io.github.vocabhunter.gui.model.MainModel;
 import io.github.vocabhunter.gui.model.SessionModel;
 import io.github.vocabhunter.gui.settings.SettingsManager;
@@ -37,6 +38,7 @@ import java.util.function.Supplier;
 
 import static javafx.beans.binding.Bindings.not;
 
+@SuppressFBWarnings({"NP_UNWRITTEN_PUBLIC_OR_PROTECTED_FIELD", "UWF_UNWRITTEN_PUBLIC_OR_PROTECTED_FIELD"})
 public class MainController {
     private static final Logger LOG = LoggerFactory.getLogger(MainController.class);
 

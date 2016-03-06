@@ -9,10 +9,10 @@ import io.github.vocabhunter.analysis.model.AnalysisResult;
 import io.github.vocabhunter.analysis.model.WordUse;
 import org.junit.Test;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Stream;
 
+import static io.github.vocabhunter.analysis.core.CollectionTool.listOf;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
@@ -92,11 +92,11 @@ public class SimpleAnalyserTest {
     }
 
     private WordUse use(final String wordIdentifier, final int useCount, final String... uses) {
-        return new WordUse(wordIdentifier, useCount, Arrays.asList(uses));
+        return new WordUse(wordIdentifier, useCount, listOf(uses));
     }
 
     private void validate(final AnalysisResult result, final WordUse... expected) {
-        List<WordUse> expectedList = Arrays.asList(expected);
+        List<WordUse> expectedList = listOf(expected);
 
         assertEquals("Uses", expectedList, result.getOrderedUses());
     }

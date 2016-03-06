@@ -8,6 +8,7 @@ import io.github.vocabhunter.analysis.core.VocabHunterException;
 import io.github.vocabhunter.analysis.model.Analyser;
 import io.github.vocabhunter.analysis.model.AnalysisResult;
 import io.github.vocabhunter.analysis.session.EnrichedSessionState;
+import io.github.vocabhunter.analysis.session.FileNameTool;
 import io.github.vocabhunter.analysis.session.SessionSerialiser;
 import io.github.vocabhunter.analysis.session.SessionState;
 import org.apache.commons.lang3.StringUtils;
@@ -85,7 +86,7 @@ public class FileStreamer {
         try (InputStream in = Files.newInputStream(file)) {
             Stream<String> stream = stream(in, file);
 
-            return analyser.analyse(stream, file.getFileName().toString());
+            return analyser.analyse(stream, FileNameTool.filename(file));
 
         } catch (final IOException e) {
             throw readError(file, e);

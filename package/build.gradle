@@ -97,6 +97,14 @@ jfxbundle.doLast {
         def name = f.getName().replace("-1.0.${packageType}", "-${publishedVersion}.${packageType}")
         f.renameTo(file("build/bundles/$name"))
     }
+
+    File bundle = file("build/bundles/VocabHunter-${publishedVersion}.${packageType}")
+
+    if (bundle.exists()) {
+        println "Created bundle '$bundle'"
+    } else {
+        throw new GradleException("Unable to create bundle file '$bundle'")
+    }
 }
 
 jfxbundle.dependsOn jar, copyJars

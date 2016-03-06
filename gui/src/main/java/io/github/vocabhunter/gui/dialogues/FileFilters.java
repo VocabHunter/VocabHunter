@@ -9,7 +9,7 @@ import javafx.stage.FileChooser.ExtensionFilter;
 
 import java.util.List;
 
-import static java.util.Arrays.asList;
+import static io.github.vocabhunter.analysis.core.CollectionTool.listOf;
 
 public final class FileFilters {
     private static final ExtensionFilter FILTER_ALL = new ExtensionFilter("All Files", "*.*");
@@ -26,13 +26,13 @@ public final class FileFilters {
 
     private static final ExtensionFilter FILTER_SESSION = new ExtensionFilter("VocabHunter Session Files", "*" + FileNameTool.SESSION_SUFFIX);
 
-    public static final List<ExtensionFilter> INPUT_DOCUMENTS = asList(FILTER_ANY_TEXT, FILTER_PDF, FILTER_OFFICE, FILTER_EBOOK, FILTER_ALL);
+    public static final List<ExtensionFilter> INPUT_DOCUMENTS = listOf(FILTER_ANY_TEXT, FILTER_PDF, FILTER_OFFICE, FILTER_EBOOK, FILTER_ALL);
 
-    public static final List<ExtensionFilter> SESSIONS = asList(FILTER_SESSION);
+    public static final List<ExtensionFilter> SESSIONS = listOf(FILTER_SESSION);
 
-    public static final List<ExtensionFilter> SESSIONS_OR_ANY = asList(FILTER_SESSION, FILTER_ALL);
+    public static final List<ExtensionFilter> SESSIONS_OR_ANY = listOf(FILTER_SESSION, FILTER_ALL);
 
-    public static final List<ExtensionFilter> EXPORTS = asList(FILTER_TEXT);
+    public static final List<ExtensionFilter> EXPORTS = listOf(FILTER_TEXT);
 
     private FileFilters() {
         // Prevent instantiation - all members are static

@@ -10,9 +10,9 @@ import org.junit.Test;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
+import static io.github.vocabhunter.analysis.core.CollectionTool.listOf;
 import static io.github.vocabhunter.analysis.session.WordState.*;
 import static org.junit.Assert.assertEquals;
 
@@ -54,10 +54,6 @@ public class FormatHandlingTest {
         EnrichedSessionState actual = read(file);
 
         assertEquals("Session file", expected, actual);
-    }
-
-    private void validate(final SessionState state) {
-        assertEquals("Document name", DOCUMENT_NAME, state.getName());
     }
 
     private EnrichedSessionState read(final String file) throws Exception {
@@ -115,7 +111,7 @@ public class FormatHandlingTest {
 
         sw.setWordIdentifier(word);
         sw.setState(state);
-        sw.setUses(Arrays.asList(lines));
+        sw.setUses(listOf(lines));
         sw.setUseCount(useCount);
 
         uses.add(sw);

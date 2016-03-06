@@ -21,4 +21,5 @@ dependencies {
     compile 'commons-io:commons-io:2.4'
     compile 'org.apache.tika:tika-parsers:1.11'
     compile 'org.slf4j:slf4j-api:1.7.18'
+    compile 'com.google.code.findbugs:annotations:3.0.1'
 }

@@ -14,15 +14,15 @@ import java.io.InputStream;
 import java.net.URL;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Arrays;
 import java.util.List;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
+import static io.github.vocabhunter.analysis.core.CollectionTool.listOf;
 import static org.junit.Assert.assertEquals;
 
 public class FileStreamerTest {
-    private static final List<String> LINES = Arrays.asList(
+    private static final List<String> LINES = listOf(
             "The quick brown fox jumped over the lazy dog's back.",
             "Now is the time for all good men to come to the aid of the party.",
             "This is a simple test document.");

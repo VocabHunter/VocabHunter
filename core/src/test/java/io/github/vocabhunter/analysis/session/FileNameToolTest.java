@@ -4,6 +4,7 @@
 
 package io.github.vocabhunter.analysis.session;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import org.junit.Test;
 
 import java.nio.file.Path;
@@ -11,6 +12,7 @@ import java.nio.file.Paths;
 
 import static org.junit.Assert.assertEquals;
 
+@SuppressFBWarnings("DMI_HARDCODED_ABSOLUTE_FILENAME")
 public class FileNameToolTest {
     @Test
     public void testEmpty() {

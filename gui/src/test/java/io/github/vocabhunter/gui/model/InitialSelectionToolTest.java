@@ -13,9 +13,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import static io.github.vocabhunter.analysis.session.WordState.KNOWN;
-import static io.github.vocabhunter.analysis.session.WordState.UNKNOWN;
-import static io.github.vocabhunter.analysis.session.WordState.UNSEEN;
+import static io.github.vocabhunter.analysis.session.WordState.*;
 
 public class InitialSelectionToolTest {
     @Test(expected = VocabHunterException.class)
