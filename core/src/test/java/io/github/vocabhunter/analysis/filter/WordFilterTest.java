@@ -11,12 +11,12 @@ import org.junit.Test;
 import java.util.Collections;
 import java.util.List;
 
-import static java.util.Arrays.asList;
+import static io.github.vocabhunter.analysis.core.CollectionTool.listOf;
 import static java.util.stream.Collectors.toList;
 import static org.junit.Assert.assertEquals;
 
 public class WordFilterTest {
-    private static final List<AnalysisWord> WORDS = asList(
+    private static final List<AnalysisWord> WORDS = listOf(
         word("a", 10),
         word("don't", 2),
         word("hello", 2),
@@ -57,7 +57,7 @@ public class WordFilterTest {
             .map(AnalysisWord::getWordIdentifier)
             .collect(toList());
 
-        assertEquals("Filtered words", asList(expected), actual);
+        assertEquals("Filtered words", listOf(expected), actual);
     }
 
     private static AnalysisWord word(final String word, final int uses) {

@@ -8,7 +8,7 @@ import org.junit.Test;
 
 import java.util.List;
 
-import static java.util.Arrays.asList;
+import static io.github.vocabhunter.analysis.core.CollectionTool.listOf;
 import static java.util.stream.Collectors.toList;
 import static org.junit.Assert.assertEquals;
 
@@ -63,6 +63,6 @@ public class WordUseToolTest {
         List<String> actual = tool.stream()
                 .collect(toList());
 
-        assertEquals("Use: " + use, asList(expected), actual);
+        assertEquals("Use: " + use, listOf(expected), actual);
     }
 }

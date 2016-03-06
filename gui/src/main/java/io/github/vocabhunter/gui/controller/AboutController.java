@@ -4,6 +4,7 @@
 
 package io.github.vocabhunter.gui.controller;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import io.github.vocabhunter.gui.common.BuildInfo;
 import io.github.vocabhunter.gui.common.GuiConstants;
 import io.github.vocabhunter.gui.common.WebPageTool;
@@ -12,6 +13,7 @@ import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
 
+@SuppressFBWarnings({"NP_UNWRITTEN_PUBLIC_OR_PROTECTED_FIELD", "UWF_UNWRITTEN_PUBLIC_OR_PROTECTED_FIELD"})
 public class AboutController {
     public Button buttonClose;
 

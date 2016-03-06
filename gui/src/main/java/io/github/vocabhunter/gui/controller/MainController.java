@@ -4,6 +4,7 @@
 
 package io.github.vocabhunter.gui.controller;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import io.github.vocabhunter.analysis.file.FileStreamer;
 import io.github.vocabhunter.analysis.file.SelectionExportTool;
 import io.github.vocabhunter.analysis.session.EnrichedSessionState;
@@ -37,6 +38,7 @@ import java.util.function.Supplier;
 
 import static javafx.beans.binding.Bindings.not;
 
+@SuppressFBWarnings({"NP_UNWRITTEN_PUBLIC_OR_PROTECTED_FIELD", "UWF_UNWRITTEN_PUBLIC_OR_PROTECTED_FIELD"})
 public class MainController {
     private static final Logger LOG = LoggerFactory.getLogger(MainController.class);
 
