@@ -6,13 +6,11 @@ package io.github.vocabhunter.gui.main;
 
 import io.github.vocabhunter.analysis.core.VocabHunterException;
 import io.github.vocabhunter.analysis.file.FileStreamer;
+import io.github.vocabhunter.gui.common.ControllerAndView;
 import io.github.vocabhunter.gui.controller.*;
 import io.github.vocabhunter.gui.dialogues.*;
 import io.github.vocabhunter.gui.event.ExternalEventBroker;
 import io.github.vocabhunter.gui.event.ExternalEventSource;
-import io.github.vocabhunter.gui.factory.ControllerAndView;
-import io.github.vocabhunter.gui.factory.FileDialogueFactory;
-import io.github.vocabhunter.gui.factory.GuiFactory;
 import io.github.vocabhunter.gui.model.MainModel;
 import io.github.vocabhunter.gui.model.SessionModel;
 import io.github.vocabhunter.gui.settings.SettingsManager;
@@ -133,7 +131,7 @@ public class GuiFactoryImpl implements GuiFactory {
         Parent root = loadNode(loader, FXML_ABOUT);
         AboutController controller = loader.getController();
 
-        return new AboutDialogue(controller, root);
+        return new AboutDialogue(controller::initialise, root);
     }
 
     @Override
@@ -142,6 +140,6 @@ public class GuiFactoryImpl implements GuiFactory {
         Parent root = loadNode(loader, FXML_SETTINGS);
         SettingsController controller = loader.getController();
 
-        return new SettingsDialogue(model, controller, root);
+        return new SettingsDialogue(model, controller::initialise, root);
     }
 }

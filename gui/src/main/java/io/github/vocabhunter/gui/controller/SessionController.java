@@ -6,7 +6,7 @@ package io.github.vocabhunter.gui.controller;
 
 import io.github.vocabhunter.analysis.filter.WordFilter;
 import io.github.vocabhunter.analysis.session.WordState;
-import io.github.vocabhunter.gui.dialogues.AlertTool;
+import io.github.vocabhunter.gui.common.AlertTool;
 import io.github.vocabhunter.gui.model.FilterSettings;
 import io.github.vocabhunter.gui.model.FilterTool;
 import io.github.vocabhunter.gui.model.SessionModel;

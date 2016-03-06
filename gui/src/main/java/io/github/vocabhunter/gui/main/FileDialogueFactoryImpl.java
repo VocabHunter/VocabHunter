@@ -5,9 +5,9 @@
 package io.github.vocabhunter.gui.main;
 
 import io.github.vocabhunter.gui.dialogues.FileDialogue;
+import io.github.vocabhunter.gui.dialogues.FileDialogueFactory;
 import io.github.vocabhunter.gui.dialogues.FileDialogueImpl;
 import io.github.vocabhunter.gui.dialogues.FileDialogueType;
-import io.github.vocabhunter.gui.factory.FileDialogueFactory;
 import io.github.vocabhunter.gui.settings.SettingsManager;
 import javafx.stage.Stage;
 

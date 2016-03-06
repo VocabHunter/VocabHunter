@@ -5,7 +5,7 @@
 package io.github.vocabhunter.gui.dialogues;
 
 import io.github.vocabhunter.gui.common.GuiConstants;
-import io.github.vocabhunter.gui.factory.UnsavedResponse;
+import io.github.vocabhunter.gui.common.UnsavedResponse;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 

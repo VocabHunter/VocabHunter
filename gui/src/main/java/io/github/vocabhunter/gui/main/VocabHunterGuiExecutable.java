@@ -4,12 +4,12 @@
 
 package io.github.vocabhunter.gui.main;
 
+import io.github.vocabhunter.gui.common.ControllerAndView;
 import io.github.vocabhunter.gui.common.ToolkitManager;
+import io.github.vocabhunter.gui.controller.GuiFactory;
 import io.github.vocabhunter.gui.controller.MainController;
 import io.github.vocabhunter.gui.event.ExternalEventBroker;
 import io.github.vocabhunter.gui.event.SingleExternalEventSource;
-import io.github.vocabhunter.gui.factory.ControllerAndView;
-import io.github.vocabhunter.gui.factory.GuiFactory;
 import javafx.application.Application;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -20,8 +20,8 @@ import java.awt.*;
 import java.util.List;
 import java.util.function.Consumer;
 
-import static io.github.vocabhunter.gui.container.GuiContainerBuilder.createGuiContainer;
 import static io.github.vocabhunter.gui.main.ExecutableLogTool.*;
+import static io.github.vocabhunter.gui.main.GuiContainerBuilder.createGuiContainer;
 
 public class VocabHunterGuiExecutable extends Application {
     private static final double WINDOW_SIZE_FACTOR = 0.80;

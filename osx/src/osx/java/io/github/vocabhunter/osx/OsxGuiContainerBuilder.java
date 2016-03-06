@@ -4,7 +4,7 @@
 
 package io.github.vocabhunter.osx;
 
-import io.github.vocabhunter.gui.container.GuiContainerBuilder;
+import io.github.vocabhunter.gui.main.GuiContainerBuilder;
 import org.picocontainer.MutablePicoContainer;
 
 public final class OsxGuiContainerBuilder {
