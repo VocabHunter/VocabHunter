@@ -13,7 +13,7 @@
   ~ Open Source Software published under the Apache Licence, Version 2.0.
   -->
 
-<BorderPane styleClass="settings" stylesheets="@main.css" xmlns="http://javafx.com/javafx/null" xmlns:fx="http://javafx.com/fxml/1" fx:controller="io.github.vocabhunter.gui.controller.SettingsController">
+<BorderPane styleClass="settings" stylesheets="@main.css" xmlns="http://javafx.com/javafx/8.0.82-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="io.github.vocabhunter.gui.controller.SettingsController">
    <top>
       <Label styleClass="description" text="Choose the words you want to show" BorderPane.alignment="CENTER" />
    </top>
