@@ -14,7 +14,7 @@ import static java.util.Comparator.comparing;
 
 public final class WordStreamTool {
     private static final Pattern PATTERN = Pattern.compile(
-        "^\\P{javaLetter}+|\\P{javaLetter}+$|\\p{javaWhitespace}\\P{javaLetter}*|\\P{javaLetter}*\\p{javaWhitespace}");
+        "^\\P{javaLetter}+|\\P{javaLetter}+$|\\P{javaLetter}*\\p{javaWhitespace}\\P{javaLetter}*");
 
     public static final Comparator<AnalysisWord> WORD_COMPARATOR
         = comparing(AnalysisWord::getUseCount).reversed().thenComparing(AnalysisWord::getWordIdentifier);
