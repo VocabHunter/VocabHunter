@@ -13,6 +13,8 @@ import java.nio.file.Path;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static io.github.vocabhunter.analysis.session.FormatVersion.*;
+
 public final class SessionSerialiser {
     private static final ObjectMapper MAPPER = new ObjectMapper();
 
@@ -33,7 +35,7 @@ public final class SessionSerialiser {
             SessionState state = MAPPER.readValue(file.toFile(), SessionState.class);
             int formatVersion = state.getFormatVersion();
 
-            if (formatVersion < 1 || formatVersion > FormatVersion.MAX_SUPPORTED_VERSION) {
+            if (formatVersion < 1 || formatVersion > LATEST_VERSION) {
                 throw new VocabHunterException("This file was created with a newer version of VocabHunter.  Please upgrade and try again.");
             } else {
                 EnrichedSessionState enriched = new EnrichedSessionState(upgradeVersion(state), file);
@@ -46,34 +48,37 @@ public final class SessionSerialiser {
     }
 
     private static SessionState upgradeVersion(final SessionState original) {
-        if (original.getFormatVersion() == FormatVersion.FORMAT_1) {
-            return upgradeVersion1(original);
+        int version = original.getFormatVersion();
+
+        if (version == FORMAT_1 || version == FORMAT_2) {
+            return upgradeVersion1And2(original);
         } else {
             return original;
         }
     }
 
-    private static SessionState upgradeVersion1(final SessionState original) {
+    private static SessionState upgradeVersion1And2(final SessionState original) {
         SessionState state = new SessionState();
         List<SessionWord> words = original.getOrderedUses().stream()
-            .map(SessionSerialiser::upgradeVersion1)
+            .map(SessionSerialiser::upgradeVersion1And2)
             .sorted(WordStreamTool.WORD_COMPARATOR)
             .collect(Collectors.toList());
 
-        state.setFormatVersion(FormatVersion.FORMAT_2);
+        state.setFormatVersion(FORMAT_3);
         state.setName(original.getName());
         state.setOrderedUses(words);
 
         return state;
     }
 
-    private static SessionWord upgradeVersion1(final SessionWord original) {
+    private static SessionWord upgradeVersion1And2(final SessionWord original) {
         SessionWord word = new SessionWord();
         String identifier = original.getWordIdentifier();
+        List<String> uses = original.getUses();
 
-        word.setWordIdentifier(identifier);
-        word.setUses(original.getUses());
-        word.setUseCount(countWords(identifier, original.getUses()));
+        word.setWordIdentifier(identifier(identifier, uses));
+        word.setUses(uses);
+        word.setUseCount(countWords(identifier, uses));
         word.setState(original.getState());
 
         return word;
@@ -84,5 +89,13 @@ public final class SessionSerialiser {
             .flatMap(WordStreamTool::words)
             .filter(w -> w.equalsIgnoreCase(identifier))
             .count();
+    }
+
+    private static String identifier(final String oldIdentifier, final List<String> uses) {
+        return uses.stream()
+            .flatMap(WordStreamTool::words)
+            .filter(w -> w.equalsIgnoreCase(oldIdentifier))
+            .reduce(WordStreamTool::preferredForm)
+            .get();
     }
 }

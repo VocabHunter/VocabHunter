@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class SessionState {
-    private int formatVersion = FormatVersion.MAX_SUPPORTED_VERSION;
+    private int formatVersion = FormatVersion.LATEST_VERSION;
 
     private String name;
 

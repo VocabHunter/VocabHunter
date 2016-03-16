@@ -14,7 +14,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import java.util.function.Function;
 import java.util.stream.Stream;
 
 import static java.util.stream.Collectors.*;
@@ -27,7 +26,7 @@ public class SimpleAnalyser implements Analyser {
         Map<String, WordUse> map = lines.flatMap(l -> uses(l))
                 .collect(
                         groupingBy(
-                                WordUse::getWordIdentifier,
+                                WordStreamTool::classifier,
                                 collectingAndThen(reducing(this::combine), Optional::get)));
         List<WordUse> uses = map.values().stream()
                 .sorted(WordStreamTool.WORD_COMPARATOR)
@@ -40,20 +39,33 @@ public class SimpleAnalyser implements Analyser {
     }
 
     private Stream<WordUse> uses(final String line) {
-        Map<String, Long> counts = WordStreamTool.words(line)
-                .map(String::toLowerCase)
-                .collect(
-                        groupingBy(Function.identity(), counting()));
+        Map<String, WordUse> map = WordStreamTool.words(line)
+            .map(w -> new WordUse(w, 1, line))
+            .collect(
+                groupingBy(
+                    WordStreamTool::classifier,
+                    collectingAndThen(reducing(this::combineSingleLine), Optional::get)));
 
-        return counts.entrySet().stream()
-                .map(e -> new WordUse(e.getKey(), e.getValue().intValue(), line));
+        return map.values().stream();
+    }
+
+
+    private WordUse combineSingleLine(final WordUse w1, final WordUse w2) {
+        return combine(w1, w2, w1.getUses());
     }
 
     private WordUse combine(final WordUse w1, final WordUse w2) {
-        List<String> l = new ArrayList<>(w1.getUses());
+        List<String> uses = new ArrayList<>(w1.getUses());
 
-        l.addAll(w2.getUses());
+        uses.addAll(w2.getUses());
 
-        return new WordUse(w1.getWordIdentifier(), w1.getUseCount() + w2.getUseCount(), l);
+        return combine(w1, w2, uses);
+    }
+
+    private WordUse combine(final WordUse w1, final WordUse w2, final List<String> uses) {
+        String identifier = WordStreamTool.preferredForm(w1.getWordIdentifier(), w2.getWordIdentifier());
+        int useCount = w1.getUseCount() + w2.getUseCount();
+
+        return new WordUse(identifier, useCount, uses);
     }
 }
