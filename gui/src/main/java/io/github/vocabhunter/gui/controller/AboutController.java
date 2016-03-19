@@ -21,9 +21,9 @@ public class AboutController {
 
     public Label labelVersion;
 
-    public void initialise(final Stage stage) {
+    public void initialise(final Stage stage, final WebPageTool webPageTool) {
         buttonClose.setOnAction(e -> stage.close());
-        linkWebsite.setOnAction(e -> WebPageTool.showWebPage(GuiConstants.WEBSITE));
+        linkWebsite.setOnAction(e -> webPageTool.showWebPage(GuiConstants.WEBSITE));
         setupVersion();
     }
 

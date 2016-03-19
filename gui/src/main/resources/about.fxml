@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Text?>
 
-<Pane styleClass="about" stylesheets="@main.css" xmlns="http://javafx.com/javafx/8.0.82-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="io.github.vocabhunter.gui.controller.AboutController">
+<Pane fx:id="aboutDialogue" styleClass="about" stylesheets="@main.css" xmlns="http://javafx.com/javafx/8.0.82-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="io.github.vocabhunter.gui.controller.AboutController">
     <children>
         <BorderPane>
             <top>

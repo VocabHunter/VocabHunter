@@ -26,7 +26,7 @@
     <top>
         <VBox>
             <children>
-                <MenuBar useSystemMenuBar="true">
+                <MenuBar fx:id="menuBar">
                     <menus>
                         <Menu mnemonicParsing="false" text="File">
                             <items>
@@ -50,7 +50,7 @@
                                 <CheckMenuItem fx:id="menuEnableFilters" mnemonicParsing="false" selected="true" text="Enable Filters" />
                             </items>
                         </Menu>
-                        <Menu mnemonicParsing="false" text="Help">
+                        <Menu fx:id="menuHelp" mnemonicParsing="false" text="Help">
                             <items>
                                 <MenuItem fx:id="menuWebsite" mnemonicParsing="false" text="VocabHunter Website" />
                                 <MenuItem fx:id="menuHowTo" mnemonicParsing="false" text="How to Use VocabHunter" />
