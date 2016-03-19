@@ -21,7 +21,8 @@ public class FilterHandler {
     public void prepare() {
         int minimumLetters = settingsManager.getFilterMinimumLetters();
         int minimumOccurrences = settingsManager.getFilterMinimumOccurrences();
-        FilterSettings settings = new FilterSettings(minimumLetters, minimumOccurrences);
+        boolean allowInitialCapitals = settingsManager.isAllowInitialCapitals();
+        FilterSettings settings = new FilterSettings(minimumLetters, minimumOccurrences, allowInitialCapitals);
 
         model.setFilterSettings(settings);
         model.filterSettingsProperty().addListener(((o, old, v) -> updateFilterSettings(v)));
@@ -30,5 +31,6 @@ public class FilterHandler {
     private void updateFilterSettings(final FilterSettings settings) {
         settingsManager.setFilterMinimumLetters(settings.getMinimumLetters());
         settingsManager.setFilterMinimumOccurrences(settings.getMinimumOccurrences());
+        settingsManager.setAllowInitialCapitals(settings.isAllowInitialCapitals());
     }
 }

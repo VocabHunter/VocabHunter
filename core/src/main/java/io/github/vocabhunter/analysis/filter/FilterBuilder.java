@@ -12,6 +12,8 @@ public class FilterBuilder {
 
     private WordFilter minimumOccurrencesFilter;
 
+    private WordFilter excludeInitialCapitalFilter;
+
     public FilterBuilder minimumLetters(final int count) {
         minimumLettersFilter = new MinimumLettersFilter(count);
 
@@ -24,16 +26,25 @@ public class FilterBuilder {
         return this;
     }
 
+    public FilterBuilder excludeInitialCapital() {
+        excludeInitialCapitalFilter = new InitialCapitalFilter();
+
+        return this;
+    }
+
     public WordFilter build() {
         List<WordFilter> filters = new ArrayList<>();
 
-        if (minimumLettersFilter != null) {
-            filters.add(minimumLettersFilter);
-        }
-        if (minimumOccurrencesFilter != null) {
-            filters.add(minimumOccurrencesFilter);
-        }
+        addIfUsed(filters, minimumLettersFilter);
+        addIfUsed(filters, minimumOccurrencesFilter);
+        addIfUsed(filters, excludeInitialCapitalFilter);
 
         return new AggregateFilter(filters);
+    }
+
+    private void addIfUsed(final List<WordFilter> filters, final WordFilter filter) {
+        if (filter != null) {
+            filters.add(filter);
+        }
     }
 }

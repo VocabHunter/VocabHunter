@@ -16,6 +16,9 @@ public class VocabHunterConsoleArguments {
     @Parameter(names = "-minoccurrences", description = "Minimum number of occurrences of word for it to be shown")
     private int minOccurrences = 3;
 
+    @Parameter(names = "-ignoreinitialcapitals", description = "Ignore words that begin with a capital letter")
+    private boolean isIgnoreInitialCapitals = false;
+
     public String getInput() {
         return input;
     }
@@ -38,5 +41,13 @@ public class VocabHunterConsoleArguments {
 
     public void setMinOccurrences(final int minOccurrences) {
         this.minOccurrences = minOccurrences;
+    }
+
+    public boolean isIgnoreInitialCapitals() {
+        return isIgnoreInitialCapitals;
+    }
+
+    public void setIgnoreInitialCapitals(final boolean ignoreInitialCapitals) {
+        isIgnoreInitialCapitals = ignoreInitialCapitals;
     }
 }

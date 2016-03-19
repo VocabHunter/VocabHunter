@@ -192,20 +192,21 @@ public class GuiTest extends FxRobot {
 
         step("Define filter", () -> {
             clickOn("#buttonSetupFilters");
-            doubleClickOn("#fieldMinimumLetters").write("7");
+            doubleClickOn("#fieldMinimumLetters").write("6");
             doubleClickOn("#fieldMinimumOccurrences").write("4");
+            clickOn("#fieldInitialCapital");
             clickOn("#buttonOk");
             verifyThat("#mainWord", hasText("surgeon"));
         });
 
         step("Mark filtered word as known", () -> {
             clickOn("#buttonKnown");
-            verifyThat("#mainWord", hasText("workhouse"));
+            verifyThat("#mainWord", hasText("parish"));
         });
 
         step("Disable filter", () -> {
             clickOn("#buttonEnableFilters");
-            verifyThat("#mainWord", hasText("workhouse"));
+            verifyThat("#mainWord", hasText("parish"));
         });
     }
 
