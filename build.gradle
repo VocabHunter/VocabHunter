@@ -78,4 +78,8 @@ subprojects {
     jacoco {
         toolVersion = '0.7.6.201602180812'
     }
+
+    [compileJava, compileTestJava].each { task ->
+        task.options.compilerArgs << "-Xlint:unchecked" << "-Xlint:deprecation" << "-Werror"
+    }
 }
