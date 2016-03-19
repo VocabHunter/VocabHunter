@@ -45,7 +45,7 @@ subprojects {
 
     dependencies {
         testCompile 'junit:junit:4.12'
-        runtime 'ch.qos.logback:logback-classic:1.1.5'
+        runtime 'ch.qos.logback:logback-classic:1.1.6'
     }
 
     pmd {
