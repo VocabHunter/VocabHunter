@@ -7,7 +7,8 @@ package io.github.vocabhunter.gui.main;
 import io.github.vocabhunter.analysis.core.VocabHunterException;
 import io.github.vocabhunter.analysis.session.EnrichedSessionState;
 import io.github.vocabhunter.analysis.session.SessionSerialiser;
-import io.github.vocabhunter.gui.common.ToolkitManager;
+import io.github.vocabhunter.gui.common.EnvironmentManager;
+import io.github.vocabhunter.gui.common.WebPageTool;
 import io.github.vocabhunter.gui.dialogues.FileDialogue;
 import io.github.vocabhunter.gui.dialogues.FileDialogueFactory;
 import io.github.vocabhunter.gui.dialogues.FileDialogueType;
@@ -21,6 +22,8 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.ArgumentCaptor;
+import org.mockito.Captor;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.picocontainer.MutablePicoContainer;
@@ -34,12 +37,14 @@ import java.net.URL;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
+import static io.github.vocabhunter.gui.common.GuiConstants.WEBPAGE_HELP;
+import static io.github.vocabhunter.gui.common.GuiConstants.WEBPAGE_ISSUE;
+import static io.github.vocabhunter.gui.common.GuiConstants.WEBSITE;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsString;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Matchers.eq;
-import static org.mockito.Mockito.any;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 import static org.testfx.api.FxAssert.verifyThat;
 import static org.testfx.api.FxToolkit.registerPrimaryStage;
 import static org.testfx.api.FxToolkit.setupApplication;
@@ -60,7 +65,7 @@ public class GuiTest extends FxRobot {
     private TestFileManager manager;
 
     @Mock
-    ToolkitManager toolkitManager;
+    EnvironmentManager environmentManager;
 
     @Mock
     private FileDialogueFactory fileDialogueFactory;
@@ -76,6 +81,12 @@ public class GuiTest extends FxRobot {
 
     @Mock
     private FileDialogue exportDialogue;
+
+    @Mock
+    private WebPageTool webPageTool;
+
+    @Captor
+    private ArgumentCaptor<String> webPageCaptor;
 
     private Path exportFile;
 
@@ -97,7 +108,9 @@ public class GuiTest extends FxRobot {
 
     @Before
     public void setUp() throws Exception {
-        when(toolkitManager.getScreenSize()).thenReturn(new Dimension(SCREEN_WIDTH, SCREEN_HEIGHT));
+        when(environmentManager.getScreenSize()).thenReturn(new Dimension(SCREEN_WIDTH, SCREEN_HEIGHT));
+        when(environmentManager.useSystemMenuBar()).thenReturn(false);
+
         manager = new TestFileManager(getClass());
         exportFile = manager.addFile("export.txt");
         sessionFile = manager.addFile("session.wordy");
@@ -116,7 +129,8 @@ public class GuiTest extends FxRobot {
         MutablePicoContainer pico = GuiContainerBuilder.createBaseContainer();
         pico.addComponent(settingsManager);
         pico.addComponent(fileDialogueFactory);
-        pico.addComponent(toolkitManager);
+        pico.addComponent(environmentManager);
+        pico.addComponent(webPageTool);
         VocabHunterGuiExecutable.setPico(pico);
 
         setupApplication(VocabHunterGuiExecutable.class);
@@ -138,6 +152,8 @@ public class GuiTest extends FxRobot {
         part1BasicWalkThrough();
         part2StartNewSessionAndFilter();
         part3ReopenFirstSession();
+        part4AboutDialogue();
+        part5WebLinks();
     }
 
     private void part1BasicWalkThrough() {
@@ -192,20 +208,21 @@ public class GuiTest extends FxRobot {
 
         step("Define filter", () -> {
             clickOn("#buttonSetupFilters");
-            doubleClickOn("#fieldMinimumLetters").write("7");
+            doubleClickOn("#fieldMinimumLetters").write("6");
             doubleClickOn("#fieldMinimumOccurrences").write("4");
+            clickOn("#fieldInitialCapital");
             clickOn("#buttonOk");
             verifyThat("#mainWord", hasText("surgeon"));
         });
 
         step("Mark filtered word as known", () -> {
             clickOn("#buttonKnown");
-            verifyThat("#mainWord", hasText("workhouse"));
+            verifyThat("#mainWord", hasText("parish"));
         });
 
         step("Disable filter", () -> {
             clickOn("#buttonEnableFilters");
-            verifyThat("#mainWord", hasText("workhouse"));
+            verifyThat("#mainWord", hasText("parish"));
         });
     }
 
@@ -215,6 +232,48 @@ public class GuiTest extends FxRobot {
             clickOn("Discard");
             verifyThat("#mainWord", hasText("a"));
         });
+    }
+
+    private void part4AboutDialogue() {
+        step("Open About dialogue", () -> {
+            clickOn("#menuHelp");
+            clickOn("#menuAbout");
+            verifyThat("#aboutDialogue", isVisible());
+        });
+
+        step("Open website from About dialogue", () -> {
+            clickOn("#linkWebsite");
+            validateWebPage(WEBSITE);
+        });
+
+        step("Close About dialogue", () -> {
+            clickOn("#buttonClose");
+        });
+    }
+
+    private void part5WebLinks() {
+        step("Open website", () -> {
+            clickOn("#menuHelp");
+            clickOn("#menuWebsite");
+            validateWebPage(WEBSITE);
+        });
+
+        step("Open VocabHunter How To", () -> {
+            clickOn("#menuHelp");
+            clickOn("#menuHowTo");
+            validateWebPage(WEBPAGE_HELP);
+        });
+
+        step("Open Issue Reporting", () -> {
+            clickOn("#menuHelp");
+            clickOn("#menuIssue");
+            validateWebPage(WEBPAGE_ISSUE);
+        });
+    }
+
+    private void validateWebPage(final String webpageHelp) {
+        verify(webPageTool, atLeastOnce()).showWebPage(webPageCaptor.capture());
+        assertEquals("Website", webpageHelp, webPageCaptor.getValue());
     }
 
     private String readFile(final Path file) {

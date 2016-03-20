@@ -12,6 +12,8 @@ public class VocabHunterSettings {
 
     public static final int DEFAULT_MINIMUM_OCCURRENCES = 2;
 
+    public static final boolean DEFAULT_ALLOW_INITIAL_CAPITALS = true;
+
     private String documentsPath;
 
     private String sessionsPath;
@@ -21,6 +23,8 @@ public class VocabHunterSettings {
     private int filterMinimumLetters = DEFAULT_MINIMUM_LETTERS;
 
     private int filterMinimumOccurrences = DEFAULT_MINIMUM_OCCURRENCES;
+
+    private boolean isAllowInitialCaptials = DEFAULT_ALLOW_INITIAL_CAPITALS;
 
     public String getDocumentsPath() {
         return documentsPath;
@@ -60,5 +64,13 @@ public class VocabHunterSettings {
 
     public void setFilterMinimumOccurrences(final int filterMinimumOccurrences) {
         this.filterMinimumOccurrences = filterMinimumOccurrences;
+    }
+
+    public boolean isAllowInitialCaptials() {
+        return isAllowInitialCaptials;
+    }
+
+    public void setAllowInitialCaptials(final boolean allowInitialCaptials) {
+        isAllowInitialCaptials = allowInitialCaptials;
     }
 }

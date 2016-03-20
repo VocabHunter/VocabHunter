@@ -33,10 +33,7 @@ public final class VocabHunterConsoleExecutable {
             Path file = Paths.get(bean.getInput());
             SimpleAnalyser analyser = new SimpleAnalyser();
             FileStreamer streamer = new FileStreamer(analyser);
-            WordFilter wordFilter = new FilterBuilder()
-                .minimumLetters(bean.getMinLetters())
-                .minimumOccurrences(bean.getMinOccurrences())
-                .build();
+            WordFilter wordFilter = buildFilter(bean);
             AnalysisResult model = streamer.analyse(file);
 
             model.getOrderedUses().stream()
@@ -45,6 +42,18 @@ public final class VocabHunterConsoleExecutable {
         } catch (final Exception e) {
             LOG.error("Application error", e);
         }
+    }
+
+    private static WordFilter buildFilter(final VocabHunterConsoleArguments bean) {
+        FilterBuilder builder = new FilterBuilder()
+            .minimumLetters(bean.getMinLetters())
+            .minimumOccurrences(bean.getMinOccurrences());
+
+        if (bean.isIgnoreInitialCapitals()) {
+            builder.excludeInitialCapital();
+        }
+
+        return builder.build();
     }
 
     private static void display(final WordUse use) {

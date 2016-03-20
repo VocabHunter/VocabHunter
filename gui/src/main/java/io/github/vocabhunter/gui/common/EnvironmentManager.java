@@ -6,6 +6,8 @@ package io.github.vocabhunter.gui.common;
 
 import java.awt.*;
 
-public interface ToolkitManager {
+public interface EnvironmentManager {
     Dimension getScreenSize();
+
+    boolean useSystemMenuBar();
 }

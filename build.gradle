@@ -8,7 +8,7 @@ allprojects {
 
 task wrapper(type: Wrapper) {
     description 'Setup the Gradle wrapper'
-    gradleVersion = '2.11'
+    gradleVersion = '2.12'
 }
 
 buildscript {
@@ -45,7 +45,7 @@ subprojects {
 
     dependencies {
         testCompile 'junit:junit:4.12'
-        runtime 'ch.qos.logback:logback-classic:1.1.5'
+        runtime 'ch.qos.logback:logback-classic:1.1.6'
     }
 
     pmd {
@@ -77,5 +77,9 @@ subprojects {
 
     jacoco {
         toolVersion = '0.7.6.201602180812'
+    }
+
+    [compileJava, compileTestJava].each { task ->
+        task.options.compilerArgs << "-Xlint:unchecked" << "-Xlint:deprecation" << "-Werror"
     }
 }

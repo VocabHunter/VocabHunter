@@ -17,9 +17,9 @@ import static org.junit.Assert.assertEquals;
 
 public class WordFilterTest {
     private static final List<AnalysisWord> WORDS = listOf(
-        word("a", 10),
+        word("A", 10),
         word("don't", 2),
-        word("hello", 2),
+        word("Hello", 2),
         word("banana", 3)
     );
 
@@ -27,26 +27,40 @@ public class WordFilterTest {
     public void testNoFilter() {
         WordFilter filter = new FilterBuilder().build();
 
-        validate(filter, "a", "don't", "hello", "banana");
+        validate(filter, "A", "don't", "Hello", "banana");
     }
 
     @Test
     public void testMinimumOccurrences() {
         WordFilter filter = new FilterBuilder().minimumOccurrences(3).build();
 
-        validate(filter, "a", "banana");
+        validate(filter, "A", "banana");
     }
 
     @Test
     public void testMinimumLetters() {
         WordFilter filter = new FilterBuilder().minimumLetters(5).build();
 
-        validate(filter, "hello", "banana");
+        validate(filter, "Hello", "banana");
     }
 
     @Test
     public void testMinimumOccurrencesAndMinumumLetters() {
         WordFilter filter = new FilterBuilder().minimumOccurrences(3).minimumLetters(2).build();
+
+        validate(filter, "banana");
+    }
+
+    @Test
+    public void testExcludeInitialCapital() {
+        WordFilter filter = new FilterBuilder().excludeInitialCapital().build();
+
+        validate(filter, "don't", "banana");
+    }
+
+    @Test
+    public void testExcludeInitialCapitalAndMinimumOccurrences() {
+        WordFilter filter = new FilterBuilder().excludeInitialCapital().minimumOccurrences(3).build();
 
         validate(filter, "banana");
     }

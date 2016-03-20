@@ -5,7 +5,7 @@
 package io.github.vocabhunter.gui.main;
 
 import io.github.vocabhunter.gui.common.ControllerAndView;
-import io.github.vocabhunter.gui.common.ToolkitManager;
+import io.github.vocabhunter.gui.common.EnvironmentManager;
 import io.github.vocabhunter.gui.controller.GuiFactory;
 import io.github.vocabhunter.gui.controller.MainController;
 import io.github.vocabhunter.gui.event.ExternalEventBroker;
@@ -36,8 +36,8 @@ public class VocabHunterGuiExecutable extends Application {
     public void start(final Stage stage) {
         Thread.currentThread().setUncaughtExceptionHandler((t, e) -> logError(e));
         try {
-            ToolkitManager toolkitManager = pico.getComponent(ToolkitManager.class);
-            Dimension screenSize = toolkitManager.getScreenSize();
+            EnvironmentManager environmentManager = pico.getComponent(EnvironmentManager.class);
+            Dimension screenSize = environmentManager.getScreenSize();
             GuiFactory factory = new GuiFactoryImpl(stage, pico);
             ControllerAndView<MainController, Parent> cav = factory.mainWindow();
             double width = screenSize.getWidth() * WINDOW_SIZE_FACTOR;

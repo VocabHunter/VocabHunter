@@ -26,4 +26,8 @@ public interface SettingsManager {
     int getFilterMinimumOccurrences();
 
     void setFilterMinimumOccurrences(int count);
+
+    boolean isAllowInitialCapitals();
+
+    void setAllowInitialCapitals(boolean allow);
 }

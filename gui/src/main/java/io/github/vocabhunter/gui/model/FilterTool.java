@@ -20,9 +20,14 @@ public final class FilterTool {
         FilterBuilder builder = new FilterBuilder();
 
         if (isFilterEnabled) {
-            return builder.minimumLetters(settings.getMinimumLetters())
-                .minimumOccurrences(settings.getMinimumOccurrences())
-                .build();
+            builder = builder.minimumLetters(settings.getMinimumLetters())
+                .minimumOccurrences(settings.getMinimumOccurrences());
+
+            if (!settings.isAllowInitialCapitals()) {
+                builder = builder.excludeInitialCapital();
+            }
+
+            return builder.build();
         } else {
             return builder.build();
         }

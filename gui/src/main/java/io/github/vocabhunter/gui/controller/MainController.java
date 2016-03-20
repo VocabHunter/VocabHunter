@@ -11,10 +11,7 @@ import io.github.vocabhunter.analysis.session.EnrichedSessionState;
 import io.github.vocabhunter.analysis.session.FileNameTool;
 import io.github.vocabhunter.analysis.session.SessionSerialiser;
 import io.github.vocabhunter.analysis.session.SessionState;
-import io.github.vocabhunter.gui.common.AlertTool;
-import io.github.vocabhunter.gui.common.ControllerAndView;
-import io.github.vocabhunter.gui.common.GuiConstants;
-import io.github.vocabhunter.gui.common.WebPageTool;
+import io.github.vocabhunter.gui.common.*;
 import io.github.vocabhunter.gui.dialogues.*;
 import io.github.vocabhunter.gui.model.MainModel;
 import io.github.vocabhunter.gui.model.SessionModel;
@@ -86,6 +83,8 @@ public class MainController {
 
     public BorderPane mainBorderPane;
 
+    public MenuBar menuBar;
+
     private GuiFactory factory;
 
     private FileStreamer fileStreamer;
@@ -94,7 +93,8 @@ public class MainController {
 
     private final MainModel model = new MainModel();
 
-    public void initialise(final Stage stage, final GuiFactory factory, final FileStreamer fileStreamer, final SettingsManager settingsManager) {
+    public void initialise(final Stage stage, final GuiFactory factory, final FileStreamer fileStreamer, final SettingsManager settingsManager,
+                           final EnvironmentManager environmentManager, final WebPageTool webPageTool) {
         this.factory = factory;
         this.fileStreamer = fileStreamer;
 
@@ -124,15 +124,17 @@ public class MainController {
 
         handler(buttonSetupFilters, menuSetupFilters, e -> processSetupFilters());
 
-        menuWebsite.setOnAction(e -> WebPageTool.showWebPage(GuiConstants.WEBSITE));
-        menuHowTo.setOnAction(e -> WebPageTool.showWebPage(GuiConstants.WEBPAGE_HELP));
-        menuIssue.setOnAction(e -> WebPageTool.showWebPage(GuiConstants.WEBPAGE_ISSUE));
+        menuWebsite.setOnAction(e -> webPageTool.showWebPage(GuiConstants.WEBSITE));
+        menuHowTo.setOnAction(e -> webPageTool.showWebPage(GuiConstants.WEBPAGE_HELP));
+        menuIssue.setOnAction(e -> webPageTool.showWebPage(GuiConstants.WEBPAGE_ISSUE));
         menuAbout.setOnAction(e -> processAbout());
 
         factory.getExternalEventSource().setListener(e -> processOpenOrNew(e.getFile()));
 
         prepareTitleHandler(stage);
         prepareFilterHandler(settingsManager);
+
+        menuBar.setUseSystemMenuBar(environmentManager.useSystemMenuBar());
     }
 
     private void prepareTitleHandler(final Stage stage) {

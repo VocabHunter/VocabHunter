@@ -10,11 +10,13 @@ import io.github.vocabhunter.gui.model.MainModel;
 import javafx.beans.property.ReadOnlyBooleanProperty;
 import javafx.beans.property.StringProperty;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.function.BooleanSupplier;
 import java.util.function.Supplier;
 
 @SuppressFBWarnings({"NP_UNWRITTEN_PUBLIC_OR_PROTECTED_FIELD", "UWF_UNWRITTEN_PUBLIC_OR_PROTECTED_FIELD"})
@@ -24,6 +26,8 @@ public class SettingsController {
     public TextField fieldMinimumLetters;
 
     public TextField fieldMinimumOccurrences;
+
+    public CheckBox fieldInitialCapital;
 
     public Button buttonOk;
 
@@ -43,6 +47,7 @@ public class SettingsController {
         FilterSettings settings = model.getFilterSettings();
         initialiseField(fieldMinimumLetters, settings::getMinimumLetters);
         initialiseField(fieldMinimumOccurrences, settings::getMinimumOccurrences);
+        initialiseField(fieldInitialCapital, settings::isAllowInitialCapitals);
     }
 
     private void exit(final boolean isSaveRequested) {
@@ -50,7 +55,9 @@ public class SettingsController {
             FilterSettings old = model.getFilterSettings();
             int minimumLetters = valueOf(fieldMinimumLetters, old.getMinimumLetters());
             int minimumOccurrences = valueOf(fieldMinimumOccurrences, old.getMinimumOccurrences());
-            FilterSettings settings = new FilterSettings(minimumLetters, minimumOccurrences);
+            boolean allowInitialCapitals = fieldInitialCapital.isSelected();
+
+            FilterSettings settings = new FilterSettings(minimumLetters, minimumOccurrences, allowInitialCapitals);
 
             model.setFilterSettings(settings);
             model.setEnableFilters(true);
@@ -77,6 +84,12 @@ public class SettingsController {
         field.setText(settingGetter.get().toString());
         textProperty.addListener((o, oldValue, newValue) -> processFieldChange(field, oldValue, newValue));
         focusedProperty.addListener((o, old, isFocused) -> processFocusChange(field, settingGetter));
+    }
+
+    private void initialiseField(final CheckBox field, final BooleanSupplier settingGetter) {
+        boolean value = settingGetter.getAsBoolean();
+
+        field.setSelected(value);
     }
 
     private void processFocusChange(final TextField field, final Supplier<Integer> settingGetter) {

@@ -15,7 +15,12 @@ public final class FormatVersion {
      */
     public static final int FORMAT_2 = 2;
 
-    public static final int MAX_SUPPORTED_VERSION = FORMAT_2;
+    /**
+     * Always capitalised words are preserved.
+     */
+    public static final int FORMAT_3 = 3;
+
+    public static final int LATEST_VERSION = FORMAT_3;
 
     private FormatVersion() {
         // Prevent instantiation - only constants are defined.

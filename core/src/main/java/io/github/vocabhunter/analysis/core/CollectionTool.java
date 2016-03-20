@@ -13,6 +13,7 @@ public final class CollectionTool {
         // Prevent instantiation - all methods are static
     }
 
+    @SafeVarargs
     public static <T> List<T> listOf(final T... a) {
         return Collections.unmodifiableList(Arrays.asList(a));
     }

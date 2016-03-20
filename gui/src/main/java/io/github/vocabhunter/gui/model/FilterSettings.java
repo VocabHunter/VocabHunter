@@ -13,9 +13,12 @@ public final class FilterSettings {
 
     private final int minimumOccurrences;
 
-    public FilterSettings(final int minimumLetters, final int minimumOccurrences) {
+    private final boolean allowInitialCapitals;
+
+    public FilterSettings(final int minimumLetters, final int minimumOccurrences, final boolean allowInitialCapitals) {
         this.minimumLetters = minimumLetters;
         this.minimumOccurrences = minimumOccurrences;
+        this.allowInitialCapitals = allowInitialCapitals;
     }
 
     public int getMinimumLetters() {
@@ -24,6 +27,10 @@ public final class FilterSettings {
 
     public int getMinimumOccurrences() {
         return minimumOccurrences;
+    }
+
+    public boolean isAllowInitialCapitals() {
+        return allowInitialCapitals;
     }
 
     @Override
@@ -36,11 +43,12 @@ public final class FilterSettings {
             return false;
         }
 
-        FilterSettings settings = (FilterSettings) o;
+        FilterSettings that = (FilterSettings) o;
 
         return new EqualsBuilder()
-            .append(minimumLetters, settings.minimumLetters)
-            .append(minimumOccurrences, settings.minimumOccurrences)
+            .append(minimumLetters, that.minimumLetters)
+            .append(minimumOccurrences, that.minimumOccurrences)
+            .append(allowInitialCapitals, that.allowInitialCapitals)
             .isEquals();
     }
 
@@ -49,6 +57,7 @@ public final class FilterSettings {
         return new HashCodeBuilder()
             .append(minimumLetters)
             .append(minimumOccurrences)
+            .append(allowInitialCapitals)
             .toHashCode();
     }
 
@@ -57,6 +66,7 @@ public final class FilterSettings {
         return new ToStringBuilder(this)
             .append("minimumLetters", minimumLetters)
             .append("minimumOccurrences", minimumOccurrences)
+            .append("allowInitialCapitals", allowInitialCapitals)
             .toString();
     }
 }

@@ -29,8 +29,9 @@ import java.nio.file.Path;
 import java.text.BreakIterator;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 import java.util.stream.Stream;
+
+import static io.github.vocabhunter.analysis.core.CoreConstants.LOCALE;
 
 public class FileStreamer {
     private static final Logger LOG = LoggerFactory.getLogger(FileStreamer.class);
@@ -64,7 +65,7 @@ public class FileStreamer {
 
     private List<String> splitToList(final String text) {
         List<String> list = new ArrayList<>();
-        BreakIterator iterator = BreakIterator.getSentenceInstance(Locale.ENGLISH);
+        BreakIterator iterator = BreakIterator.getSentenceInstance(LOCALE);
         iterator.setText(text);
         int start = iterator.first();
         int end = iterator.next();

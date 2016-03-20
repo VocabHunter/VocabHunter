@@ -79,31 +79,41 @@ public class SettingsManagerImpl implements SettingsManager {
 
     @Override
     public int getFilterMinimumLetters() {
-        return getInt(VocabHunterSettings::getFilterMinimumLetters);
+        return getValue(VocabHunterSettings::getFilterMinimumLetters);
     }
 
     @Override
     public void setFilterMinimumLetters(final int count) {
-        setInt(VocabHunterSettings::setFilterMinimumLetters, count);
+        setValue(VocabHunterSettings::setFilterMinimumLetters, count);
     }
 
     @Override
     public int getFilterMinimumOccurrences() {
-        return getInt(VocabHunterSettings::getFilterMinimumOccurrences);
+        return getValue(VocabHunterSettings::getFilterMinimumOccurrences);
     }
 
     @Override
     public void setFilterMinimumOccurrences(final int count) {
-        setInt(VocabHunterSettings::setFilterMinimumOccurrences, count);
+        setValue(VocabHunterSettings::setFilterMinimumOccurrences, count);
     }
 
-    private int getInt(final Function<VocabHunterSettings, Integer> getter) {
+    @Override
+    public boolean isAllowInitialCapitals() {
+        return getValue(VocabHunterSettings::isAllowInitialCaptials);
+    }
+
+    @Override
+    public void setAllowInitialCapitals(final boolean allow) {
+        setValue(VocabHunterSettings::setAllowInitialCaptials, allow);
+    }
+
+    private <T> T getValue(final Function<VocabHunterSettings, T> getter) {
         VocabHunterSettings settings = readSettings();
 
         return getter.apply(settings);
     }
 
-    private void setInt(final BiConsumer<VocabHunterSettings, Integer> setter, final int value) {
+    private <T> void setValue(final BiConsumer<VocabHunterSettings, T> setter, final T value) {
         VocabHunterSettings settings = readSettings();
 
         setter.accept(settings, value);
