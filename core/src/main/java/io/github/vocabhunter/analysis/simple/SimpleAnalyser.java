@@ -23,7 +23,7 @@ public class SimpleAnalyser implements Analyser {
 
     @Override
     public AnalysisResult analyse(final Stream<String> lines, final String name) {
-        Map<String, WordUse> map = lines.flatMap(l -> uses(l))
+        Map<String, WordUse> map = lines.flatMap(this::uses)
                 .collect(
                         groupingBy(
                                 WordStreamTool::classifier,
@@ -40,7 +40,7 @@ public class SimpleAnalyser implements Analyser {
 
     private Stream<WordUse> uses(final String line) {
         Map<String, WordUse> map = WordStreamTool.words(line)
-            .map(w -> new WordUse(w, 1, line))
+            .map(w -> new WordUse(w, line))
             .collect(
                 groupingBy(
                     WordStreamTool::classifier,

@@ -12,7 +12,7 @@ import java.nio.file.Paths;
 public final class FileNameTool {
     public static final String SESSION_SUFFIX = ".wordy";
 
-    public static final String EXPORT_SUFFIX = ".txt";
+    private static final String EXPORT_SUFFIX = ".txt";
 
     private FileNameTool() {
         // Prevent instantiation - all methods are static

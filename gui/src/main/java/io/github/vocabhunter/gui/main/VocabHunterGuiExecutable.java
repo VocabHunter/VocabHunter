@@ -58,7 +58,7 @@ public class VocabHunterGuiExecutable extends Application {
         runApp(args, createGuiContainer(args), a -> launch(a));
     }
 
-    public static void runApp(final String[] args, final MutablePicoContainer pico, final Consumer<String[]> launcher) {
+    protected static void runApp(final String[] args, final MutablePicoContainer pico, final Consumer<String[]> launcher) {
         logStartup();
         try {
             logSystemDetails();

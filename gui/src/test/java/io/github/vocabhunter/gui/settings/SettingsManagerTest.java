@@ -100,17 +100,17 @@ public class SettingsManagerTest {
     }
 
     @Test
-    public void testUpdateFilterMinimumOcurrences() {
+    public void testUpdateFilterMinimumOccurrences() {
         validateUpdateInt(target::getFilterMinimumOccurrences, target::setFilterMinimumOccurrences);
     }
 
     @Test
-    public void testMissingFilterMinimumOcurrences() {
+    public void testMissingFilterMinimumOccurrences() {
         validateMissingInt(target::getFilterMinimumOccurrences, DEFAULT_MINIMUM_OCCURRENCES);
     }
 
     @Test
-    public void testUpdateAllowInitialCaptials() {
+    public void testUpdateAllowInitialCapitals() {
         target.setAllowInitialCapitals(false);
         Assert.assertFalse("Disallow initial capital", target.isAllowInitialCapitals());
 
@@ -119,7 +119,7 @@ public class SettingsManagerTest {
     }
 
     @Test
-    public void testMissingAllowInitialCaptials() {
+    public void testMissingAllowInitialCapitals() {
         assertEquals("Missing initial capital", DEFAULT_ALLOW_INITIAL_CAPITALS, target.isAllowInitialCapitals());
     }
 

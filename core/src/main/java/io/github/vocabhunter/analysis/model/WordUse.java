@@ -19,8 +19,8 @@ public final class WordUse implements AnalysisWord {
 
     private final List<String> uses;
 
-    public WordUse(final String wordIdentifier, final int useCount, final String use) {
-        this(wordIdentifier, useCount, Collections.singletonList(use));
+    public WordUse(final String wordIdentifier, final String use) {
+        this(wordIdentifier, 1, Collections.singletonList(use));
     }
 
     public WordUse(final String wordIdentifier, final int useCount, final List<String> uses) {

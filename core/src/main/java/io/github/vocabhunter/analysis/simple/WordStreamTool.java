@@ -67,7 +67,7 @@ public final class WordStreamTool {
         return normalise(use.getWordIdentifier());
     }
 
-    public static String normalise(final String word) {
+    private static String normalise(final String word) {
         return word.toLowerCase(LOCALE);
     }
 }

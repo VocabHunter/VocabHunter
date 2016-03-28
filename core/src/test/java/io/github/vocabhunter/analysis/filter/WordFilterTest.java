@@ -45,7 +45,7 @@ public class WordFilterTest {
     }
 
     @Test
-    public void testMinimumOccurrencesAndMinumumLetters() {
+    public void testMinimumOccurrencesAndMinimumLetters() {
         WordFilter filter = new FilterBuilder().minimumOccurrences(3).minimumLetters(2).build();
 
         validate(filter, "banana");
