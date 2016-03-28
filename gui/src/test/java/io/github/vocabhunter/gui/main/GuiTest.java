@@ -217,12 +217,12 @@ public class GuiTest extends FxRobot {
 
         step("Mark filtered word as known", () -> {
             clickOn("#buttonKnown");
-            verifyThat("#mainWord", hasText("parish"));
+            verifyThat("#mainWord", hasText("workhouse"));
         });
 
         step("Disable filter", () -> {
             clickOn("#buttonEnableFilters");
-            verifyThat("#mainWord", hasText("parish"));
+            verifyThat("#mainWord", hasText("workhouse"));
         });
     }
 
