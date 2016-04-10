@@ -56,7 +56,7 @@ public class SessionController {
     public void initialise(final SessionModel sessionModel) {
         this.sessionModel = sessionModel;
 
-        wordStateProperty = Bindings.<WordState>select(sessionModel.currentWordProperty(), "state");
+        wordStateProperty = Bindings.select(sessionModel.currentWordProperty(), "state");
 
         useListView.setItems(sessionModel.getUseList());
         useListView.setCellFactory(s -> new UseListCell(sessionModel.currentWordProperty()));

@@ -69,6 +69,11 @@ public class WordStreamToolTest {
     }
 
     @Test
+    public void testDoubleDash() throws Exception {
+        validate("This--is a--test.", "This", "is", "a", "test");
+    }
+
+    @Test
     public void testDont() throws Exception {
         validate("Don't", "Don't");
     }

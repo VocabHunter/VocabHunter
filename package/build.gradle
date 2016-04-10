@@ -92,12 +92,6 @@ task copyJars(type: Copy) {
 }
 
 jfxbundle.doLast {
-    FileTree tree = fileTree(dir: 'build/bundles').include("**/*.${packageType}")
-    tree.each {File f ->
-        def name = f.getName().replace("-1.0.${packageType}", "-${publishedVersion}.${packageType}")
-        f.renameTo(file("build/bundles/$name"))
-    }
-
     File bundle = file("build/bundles/VocabHunter-${publishedVersion}.${packageType}")
 
     if (bundle.exists()) {

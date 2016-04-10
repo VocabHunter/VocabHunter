@@ -38,9 +38,7 @@ public final class SessionSerialiser {
             if (formatVersion < 1 || formatVersion > LATEST_VERSION) {
                 throw new VocabHunterException("This file was created with a newer version of VocabHunter.  Please upgrade and try again.");
             } else {
-                EnrichedSessionState enriched = new EnrichedSessionState(upgradeVersion(state), file);
-
-                return enriched;
+                return new EnrichedSessionState(upgradeVersion(state), file);
             }
         } catch (final IOException e) {
             throw new VocabHunterException(String.format("Unable to load file '%s'", file), e);

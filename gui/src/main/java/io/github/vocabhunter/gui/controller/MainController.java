@@ -298,9 +298,7 @@ public class MainController {
         SessionModelTool sessionTool = new SessionModelTool(state, model.getFilterSettings(), model.isEnableFilters());
         if (sessionTool.isFilterError()) {
             model.setEnableFilters(false);
-            Platform.runLater(() -> {
-                AlertTool.filterErrorAlert();
-            });
+            Platform.runLater(AlertTool::filterErrorAlert);
         }
 
         SessionModel sessionModel = sessionTool.buildModel();

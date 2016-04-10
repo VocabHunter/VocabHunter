@@ -16,23 +16,19 @@
                  uri="javafx:com.sun.javafx.tools.ant"
                  classpath="${JAVA_HOME}/lib/ant-javafx.jar"/>
 
-        <fx:application id="VocabHunterId"
-                        name="VocabHunter"
-                        mainClass="${mainClass}"/>
-
-        <fx:resources id="applicationResourcesId">
-            <fx:fileset dir="${basedir}/build/libs"/>
-        </fx:resources>
-
         <fx:deploy outdir="${basedir}/build"
                    nativeBundles="${packageType}">
 
             <fx:platform basedir=""/>
 
-            <fx:application refId="VocabHunterId"
+            <fx:application id="VocabHunterId"
+                            name="VocabHunter"
+                            mainClass="${mainClass}"
                             version="${version}"/>
 
-            <fx:resources refid="applicationResourcesId"/>
+            <fx:resources>
+                <fx:fileset dir="${basedir}/build/libs"/>
+            </fx:resources>
 
             <fx:info title="VocabHunter">
                 <fx:association description="VocabHunter session"

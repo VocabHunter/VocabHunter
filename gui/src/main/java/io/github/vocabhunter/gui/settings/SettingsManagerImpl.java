@@ -99,12 +99,12 @@ public class SettingsManagerImpl implements SettingsManager {
 
     @Override
     public boolean isAllowInitialCapitals() {
-        return getValue(VocabHunterSettings::isAllowInitialCaptials);
+        return getValue(VocabHunterSettings::isAllowInitialCapitals);
     }
 
     @Override
     public void setAllowInitialCapitals(final boolean allow) {
-        setValue(VocabHunterSettings::setAllowInitialCaptials, allow);
+        setValue(VocabHunterSettings::setAllowInitialCapitals, allow);
     }
 
     private <T> T getValue(final Function<VocabHunterSettings, T> getter) {

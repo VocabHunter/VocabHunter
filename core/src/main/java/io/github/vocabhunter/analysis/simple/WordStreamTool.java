@@ -15,7 +15,7 @@ import static java.util.Comparator.comparing;
 
 public final class WordStreamTool {
     private static final Pattern PATTERN = Pattern.compile(
-        "^\\P{javaLetter}+|\\P{javaLetter}+$|\\P{javaLetter}*\\p{javaWhitespace}\\P{javaLetter}*");
+        "^\\P{javaLetter}+|\\P{javaLetter}+$|\\P{javaLetter}*\\p{javaWhitespace}\\P{javaLetter}*|\\P{javaLetter}\\P{javaLetter}+");
 
     public static final Comparator<AnalysisWord> WORD_COMPARATOR
         = comparing(AnalysisWord::getUseCount).reversed().thenComparing(WordStreamTool::classifier);
@@ -67,7 +67,7 @@ public final class WordStreamTool {
         return normalise(use.getWordIdentifier());
     }
 
-    public static String normalise(final String word) {
+    private static String normalise(final String word) {
         return word.toLowerCase(LOCALE);
     }
 }
