@@ -19,6 +19,9 @@ public class VocabHunterConsoleArguments {
     @Parameter(names = "-ignoreinitialcapitals", description = "Ignore words that begin with a capital letter")
     private boolean isIgnoreInitialCapitals = false;
 
+    @Parameter(names = "-hideuses", description = "Hide the lists of uses of each word")
+    private boolean isHideUses = false;
+
     public String getInput() {
         return input;
     }
@@ -49,5 +52,13 @@ public class VocabHunterConsoleArguments {
 
     public void setIgnoreInitialCapitals(final boolean ignoreInitialCapitals) {
         isIgnoreInitialCapitals = ignoreInitialCapitals;
+    }
+
+    public boolean isHideUses() {
+        return isHideUses;
+    }
+
+    public void setHideUses(final boolean hideUses) {
+        isHideUses = hideUses;
     }
 }

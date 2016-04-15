@@ -38,7 +38,7 @@ public final class VocabHunterConsoleExecutable {
 
             model.getOrderedUses().stream()
                     .filter(wordFilter::isShown)
-                    .forEach(VocabHunterConsoleExecutable::display);
+                    .forEach(w -> display(w, bean.isHideUses()));
         } catch (final Exception e) {
             LOG.error("Application error", e);
         }
@@ -56,9 +56,13 @@ public final class VocabHunterConsoleExecutable {
         return builder.build();
     }
 
-    private static void display(final WordUse use) {
-        LOG.info("\n{} ({}):", use.getWordIdentifier(), use.getUseCount());
-        use.getUses().stream()
-                .forEach(s -> LOG.info(" - {}", s));
+    private static void display(final WordUse use, final boolean isHideUses) {
+        if (isHideUses) {
+            LOG.info("{} ({})", use.getWordIdentifier(), use.getUseCount());
+        } else {
+            LOG.info("\n{} ({}):", use.getWordIdentifier(), use.getUseCount());
+            use.getUses().stream()
+                    .forEach(s -> LOG.info(" - {}", s));
+        }
     }
 }
