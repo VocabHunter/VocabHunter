@@ -94,6 +94,6 @@ public final class SessionSerialiser {
             .flatMap(WordStreamTool::words)
             .filter(w -> w.equalsIgnoreCase(oldIdentifier))
             .reduce(WordStreamTool::preferredForm)
-            .get();
+            .orElse(oldIdentifier);
     }
 }
