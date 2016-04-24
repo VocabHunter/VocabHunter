@@ -18,8 +18,8 @@ import java.util.List;
 import java.util.TreeSet;
 import java.util.stream.Collectors;
 
-import static io.github.vocabhunter.gui.model.FilterTool.applyFilter;
-import static io.github.vocabhunter.gui.model.FilterTool.filter;
+import static io.github.vocabhunter.analysis.filter.FilterTool.applyFilter;
+import static io.github.vocabhunter.gui.model.FilterSettingsTool.filter;
 import static java.util.Collections.unmodifiableList;
 
 public final class SessionModel {

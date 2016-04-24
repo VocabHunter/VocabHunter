@@ -6,6 +6,12 @@ package io.github.vocabhunter.executable.console;
 
 import com.beust.jcommander.Parameter;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import static java.util.Collections.emptyList;
+import static java.util.Collections.unmodifiableList;
+
 public class VocabHunterConsoleArguments {
     @Parameter(names = "-input", description = "Text input file", required = true)
     private String input;
@@ -21,6 +27,12 @@ public class VocabHunterConsoleArguments {
 
     @Parameter(names = "-hideuses", description = "Hide the lists of uses of each word")
     private boolean isHideUses = false;
+
+    @Parameter(names = "-filterknown", description = "Words marked as known are filtered from these session files")
+    private List<String> filterKnown = emptyList();
+
+    @Parameter(names = "-filterseen", description = "Words marked as known or unknown are filtered from these session files")
+    private List<String> filterSeen = emptyList();
 
     public String getInput() {
         return input;
@@ -60,5 +72,21 @@ public class VocabHunterConsoleArguments {
 
     public void setHideUses(final boolean hideUses) {
         isHideUses = hideUses;
+    }
+
+    public List<String> getFilterKnown() {
+        return unmodifiableList(filterKnown);
+    }
+
+    public void setFilterKnown(final List<String> filterKnown) {
+        this.filterKnown = new ArrayList<>(filterKnown);
+    }
+
+    public List<String> getFilterSeen() {
+        return unmodifiableList(filterSeen);
+    }
+
+    public void setFilterSeen(final List<String> filterSeen) {
+        this.filterSeen = new ArrayList<>(filterSeen);
     }
 }

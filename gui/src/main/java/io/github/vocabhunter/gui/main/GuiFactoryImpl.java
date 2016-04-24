@@ -106,22 +106,22 @@ public class GuiFactoryImpl implements GuiFactory {
     }
 
     @Override
-    public FileDialogue newSessionChooser() {
+    public FileDialogue newSessionChooser(final Stage stage) {
         return fileDialogueFactory.create(FileDialogueType.NEW_SESSION, stage);
     }
 
     @Override
-    public FileDialogue saveSessionChooser() {
+    public FileDialogue saveSessionChooser(final Stage stage) {
         return fileDialogueFactory.create(FileDialogueType.SAVE_SESSION, stage);
     }
 
     @Override
-    public FileDialogue openSessionChooser() {
+    public FileDialogue openSessionChooser(final Stage stage) {
         return fileDialogueFactory.create(FileDialogueType.OPEN_SESSION, stage);
     }
 
     @Override
-    public FileDialogue exportSelectionChooser() {
+    public FileDialogue exportSelectionChooser(final Stage stage) {
         return fileDialogueFactory.create(FileDialogueType.EXPORT_SELECTION, stage);
     }
 
@@ -150,6 +150,6 @@ public class GuiFactoryImpl implements GuiFactory {
         Parent root = loadNode(loader, FXML_SETTINGS);
         SettingsController controller = loader.getController();
 
-        return new SettingsDialogue(model, controller::initialise, root);
+        return new SettingsDialogue(model, (m, s) -> controller.initialise(m, this, s), root);
     }
 }

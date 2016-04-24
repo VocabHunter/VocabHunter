@@ -9,7 +9,6 @@ import io.github.vocabhunter.analysis.filter.WordFilter;
 import io.github.vocabhunter.analysis.session.WordState;
 import io.github.vocabhunter.gui.common.AlertTool;
 import io.github.vocabhunter.gui.model.FilterSettings;
-import io.github.vocabhunter.gui.model.FilterTool;
 import io.github.vocabhunter.gui.model.SessionModel;
 import io.github.vocabhunter.gui.model.WordModel;
 import io.github.vocabhunter.gui.view.UseListCell;
@@ -23,7 +22,8 @@ import javafx.scene.control.ListView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
 
-import static io.github.vocabhunter.gui.model.FilterTool.filter;
+import static io.github.vocabhunter.analysis.filter.FilterTool.isValid;
+import static io.github.vocabhunter.gui.model.FilterSettingsTool.filter;
 
 @SuppressFBWarnings({"NP_UNWRITTEN_PUBLIC_OR_PROTECTED_FIELD", "UWF_UNWRITTEN_PUBLIC_OR_PROTECTED_FIELD"})
 public class SessionController {
@@ -104,7 +104,7 @@ public class SessionController {
         boolean isFilterEnabled = sessionModel.isEnableFilters();
         WordFilter filter = filter(filterSettings, isFilterEnabled);
 
-        if (FilterTool.isValid(filter, sessionModel.getAllWords())) {
+        if (isValid(filter, sessionModel.getAllWords())) {
             sessionModel.updateWordList(isEditable, filter);
             wordListHandler.selectClosestWord(isEditable, filter);
         } else {

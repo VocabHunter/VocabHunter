@@ -5,14 +5,14 @@
 package io.github.vocabhunter.gui.model;
 
 import io.github.vocabhunter.analysis.filter.FilterBuilder;
+import io.github.vocabhunter.analysis.filter.FilterTool;
 import io.github.vocabhunter.analysis.filter.WordFilter;
 import io.github.vocabhunter.analysis.model.AnalysisWord;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
-public final class FilterTool {
-    private FilterTool() {
+public final class FilterSettingsTool {
+    private FilterSettingsTool() {
         // Prevent instantiation - all methods are static
     }
 
@@ -34,17 +34,6 @@ public final class FilterTool {
     }
 
     public static boolean isValid(final FilterSettings settings, final List<? extends AnalysisWord> words) {
-        return isValid(filter(settings, true), words);
-    }
-
-    public static boolean isValid(final WordFilter filter, final List<? extends AnalysisWord> words) {
-        return words.stream()
-            .anyMatch(filter::isShown);
-    }
-
-    public static <T extends AnalysisWord> List<T> applyFilter(final WordFilter filter, final List<T> words) {
-        return words.stream()
-                .filter(filter::isShown)
-                .collect(Collectors.toList());
+        return FilterTool.isValid(filter(settings, true), words);
     }
 }

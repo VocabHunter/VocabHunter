@@ -10,12 +10,15 @@ import io.github.vocabhunter.analysis.filter.FilterBuilder;
 import io.github.vocabhunter.analysis.filter.WordFilter;
 import io.github.vocabhunter.analysis.model.AnalysisResult;
 import io.github.vocabhunter.analysis.model.WordUse;
+import io.github.vocabhunter.analysis.session.SessionWordsTool;
 import io.github.vocabhunter.analysis.simple.SimpleAnalyser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.List;
+import java.util.function.Function;
 
 public final class VocabHunterConsoleExecutable {
     private static final Logger LOG = LoggerFactory.getLogger(VocabHunterConsoleExecutable.class);
@@ -52,8 +55,17 @@ public final class VocabHunterConsoleExecutable {
         if (bean.isIgnoreInitialCapitals()) {
             builder.excludeInitialCapital();
         }
+        addFilteredWords(builder, bean.getFilterKnown(), SessionWordsTool::knownWords);
+        addFilteredWords(builder, bean.getFilterSeen(), SessionWordsTool::seenWords);
 
         return builder.build();
+    }
+
+    private static void addFilteredWords(final FilterBuilder builder, final List<String> filenames, final Function<Path, List<String>> extractor) {
+        filenames.stream()
+            .map(Paths::get)
+            .map(extractor)
+            .forEach(builder::addExcludedWords);
     }
 
     private static void display(final WordUse use, final boolean isHideUses) {

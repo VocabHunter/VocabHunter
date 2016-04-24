@@ -4,7 +4,7 @@
 
 package io.github.vocabhunter.analysis.session;
 
-public final class FormatVersion {
+public final class SessionFormatVersion {
     /**
      * First version of the format.
      */
@@ -22,7 +22,7 @@ public final class FormatVersion {
 
     public static final int LATEST_VERSION = FORMAT_3;
 
-    private FormatVersion() {
+    private SessionFormatVersion() {
         // Prevent instantiation - only constants are defined.
     }
 }

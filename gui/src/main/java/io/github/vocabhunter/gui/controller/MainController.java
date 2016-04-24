@@ -31,7 +31,6 @@ import org.slf4j.LoggerFactory;
 import java.nio.file.Path;
 import java.util.function.Consumer;
 import java.util.function.Function;
-import java.util.function.Supplier;
 
 import static javafx.beans.binding.Bindings.not;
 
@@ -85,6 +84,8 @@ public class MainController {
 
     public MenuBar menuBar;
 
+    private Stage stage;
+
     private GuiFactory factory;
 
     private FileStreamer fileStreamer;
@@ -95,6 +96,7 @@ public class MainController {
 
     public void initialise(final Stage stage, final GuiFactory factory, final FileStreamer fileStreamer, final SettingsManager settingsManager,
                            final EnvironmentManager environmentManager, final WebPageTool webPageTool) {
+        this.stage = stage;
         this.factory = factory;
         this.fileStreamer = fileStreamer;
 
@@ -131,13 +133,13 @@ public class MainController {
 
         factory.getExternalEventSource().setListener(e -> processOpenOrNew(e.getFile()));
 
-        prepareTitleHandler(stage);
+        prepareTitleHandler();
         prepareFilterHandler(settingsManager);
 
         menuBar.setUseSystemMenuBar(environmentManager.useSystemMenuBar());
     }
 
-    private void prepareTitleHandler(final Stage stage) {
+    private void prepareTitleHandler() {
         TitleHandler handler = new TitleHandler(model);
 
         handler.prepare();
@@ -164,7 +166,7 @@ public class MainController {
         editOff.setToggleGroup(editGroup);
     }
 
-    private void processFileWithCheck(final Supplier<FileDialogue> chooserFactory, final Consumer<FileDialogue> processor) {
+    private void processFileWithCheck(final Function<Stage, FileDialogue> chooserFactory, final Consumer<FileDialogue> processor) {
         boolean isProcessRequired = unsavedChangesCheck();
 
         if (isProcessRequired) {
@@ -181,8 +183,8 @@ public class MainController {
         }
     }
 
-    private void processFile(final Supplier<FileDialogue> chooserFactory, final Consumer<FileDialogue> processor) {
-        FileDialogue chooser = chooserFactory.get();
+    private void processFile(final Function<Stage, FileDialogue> chooserFactory, final Consumer<FileDialogue> processor) {
+        FileDialogue chooser = chooserFactory.apply(stage);
 
         chooser.showChooser();
         if (chooser.isFileSelected()) {
@@ -254,7 +256,7 @@ public class MainController {
     }
 
     private boolean processSaveAs() {
-        FileDialogue chooser = factory.saveSessionChooser();
+        FileDialogue chooser = factory.saveSessionChooser(stage);
 
         chooser.showChooser();
         if (chooser.isFileSelected()) {

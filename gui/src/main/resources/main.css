@@ -95,6 +95,12 @@
 .settings .buttonBar {
     -fx-padding: 20 0 0 0;
 }
+.settings .settingsGroup {
+    -fx-border-color: lightgrey;
+    -fx-border-width: 1;
+    -fx-padding: 10 10 10 10;
+    -fx-border-insets: 5 0 5 0;
+}
 .about BorderPane {
     -fx-padding: 10 20 10 10;
     -fx-border-insets: 10 10 10 10;
