@@ -4,6 +4,7 @@
 
 package io.github.vocabhunter.gui.main;
 
+import io.github.vocabhunter.analysis.core.CoreConstants;
 import io.github.vocabhunter.analysis.core.VocabHunterException;
 import io.github.vocabhunter.analysis.session.EnrichedSessionState;
 import io.github.vocabhunter.analysis.session.SessionSerialiser;
@@ -18,7 +19,6 @@ import io.github.vocabhunter.gui.settings.SettingsManager;
 import io.github.vocabhunter.gui.settings.SettingsManagerImpl;
 import io.github.vocabhunter.test.utils.TestFileManager;
 import javafx.stage.Stage;
-import org.apache.commons.io.FileUtils;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -36,6 +36,7 @@ import org.testfx.api.FxRobot;
 import java.awt.*;
 import java.io.IOException;
 import java.net.URL;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
@@ -280,7 +281,7 @@ public class GuiTest extends FxRobot {
 
     private String readFile(final Path file) {
         try {
-            return FileUtils.readFileToString(file.toFile());
+            return new String(Files.readAllBytes(file), CoreConstants.CHARSET);
         } catch (IOException e) {
             throw new VocabHunterException(String.format("Unable to read file %s", file), e);
         }

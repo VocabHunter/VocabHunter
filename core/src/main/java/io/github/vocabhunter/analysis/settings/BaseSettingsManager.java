@@ -8,7 +8,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import io.github.vocabhunter.analysis.core.VocabHunterException;
 
 import java.io.IOException;
-import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Collections;
@@ -16,8 +15,6 @@ import java.util.List;
 
 public class BaseSettingsManager<T> {
     private static final ObjectMapper MAPPER = new ObjectMapper();
-
-    private static final Charset UTF_8 = Charset.forName("UTF-8");
 
     private static final List<String> MINIMAL_JSON = Collections.singletonList("{}");
 
@@ -50,7 +47,7 @@ public class BaseSettingsManager<T> {
     protected T readSettings() {
         try {
             if (!Files.isRegularFile(settingsFile)) {
-                Files.write(settingsFile, MINIMAL_JSON, UTF_8);
+                Files.write(settingsFile, MINIMAL_JSON);
             }
             return MAPPER.readValue(settingsFile.toFile(), beanClass);
         } catch (final IOException e) {
