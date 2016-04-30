@@ -61,9 +61,8 @@ public final class VocabHunterConsoleExecutable {
         return builder.build();
     }
 
-    private static void addFilteredWords(final FilterBuilder builder, final List<String> filenames, final Function<Path, List<String>> extractor) {
+    private static void addFilteredWords(final FilterBuilder builder, final List<Path> filenames, final Function<Path, List<String>> extractor) {
         filenames.stream()
-            .map(Paths::get)
             .map(extractor)
             .forEach(builder::addExcludedWords);
     }
