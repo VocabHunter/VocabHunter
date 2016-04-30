@@ -48,5 +48,7 @@ test {
     if (project.hasProperty("skipGuiTests")) {
         exclude 'io/github/vocabhunter/gui/main/GuiTest*'
     }
-    jvmArgs "-Dheadless=true"
+    if (!project.hasProperty("noHeadless")) {
+        jvmArgs "-Dheadless=true"
+    }
 }
