@@ -17,7 +17,7 @@ $ ./gradlew clean build
 
 # How To Run VocabHunter
 
-To try the system out, you can run it directly from the command line as follows:
+Go to the [download](http://vocabhunter.github.io/download/) page of the website to get the latest release of VocabHunter.  Alternatively, you can run the development version from the command line as follows:
 ~~~
 $ ./gradlew :gui:run
 ~~~
