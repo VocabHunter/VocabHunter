@@ -19,11 +19,14 @@ public class AboutController {
 
     public Hyperlink linkWebsite;
 
+    public Hyperlink linkTwitter;
+
     public Label labelVersion;
 
     public void initialise(final Stage stage, final WebPageTool webPageTool) {
         buttonClose.setOnAction(e -> stage.close());
         linkWebsite.setOnAction(e -> webPageTool.showWebPage(GuiConstants.WEBSITE));
+        linkTwitter.setOnAction(e -> webPageTool.showWebPage(GuiConstants.TWITTER));
         setupVersion();
     }
 

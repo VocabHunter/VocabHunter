@@ -13,6 +13,8 @@ public final class GuiConstants {
 
     public static final String WEBPAGE_ISSUE = WEBSITE + "issues/";
 
+    public static final String TWITTER = "https://twitter.com/vocabhunterapp";
+
     private GuiConstants() {
         // Prevent instantiation - only constants are defined.
     }
