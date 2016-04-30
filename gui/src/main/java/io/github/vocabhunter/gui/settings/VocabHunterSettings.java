@@ -6,6 +6,8 @@ package io.github.vocabhunter.gui.settings;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import java.nio.file.Path;
+
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class VocabHunterSettings {
     public static final int DEFAULT_MINIMUM_LETTERS = 2;
@@ -14,11 +16,11 @@ public class VocabHunterSettings {
 
     public static final boolean DEFAULT_ALLOW_INITIAL_CAPITALS = true;
 
-    private String documentsPath;
+    private Path documentsPath;
 
-    private String sessionsPath;
+    private Path sessionsPath;
 
-    private String exportPath;
+    private Path exportPath;
 
     private int filterMinimumLetters = DEFAULT_MINIMUM_LETTERS;
 
@@ -26,27 +28,27 @@ public class VocabHunterSettings {
 
     private boolean isAllowInitialCapitals = DEFAULT_ALLOW_INITIAL_CAPITALS;
 
-    public String getDocumentsPath() {
+    public Path getDocumentsPath() {
         return documentsPath;
     }
 
-    public void setDocumentsPath(final String documentsPath) {
+    public void setDocumentsPath(final Path documentsPath) {
         this.documentsPath = documentsPath;
     }
 
-    public String getSessionsPath() {
+    public Path getSessionsPath() {
         return sessionsPath;
     }
 
-    public void setSessionsPath(final String sessionsPath) {
+    public void setSessionsPath(final Path sessionsPath) {
         this.sessionsPath = sessionsPath;
     }
 
-    public String getExportPath() {
+    public Path getExportPath() {
         return exportPath;
     }
 
-    public void setExportPath(final String exportPath) {
+    public void setExportPath(final Path exportPath) {
         this.exportPath = exportPath;
     }
 

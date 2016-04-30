@@ -96,25 +96,21 @@ public class SettingsManagerImpl extends BaseSettingsManager<VocabHunterSettings
         writeSettings(settings);
     }
 
-    private Path getPath(final Function<VocabHunterSettings, String> getter) {
+    private Path getPath(final Function<VocabHunterSettings, Path> getter) {
         VocabHunterSettings settings = readSettings();
-        String pathName = getter.apply(settings);
+        Path path = getter.apply(settings);
 
-        if (pathName != null) {
-            Path path = Paths.get(pathName);
-
-            if (Files.isDirectory(path)) {
-                return path;
-            }
+        if (path != null && Files.isDirectory(path)) {
+            return path;
         }
 
         return Paths.get(System.getProperty("user.home"));
     }
 
-    private void setPath(final BiConsumer<VocabHunterSettings, String> setter, final Path path) {
+    private void setPath(final BiConsumer<VocabHunterSettings, Path> setter, final Path path) {
         VocabHunterSettings settings = readSettings();
 
-        setter.accept(settings, path.toString());
+        setter.accept(settings, path);
         writeSettings(settings);
     }
 }
