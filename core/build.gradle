@@ -17,8 +17,8 @@ artifacts {
 
 dependencies {
     compile 'org.apache.commons:commons-lang3:3.4'
-    compile 'com.fasterxml.jackson.core:jackson-databind:2.7.3'
-    compile 'commons-io:commons-io:2.4'
+    compile 'com.fasterxml.jackson.core:jackson-databind:2.7.4'
+    compile 'commons-io:commons-io:2.5'
     compile 'org.apache.tika:tika-parsers:1.12'
     compile 'org.slf4j:slf4j-api:1.7.21'
     compile 'com.google.code.findbugs:annotations:3.0.1'
