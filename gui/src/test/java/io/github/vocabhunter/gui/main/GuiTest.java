@@ -4,9 +4,12 @@
 
 package io.github.vocabhunter.gui.main;
 
+import io.github.vocabhunter.analysis.core.CoreConstants;
 import io.github.vocabhunter.analysis.core.VocabHunterException;
 import io.github.vocabhunter.analysis.session.EnrichedSessionState;
 import io.github.vocabhunter.analysis.session.SessionSerialiser;
+import io.github.vocabhunter.analysis.settings.FileListManager;
+import io.github.vocabhunter.analysis.settings.FileListManagerImpl;
 import io.github.vocabhunter.gui.common.EnvironmentManager;
 import io.github.vocabhunter.gui.common.WebPageTool;
 import io.github.vocabhunter.gui.dialogues.FileDialogue;
@@ -16,7 +19,6 @@ import io.github.vocabhunter.gui.settings.SettingsManager;
 import io.github.vocabhunter.gui.settings.SettingsManagerImpl;
 import io.github.vocabhunter.test.utils.TestFileManager;
 import javafx.stage.Stage;
-import org.apache.commons.io.FileUtils;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -34,12 +36,11 @@ import org.testfx.api.FxRobot;
 import java.awt.*;
 import java.io.IOException;
 import java.net.URL;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-import static io.github.vocabhunter.gui.common.GuiConstants.WEBPAGE_HELP;
-import static io.github.vocabhunter.gui.common.GuiConstants.WEBPAGE_ISSUE;
-import static io.github.vocabhunter.gui.common.GuiConstants.WEBSITE;
+import static io.github.vocabhunter.gui.common.GuiConstants.*;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsString;
 import static org.junit.Assert.assertEquals;
@@ -122,11 +123,14 @@ public class GuiTest extends FxRobot {
         setUpFileDialogue(FileDialogueType.OPEN_SESSION, openSessionDialogue, sessionFile);
         setUpFileDialogue(FileDialogueType.EXPORT_SELECTION, exportDialogue, exportFile);
 
-        Path settingsFile = manager.addFile("settings.json");
+        Path settingsFile = manager.addFile(SettingsManagerImpl.SETTINGS_JSON);
         SettingsManager settingsManager = new SettingsManagerImpl(settingsFile);
+        Path fileListManagerFile = manager.addFile(FileListManagerImpl.SETTINGS_JSON);
+        FileListManager fileListManager = new FileListManagerImpl(fileListManagerFile);
 
         MutablePicoContainer pico = GuiContainerBuilder.createBaseContainer();
         pico.addComponent(settingsManager);
+        pico.addComponent(fileListManager);
         pico.addComponent(fileDialogueFactory);
         pico.addComponent(environmentManager);
         pico.addComponent(webPageTool);
@@ -277,7 +281,7 @@ public class GuiTest extends FxRobot {
 
     private String readFile(final Path file) {
         try {
-            return FileUtils.readFileToString(file.toFile());
+            return new String(Files.readAllBytes(file), CoreConstants.CHARSET);
         } catch (IOException e) {
             throw new VocabHunterException(String.format("Unable to read file %s", file), e);
         }

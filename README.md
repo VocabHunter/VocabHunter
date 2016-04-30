@@ -17,7 +17,7 @@ $ ./gradlew clean build
 
 # How To Run VocabHunter
 
-To try the system out, you can run it directly from the command line as follows:
+Go to the [download](http://vocabhunter.github.io/download/) page of the website to get the latest release of VocabHunter.  Alternatively, you can run the development version from the command line as follows:
 ~~~
 $ ./gradlew :gui:run
 ~~~
@@ -34,3 +34,10 @@ $ ./gradlew clean build jfxbundle
 ~~~
 
 When the build is complete, you will find the bundle file in the directory `package/build/bundles`.
+
+# How To Run The GUI Test
+
+By default the GUI test runs as part of the standard Gradle build, in headless mode.  If you'd like to run the GUI test in a non-headless mode so that you can see what is happening, use the following command:
+~~~
+$ ./gradlew :gui:test --tests io.github.vocabhunter.gui.main.GuiTest --rerun-tasks -PnoHeadless
+~~~

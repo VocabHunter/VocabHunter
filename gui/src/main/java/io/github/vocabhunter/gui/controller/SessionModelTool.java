@@ -7,7 +7,6 @@ package io.github.vocabhunter.gui.controller;
 import io.github.vocabhunter.analysis.session.SessionState;
 import io.github.vocabhunter.analysis.session.SessionWord;
 import io.github.vocabhunter.gui.model.FilterSettings;
-import io.github.vocabhunter.gui.model.FilterTool;
 import io.github.vocabhunter.gui.model.SessionModel;
 import io.github.vocabhunter.gui.model.WordModel;
 
@@ -20,23 +19,13 @@ public class SessionModelTool {
 
     private final FilterSettings filterSettings;
 
-    private final boolean isFilterRequested;
-
-    private final boolean isFilterEnabled;
-
-    public SessionModelTool(final SessionState state, final FilterSettings filterSettings, final boolean isFilterRequested) {
+    public SessionModelTool(final SessionState state, final FilterSettings filterSettings) {
         this.state = state;
         this.filterSettings = filterSettings;
-        this.isFilterRequested = isFilterRequested;
-        this.isFilterEnabled = isFilterRequested && FilterTool.isValid(filterSettings, state.getOrderedUses());
     }
 
     public SessionModel buildModel() {
-        return new SessionModel(state.getName(), words(state), filterSettings, isFilterEnabled);
-    }
-
-    public boolean isFilterError() {
-        return isFilterRequested && !isFilterEnabled;
+        return new SessionModel(state.getName(), words(state), filterSettings);
     }
 
     private List<WordModel> words(final SessionState raw) {

@@ -11,19 +11,20 @@ import io.github.vocabhunter.gui.model.MainModel;
 import io.github.vocabhunter.gui.model.SessionModel;
 import javafx.scene.Node;
 import javafx.scene.Parent;
+import javafx.stage.Stage;
 
 public interface GuiFactory {
     ControllerAndView<MainController, Parent> mainWindow();
 
     ControllerAndView<SessionController, Node> session(SessionModel model);
 
-    FileDialogue newSessionChooser();
+    FileDialogue newSessionChooser(Stage stage);
 
-    FileDialogue saveSessionChooser();
+    FileDialogue saveSessionChooser(Stage stage);
 
-    FileDialogue openSessionChooser();
+    FileDialogue openSessionChooser(Stage stage);
 
-    FileDialogue exportSelectionChooser();
+    FileDialogue exportSelectionChooser(Stage stage);
 
     UnsavedChangesDialogue unsavedChangesDialogue(MainModel model);
 

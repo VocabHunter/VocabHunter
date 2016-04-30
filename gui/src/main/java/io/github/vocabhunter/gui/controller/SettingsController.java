@@ -5,19 +5,23 @@
 package io.github.vocabhunter.gui.controller;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
-import io.github.vocabhunter.gui.model.FilterSettings;
-import io.github.vocabhunter.gui.model.MainModel;
+import io.github.vocabhunter.gui.dialogues.FileDialogue;
+import io.github.vocabhunter.gui.model.*;
+import io.github.vocabhunter.gui.view.FilterFileCell;
 import javafx.beans.property.ReadOnlyBooleanProperty;
 import javafx.beans.property.StringProperty;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.List;
 import java.util.function.BooleanSupplier;
 import java.util.function.Supplier;
+import java.util.stream.Collectors;
 
 @SuppressFBWarnings({"NP_UNWRITTEN_PUBLIC_OR_PROTECTED_FIELD", "UWF_UNWRITTEN_PUBLIC_OR_PROTECTED_FIELD"})
 public class SettingsController {
@@ -29,16 +33,25 @@ public class SettingsController {
 
     public CheckBox fieldInitialCapital;
 
+    public ListView<FilterFileModel> listExcludedFiles;
+
+    public Button buttonAddList;
+
     public Button buttonOk;
 
     public Button buttonCancel;
 
     private MainModel model;
 
+    private GuiFactory factory;
+
     private Stage stage;
 
-    public void initialise(final MainModel model, final Stage stage) {
+    private FilterFileListModel filterFilesModel;
+
+    public void initialise(final MainModel model, final GuiFactory factory, final Stage stage) {
         this.model = model;
+        this.factory = factory;
         this.stage = stage;
 
         buttonOk.setOnAction(e -> exit(true));
@@ -48,6 +61,26 @@ public class SettingsController {
         initialiseField(fieldMinimumLetters, settings::getMinimumLetters);
         initialiseField(fieldMinimumOccurrences, settings::getMinimumOccurrences);
         initialiseField(fieldInitialCapital, settings::isAllowInitialCapitals);
+
+        List<FilterFileModel> filterFiles = settings.getFilterFiles().stream()
+            .map(f -> new FilterFileModel(f.getFile(), f.getMode()))
+            .collect(Collectors.toList());
+
+        filterFilesModel = new FilterFileListModel(filterFiles);
+        listExcludedFiles.setItems(filterFilesModel.getFiles());
+        buttonAddList.setOnAction(e -> processAddFile());
+        listExcludedFiles.setCellFactory(p -> new FilterFileCell(filterFilesModel::remove));
+    }
+
+    private void processAddFile() {
+        FileDialogue dialogue = factory.openSessionChooser(stage);
+
+        dialogue.showChooser();
+        if (dialogue.isFileSelected()) {
+            FilterFileModel fileModel = filterFilesModel.addFile(dialogue.getSelectedFile());
+
+            listExcludedFiles.scrollTo(fileModel);
+        }
     }
 
     private void exit(final boolean isSaveRequested) {
@@ -56,8 +89,11 @@ public class SettingsController {
             int minimumLetters = valueOf(fieldMinimumLetters, old.getMinimumLetters());
             int minimumOccurrences = valueOf(fieldMinimumOccurrences, old.getMinimumOccurrences());
             boolean allowInitialCapitals = fieldInitialCapital.isSelected();
+            List<FilterFile> filterFiles = filterFilesModel.getFiles().stream()
+                .map(f -> new FilterFile(f.getFile(), f.getMode()))
+                .collect(Collectors.toList());
 
-            FilterSettings settings = new FilterSettings(minimumLetters, minimumOccurrences, allowInitialCapitals);
+            FilterSettings settings = new FilterSettings(minimumLetters, minimumOccurrences, allowInitialCapitals, filterFiles);
 
             model.setFilterSettings(settings);
             model.setEnableFilters(true);

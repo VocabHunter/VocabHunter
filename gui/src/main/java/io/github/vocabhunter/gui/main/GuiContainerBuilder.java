@@ -5,6 +5,7 @@
 package io.github.vocabhunter.gui.main;
 
 import io.github.vocabhunter.analysis.file.FileStreamer;
+import io.github.vocabhunter.analysis.settings.FileListManagerImpl;
 import io.github.vocabhunter.analysis.simple.SimpleAnalyser;
 import io.github.vocabhunter.gui.common.EnvironmentManagerImpl;
 import io.github.vocabhunter.gui.common.WebPageToolImpl;
@@ -36,6 +37,7 @@ public final class GuiContainerBuilder {
         MutablePicoContainer pico = createBaseContainer(args);
 
         pico.addComponent(SettingsManagerImpl.class);
+        pico.addComponent(FileListManagerImpl.class);
         pico.addComponent(FileDialogueFactoryImpl.class);
         pico.addComponent(EnvironmentManagerImpl.class);
         pico.addComponent(WebPageToolImpl.class);

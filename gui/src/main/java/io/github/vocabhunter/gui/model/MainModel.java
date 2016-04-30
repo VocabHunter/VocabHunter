@@ -120,10 +120,6 @@ public class MainModel {
         return enableFilters;
     }
 
-    public boolean isEnableFilters() {
-        return enableFilters.get();
-    }
-
     public void setEnableFilters(final boolean enableFilters) {
         this.enableFilters.set(enableFilters);
     }

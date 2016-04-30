@@ -8,11 +8,11 @@ import io.github.vocabhunter.analysis.session.SessionState;
 import io.github.vocabhunter.analysis.session.SessionWord;
 import io.github.vocabhunter.analysis.session.WordState;
 import io.github.vocabhunter.test.utils.TestFileManager;
-import org.apache.commons.io.FileUtils;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
 
@@ -56,7 +56,7 @@ public class SelectionExportToolTest {
     private void validate(final SessionState state, final String... expected) throws Exception {
         SelectionExportTool.exportSelection(state, file);
 
-        List<String> actual = FileUtils.readLines(file.toFile());
+        List<String> actual = Files.readAllLines(file);
         assertEquals("File content", listOf(expected), actual);
     }
 

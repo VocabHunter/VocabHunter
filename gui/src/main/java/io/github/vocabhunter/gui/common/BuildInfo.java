@@ -15,7 +15,7 @@ import java.util.Properties;
 public final class BuildInfo {
     private static final Logger LOG = LoggerFactory.getLogger(BuildInfo.class);
 
-    private static final String PROPERTIES_FILE = "build-info.properties";
+    private static final String PROPERTIES_FILE = "properties/build-info.properties";
 
     private BuildInfo() {
         // Prevent instantiation - all methods are static

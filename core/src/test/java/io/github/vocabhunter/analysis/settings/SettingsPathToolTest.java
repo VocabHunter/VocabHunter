@@ -2,7 +2,7 @@
  * Open Source Software published under the Apache Licence, Version 2.0.
  */
 
-package io.github.vocabhunter.gui.settings;
+package io.github.vocabhunter.analysis.settings;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -16,7 +16,7 @@ public class SettingsPathToolTest {
 
     @Test
     public void testObtainSettingsFilePath() {
-        Path path = SettingsPathTool.obtainSettingsFilePath();
+        Path path = SettingsPathTool.obtainSettingsFilePath("test.txt");
 
         LOG.info("Settings file path {}", path);
 

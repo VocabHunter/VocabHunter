@@ -13,7 +13,7 @@ import java.nio.file.Path;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static io.github.vocabhunter.analysis.session.FormatVersion.*;
+import static io.github.vocabhunter.analysis.session.SessionFormatVersion.*;
 
 public final class SessionSerialiser {
     private static final ObjectMapper MAPPER = new ObjectMapper();
@@ -94,6 +94,6 @@ public final class SessionSerialiser {
             .flatMap(WordStreamTool::words)
             .filter(w -> w.equalsIgnoreCase(oldIdentifier))
             .reduce(WordStreamTool::preferredForm)
-            .get();
+            .orElse(oldIdentifier);
     }
 }
