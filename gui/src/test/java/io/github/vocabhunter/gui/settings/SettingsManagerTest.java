@@ -16,6 +16,7 @@ import java.nio.file.Paths;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 
+import static io.github.vocabhunter.gui.settings.SettingsManagerImpl.SETTINGS_JSON;
 import static io.github.vocabhunter.gui.settings.VocabHunterSettings.*;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -34,7 +35,7 @@ public class SettingsManagerTest {
     @Before
     public void setUp() throws Exception {
         files = new TestFileManager(getClass());
-        Path settingsFile = files.addFile("settings.json");
+        Path settingsFile = files.addFile(SETTINGS_JSON);
         dummyPath = files.addFile("dummy");
         target = new SettingsManagerImpl(settingsFile);
     }

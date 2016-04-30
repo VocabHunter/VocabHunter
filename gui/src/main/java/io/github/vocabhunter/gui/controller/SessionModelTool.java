@@ -14,30 +14,18 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-import static io.github.vocabhunter.gui.model.FilterSettingsTool.isValid;
-
 public class SessionModelTool {
     private final SessionState state;
 
     private final FilterSettings filterSettings;
 
-    private final boolean isFilterRequested;
-
-    private final boolean isFilterEnabled;
-
-    public SessionModelTool(final SessionState state, final FilterSettings filterSettings, final boolean isFilterRequested) {
+    public SessionModelTool(final SessionState state, final FilterSettings filterSettings) {
         this.state = state;
         this.filterSettings = filterSettings;
-        this.isFilterRequested = isFilterRequested;
-        this.isFilterEnabled = isFilterRequested && isValid(filterSettings, state.getOrderedUses());
     }
 
     public SessionModel buildModel() {
-        return new SessionModel(state.getName(), words(state), filterSettings, isFilterEnabled);
-    }
-
-    public boolean isFilterError() {
-        return isFilterRequested && !isFilterEnabled;
+        return new SessionModel(state.getName(), words(state), filterSettings);
     }
 
     private List<WordModel> words(final SessionState raw) {

@@ -4,10 +4,10 @@
 
 package io.github.vocabhunter.gui.model;
 
+import io.github.vocabhunter.analysis.core.VocabHunterException;
 import io.github.vocabhunter.analysis.filter.FilterBuilder;
-import io.github.vocabhunter.analysis.filter.FilterTool;
 import io.github.vocabhunter.analysis.filter.WordFilter;
-import io.github.vocabhunter.analysis.model.AnalysisWord;
+import io.github.vocabhunter.analysis.session.SessionWordsTool;
 
 import java.util.List;
 
@@ -26,14 +26,30 @@ public final class FilterSettingsTool {
             if (!settings.isAllowInitialCapitals()) {
                 builder = builder.excludeInitialCapital();
             }
-
-            return builder.build();
-        } else {
-            return builder.build();
+            for (FilterFile file : settings.getFilterFiles()) {
+                builder = addFilter(builder, file);
+            }
         }
+
+        return builder.build();
     }
 
-    public static boolean isValid(final FilterSettings settings, final List<? extends AnalysisWord> words) {
-        return FilterTool.isValid(filter(settings, true), words);
+    private static FilterBuilder addFilter(final FilterBuilder builder, final FilterFile file) {
+        List<String> words = getFilteredWords(file);
+
+        return builder.addExcludedWords(words);
+    }
+
+    private static List<String> getFilteredWords(final FilterFile file) {
+        FilterFileMode mode = file.getMode();
+
+        switch (mode) {
+            case KNOWN:
+                return SessionWordsTool.knownWords(file.getFile());
+            case SEEN:
+                return SessionWordsTool.seenWords(file.getFile());
+            default:
+                throw new VocabHunterException(String.format("Unknown filter mode %s", mode));
+        }
     }
 }

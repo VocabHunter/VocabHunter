@@ -5,9 +5,9 @@
 package io.github.vocabhunter.gui.controller;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+import io.github.vocabhunter.analysis.core.VocabHunterException;
 import io.github.vocabhunter.analysis.filter.WordFilter;
 import io.github.vocabhunter.analysis.session.WordState;
-import io.github.vocabhunter.gui.common.AlertTool;
 import io.github.vocabhunter.gui.model.FilterSettings;
 import io.github.vocabhunter.gui.model.SessionModel;
 import io.github.vocabhunter.gui.model.WordModel;
@@ -21,12 +21,17 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import static io.github.vocabhunter.analysis.filter.FilterTool.isValid;
+import static io.github.vocabhunter.gui.dialogues.AlertTool.filterErrorAlert;
 import static io.github.vocabhunter.gui.model.FilterSettingsTool.filter;
 
 @SuppressFBWarnings({"NP_UNWRITTEN_PUBLIC_OR_PROTECTED_FIELD", "UWF_UNWRITTEN_PUBLIC_OR_PROTECTED_FIELD"})
 public class SessionController {
+    private static final Logger LOG = LoggerFactory.getLogger(SessionController.class);
+
     public Label mainWord;
 
     public Label useCountLabel;
@@ -102,17 +107,38 @@ public class SessionController {
         boolean isEditable = sessionModel.isEditable();
         FilterSettings filterSettings = sessionModel.getFilterSettings();
         boolean isFilterEnabled = sessionModel.isEnableFilters();
-        WordFilter filter = filter(filterSettings, isFilterEnabled);
+        VocabHunterException exception;
+        boolean isFilterSuccess;
 
-        if (isValid(filter, sessionModel.getAllWords())) {
-            sessionModel.updateWordList(isEditable, filter);
-            wordListHandler.selectClosestWord(isEditable, filter);
-        } else {
-            Platform.runLater(() -> {
-                sessionModel.setEnableFilters(false);
-                AlertTool.filterErrorAlert();
-            });
+        try {
+            WordFilter filter = filter(filterSettings, isFilterEnabled);
+
+            isFilterSuccess = isValid(filter, sessionModel.getAllWords());
+            if (isFilterSuccess) {
+                sessionModel.updateWordList(isEditable, filter);
+                wordListHandler.selectClosestWord(isEditable, filter);
+            }
+            exception = null;
+        } catch (VocabHunterException e) {
+            LOG.error("Failed to activate filter", e);
+            exception = e;
+            isFilterSuccess = false;
         }
+
+        if (!isFilterSuccess) {
+            processFilterFailure(exception);
+        }
+    }
+
+    private void processFilterFailure(final VocabHunterException e) {
+        Platform.runLater(() -> {
+            sessionModel.setEnableFilters(false);
+            if (e == null) {
+                filterErrorAlert();
+            } else {
+                filterErrorAlert(e);
+            }
+        });
     }
 
     private void updateCurrentWordProperty(final WordModel word) {

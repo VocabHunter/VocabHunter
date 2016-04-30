@@ -6,6 +6,7 @@ package io.github.vocabhunter.gui.main;
 
 import io.github.vocabhunter.analysis.core.VocabHunterException;
 import io.github.vocabhunter.analysis.file.FileStreamer;
+import io.github.vocabhunter.analysis.settings.FileListManager;
 import io.github.vocabhunter.gui.common.ControllerAndView;
 import io.github.vocabhunter.gui.common.EnvironmentManager;
 import io.github.vocabhunter.gui.common.WebPageTool;
@@ -38,6 +39,8 @@ public class GuiFactoryImpl implements GuiFactory {
 
     private final SettingsManager settingsManager;
 
+    private final FileListManager fileListManager;
+
     private final EnvironmentManager environmentManager;
 
     private final FileDialogueFactory fileDialogueFactory;
@@ -49,16 +52,18 @@ public class GuiFactoryImpl implements GuiFactory {
     private final WebPageTool webPageTool;
 
     public GuiFactoryImpl(final Stage stage, final MutablePicoContainer pico) {
-        this(stage, pico.getComponent(SettingsManager.class), pico.getComponent(EnvironmentManager.class),
-             pico.getComponent(FileDialogueFactory.class), pico.getComponent(ExternalEventBroker.class),
-             pico.getComponent(FileStreamer.class), pico.getComponent(WebPageTool.class));
+        this(stage, pico.getComponent(SettingsManager.class), pico.getComponent(FileListManager.class),
+             pico.getComponent(EnvironmentManager.class), pico.getComponent(FileDialogueFactory.class),
+             pico.getComponent(ExternalEventBroker.class), pico.getComponent(FileStreamer.class),
+             pico.getComponent(WebPageTool.class));
     }
 
-    private GuiFactoryImpl(final Stage stage, final SettingsManager settingsManager, final EnvironmentManager environmentManager,
-                           final FileDialogueFactory fileDialogueFactory, final ExternalEventBroker externalEventSource,
-                           final FileStreamer fileStreamer, final WebPageTool webPageTool) {
+    private GuiFactoryImpl(final Stage stage, final SettingsManager settingsManager, final FileListManager fileListManager,
+                           final EnvironmentManager environmentManager, final FileDialogueFactory fileDialogueFactory,
+                           final ExternalEventBroker externalEventSource, final FileStreamer fileStreamer, final WebPageTool webPageTool) {
         this.stage = stage;
         this.settingsManager = settingsManager;
+        this.fileListManager = fileListManager;
         this.environmentManager = environmentManager;
         this.fileDialogueFactory = fileDialogueFactory;
         this.externalEventSource = externalEventSource;
@@ -72,7 +77,7 @@ public class GuiFactoryImpl implements GuiFactory {
         Parent root = loadNode(loader, FXML_MAIN);
         MainController controller = loader.getController();
 
-        controller.initialise(stage, this, fileStreamer, settingsManager, environmentManager, webPageTool);
+        controller.initialise(stage, this, fileStreamer, settingsManager, fileListManager, environmentManager, webPageTool);
 
         return new ControllerAndView<>(controller, root);
     }
@@ -132,7 +137,7 @@ public class GuiFactoryImpl implements GuiFactory {
 
     @Override
     public ErrorDialogue errorDialogue(final String title, final String message, final Throwable e) {
-        return new ErrorDialogue(title, message, e);
+        return new ErrorDialogue(title, e, message);
     }
 
     @Override

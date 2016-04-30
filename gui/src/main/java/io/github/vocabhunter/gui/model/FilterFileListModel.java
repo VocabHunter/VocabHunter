@@ -8,9 +8,14 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 import java.nio.file.Path;
+import java.util.List;
 
 public class FilterFileListModel {
-    private final ObservableList<FilterFileModel> files = FXCollections.observableArrayList();
+    private final ObservableList<FilterFileModel> files;
+
+    public FilterFileListModel(final List<FilterFileModel> files) {
+        this.files = FXCollections.observableArrayList(files);
+    }
 
     public ObservableList<FilterFileModel> getFiles() {
         return files;

@@ -4,6 +4,7 @@
 
 package io.github.vocabhunter.analysis.session;
 
+import io.github.vocabhunter.analysis.core.VocabHunterException;
 import io.github.vocabhunter.analysis.model.AnalysisWord;
 
 import java.nio.file.Path;
@@ -18,26 +19,26 @@ public final class SessionWordsTool {
     }
 
     public static List<String> knownWords(final Path file) {
-        return knownWords(SessionSerialiser.read(file));
+        return knownWords(readSessionFile(file));
     }
 
     public static List<String> knownWords(final EnrichedSessionState state) {
         return knownWords(state.getState());
     }
 
-    public static List<String> knownWords(final SessionState state) {
+    private static List<String> knownWords(final SessionState state) {
         return words(state, SessionWordsTool::isKnown);
     }
 
     public static List<String> seenWords(final Path file) {
-        return seenWords(SessionSerialiser.read(file));
+        return seenWords(readSessionFile(file));
     }
 
     public static List<String> seenWords(final EnrichedSessionState state) {
         return seenWords(state.getState());
     }
 
-    public static List<String> seenWords(final SessionState state) {
+    private static List<String> seenWords(final SessionState state) {
         return words(state, SessionWordsTool::isSeen);
     }
 
@@ -56,6 +57,14 @@ public final class SessionWordsTool {
         WordState state = w.getState();
 
         return state.equals(WordState.KNOWN) || state.equals(WordState.UNKNOWN);
+    }
+
+    private static EnrichedSessionState readSessionFile(final Path file) {
+        try {
+            return SessionSerialiser.read(file);
+        } catch (Exception e) {
+            throw new VocabHunterException(String.format("Unable to read filter file '%s'", file), e);
+        }
     }
 }
 

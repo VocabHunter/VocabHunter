@@ -15,14 +15,16 @@ import javafx.stage.Stage;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class ErrorDialogue {
     private final Alert alert;
 
-    public ErrorDialogue(final String title, final String message, final Throwable e) {
+    public ErrorDialogue(final String title, final Throwable e, final String... messages) {
         alert = new Alert(AlertType.ERROR);
         alert.setTitle(title);
-        alert.setHeaderText(message);
+        alert.setHeaderText(headerText(messages));
 
         TextArea textArea = new TextArea(exceptionText(e));
         VBox expContent = new VBox();
@@ -31,6 +33,11 @@ public class ErrorDialogue {
         expContent.getChildren().setAll(new Label("Error details:"), textArea);
         dialogPane.setExpandableContent(expContent);
         dialogPane.expandedProperty().addListener(p -> Platform.runLater(this::resizeAlert));
+    }
+
+    private String headerText(final String... messages) {
+        return Stream.of(messages)
+            .collect(Collectors.joining("\n\n"));
     }
 
     private void resizeAlert() {

@@ -6,10 +6,7 @@ package io.github.vocabhunter.gui.controller;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import io.github.vocabhunter.gui.dialogues.FileDialogue;
-import io.github.vocabhunter.gui.model.FilterFileListModel;
-import io.github.vocabhunter.gui.model.FilterFileModel;
-import io.github.vocabhunter.gui.model.FilterSettings;
-import io.github.vocabhunter.gui.model.MainModel;
+import io.github.vocabhunter.gui.model.*;
 import io.github.vocabhunter.gui.view.FilterFileCell;
 import javafx.beans.property.ReadOnlyBooleanProperty;
 import javafx.beans.property.StringProperty;
@@ -21,8 +18,10 @@ import javafx.stage.Stage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.List;
 import java.util.function.BooleanSupplier;
 import java.util.function.Supplier;
+import java.util.stream.Collectors;
 
 @SuppressFBWarnings({"NP_UNWRITTEN_PUBLIC_OR_PROTECTED_FIELD", "UWF_UNWRITTEN_PUBLIC_OR_PROTECTED_FIELD"})
 public class SettingsController {
@@ -48,7 +47,7 @@ public class SettingsController {
 
     private Stage stage;
 
-    private final FilterFileListModel filterFilesModel = new FilterFileListModel();
+    private FilterFileListModel filterFilesModel;
 
     public void initialise(final MainModel model, final GuiFactory factory, final Stage stage) {
         this.model = model;
@@ -63,6 +62,11 @@ public class SettingsController {
         initialiseField(fieldMinimumOccurrences, settings::getMinimumOccurrences);
         initialiseField(fieldInitialCapital, settings::isAllowInitialCapitals);
 
+        List<FilterFileModel> filterFiles = settings.getFilterFiles().stream()
+            .map(f -> new FilterFileModel(f.getFile(), f.getMode()))
+            .collect(Collectors.toList());
+
+        filterFilesModel = new FilterFileListModel(filterFiles);
         listExcludedFiles.setItems(filterFilesModel.getFiles());
         buttonAddList.setOnAction(e -> processAddFile());
         listExcludedFiles.setCellFactory(p -> new FilterFileCell(filterFilesModel::remove));
@@ -85,8 +89,11 @@ public class SettingsController {
             int minimumLetters = valueOf(fieldMinimumLetters, old.getMinimumLetters());
             int minimumOccurrences = valueOf(fieldMinimumOccurrences, old.getMinimumOccurrences());
             boolean allowInitialCapitals = fieldInitialCapital.isSelected();
+            List<FilterFile> filterFiles = filterFilesModel.getFiles().stream()
+                .map(f -> new FilterFile(f.getFile(), f.getMode()))
+                .collect(Collectors.toList());
 
-            FilterSettings settings = new FilterSettings(minimumLetters, minimumOccurrences, allowInitialCapitals);
+            FilterSettings settings = new FilterSettings(minimumLetters, minimumOccurrences, allowInitialCapitals, filterFiles);
 
             model.setFilterSettings(settings);
             model.setEnableFilters(true);

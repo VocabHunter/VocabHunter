@@ -19,7 +19,6 @@ import java.util.TreeSet;
 import java.util.stream.Collectors;
 
 import static io.github.vocabhunter.analysis.filter.FilterTool.applyFilter;
-import static io.github.vocabhunter.gui.model.FilterSettingsTool.filter;
 import static java.util.Collections.unmodifiableList;
 
 public final class SessionModel {
@@ -45,21 +44,18 @@ public final class SessionModel {
 
     private final SimpleObjectProperty<FilterSettings> filterSettings;
 
-    private final SimpleBooleanProperty enableFilters;
+    private final SimpleBooleanProperty enableFilters = new SimpleBooleanProperty();
 
-    public SessionModel(final String documentName, final List<WordModel> words, final FilterSettings filterSettings, final boolean isFilterEnabled) {
+    public SessionModel(final String documentName, final List<WordModel> words, final FilterSettings filterSettings) {
         this.documentName = new SimpleStringProperty(documentName);
         this.filterSettings = new SimpleObjectProperty<>(filterSettings);
-        this.enableFilters = new SimpleBooleanProperty(isFilterEnabled);
         allWords = words;
         selectedWords.addAll(words.stream()
                 .filter(w -> w.getState().equals(WordState.UNKNOWN))
                 .collect(Collectors.toList()));
 
-        WordFilter filter = filter(filterSettings, isFilterEnabled);
-
-        updateWordList(true, filter);
-        currentWord = new SimpleObjectProperty<>(InitialSelectionTool.nextWord(applyFilter(filter, allWords)));
+        wordList.addAll(allWords);
+        currentWord = new SimpleObjectProperty<>(InitialSelectionTool.nextWord(allWords));
     }
 
     public void addSelectedWord(final WordModel word) {
