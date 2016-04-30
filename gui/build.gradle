@@ -1,6 +1,7 @@
 /*
  * Open Source Software published under the Apache Licence, Version 2.0.
  */
+import org.apache.tools.ant.filters.*
 
 apply plugin: 'application'
 
@@ -10,16 +11,16 @@ applicationName = "VocabHunter"
 
 ext.buildTimestamp = new Date().format('yyyy-MM-dd HH:mm:ss')
 
-task createBuildInfoFile(dependsOn: processResources) << {
-    def buildInfoFile = new File("$buildDir/build-info.properties")
-    Properties props = new Properties()
-    props.setProperty('version', project.property("version"))
-    props.setProperty('timestamp', project.buildTimestamp)
-    props.store(buildInfoFile.newWriter(), null)
+processResources {
+    filesMatching('properties/*.properties') {
+        filter ReplaceTokens, tokens: [
+            'build.version': project.property("version"),
+            'build.timestamp': project.buildTimestamp
+        ]
+    }
 }
 
 jar {
-    dependsOn createBuildInfoFile
     from(buildDir) {
         include 'build-info.properties'
     }
