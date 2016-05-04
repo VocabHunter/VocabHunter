@@ -7,7 +7,8 @@ package io.github.vocabhunter.gui.controller;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import io.github.vocabhunter.analysis.core.VocabHunterException;
 import io.github.vocabhunter.analysis.filter.WordFilter;
-import io.github.vocabhunter.analysis.session.WordState;
+import io.github.vocabhunter.analysis.marked.MarkTool;
+import io.github.vocabhunter.analysis.marked.WordState;
 import io.github.vocabhunter.gui.model.FilterSettings;
 import io.github.vocabhunter.gui.model.SessionModel;
 import io.github.vocabhunter.gui.model.WordModel;
@@ -24,7 +25,6 @@ import javafx.scene.layout.BorderPane;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import static io.github.vocabhunter.analysis.filter.FilterTool.isValid;
 import static io.github.vocabhunter.gui.dialogues.AlertTool.filterErrorAlert;
 import static io.github.vocabhunter.gui.model.FilterSettingsTool.filter;
 
@@ -112,10 +112,11 @@ public class SessionController {
 
         try {
             WordFilter filter = filter(filterSettings, isFilterEnabled);
+            MarkTool<WordModel> markTool = new MarkTool<>(filter, sessionModel.getAllWords());
 
-            isFilterSuccess = isValid(filter, sessionModel.getAllWords());
+            isFilterSuccess = markTool.isValidFilter();
             if (isFilterSuccess) {
-                sessionModel.updateWordList(isEditable, filter);
+                sessionModel.updateWordList(isEditable, markTool);
                 wordListHandler.selectClosestWord(isEditable, filter);
             }
             exception = null;

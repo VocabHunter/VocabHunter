@@ -4,7 +4,7 @@
 
 package io.github.vocabhunter.gui.view;
 
-import io.github.vocabhunter.analysis.session.WordState;
+import io.github.vocabhunter.analysis.marked.WordState;
 import javafx.css.PseudoClass;
 import javafx.scene.Node;
 

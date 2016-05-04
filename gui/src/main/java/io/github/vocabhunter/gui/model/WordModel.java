@@ -4,8 +4,8 @@
 
 package io.github.vocabhunter.gui.model;
 
-import io.github.vocabhunter.analysis.model.AnalysisWord;
-import io.github.vocabhunter.analysis.session.WordState;
+import io.github.vocabhunter.analysis.marked.MarkedWord;
+import io.github.vocabhunter.analysis.marked.WordState;
 import javafx.beans.Observable;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -14,7 +14,7 @@ import javafx.util.Callback;
 import java.util.Collections;
 import java.util.List;
 
-public class WordModel implements AnalysisWord {
+public class WordModel implements MarkedWord {
     public static final Callback<WordModel, Observable[]> PROPERTY_EXTRACTOR
             = w -> new Observable[] {w.identifier, w.state};
 
@@ -45,6 +45,7 @@ public class WordModel implements AnalysisWord {
         return identifier.get();
     }
 
+    @Override
     public WordState getState() {
         return state.get();
     }

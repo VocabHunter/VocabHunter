@@ -5,8 +5,8 @@
 package io.github.vocabhunter.analysis.session;
 
 import io.github.vocabhunter.analysis.filter.FilterBuilder;
-import io.github.vocabhunter.analysis.filter.FilterTool;
 import io.github.vocabhunter.analysis.filter.WordFilter;
+import io.github.vocabhunter.analysis.marked.MarkTool;
 import io.github.vocabhunter.analysis.model.AnalysisWord;
 import org.junit.Test;
 
@@ -40,7 +40,8 @@ public class SessionWordsToolTest {
         EnrichedSessionState state = read(SESSION_FILE);
         List<String> exclusions = filterMethod.apply(state);
         WordFilter filter = new FilterBuilder().addExcludedWords(exclusions).build();
-        List<SessionWord> words = FilterTool.applyFilter(filter, state.getState().getOrderedUses());
+        MarkTool<SessionWord> markTool = new MarkTool<>(filter, state.getState().getOrderedUses());
+        List<SessionWord> words = markTool.getFilteredWords();
         List<String> actual = words.stream()
             .map(AnalysisWord::getWordIdentifier)
             .collect(toList());

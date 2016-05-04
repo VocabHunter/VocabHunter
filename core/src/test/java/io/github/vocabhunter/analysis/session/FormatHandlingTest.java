@@ -5,6 +5,7 @@
 package io.github.vocabhunter.analysis.session;
 
 import io.github.vocabhunter.analysis.core.VocabHunterException;
+import io.github.vocabhunter.analysis.marked.WordState;
 import org.junit.Test;
 
 import java.nio.file.Path;
@@ -14,7 +15,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static io.github.vocabhunter.analysis.core.CollectionTool.listOf;
-import static io.github.vocabhunter.analysis.session.WordState.*;
+import static io.github.vocabhunter.analysis.marked.WordState.*;
 import static org.junit.Assert.assertEquals;
 
 public class FormatHandlingTest {

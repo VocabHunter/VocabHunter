@@ -5,9 +5,9 @@
 package io.github.vocabhunter.analysis.file;
 
 import io.github.vocabhunter.analysis.core.VocabHunterException;
+import io.github.vocabhunter.analysis.marked.WordState;
 import io.github.vocabhunter.analysis.session.SessionState;
 import io.github.vocabhunter.analysis.session.SessionWord;
-import io.github.vocabhunter.analysis.session.WordState;
 
 import java.io.IOException;
 import java.nio.file.Files;

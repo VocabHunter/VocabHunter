@@ -5,7 +5,7 @@
 package io.github.vocabhunter.gui.model;
 
 import io.github.vocabhunter.analysis.core.VocabHunterException;
-import io.github.vocabhunter.analysis.session.WordState;
+import io.github.vocabhunter.analysis.marked.WordState;
 
 import java.util.List;
 
