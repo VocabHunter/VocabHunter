@@ -30,4 +30,11 @@ public class ProgressModel {
     public SimpleIntegerProperty unseenFilteredProperty() {
         return unseenFiltered;
     }
+
+    public void updateProgress(final int known, final int unknown, final int unseenUnfiltered, final int unseenFiltered) {
+        this.known.set(known);
+        this.unknown.set(unknown);
+        this.unseenUnfiltered.set(unseenUnfiltered);
+        this.unseenFiltered.set(unseenFiltered);
+    }
 }

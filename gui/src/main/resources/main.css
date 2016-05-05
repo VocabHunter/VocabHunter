@@ -7,6 +7,10 @@
    -colour-unknown-end: #a43030;
    -gradient-unknown: linear-gradient(from 0% 0% to 100% 200%, repeat, -colour-unknown 0%, -colour-unknown-end 90%);
    -colour-word-use: darkblue;
+   -colour-filtered: lightgrey;
+   -colour-done: royalblue;
+   -colour-remaining: lightcoral;
+   -colour-unseen-unfiltered: powderblue;
 }
 
 .mainWord {
@@ -128,4 +132,28 @@
 .wordUse {
     -fx-font-weight: bold;
     -fx-fill: -colour-word-use;
+}
+/* Done */
+.chartProgress .default-color0.chart-pie {
+    -fx-pie-color: -colour-done;
+}
+/* Remaining */
+.chartProgress .default-color1.chart-pie {
+    -fx-pie-color: -colour-remaining;
+}
+/* Known */
+.chartResults .default-color0.chart-pie {
+    -fx-pie-color: -colour-known-end;
+}
+/* Unknown */
+.chartResults .default-color1.chart-pie {
+    -fx-pie-color: -colour-unknown-end;
+}
+/* Unseen & unfiltered */
+.chartResults .default-color2.chart-pie {
+    -fx-pie-color: -colour-unseen-unfiltered;
+}
+/* Unseen & filtered */
+.chartResults .default-color3.chart-pie {
+    -fx-pie-color: -colour-filtered;
 }

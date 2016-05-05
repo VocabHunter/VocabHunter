@@ -45,6 +45,8 @@ public final class SessionModel {
 
     private final SimpleBooleanProperty enableFilters = new SimpleBooleanProperty();
 
+    private final ProgressModel progress = new ProgressModel();
+
     public SessionModel(final String documentName, final List<WordModel> words, final FilterSettings filterSettings) {
         this.documentName = new SimpleStringProperty(documentName);
         this.filterSettings = new SimpleObjectProperty<>(filterSettings);
@@ -77,6 +79,7 @@ public final class SessionModel {
         wordList.clear();
         if (isEditable) {
             wordList.addAll(markTool.getFilteredWords());
+            progress.updateProgress(markTool.getKnown(), markTool.getUnknown(), markTool.getUnseenUnfiltered(), markTool.getUnseenFiltered());
         } else {
             wordList.addAll(selectedWords);
         }
@@ -166,5 +169,9 @@ public final class SessionModel {
 
     public boolean isEnableFilters() {
         return enableFilters.get();
+    }
+
+    public ProgressModel getProgress() {
+        return progress;
     }
 }

@@ -307,6 +307,7 @@ public class MainController {
         ControllerAndView<SessionController, Node> cav = factory.session(sessionModel);
 
         viewTool.addAnalysisView(cav.getView());
+        viewTool.addProgressView(factory.progress(sessionModel.getProgress()));
         mainBorderPane.setCenter(viewTool.getView());
 
         keyPressHandler = cav.getController().getKeyPressHandler();

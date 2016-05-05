@@ -15,6 +15,7 @@ import io.github.vocabhunter.gui.dialogues.*;
 import io.github.vocabhunter.gui.event.ExternalEventBroker;
 import io.github.vocabhunter.gui.event.ExternalEventSource;
 import io.github.vocabhunter.gui.model.MainModel;
+import io.github.vocabhunter.gui.model.ProgressModel;
 import io.github.vocabhunter.gui.model.SessionModel;
 import io.github.vocabhunter.gui.settings.SettingsManager;
 import javafx.fxml.FXMLLoader;
@@ -30,6 +31,8 @@ public class GuiFactoryImpl implements GuiFactory {
     private static final String FXML_MAIN = "main.fxml";
 
     private static final String FXML_SESSION = "session.fxml";
+
+    private static final String FXML_PROGRESS = "progress.fxml";
 
     private static final String FXML_ABOUT = "about.fxml";
 
@@ -91,6 +94,17 @@ public class GuiFactoryImpl implements GuiFactory {
         controller.initialise(model);
 
         return new ControllerAndView<>(controller, root);
+    }
+
+    @Override
+    public Node progress(final ProgressModel model) {
+        FXMLLoader loader = loader(FXML_PROGRESS);
+        Node root = loadNode(loader, FXML_PROGRESS);
+        ProgressController controller = loader.getController();
+
+        controller.initialise(model);
+
+        return root;
     }
 
     private <T> T loadNode(final FXMLLoader loader, final String fxml) {

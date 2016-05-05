@@ -24,6 +24,10 @@ public class SessionViewTool {
         analysisTab.setContent(view);
     }
 
+    public void addProgressView(final Node view) {
+        progressTab.setContent(view);
+    }
+
     public Node getView() {
         return tabPane;
     }
