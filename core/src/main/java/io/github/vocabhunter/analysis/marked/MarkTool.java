@@ -13,7 +13,7 @@ import static java.util.Collections.emptyMap;
 import static java.util.stream.Collectors.*;
 
 public final class MarkTool<T extends MarkedWord> {
-    private final List<T> filteredWords;
+    private final List<T> shownWords;
 
     private final int known;
 
@@ -23,18 +23,17 @@ public final class MarkTool<T extends MarkedWord> {
 
     private final int unseenFiltered;
 
-
     public MarkTool(final List<T> words) {
         this(w -> true, words);
     }
 
     public MarkTool(final WordFilter filter, final List<T> words) {
-        filteredWords = words.stream()
-            .filter(filter::isShown)
+        shownWords = words.stream()
+            .filter(w -> !w.getState().equals(WordState.UNSEEN) || filter.isShown(w))
             .collect(toList());
 
         Map<WordState, Map<Boolean, Long>> groups = words.stream()
-            .collect(groupingBy(T::getState, groupingBy(w -> filter.isShown(w), counting())));
+            .collect(groupingBy(T::getState, groupingBy(filter::isShown, counting())));
 
         known = extractValues(groups, WordState.KNOWN);
         unknown = extractValues(groups, WordState.UNKNOWN);
@@ -60,12 +59,12 @@ public final class MarkTool<T extends MarkedWord> {
         return groups.getOrDefault(state, emptyMap());
     }
 
-    public List<T> getFilteredWords() {
-        return filteredWords;
+    public List<T> getShownWords() {
+        return shownWords;
     }
 
     public boolean isValidFilter() {
-        return !filteredWords.isEmpty();
+        return !shownWords.isEmpty();
     }
 
     public int getKnown() {

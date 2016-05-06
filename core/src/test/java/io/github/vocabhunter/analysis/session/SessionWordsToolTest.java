@@ -20,7 +20,9 @@ import static java.util.stream.Collectors.toList;
 import static org.junit.Assert.assertEquals;
 
 public class SessionWordsToolTest {
-    private static final String SESSION_FILE = "format1.wordy";
+    private static final String SESSION_FILE = "unmarked.wordy";
+
+    private static final String FILTER_FILE = "format1.wordy";
 
     @Test
     public void testKnown() throws Exception {
@@ -37,16 +39,22 @@ public class SessionWordsToolTest {
     }
 
     private void validate(final Function<EnrichedSessionState, List<String>> filterMethod, final List<String> expected) throws Exception {
+        WordFilter filter = buildFilter(filterMethod);
         EnrichedSessionState state = read(SESSION_FILE);
-        List<String> exclusions = filterMethod.apply(state);
-        WordFilter filter = new FilterBuilder().addExcludedWords(exclusions).build();
         MarkTool<SessionWord> markTool = new MarkTool<>(filter, state.getState().getOrderedUses());
-        List<SessionWord> words = markTool.getFilteredWords();
+        List<SessionWord> words = markTool.getShownWords();
         List<String> actual = words.stream()
             .map(AnalysisWord::getWordIdentifier)
             .collect(toList());
 
         assertEquals("Filtered words", expected, actual);
+    }
+
+    private WordFilter buildFilter(final Function<EnrichedSessionState, List<String>> filterMethod) throws Exception {
+        EnrichedSessionState state = read(FILTER_FILE);
+        List<String> exclusions = filterMethod.apply(state);
+
+        return new FilterBuilder().addExcludedWords(exclusions).build();
     }
 
     private EnrichedSessionState read(final String file) throws Exception {

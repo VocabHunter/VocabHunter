@@ -78,7 +78,7 @@ public final class SessionModel {
     public void updateWordList(final boolean isEditable, final MarkTool<WordModel> markTool) {
         wordList.clear();
         if (isEditable) {
-            wordList.addAll(markTool.getFilteredWords());
+            wordList.addAll(markTool.getShownWords());
             progress.updateProgress(markTool.getKnown(), markTool.getUnknown(), markTool.getUnseenUnfiltered(), markTool.getUnseenFiltered());
         } else {
             wordList.addAll(selectedWords);
