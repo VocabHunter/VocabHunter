@@ -92,12 +92,18 @@ task copyJars(type: Copy) {
 }
 
 jfxbundle.doLast {
-    File bundle = file("build/bundles/VocabHunter-${publishedVersion}.${packageType}")
-
-    if (bundle.exists()) {
-        println "Created bundle '$bundle'"
-    } else {
+    String bundle = "VocabHunter-${publishedVersion}.${packageType}"
+    FileTree tree = fileTree('build/bundles') {
+        include {
+            it.file.name.equalsIgnoreCase(bundle)
+        }
+    }
+    if (tree.isEmpty()) {
         throw new GradleException("Unable to create bundle file '$bundle'")
+    } else {
+        tree.each {File f ->
+            println "Created bundle '$f'"
+        }
     }
 }
 
