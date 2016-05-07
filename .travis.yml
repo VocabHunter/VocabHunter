@@ -27,7 +27,7 @@ cache:
 install: true
 
 script:
-  - ./gradlew clean build -info
+  - ./gradlew clean build jfxbundle -info
 
 deploy:
   provider: releases
