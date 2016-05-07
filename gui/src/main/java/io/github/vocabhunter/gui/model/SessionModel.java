@@ -45,11 +45,12 @@ public final class SessionModel {
 
     private final SimpleBooleanProperty enableFilters = new SimpleBooleanProperty();
 
-    private final ProgressModel progress = new ProgressModel();
+    private final ProgressModel progress;
 
-    public SessionModel(final String documentName, final List<WordModel> words, final FilterSettings filterSettings) {
+    public SessionModel(final String documentName, final List<WordModel> words, final FilterSettings filterSettings, final ProgressModel progress) {
         this.documentName = new SimpleStringProperty(documentName);
         this.filterSettings = new SimpleObjectProperty<>(filterSettings);
+        this.progress = progress;
         allWords = words;
         selectedWords.addAll(words.stream()
                 .filter(w -> w.getState().equals(WordState.UNKNOWN))
