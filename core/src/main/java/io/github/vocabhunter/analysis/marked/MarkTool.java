@@ -29,7 +29,7 @@ public final class MarkTool<T extends MarkedWord> {
 
     public MarkTool(final WordFilter filter, final List<T> words) {
         shownWords = words.stream()
-            .filter(w -> !w.getState().equals(WordState.UNSEEN) || filter.isShown(w))
+            .filter(w -> isShown(filter, w))
             .collect(toList());
 
         Map<WordState, Map<Boolean, Long>> groups = words.stream()
@@ -81,5 +81,9 @@ public final class MarkTool<T extends MarkedWord> {
 
     public int getUnseenFiltered() {
         return unseenFiltered;
+    }
+
+    public static <W extends MarkedWord> boolean isShown(final WordFilter filter, final W w) {
+        return !w.getState().equals(WordState.UNSEEN) || filter.isShown(w);
     }
 }
