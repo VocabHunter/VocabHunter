@@ -139,10 +139,11 @@ public class GuiTest extends FxRobot implements GuiTestValidator {
         GuiTestSteps steps = new GuiTestSteps(this, this);
 
         steps.part1BasicWalkThrough();
-        steps.part2StartNewSessionAndFilter();
-        steps.part3ReopenFirstSession();
-        steps.part4AboutDialogue();
-        steps.part5WebLinks();
+        steps.part2Progress();
+        steps.part3StartNewSessionAndFilter();
+        steps.part4ReopenFirstSession();
+        steps.part5AboutDialogue();
+        steps.part6WebLinks();
     }
 
     @Override

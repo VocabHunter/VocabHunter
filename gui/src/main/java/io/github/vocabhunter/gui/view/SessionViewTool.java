@@ -17,7 +17,9 @@ public class SessionViewTool {
 
     public SessionViewTool() {
         analysisTab.setClosable(false);
+        analysisTab.setId("tabAnalysis");
         progressTab.setClosable(false);
+        progressTab.setId("tabProgress");
     }
 
     public void addAnalysisView(final Node view) {

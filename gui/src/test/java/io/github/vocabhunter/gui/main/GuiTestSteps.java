@@ -69,7 +69,20 @@ public class GuiTestSteps {
         });
     }
 
-    public void part2StartNewSessionAndFilter() {
+    public void part2Progress() {
+        step("Check progress", () -> {
+            robot.clickOn("#tabProgress");
+            verifyThat("#labelValueDone", hasText("2 Words"));
+        });
+
+        step("Return to analysis", () -> {
+            robot.clickOn("#tabAnalysis");
+            verifyThat("#mainWord", hasText("the"));
+        });
+
+    }
+
+    public void part3StartNewSessionAndFilter() {
         step("Open a new session for a different book", () -> {
             robot.clickOn("#buttonNew");
             verifyThat("#mainWord", hasText("the"));
@@ -95,7 +108,7 @@ public class GuiTestSteps {
         });
     }
 
-    public void part3ReopenFirstSession() {
+    public void part4ReopenFirstSession() {
         step("Re-open the old session", () -> {
             robot.clickOn("#buttonOpen");
             robot.clickOn("Discard");
@@ -103,7 +116,7 @@ public class GuiTestSteps {
         });
     }
 
-    public void part4AboutDialogue() {
+    public void part5AboutDialogue() {
         step("Open About dialogue", () -> {
             robot.clickOn("#menuHelp");
             robot.clickOn("#menuAbout");
@@ -120,7 +133,7 @@ public class GuiTestSteps {
         });
     }
 
-    public void part5WebLinks() {
+    public void part6WebLinks() {
         step("Open website", () -> {
             robot.clickOn("#menuHelp");
             robot.clickOn("#menuWebsite");
