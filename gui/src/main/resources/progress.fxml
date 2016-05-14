@@ -5,10 +5,13 @@
   -->
 
 <?import javafx.scene.chart.PieChart?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Circle?>
 
 <AnchorPane prefHeight="500.0" prefWidth="700.0" stylesheets="@main.css" xmlns="http://javafx.com/javafx/null" xmlns:fx="http://javafx.com/fxml/1" fx:controller="io.github.vocabhunter.gui.controller.ProgressController">
  <children>
@@ -19,10 +22,73 @@
          </columnConstraints>
          <rowConstraints>
             <RowConstraints vgrow="SOMETIMES" />
+            <RowConstraints />
          </rowConstraints>
          <children>
-            <PieChart fx:id="chartProgress" styleClass="chartProgress" title="Progress" maxHeight="600" />
-            <PieChart fx:id="chartResults" styleClass="chartResults" title="Results" GridPane.columnIndex="1" maxHeight="600" />
+            <PieChart fx:id="chartProgress" legendVisible="false" styleClass="chartProgress" title="Progress" />
+            <PieChart fx:id="chartResults" legendVisible="false" styleClass="chartResults" title="Results" GridPane.columnIndex="1" />
+            <VBox alignment="TOP_CENTER" fillWidth="false" minHeight="-Infinity" minWidth="-Infinity" GridPane.rowIndex="1">
+               <children>
+                   <GridPane styleClass="chartLegend">
+                       <columnConstraints>
+                           <ColumnConstraints />
+                           <ColumnConstraints />
+                           <ColumnConstraints />
+                           <ColumnConstraints />
+                       </columnConstraints>
+                       <rowConstraints>
+                           <RowConstraints />
+                           <RowConstraints />
+                       </rowConstraints>
+                       <children>
+                           <Circle radius="7" styleClass="keyDone" />
+                           <Label text="Marked as Known/Unknown" GridPane.columnIndex="1" />
+                           <Label fx:id="labelValueDone" text="123 Words" GridPane.columnIndex="2" />
+                           <Label fx:id="labelPercentDone" text="1%" GridPane.columnIndex="3" />
+                           <Circle radius="7" styleClass="keyRemaining" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+                           <Label text="Unmarked" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                           <Label fx:id="labelValueRemaining" text="29 Words" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                           <Label fx:id="labelPercentRemaining" text="2%" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+                       </children>
+                   </GridPane>
+               </children>
+            </VBox>
+            <VBox alignment="TOP_CENTER" fillWidth="false" minHeight="-Infinity" minWidth="-Infinity" GridPane.columnIndex="1" GridPane.rowIndex="1">
+               <children>
+                  <GridPane styleClass="chartLegend">
+                    <columnConstraints>
+                      <ColumnConstraints />
+                      <ColumnConstraints />
+                      <ColumnConstraints />
+                      <ColumnConstraints />
+                    </columnConstraints>
+                    <rowConstraints>
+                      <RowConstraints />
+                      <RowConstraints />
+                      <RowConstraints />
+                      <RowConstraints />
+                    </rowConstraints>
+                     <children>
+                          <Circle radius="7" styleClass="keyKnown" />
+                          <Label text="Marked as Known" GridPane.columnIndex="1" />
+                          <Label fx:id="labelValueKnown" text="123 Words" GridPane.columnIndex="2" />
+                          <Label fx:id="labelPercentKnown" text="1%" GridPane.columnIndex="3" />
+                          <Circle radius="7" styleClass="keyUnknown" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+                          <Label text="Marked as Unknown" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                          <Label fx:id="labelValueUnknown" text="29 Words" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                          <Label fx:id="labelPercentUnknown" text="2%" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+                          <Circle radius="7" styleClass="keyUnseenUnfiltered" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+                          <Label text="Unmarked" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                          <Label fx:id="labelValueUnseenUnfiltered" text="3 Words" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+                          <Label fx:id="labelPercentUnseenUnfiltered" text="3%" GridPane.columnIndex="3" GridPane.rowIndex="2" />
+                          <Circle radius="7" styleClass="keyFiltered" GridPane.columnIndex="0" GridPane.rowIndex="3" />
+                          <Label text="Filtered" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                          <Label fx:id="labelValueFiltered" text="25 Words" GridPane.columnIndex="2" GridPane.rowIndex="3" />
+                          <Label fx:id="labelPercentFiltered" text="4%" GridPane.columnIndex="3" GridPane.rowIndex="3" />
+                     </children>
+                  </GridPane>
+               </children>
+            </VBox>
          </children>
       </GridPane>
  </children>

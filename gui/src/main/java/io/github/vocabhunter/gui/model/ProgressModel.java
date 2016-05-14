@@ -5,6 +5,9 @@
 package io.github.vocabhunter.gui.model;
 
 import io.github.vocabhunter.analysis.marked.WordState;
+import javafx.beans.binding.Bindings;
+import javafx.beans.binding.NumberBinding;
+import javafx.beans.binding.NumberExpression;
 import javafx.beans.property.SimpleIntegerProperty;
 
 import java.util.Collections;
@@ -12,6 +15,8 @@ import java.util.EnumMap;
 import java.util.Map;
 
 public class ProgressModel {
+    private static final double PERCENT = 100;
+
     private final SimpleIntegerProperty known = new SimpleIntegerProperty();
 
     private final SimpleIntegerProperty unknown = new SimpleIntegerProperty();
@@ -21,6 +26,28 @@ public class ProgressModel {
     private final SimpleIntegerProperty unseenFiltered = new SimpleIntegerProperty();
 
     private final Map<WordState, SimpleIntegerProperty> properties;
+
+    private final NumberBinding marked = known.add(unknown);
+
+    private final NumberBinding totalVisible = known.add(unknown).add(unseenUnfiltered);
+
+    private final NumberBinding total = totalVisible.add(unseenFiltered);
+
+    private final NumberBinding knownPercent = bindPercentage(known, total);
+
+    private final NumberBinding unknownPercent = bindPercentage(unknown, total);
+
+    private final NumberBinding unseenUnfilteredPercent = bindPercentage(unseenUnfiltered, total);
+
+    private final NumberBinding unseenUnfilteredPercentVisible = bindPercentage(unseenUnfiltered, totalVisible);
+
+    private final NumberBinding unseenFilteredPercent = bindPercentage(unseenFiltered, total);
+
+    private final NumberBinding markedPercentVisible = bindPercentage(marked, totalVisible);
+
+    private NumberBinding bindPercentage(final NumberExpression property, final NumberBinding total) {
+        return Bindings.when(property.isEqualTo(0)).then(0).otherwise(property.multiply(PERCENT).divide(total));
+    }
 
     public SimpleIntegerProperty knownProperty() {
         return known;
@@ -34,8 +61,40 @@ public class ProgressModel {
         return unseenUnfiltered;
     }
 
+    public NumberBinding unseenUnfilteredPercentVisibleProperty() {
+        return unseenUnfilteredPercentVisible;
+    }
+
     public SimpleIntegerProperty unseenFilteredProperty() {
         return unseenFiltered;
+    }
+
+    public NumberBinding markedProperty() {
+        return marked;
+    }
+
+    public NumberBinding totalProperty() {
+        return total;
+    }
+
+    public NumberBinding knownPercentProperty() {
+        return knownPercent;
+    }
+
+    public NumberBinding unknownPercentProperty() {
+        return unknownPercent;
+    }
+
+    public NumberBinding unseenUnfilteredPercentProperty() {
+        return unseenUnfilteredPercent;
+    }
+
+    public NumberBinding unseenFilteredPercentProperty() {
+        return unseenFilteredPercent;
+    }
+
+    public NumberBinding markedPercentVisibleProperty() {
+        return markedPercentVisible;
     }
 
     public ProgressModel() {

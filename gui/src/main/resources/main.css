@@ -157,3 +157,30 @@
 .chartResults .default-color3.chart-pie {
     -fx-pie-color: -colour-filtered;
 }
+.chartLegend {
+    -fx-padding: 10;
+    -fx-border-color: lightgrey;
+    -fx-border-width: 1;
+    -fx-border-insets: 0 0 10 0;
+}
+.chartLegend Label {
+    -fx-padding: 5 0 5 5;
+}
+.chartLegend .keyDone {
+    -fx-fill: -colour-done;
+}
+.chartLegend .keyRemaining {
+    -fx-fill: -colour-remaining;
+}
+.chartLegend .keyKnown {
+    -fx-fill: -colour-known-end;
+}
+.chartLegend .keyUnknown {
+    -fx-fill: -colour-unknown-end;
+}
+.chartLegend .keyUnseenUnfiltered {
+    -fx-fill: -colour-unseen-unfiltered;
+}
+.chartLegend .keyFiltered {
+    -fx-fill: -colour-filtered;
+}
