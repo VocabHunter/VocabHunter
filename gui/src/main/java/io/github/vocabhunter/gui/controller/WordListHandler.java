@@ -13,6 +13,8 @@ import javafx.scene.control.MultipleSelectionModel;
 
 import java.util.function.IntPredicate;
 
+import static io.github.vocabhunter.analysis.marked.MarkTool.isShown;
+
 public class WordListHandler {
     private static final int SCROLL_OFFSET = 4;
 
@@ -60,7 +62,7 @@ public class WordListHandler {
     private WordModel findClosestWord(final int current, final boolean isEditable, final WordFilter filter) {
         IntPredicate test;
         if (isEditable) {
-            test = i -> filter.isShown(sessionModel.getWord(i));
+            test = i -> isShown(filter, sessionModel.getWord(i));
         } else {
             test = sessionModel::isSelected;
         }

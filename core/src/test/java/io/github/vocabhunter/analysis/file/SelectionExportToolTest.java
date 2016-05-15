@@ -4,9 +4,9 @@
 
 package io.github.vocabhunter.analysis.file;
 
+import io.github.vocabhunter.analysis.marked.WordState;
 import io.github.vocabhunter.analysis.session.SessionState;
 import io.github.vocabhunter.analysis.session.SessionWord;
-import io.github.vocabhunter.analysis.session.WordState;
 import io.github.vocabhunter.test.utils.TestFileManager;
 import org.junit.After;
 import org.junit.Before;

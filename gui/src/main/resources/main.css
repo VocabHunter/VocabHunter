@@ -7,6 +7,10 @@
    -colour-unknown-end: #a43030;
    -gradient-unknown: linear-gradient(from 0% 0% to 100% 200%, repeat, -colour-unknown 0%, -colour-unknown-end 90%);
    -colour-word-use: darkblue;
+   -colour-filtered: lightgrey;
+   -colour-done: royalblue;
+   -colour-remaining: lightcoral;
+   -colour-unseen-unfiltered: powderblue;
 }
 
 .mainWord {
@@ -128,4 +132,55 @@
 .wordUse {
     -fx-font-weight: bold;
     -fx-fill: -colour-word-use;
+}
+/* Done */
+.chartProgress .default-color0.chart-pie {
+    -fx-pie-color: -colour-done;
+}
+/* Remaining */
+.chartProgress .default-color1.chart-pie {
+    -fx-pie-color: -colour-remaining;
+}
+/* Known */
+.chartResults .default-color0.chart-pie {
+    -fx-pie-color: -colour-known-end;
+}
+/* Unknown */
+.chartResults .default-color1.chart-pie {
+    -fx-pie-color: -colour-unknown-end;
+}
+/* Unseen & unfiltered */
+.chartResults .default-color2.chart-pie {
+    -fx-pie-color: -colour-unseen-unfiltered;
+}
+/* Unseen & filtered */
+.chartResults .default-color3.chart-pie {
+    -fx-pie-color: -colour-filtered;
+}
+.chartLegend {
+    -fx-padding: 10;
+    -fx-border-color: lightgrey;
+    -fx-border-width: 1;
+    -fx-border-insets: 0 0 10 0;
+}
+.chartLegend Label {
+    -fx-padding: 5 0 5 5;
+}
+.chartLegend .keyDone {
+    -fx-fill: -colour-done;
+}
+.chartLegend .keyRemaining {
+    -fx-fill: -colour-remaining;
+}
+.chartLegend .keyKnown {
+    -fx-fill: -colour-known-end;
+}
+.chartLegend .keyUnknown {
+    -fx-fill: -colour-unknown-end;
+}
+.chartLegend .keyUnseenUnfiltered {
+    -fx-fill: -colour-unseen-unfiltered;
+}
+.chartLegend .keyFiltered {
+    -fx-fill: -colour-filtered;
 }

@@ -41,3 +41,13 @@ By default the GUI test runs as part of the standard Gradle build, in headless m
 ~~~
 $ ./gradlew :gui:test --tests io.github.vocabhunter.gui.main.GuiTest --rerun-tasks -PnoHeadless
 ~~~
+
+# Using the OpenJDK
+
+VocabHunter works well if you choose the OpenJDK 8 instead of the Oracle JDK.  If you choose the OpenJDK you may find you need to install JavaFX separately.  For example, on Ubuntu 16.04 you can install the OpenJDK 8 and JavaFX as follows:
+~~~
+$ sudo apt-get install openjdk-8-jdk
+$ sudo apt-get install openjfx
+~~~
+
+Unfortunately the headless tests don't currently work on the OpenJDK when running the Gradle command line build (see [related issue #13](../../issues/13)).   To work around this either run the build without the headless option by adding `-PnoHeadless` or skip the GUI tests using `-PskipGuiTests`.

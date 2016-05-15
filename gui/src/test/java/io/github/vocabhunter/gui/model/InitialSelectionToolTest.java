@@ -5,7 +5,7 @@
 package io.github.vocabhunter.gui.model;
 
 import io.github.vocabhunter.analysis.core.VocabHunterException;
-import io.github.vocabhunter.analysis.session.WordState;
+import io.github.vocabhunter.analysis.marked.WordState;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import static io.github.vocabhunter.analysis.session.WordState.*;
+import static io.github.vocabhunter.analysis.marked.WordState.*;
 
 public class InitialSelectionToolTest {
     @Test(expected = VocabHunterException.class)

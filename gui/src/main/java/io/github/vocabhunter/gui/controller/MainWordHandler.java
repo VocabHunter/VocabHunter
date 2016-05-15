@@ -4,7 +4,7 @@
 
 package io.github.vocabhunter.gui.controller;
 
-import io.github.vocabhunter.analysis.session.WordState;
+import io.github.vocabhunter.analysis.marked.WordState;
 import io.github.vocabhunter.gui.model.SessionModel;
 import io.github.vocabhunter.gui.model.WordModel;
 import io.github.vocabhunter.gui.view.StateClassTool;

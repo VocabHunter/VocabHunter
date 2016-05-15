@@ -29,8 +29,6 @@ import org.mockito.Captor;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.picocontainer.MutablePicoContainer;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.testfx.api.FxRobot;
 
 import java.awt.*;
@@ -40,28 +38,16 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-import static io.github.vocabhunter.gui.common.GuiConstants.*;
+import static io.github.vocabhunter.gui.main.GuiTestConstants.*;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsString;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.*;
-import static org.testfx.api.FxAssert.verifyThat;
 import static org.testfx.api.FxToolkit.registerPrimaryStage;
 import static org.testfx.api.FxToolkit.setupApplication;
-import static org.testfx.matcher.base.NodeMatchers.*;
 
 @RunWith(MockitoJUnitRunner.class)
-public class GuiTest extends FxRobot {
-    private static final String BOOK1 = "great-expectations.txt";
-
-    private static final String BOOK2 = "oliver-twist.txt";
-
-    private static final int SCREEN_WIDTH = 1366;
-
-    private static final int SCREEN_HEIGHT = 768;
-
-    private static final Logger LOG = LoggerFactory.getLogger(GuiTest.class);
-
+public class GuiTest extends FxRobot implements GuiTestValidator {
     private TestFileManager manager;
 
     @Mock
@@ -91,8 +77,6 @@ public class GuiTest extends FxRobot {
     private Path exportFile;
 
     private Path sessionFile;
-
-    private int stepNo;
 
     @BeforeClass
     public static void setupSpec() throws Exception {
@@ -152,131 +136,26 @@ public class GuiTest extends FxRobot {
 
     @Test
     public void testWalkThrough() {
-        part1BasicWalkThrough();
-        part2StartNewSessionAndFilter();
-        part3ReopenFirstSession();
-        part4AboutDialogue();
-        part5WebLinks();
+        GuiTestSteps steps = new GuiTestSteps(this, this);
+
+        steps.part1BasicWalkThrough();
+        steps.part2Progress();
+        steps.part3StartNewSessionAndFilter();
+        steps.part4ReopenFirstSession();
+        steps.part5AboutDialogue();
+        steps.part6WebLinks();
     }
 
-    private void part1BasicWalkThrough() {
-        step("Open application", () -> {
-            verifyThat("#mainBorderPane", isVisible());
-        });
-
-        step("Start new session", () -> {
-            clickOn("#buttonNew");
-            verifyThat("#mainWordPane", isVisible());
-            verifyThat("#mainWord", hasText("and"));
-        });
-
-        step("Mark word as known", () -> {
-            clickOn("#buttonKnown");
-            verifyThat("#mainWord", hasText("the"));
-        });
-
-        step("Mark word as unknown", () -> {
-            clickOn("#buttonUnknown");
-            verifyThat("#mainWord", hasText("to"));
-        });
-
-        step("Show selection", () -> {
-            clickOn("#buttonEditOff");
-            verifyThat("#buttonKnown", isInvisible());
-        });
-
-        step("Return to edit mode", () -> {
-            clickOn("#buttonEditOn");
-            verifyThat("#buttonKnown", isVisible());
-        });
-
-        step("Export the selection", () -> {
-            clickOn("#buttonExport");
-            String text = null;
-            text = readFile(exportFile);
-            assertThat("Export file content", text, containsString("the"));
-        });
-
-        step("Save the session", () -> {
-            clickOn("#buttonSave");
-            validateSavedSession(BOOK1);
-        });
+    @Override
+    public void validateExportFile() {
+        String text = readFile(exportFile);
+        assertThat("Export file content", text, containsString("the"));
     }
 
-    private void part2StartNewSessionAndFilter() {
-        step("Open a new session for a different book", () -> {
-            clickOn("#buttonNew");
-            verifyThat("#mainWord", hasText("the"));
-        });
-
-        step("Define filter", () -> {
-            clickOn("#buttonSetupFilters");
-            doubleClickOn("#fieldMinimumLetters").write("6");
-            doubleClickOn("#fieldMinimumOccurrences").write("4");
-            clickOn("#fieldInitialCapital");
-            clickOn("#buttonOk");
-            verifyThat("#mainWord", hasText("surgeon"));
-        });
-
-        step("Mark filtered word as known", () -> {
-            clickOn("#buttonKnown");
-            verifyThat("#mainWord", hasText("workhouse"));
-        });
-
-        step("Disable filter", () -> {
-            clickOn("#buttonEnableFilters");
-            verifyThat("#mainWord", hasText("workhouse"));
-        });
-    }
-
-    private void part3ReopenFirstSession() {
-        step("Re-open the old session", () -> {
-            clickOn("#buttonOpen");
-            clickOn("Discard");
-            verifyThat("#mainWord", hasText("a"));
-        });
-    }
-
-    private void part4AboutDialogue() {
-        step("Open About dialogue", () -> {
-            clickOn("#menuHelp");
-            clickOn("#menuAbout");
-            verifyThat("#aboutDialogue", isVisible());
-        });
-
-        step("Open website from About dialogue", () -> {
-            clickOn("#linkWebsite");
-            validateWebPage(WEBSITE);
-        });
-
-        step("Close About dialogue", () -> {
-            clickOn("#buttonClose");
-        });
-    }
-
-    private void part5WebLinks() {
-        step("Open website", () -> {
-            clickOn("#menuHelp");
-            clickOn("#menuWebsite");
-            validateWebPage(WEBSITE);
-        });
-
-        step("Open VocabHunter How To", () -> {
-            clickOn("#menuHelp");
-            clickOn("#menuHowTo");
-            validateWebPage(WEBPAGE_HELP);
-        });
-
-        step("Open Issue Reporting", () -> {
-            clickOn("#menuHelp");
-            clickOn("#menuIssue");
-            validateWebPage(WEBPAGE_ISSUE);
-        });
-    }
-
-    private void validateWebPage(final String webpageHelp) {
+    @Override
+    public void validateWebPage(final String page) {
         verify(webPageTool, atLeastOnce()).showWebPage(webPageCaptor.capture());
-        assertEquals("Website", webpageHelp, webPageCaptor.getValue());
+        assertEquals("Website", page, webPageCaptor.getValue());
     }
 
     private String readFile(final Path file) {
@@ -287,7 +166,8 @@ public class GuiTest extends FxRobot {
         }
     }
 
-    private void validateSavedSession(final String name) {
+    @Override
+    public void validateSavedSession(final String name) {
         EnrichedSessionState state = SessionSerialiser.read(sessionFile);
 
         assertEquals("Session state name", name, state.getState().getName());
@@ -301,12 +181,5 @@ public class GuiTest extends FxRobot {
         } else {
             return Paths.get(url.toURI());
         }
-    }
-
-    private void step(final String step, final Runnable runnable) {
-        ++stepNo;
-        LOG.info("STEP {}: Begin - {}", stepNo, step);
-        runnable.run();
-        LOG.info("STEP {}:   End - {}", stepNo, step);
     }
 }

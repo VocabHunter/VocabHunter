@@ -20,6 +20,7 @@ import io.github.vocabhunter.gui.dialogues.*;
 import io.github.vocabhunter.gui.model.MainModel;
 import io.github.vocabhunter.gui.model.SessionModel;
 import io.github.vocabhunter.gui.settings.SettingsManager;
+import io.github.vocabhunter.gui.view.SessionViewTool;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
@@ -302,11 +303,14 @@ public class MainController {
     private SessionModel addSession(final SessionState state) {
         SessionModelTool sessionTool = new SessionModelTool(state, model.getFilterSettings());
         SessionModel sessionModel = sessionTool.buildModel();
+        SessionViewTool viewTool = new SessionViewTool();
         ControllerAndView<SessionController, Node> cav = factory.session(sessionModel);
-        SessionController controller = cav.getController();
-        mainBorderPane.setCenter(cav.getView());
 
-        keyPressHandler = controller.getKeyPressHandler();
+        viewTool.addAnalysisView(cav.getView());
+        viewTool.addProgressView(factory.progress(sessionModel.getProgress()));
+        mainBorderPane.setCenter(viewTool.getView());
+
+        keyPressHandler = cav.getController().getKeyPressHandler();
 
         return sessionModel;
     }

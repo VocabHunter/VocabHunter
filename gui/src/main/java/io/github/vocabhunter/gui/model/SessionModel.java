@@ -4,8 +4,8 @@
 
 package io.github.vocabhunter.gui.model;
 
-import io.github.vocabhunter.analysis.filter.WordFilter;
-import io.github.vocabhunter.analysis.session.WordState;
+import io.github.vocabhunter.analysis.marked.MarkTool;
+import io.github.vocabhunter.analysis.marked.WordState;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -18,7 +18,6 @@ import java.util.List;
 import java.util.TreeSet;
 import java.util.stream.Collectors;
 
-import static io.github.vocabhunter.analysis.filter.FilterTool.applyFilter;
 import static java.util.Collections.unmodifiableList;
 
 public final class SessionModel {
@@ -46,15 +45,18 @@ public final class SessionModel {
 
     private final SimpleBooleanProperty enableFilters = new SimpleBooleanProperty();
 
-    public SessionModel(final String documentName, final List<WordModel> words, final FilterSettings filterSettings) {
+    private final ProgressModel progress;
+
+    public SessionModel(final String documentName, final List<WordModel> words, final FilterSettings filterSettings, final ProgressModel progress) {
         this.documentName = new SimpleStringProperty(documentName);
         this.filterSettings = new SimpleObjectProperty<>(filterSettings);
+        this.progress = progress;
         allWords = words;
         selectedWords.addAll(words.stream()
                 .filter(w -> w.getState().equals(WordState.UNKNOWN))
                 .collect(Collectors.toList()));
 
-        wordList.addAll(allWords);
+        updateWordList(true, new MarkTool<>(words));
         currentWord = new SimpleObjectProperty<>(InitialSelectionTool.nextWord(allWords));
     }
 
@@ -74,10 +76,11 @@ public final class SessionModel {
         useCount.set(String.format("(%d uses)", word.getUseCount()));
     }
 
-    public void updateWordList(final boolean isEditable, final WordFilter filter) {
+    public void updateWordList(final boolean isEditable, final MarkTool<WordModel> markTool) {
         wordList.clear();
         if (isEditable) {
-            wordList.addAll(applyFilter(filter, allWords));
+            wordList.addAll(markTool.getShownWords());
+            progress.updateProgress(markTool.getKnown(), markTool.getUnknown(), markTool.getUnseenUnfiltered(), markTool.getUnseenFiltered());
         } else {
             wordList.addAll(selectedWords);
         }
@@ -167,5 +170,9 @@ public final class SessionModel {
 
     public boolean isEnableFilters() {
         return enableFilters.get();
+    }
+
+    public ProgressModel getProgress() {
+        return progress;
     }
 }
