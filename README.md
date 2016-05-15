@@ -50,4 +50,4 @@ $ sudo apt-get install openjdk-8-jdk
 $ sudo apt-get install openjfx
 ~~~
 
-Unfortunately the headless tests don't currently work on the OpenJDK when running the Gradle command line build (see related issue #13).   To work around this either run the build without the headless option by adding `-PnoHeadless` or skip the GUI tests using `-PskipGuiTests`.
+Unfortunately the headless tests don't currently work on the OpenJDK when running the Gradle command line build (see [related issue #13](../../issues/13)).   To work around this either run the build without the headless option by adding `-PnoHeadless` or skip the GUI tests using `-PskipGuiTests`.
