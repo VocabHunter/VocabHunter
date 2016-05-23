@@ -30,10 +30,10 @@
                     <menus>
                         <Menu mnemonicParsing="false" text="File">
                             <items>
-                                <MenuItem fx:id="menuNew" mnemonicParsing="false" text="New..." />
-                                <MenuItem fx:id="menuOpen" mnemonicParsing="false" text="Open..." />
-                                <MenuItem fx:id="menuSave" mnemonicParsing="false" text="Save" />
-                                <MenuItem fx:id="menuSaveAs" mnemonicParsing="false" text="Save As..." />
+                                <MenuItem fx:id="menuNew" mnemonicParsing="false" text="New..." accelerator="Shortcut+N"/>
+                                <MenuItem fx:id="menuOpen" mnemonicParsing="false" text="Open..." accelerator="Shortcut+O" />
+                                <MenuItem fx:id="menuSave" mnemonicParsing="false" text="Save" accelerator="Shortcut+S" />
+                                <MenuItem fx:id="menuSaveAs" mnemonicParsing="false" text="Save As..." accelerator="Shift+Shortcut+S" />
                             </items>
                         </Menu>
                         <Menu mnemonicParsing="false" text="Selection">
@@ -41,7 +41,7 @@
                                 <RadioMenuItem fx:id="menuEditOn" mnemonicParsing="false" text="Select Words" />
                                 <RadioMenuItem fx:id="menuEditOff" mnemonicParsing="false" text="Show Selection" />
                                 <SeparatorMenuItem mnemonicParsing="false" />
-                                <MenuItem fx:id="menuExport" mnemonicParsing="false" text="Export Selection..." />
+                                <MenuItem fx:id="menuExport" mnemonicParsing="false" text="Export Selection..." accelerator="Shortcut+E" />
                             </items>
                         </Menu>
                         <Menu mnemonicParsing="false" text="Filters">
