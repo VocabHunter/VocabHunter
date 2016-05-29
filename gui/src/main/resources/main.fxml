@@ -17,12 +17,13 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Text?>
+<?import org.controlsfx.control.StatusBar?>
 
 <!--
   ~ Open Source Software published under the Apache Licence, Version 2.0.
   -->
 
-<BorderPane fx:id="mainBorderPane" prefHeight="500.0" prefWidth="1000.0" stylesheets="@main.css" xmlns="http://javafx.com/javafx/8.0.82-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="io.github.vocabhunter.gui.controller.MainController">
+<BorderPane fx:id="mainBorderPane" prefHeight="500.0" prefWidth="1000.0" stylesheets="@main.css" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="io.github.vocabhunter.gui.controller.MainController">
     <top>
         <VBox>
             <children>
@@ -30,10 +31,10 @@
                     <menus>
                         <Menu mnemonicParsing="false" text="File">
                             <items>
-                                <MenuItem fx:id="menuNew" mnemonicParsing="false" text="New..." accelerator="Shortcut+N"/>
-                                <MenuItem fx:id="menuOpen" mnemonicParsing="false" text="Open..." accelerator="Shortcut+O" />
-                                <MenuItem fx:id="menuSave" mnemonicParsing="false" text="Save" accelerator="Shortcut+S" />
-                                <MenuItem fx:id="menuSaveAs" mnemonicParsing="false" text="Save As..." accelerator="Shift+Shortcut+S" />
+                                <MenuItem fx:id="menuNew" accelerator="Shortcut+N" mnemonicParsing="false" text="New..." />
+                                <MenuItem fx:id="menuOpen" accelerator="Shortcut+O" mnemonicParsing="false" text="Open..." />
+                                <MenuItem fx:id="menuSave" accelerator="Shortcut+S" mnemonicParsing="false" text="Save" />
+                                <MenuItem fx:id="menuSaveAs" accelerator="Shift+Shortcut+S" mnemonicParsing="false" text="Save As..." />
                             </items>
                         </Menu>
                         <Menu mnemonicParsing="false" text="Selection">
@@ -41,7 +42,7 @@
                                 <RadioMenuItem fx:id="menuEditOn" mnemonicParsing="false" text="Select Words" />
                                 <RadioMenuItem fx:id="menuEditOff" mnemonicParsing="false" text="Show Selection" />
                                 <SeparatorMenuItem mnemonicParsing="false" />
-                                <MenuItem fx:id="menuExport" mnemonicParsing="false" text="Export Selection..." accelerator="Shortcut+E" />
+                                <MenuItem fx:id="menuExport" accelerator="Shortcut+E" mnemonicParsing="false" text="Export Selection..." />
                             </items>
                         </Menu>
                         <Menu mnemonicParsing="false" text="Filters">
@@ -131,4 +132,7 @@
            </children>
        </VBox>
    </center>
+   <bottom>
+      <StatusBar fx:id="statusBar" />
+   </bottom>
 </BorderPane>

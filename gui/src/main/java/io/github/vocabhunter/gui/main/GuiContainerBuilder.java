@@ -12,6 +12,7 @@ import io.github.vocabhunter.gui.common.WebPageToolImpl;
 import io.github.vocabhunter.gui.event.CommandLineEventSource;
 import io.github.vocabhunter.gui.event.ExternalEventBroker;
 import io.github.vocabhunter.gui.settings.SettingsManagerImpl;
+import io.github.vocabhunter.gui.status.StatusManagerImpl;
 import org.picocontainer.DefaultPicoContainer;
 import org.picocontainer.MutablePicoContainer;
 import org.picocontainer.behaviors.Caching;
@@ -26,6 +27,7 @@ public final class GuiContainerBuilder {
 
         pico.addComponent(SimpleAnalyser.class);
         pico.addComponent(FileStreamer.class);
+        pico.addComponent(StatusManagerImpl.class);
 
         pico.addComponent(new CommandLineEventSource(args));
         pico.addComponent(ExternalEventBroker.class);
