@@ -18,6 +18,7 @@ import io.github.vocabhunter.gui.model.MainModel;
 import io.github.vocabhunter.gui.model.ProgressModel;
 import io.github.vocabhunter.gui.model.SessionModel;
 import io.github.vocabhunter.gui.settings.SettingsManager;
+import io.github.vocabhunter.gui.status.StatusActionManager;
 import io.github.vocabhunter.gui.status.StatusManager;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -49,6 +50,8 @@ public class GuiFactoryImpl implements GuiFactory {
 
     private final StatusManager statusManager;
 
+    private final StatusActionManager statusActionManager;
+
     private final FileDialogueFactory fileDialogueFactory;
 
     private final ExternalEventBroker externalEventSource;
@@ -60,19 +63,23 @@ public class GuiFactoryImpl implements GuiFactory {
     public GuiFactoryImpl(final Stage stage, final MutablePicoContainer pico) {
         this(stage, pico.getComponent(SettingsManager.class), pico.getComponent(FileListManager.class),
              pico.getComponent(EnvironmentManager.class), pico.getComponent(StatusManager.class),
-             pico.getComponent(FileDialogueFactory.class), pico.getComponent(ExternalEventBroker.class),
-             pico.getComponent(FileStreamer.class), pico.getComponent(WebPageTool.class));
+             pico.getComponent(StatusActionManager.class), pico.getComponent(FileDialogueFactory.class),
+             pico.getComponent(ExternalEventBroker.class), pico.getComponent(FileStreamer.class),
+             pico.getComponent(WebPageTool.class));
     }
 
+    @SuppressWarnings("PMD.ExcessiveParameterList")
     private GuiFactoryImpl(final Stage stage, final SettingsManager settingsManager, final FileListManager fileListManager,
                            final EnvironmentManager environmentManager, final StatusManager statusManager,
-                           final FileDialogueFactory fileDialogueFactory, final ExternalEventBroker externalEventSource,
+                           final StatusActionManager statusActionManager, final FileDialogueFactory fileDialogueFactory,
+                           final ExternalEventBroker externalEventSource,
                            final FileStreamer fileStreamer, final WebPageTool webPageTool) {
         this.stage = stage;
         this.settingsManager = settingsManager;
         this.fileListManager = fileListManager;
         this.environmentManager = environmentManager;
         this.statusManager = statusManager;
+        this.statusActionManager = statusActionManager;
         this.fileDialogueFactory = fileDialogueFactory;
         this.externalEventSource = externalEventSource;
         this.fileStreamer = fileStreamer;
@@ -87,7 +94,9 @@ public class GuiFactoryImpl implements GuiFactory {
         MainController controller = loader.getController();
 
         statusManager.initialise(model.getStatusModel());
-        controller.initialise(stage, this, fileStreamer, settingsManager, fileListManager, environmentManager, statusManager, webPageTool, model);
+        controller.initialise(
+            stage, this, fileStreamer, settingsManager, fileListManager, environmentManager,
+            statusManager, statusActionManager, webPageTool, model);
 
         return new ControllerAndView<>(controller, root);
     }

@@ -21,6 +21,7 @@ import io.github.vocabhunter.gui.model.MainModel;
 import io.github.vocabhunter.gui.model.SessionModel;
 import io.github.vocabhunter.gui.model.StatusModel;
 import io.github.vocabhunter.gui.settings.SettingsManager;
+import io.github.vocabhunter.gui.status.StatusActionManager;
 import io.github.vocabhunter.gui.status.StatusManager;
 import io.github.vocabhunter.gui.view.SessionViewTool;
 import javafx.event.ActionEvent;
@@ -36,6 +37,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.nio.file.Path;
+import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
@@ -105,23 +107,27 @@ public class MainController {
 
     private MainModel model;
 
+    private StatusActionManager statusActionManager;
+
+    @SuppressWarnings("PMD.ExcessiveParameterList")
     public void initialise(final Stage stage, final GuiFactory factory, final FileStreamer fileStreamer, final SettingsManager settingsManager,
                            final FileListManager fileListManager, final EnvironmentManager environmentManager, final StatusManager statusManager,
-                           final WebPageTool webPageTool, final MainModel model) {
+                           final StatusActionManager statusActionManager, final WebPageTool webPageTool, final MainModel model) {
         this.model = model;
         this.stage = stage;
         this.factory = factory;
         this.fileStreamer = fileStreamer;
         this.statusManager = statusManager;
+        this.statusActionManager = statusActionManager;
 
         buildToggleGroup(buttonEditOn, buttonEditOff);
         buildToggleGroup(menuEditOn, menuEditOff);
 
-        handler(buttonOpen, menuOpen, () -> processFileWithCheck(factory::openSessionChooser, this::processOpenSession), statusManager::beginOpenSession);
-        handler(buttonNew, menuNew, () -> processFileWithCheck(factory::newSessionChooser, this::processNewSession), statusManager::beginNewSession);
-        handler(buttonSave, menuSave, this::processSave, statusManager::beginSaveSession);
-        handler(menuSaveAs, this::processSaveAs, statusManager::beginSaveSession);
-        handler(buttonExport, menuExport, () -> processFile(factory::exportSelectionChooser, this::processExport), statusManager::beginExport);
+        handler(buttonOpen, menuOpen, () -> processFileWithCheck(factory::openSessionChooser, this::processOpenSession), StatusManager::beginOpenSession);
+        handler(buttonNew, menuNew, () -> processFileWithCheck(factory::newSessionChooser, this::processNewSession), StatusManager::beginNewSession);
+        handler(buttonSave, menuSave, this::processSave, StatusManager::beginSaveSession);
+        handler(menuSaveAs, this::processSaveAs, StatusManager::beginSaveSession);
+        handler(buttonExport, menuExport, () -> processFile(factory::exportSelectionChooser, this::processExport), StatusManager::beginExport);
 
         buttonEditOn.disableProperty().bind(not(model.sessionOpenProperty()));
         menuEditOn.disableProperty().bind(not(model.sessionOpenProperty()));
@@ -176,14 +182,14 @@ public class MainController {
         statusBar.progressProperty().bind(statusModel.progressProperty());
     }
 
-    private void handler(final MenuItem menuItem, final Supplier<Boolean> action, final Runnable beginStatus) {
-        EventHandler<ActionEvent> handler = e -> wrapHandler(action, beginStatus);
+    private void handler(final MenuItem menuItem, final Supplier<Boolean> action, final Consumer<StatusManager> beginStatus) {
+        EventHandler<ActionEvent> handler = e -> statusActionManager.wrapHandler(action, beginStatus);
 
         menuItem.setOnAction(handler);
     }
 
-    private void handler(final Button button, final MenuItem menuItem, final Supplier<Boolean> handler, final Runnable beginStatus) {
-        handler(button, menuItem, () -> wrapHandler(handler, beginStatus));
+    private void handler(final Button button, final MenuItem menuItem, final Supplier<Boolean> handler, final Consumer<StatusManager> beginStatus) {
+        handler(button, menuItem, () -> statusActionManager.wrapHandler(handler, beginStatus));
     }
 
     private void handler(final Button button, final MenuItem menuItem, final Runnable action) {
@@ -191,20 +197,6 @@ public class MainController {
 
         button.setOnAction(handler);
         menuItem.setOnAction(handler);
-    }
-
-    private void wrapHandler(final Supplier<Boolean> handler, final Runnable beginStatus) {
-        beginStatus.run();
-
-        try {
-            boolean isSuccessfulAction = handler.get();
-
-            if (isSuccessfulAction) {
-                statusManager.markSuccess();
-            }
-        } finally {
-            statusManager.completeAction();
-        }
     }
 
     private void buildToggleGroup(final Toggle editOn, final Toggle editOff) {

@@ -12,6 +12,7 @@ import io.github.vocabhunter.gui.common.WebPageToolImpl;
 import io.github.vocabhunter.gui.event.CommandLineEventSource;
 import io.github.vocabhunter.gui.event.ExternalEventBroker;
 import io.github.vocabhunter.gui.settings.SettingsManagerImpl;
+import io.github.vocabhunter.gui.status.StatusActionManagerImpl;
 import io.github.vocabhunter.gui.status.StatusManagerImpl;
 import org.picocontainer.DefaultPicoContainer;
 import org.picocontainer.MutablePicoContainer;
@@ -43,6 +44,7 @@ public final class GuiContainerBuilder {
         pico.addComponent(FileDialogueFactoryImpl.class);
         pico.addComponent(EnvironmentManagerImpl.class);
         pico.addComponent(WebPageToolImpl.class);
+        pico.addComponent(StatusActionManagerImpl.class);
 
         return pico;
     }
