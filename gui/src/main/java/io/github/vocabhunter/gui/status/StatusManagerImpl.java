@@ -55,6 +55,7 @@ public class StatusManagerImpl implements StatusManager {
         LOG.debug("Begin: {}", name);
         model.setText(name);
         model.setProgress(-1);
+        model.setBusy(true);
     }
 
     @Override
@@ -72,5 +73,6 @@ public class StatusManagerImpl implements StatusManager {
         LOG.debug("Complete: {}", name);
         model.setText("");
         model.setProgress(0);
+        model.setBusy(false);
     }
 }

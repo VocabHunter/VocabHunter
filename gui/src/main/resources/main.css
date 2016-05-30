@@ -184,3 +184,7 @@
 .chartLegend .keyFiltered {
     -fx-fill: -colour-filtered;
 }
+.masker {
+    -fx-background-color: black;
+    -fx-opacity: 0.3;
+}

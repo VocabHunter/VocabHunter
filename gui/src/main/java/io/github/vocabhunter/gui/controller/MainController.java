@@ -30,6 +30,7 @@ import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import org.controlsfx.control.StatusBar;
@@ -95,6 +96,8 @@ public class MainController {
 
     public StatusBar statusBar;
 
+    public Pane maskerPane;
+
     private Stage stage;
 
     private GuiFactory factory;
@@ -155,7 +158,7 @@ public class MainController {
 
         prepareTitleHandler();
         prepareFilterHandler(settingsManager, fileListManager);
-        prepareStatusBar();
+        prepareStatusInformation();
 
         menuBar.setUseSystemMenuBar(environmentManager.useSystemMenuBar());
     }
@@ -175,11 +178,12 @@ public class MainController {
         buttonEnableFilters.selectedProperty().bindBidirectional(model.enableFiltersProperty());
     }
 
-    private void prepareStatusBar() {
+    private void prepareStatusInformation() {
         StatusModel statusModel = model.getStatusModel();
 
         statusBar.textProperty().bind(statusModel.textProperty());
         statusBar.progressProperty().bind(statusModel.progressProperty());
+        maskerPane.visibleProperty().bind(statusModel.busyProperty());
     }
 
     private void handler(final MenuItem menuItem, final Supplier<Boolean> action, final Consumer<StatusManager> beginStatus) {
