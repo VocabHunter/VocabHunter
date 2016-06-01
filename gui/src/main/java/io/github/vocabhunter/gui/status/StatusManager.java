@@ -4,6 +4,7 @@
 
 package io.github.vocabhunter.gui.status;
 
+import io.github.vocabhunter.gui.model.PositionModel;
 import io.github.vocabhunter.gui.model.StatusModel;
 
 public interface StatusManager {
@@ -22,4 +23,6 @@ public interface StatusManager {
     void markSuccess();
 
     void completeAction();
+
+    void replaceSession(PositionModel positionModel);
 }

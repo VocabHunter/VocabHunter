@@ -6,10 +6,7 @@ package io.github.vocabhunter.gui.controller;
 
 import io.github.vocabhunter.analysis.session.SessionState;
 import io.github.vocabhunter.analysis.session.SessionWord;
-import io.github.vocabhunter.gui.model.FilterSettings;
-import io.github.vocabhunter.gui.model.ProgressModel;
-import io.github.vocabhunter.gui.model.SessionModel;
-import io.github.vocabhunter.gui.model.WordModel;
+import io.github.vocabhunter.gui.model.*;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -27,8 +24,9 @@ public class SessionModelTool {
 
     public SessionModel buildModel() {
         ProgressModel progressModel = new ProgressModel();
+        PositionModel positionModel = new PositionModel();
 
-        return new SessionModel(state.getName(), words(state, progressModel), filterSettings, progressModel);
+        return new SessionModel(state.getName(), words(state, progressModel), filterSettings, progressModel, positionModel);
     }
 
     private List<WordModel> words(final SessionState raw, final ProgressModel progressModel) {

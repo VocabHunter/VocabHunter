@@ -284,6 +284,7 @@ public class MainController {
             SessionModel sessionModel = addSession(state);
 
             model.replaceSessionModel(state, sessionModel, enrichedState.getFile().orElse(null));
+            statusManager.replaceSession(sessionModel.getPosition());
 
             return true;
         } catch (final RuntimeException e) {

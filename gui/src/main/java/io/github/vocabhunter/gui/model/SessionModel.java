@@ -47,10 +47,13 @@ public final class SessionModel {
 
     private final ProgressModel progress;
 
-    public SessionModel(final String documentName, final List<WordModel> words, final FilterSettings filterSettings, final ProgressModel progress) {
+    private final PositionModel position;
+
+    public SessionModel(final String documentName, final List<WordModel> words, final FilterSettings filterSettings, final ProgressModel progress, final PositionModel position) {
         this.documentName = new SimpleStringProperty(documentName);
         this.filterSettings = new SimpleObjectProperty<>(filterSettings);
         this.progress = progress;
+        this.position = position;
         allWords = words;
         selectedWords.addAll(words.stream()
                 .filter(w -> w.getState().equals(WordState.UNKNOWN))
@@ -174,5 +177,9 @@ public final class SessionModel {
 
     public ProgressModel getProgress() {
         return progress;
+    }
+
+    public PositionModel getPosition() {
+        return position;
     }
 }
