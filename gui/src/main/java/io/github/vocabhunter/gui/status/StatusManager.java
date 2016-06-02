@@ -19,6 +19,8 @@ public interface StatusManager {
 
     void beginExport();
 
+    void beginExit();
+
     void performAction();
 
     void markSuccess();

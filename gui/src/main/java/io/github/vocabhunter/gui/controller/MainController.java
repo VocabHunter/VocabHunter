@@ -397,13 +397,17 @@ public class MainController {
     }
 
     public EventHandler<WindowEvent> getCloseRequestHandler() {
-        return e -> {
-            boolean isContinue = unsavedChangesCheck();
+        return e -> statusActionManager.wrapNoWaitHandler(() -> handleExitRequest(e), StatusManager::beginExit);
+    }
 
-            if (!isContinue) {
-                e.consume();
-            }
-        };
+    private boolean handleExitRequest(final WindowEvent e) {
+        boolean isContinue = unsavedChangesCheck();
+
+        if (!isContinue) {
+            e.consume();
+        }
+
+        return isContinue;
     }
 
     private void handleKeyEvent(final KeyEvent event) {

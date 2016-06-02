@@ -16,9 +16,17 @@ public abstract class AbstractStatusActionManager implements StatusActionManager
 
     @Override
     public void wrapHandler(final Supplier<Boolean> handler, final Consumer<StatusManager> beginStatus) {
-        beginStatus.accept(statusManager);
+        performWrap(handler, beginStatus, this::executeHandler);
+    }
 
-        executeHandler(() -> runHandler(handler));
+    @Override
+    public void wrapNoWaitHandler(final Supplier<Boolean> handler, final Consumer<StatusManager> beginStatus) {
+        performWrap(handler, beginStatus, Runnable::run);
+    }
+
+    private void performWrap(final Supplier<Boolean> handler, final Consumer<StatusManager> beginStatus, final Consumer<Runnable> executor) {
+        beginStatus.accept(statusManager);
+        executor.accept(() -> runHandler(handler));
     }
 
     protected abstract void executeHandler(Runnable handler);

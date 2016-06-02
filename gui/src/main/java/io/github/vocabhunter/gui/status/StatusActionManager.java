@@ -9,4 +9,6 @@ import java.util.function.Supplier;
 
 public interface StatusActionManager {
     void wrapHandler(Supplier<Boolean> handler, Consumer<StatusManager> beginStatus);
+
+    void wrapNoWaitHandler(Supplier<Boolean> handler, Consumer<StatusManager> beginStatus);
 }

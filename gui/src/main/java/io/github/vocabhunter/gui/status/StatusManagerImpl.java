@@ -28,6 +28,8 @@ public class StatusManagerImpl implements StatusManager {
 
     private static final String NAME_EXPORT = "Export the words marked as unknown";
 
+    private static final String NAME_EXIT = "Exit VocabHunter";
+
     private static final int POSITION_BUFFER_SIZE = 100;
 
     private String name;
@@ -46,29 +48,31 @@ public class StatusManagerImpl implements StatusManager {
 
     @Override
     public void beginNewSession() {
-        name = NAME_NEW_SESSION;
-        begin();
+        begin(NAME_NEW_SESSION);
     }
 
     @Override
     public void beginOpenSession() {
-        name = NAME_OPEN_SESSION;
-        begin();
+        begin(NAME_OPEN_SESSION);
     }
 
     @Override
     public void beginSaveSession() {
-        name = NAME_SAVE_SESSION;
-        begin();
+        begin(NAME_SAVE_SESSION);
     }
 
     @Override
     public void beginExport() {
-        name = NAME_EXPORT;
-        begin();
+        begin(NAME_EXPORT);
     }
 
-    private void begin() {
+    @Override
+    public void beginExit() {
+        begin(NAME_EXIT);
+    }
+
+    private void begin(final String name) {
+        this.name = name;
         LOG.debug("Begin: {}", name);
         actionDescription.setValue(name);
         busy.setValue(true);
