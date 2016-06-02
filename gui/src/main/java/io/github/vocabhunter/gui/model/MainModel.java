@@ -38,6 +38,8 @@ public class MainModel {
 
     private final SimpleBooleanProperty enableFilters = new SimpleBooleanProperty(true);
 
+    private final StatusModel statusModel = new StatusModel();
+
     public void replaceSessionModel(final SessionState sessionState, final SessionModel sessionModel, final Path sessionFile) {
         unbindOldSession();
 
@@ -138,5 +140,9 @@ public class MainModel {
 
     public SessionState getSessionState() {
         return sessionState.orElseThrow(() -> new VocabHunterException("No session state available"));
+    }
+
+    public StatusModel getStatusModel() {
+        return statusModel;
     }
 }

@@ -15,120 +15,135 @@
 <?import javafx.scene.control.Tooltip?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Text?>
+<?import org.controlsfx.control.StatusBar?>
 
 <!--
   ~ Open Source Software published under the Apache Licence, Version 2.0.
   -->
 
-<BorderPane fx:id="mainBorderPane" prefHeight="500.0" prefWidth="1000.0" stylesheets="@main.css" xmlns="http://javafx.com/javafx/8.0.82-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="io.github.vocabhunter.gui.controller.MainController">
-    <top>
-        <VBox>
-            <children>
-                <MenuBar fx:id="menuBar">
-                    <menus>
-                        <Menu mnemonicParsing="false" text="File">
-                            <items>
-                                <MenuItem fx:id="menuNew" mnemonicParsing="false" text="New..." />
-                                <MenuItem fx:id="menuOpen" mnemonicParsing="false" text="Open..." />
-                                <MenuItem fx:id="menuSave" mnemonicParsing="false" text="Save" />
-                                <MenuItem fx:id="menuSaveAs" mnemonicParsing="false" text="Save As..." />
-                            </items>
-                        </Menu>
-                        <Menu mnemonicParsing="false" text="Selection">
-                            <items>
-                                <RadioMenuItem fx:id="menuEditOn" mnemonicParsing="false" text="Select Words" />
-                                <RadioMenuItem fx:id="menuEditOff" mnemonicParsing="false" text="Show Selection" />
-                                <SeparatorMenuItem mnemonicParsing="false" />
-                                <MenuItem fx:id="menuExport" mnemonicParsing="false" text="Export Selection..." />
-                            </items>
-                        </Menu>
-                        <Menu mnemonicParsing="false" text="Filters">
-                            <items>
-                                <MenuItem fx:id="menuSetupFilters" mnemonicParsing="false" text="Setup Filters..." />
-                                <CheckMenuItem fx:id="menuEnableFilters" mnemonicParsing="false" selected="true" text="Enable Filters" />
-                            </items>
-                        </Menu>
-                        <Menu fx:id="menuHelp" mnemonicParsing="false" text="Help">
-                            <items>
-                                <MenuItem fx:id="menuWebsite" mnemonicParsing="false" text="VocabHunter Website" />
-                                <MenuItem fx:id="menuHowTo" mnemonicParsing="false" text="How to Use VocabHunter" />
-                                <MenuItem fx:id="menuIssue" mnemonicParsing="false" text="How to Report a Bug" />
-                                <MenuItem fx:id="menuAbout" mnemonicParsing="false" text="About" />
-                            </items>
-                        </Menu>
-                    </menus>
-                </MenuBar>
-                <ToolBar>
-                    <items>
-                        <Button fx:id="buttonNew" mnemonicParsing="false" styleClass="buttonNew" text="New">
-                            <tooltip>
-                                <Tooltip text="Analyse a document and start a new session" />
-                            </tooltip>
-                        </Button>
-                        <Button fx:id="buttonOpen" mnemonicParsing="false" styleClass="buttonOpen" text="Open">
-                            <tooltip>
-                                <Tooltip text="Open a saved session" />
-                            </tooltip>
-                        </Button>
-                        <Button fx:id="buttonSave" mnemonicParsing="false" styleClass="buttonSave" text="Save">
-                            <tooltip>
-                                <Tooltip text="Save the session" />
-                            </tooltip>
-                        </Button>
-                        <Button fx:id="buttonExport" mnemonicParsing="false" styleClass="buttonExport" text="Export Selection">
-                            <tooltip>
-                                <Tooltip text="Export the list of words marked as unknown to a file" />
-                            </tooltip>
-                        </Button>
-                        <Separator orientation="VERTICAL" />
-                        <Button fx:id="buttonSetupFilters" mnemonicParsing="false" styleClass="buttonSetupFilters" text="Setup Filters">
-                            <tooltip>
-                                <Tooltip text="Define the filters that are used to hide words" />
-                            </tooltip>
-                        </Button>
-                        <CheckBox fx:id="buttonEnableFilters" mnemonicParsing="false" selected="true" text="Enable Filters">
-                            <tooltip>
-                                <Tooltip text="Hide words using the filters" />
-                            </tooltip>
-                        </CheckBox>
-                        <Separator orientation="VERTICAL" />
-                        <RadioButton fx:id="buttonEditOn" mnemonicParsing="false" text="Select Words">
-                            <tooltip>
-                                <Tooltip text="Mark words as known and unknown" />
-                            </tooltip>
-                        </RadioButton>
-                        <RadioButton fx:id="buttonEditOff" mnemonicParsing="false" text="Show Selection">
-                            <tooltip>
-                                <Tooltip text="Show a list of all the words marked as unknown" />
-                            </tooltip>
-                        </RadioButton>
-                    </items>
-                </ToolBar>
-            </children>
-        </VBox>
-    </top>
+<BorderPane prefHeight="500.0" prefWidth="1000.0" stylesheets="@main.css" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="io.github.vocabhunter.gui.controller.MainController">
    <center>
-       <VBox alignment="CENTER" styleClass="noSession">
-           <children>
-               <HBox alignment="CENTER">
-                   <children>
-                       <Text styleClass="title,left" text="Vocab" />
-                       <Text styleClass="title,right" text="Hunter" />
-                   </children>
-               </HBox>
-               <HBox alignment="CENTER">
-                   <children>
-                       <VBox>
-                           <children>
-                               <Label styleClass="new" text="Choose 'New' to analyse a document and start a new session." />
-                               <Label styleClass="open" text="Choose 'Open' to load a saved session." />
-                           </children>
-                       </VBox>
-                   </children>
-               </HBox>
-           </children>
-       </VBox>
+      <StackPane>
+         <children>
+            <BorderPane fx:id="mainBorderPane">
+                <top>
+                    <VBox>
+                        <children>
+                            <MenuBar fx:id="menuBar">
+                                <menus>
+                                    <Menu mnemonicParsing="false" text="File">
+                                        <items>
+                                            <MenuItem fx:id="menuNew" accelerator="Shortcut+N" mnemonicParsing="false" text="New..." />
+                                            <MenuItem fx:id="menuOpen" accelerator="Shortcut+O" mnemonicParsing="false" text="Open..." />
+                                            <MenuItem fx:id="menuSave" accelerator="Shortcut+S" mnemonicParsing="false" text="Save" />
+                                            <MenuItem fx:id="menuSaveAs" accelerator="Shift+Shortcut+S" mnemonicParsing="false" text="Save As..." />
+                                        </items>
+                                    </Menu>
+                                    <Menu mnemonicParsing="false" text="Selection">
+                                        <items>
+                                            <RadioMenuItem fx:id="menuEditOn" mnemonicParsing="false" text="Select Words" />
+                                            <RadioMenuItem fx:id="menuEditOff" mnemonicParsing="false" text="Show Selection" />
+                                            <SeparatorMenuItem mnemonicParsing="false" />
+                                            <MenuItem fx:id="menuExport" accelerator="Shortcut+E" mnemonicParsing="false" text="Export Selection..." />
+                                        </items>
+                                    </Menu>
+                                    <Menu mnemonicParsing="false" text="Filters">
+                                        <items>
+                                            <MenuItem fx:id="menuSetupFilters" mnemonicParsing="false" text="Setup Filters..." />
+                                            <CheckMenuItem fx:id="menuEnableFilters" mnemonicParsing="false" selected="true" text="Enable Filters" />
+                                        </items>
+                                    </Menu>
+                                    <Menu fx:id="menuHelp" mnemonicParsing="false" text="Help">
+                                        <items>
+                                            <MenuItem fx:id="menuWebsite" mnemonicParsing="false" text="VocabHunter Website" />
+                                            <MenuItem fx:id="menuHowTo" mnemonicParsing="false" text="How to Use VocabHunter" />
+                                            <MenuItem fx:id="menuIssue" mnemonicParsing="false" text="How to Report a Bug" />
+                                            <MenuItem fx:id="menuAbout" mnemonicParsing="false" text="About" />
+                                        </items>
+                                    </Menu>
+                                </menus>
+                            </MenuBar>
+                            <ToolBar>
+                                <items>
+                                    <Button fx:id="buttonNew" mnemonicParsing="false" styleClass="buttonNew" text="New">
+                                        <tooltip>
+                                            <Tooltip text="Analyse a document and start a new session" />
+                                        </tooltip>
+                                    </Button>
+                                    <Button fx:id="buttonOpen" mnemonicParsing="false" styleClass="buttonOpen" text="Open">
+                                        <tooltip>
+                                            <Tooltip text="Open a saved session" />
+                                        </tooltip>
+                                    </Button>
+                                    <Button fx:id="buttonSave" mnemonicParsing="false" styleClass="buttonSave" text="Save">
+                                        <tooltip>
+                                            <Tooltip text="Save the session" />
+                                        </tooltip>
+                                    </Button>
+                                    <Button fx:id="buttonExport" mnemonicParsing="false" styleClass="buttonExport" text="Export Selection">
+                                        <tooltip>
+                                            <Tooltip text="Export the list of words marked as unknown to a file" />
+                                        </tooltip>
+                                    </Button>
+                                    <Separator orientation="VERTICAL" />
+                                    <Button fx:id="buttonSetupFilters" mnemonicParsing="false" styleClass="buttonSetupFilters" text="Setup Filters">
+                                        <tooltip>
+                                            <Tooltip text="Define the filters that are used to hide words" />
+                                        </tooltip>
+                                    </Button>
+                                    <CheckBox fx:id="buttonEnableFilters" mnemonicParsing="false" selected="true" text="Enable Filters">
+                                        <tooltip>
+                                            <Tooltip text="Hide words using the filters" />
+                                        </tooltip>
+                                    </CheckBox>
+                                    <Separator orientation="VERTICAL" />
+                                    <RadioButton fx:id="buttonEditOn" mnemonicParsing="false" text="Select Words">
+                                        <tooltip>
+                                            <Tooltip text="Mark words as known and unknown" />
+                                        </tooltip>
+                                    </RadioButton>
+                                    <RadioButton fx:id="buttonEditOff" mnemonicParsing="false" text="Show Selection">
+                                        <tooltip>
+                                            <Tooltip text="Show a list of all the words marked as unknown" />
+                                        </tooltip>
+                                    </RadioButton>
+                                </items>
+                            </ToolBar>
+                        </children>
+                    </VBox>
+                </top>
+               <center>
+                   <VBox alignment="CENTER" styleClass="noSession">
+                       <children>
+                           <HBox alignment="CENTER">
+                               <children>
+                                   <Text styleClass="title,left" text="Vocab" />
+                                   <Text styleClass="title,right" text="Hunter" />
+                               </children>
+                           </HBox>
+                           <HBox alignment="CENTER">
+                               <children>
+                                   <VBox>
+                                       <children>
+                                           <Label styleClass="new" text="Choose 'New' to analyse a document and start a new session." />
+                                           <Label styleClass="open" text="Choose 'Open' to load a saved session." />
+                                       </children>
+                                   </VBox>
+                               </children>
+                           </HBox>
+                       </children>
+                   </VBox>
+               </center>
+            </BorderPane>
+            <Pane fx:id="maskerPane" styleClass="masker" visible="false" />
+         </children>
+      </StackPane>
    </center>
+   <bottom>
+      <StatusBar fx:id="statusBar" BorderPane.alignment="CENTER" />
+   </bottom>
 </BorderPane>

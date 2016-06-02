@@ -10,6 +10,7 @@ import io.github.vocabhunter.analysis.filter.WordFilter;
 import io.github.vocabhunter.analysis.marked.MarkTool;
 import io.github.vocabhunter.analysis.marked.WordState;
 import io.github.vocabhunter.gui.model.FilterSettings;
+import io.github.vocabhunter.gui.model.PositionModel;
 import io.github.vocabhunter.gui.model.SessionModel;
 import io.github.vocabhunter.gui.model.WordModel;
 import io.github.vocabhunter.gui.view.UseListCell;
@@ -70,6 +71,7 @@ public class SessionController {
         prepareWordListHandler();
         prepareWordStateHandler();
         prepareMainWord();
+        preparePositionModel();
 
         mainWordHandler.processWordUpdate(sessionModel.getCurrentWord());
 
@@ -93,6 +95,14 @@ public class SessionController {
     private void prepareMainWord() {
         mainWordHandler = new MainWordHandler(mainWord, useCountLabel, mainWordPane, sessionModel, wordStateProperty);
         mainWordHandler.prepare();
+    }
+
+    private void preparePositionModel() {
+        PositionModel position = sessionModel.getPosition();
+
+        position.positionIndexProperty().bind(wordListView.getSelectionModel().selectedIndexProperty());
+        position.sizeProperty().bind(Bindings.size(wordListView.getItems()));
+        position.editableProperty().bind(sessionModel.editableProperty());
     }
 
     private void updateWordListIfFilterEnabled() {

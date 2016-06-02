@@ -2,7 +2,9 @@
 
 [![Build Status](https://travis-ci.org/VocabHunter/VocabHunter.svg?branch=travis-osx)](https://travis-ci.org/VocabHunter/VocabHunter)
 
-VocabHunter is a system to help learners of foreign languages.  You can find details of the system at [vocabhunter.github.io](http://vocabhunter.github.io/)
+VocabHunter is a system to help learners of foreign languages.  The best place to go for information about VocabHunter is the project website: [vocabhunter.github.io](http://vocabhunter.github.io/).
+
+To get all the latest news about VocabHunter including announcements of new releases, follow [@vocabhunterapp](https://twitter.com/vocabhunterapp) on Twitter.
 
 # Prerequisites
 

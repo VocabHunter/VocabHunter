@@ -6,10 +6,10 @@ package io.github.vocabhunter.gui.controller;
 
 import io.github.vocabhunter.analysis.session.SessionState;
 import io.github.vocabhunter.analysis.session.SessionWord;
-import io.github.vocabhunter.gui.model.FilterSettings;
-import io.github.vocabhunter.gui.model.ProgressModel;
-import io.github.vocabhunter.gui.model.SessionModel;
-import io.github.vocabhunter.gui.model.WordModel;
+import io.github.vocabhunter.gui.model.*;
+import io.github.vocabhunter.gui.view.SessionTab;
+import javafx.beans.binding.Bindings;
+import javafx.beans.property.SimpleObjectProperty;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -20,15 +20,21 @@ public class SessionModelTool {
 
     private final FilterSettings filterSettings;
 
-    public SessionModelTool(final SessionState state, final FilterSettings filterSettings) {
+    private final SimpleObjectProperty<SessionTab> tabProperty;
+
+    public SessionModelTool(final SessionState state, final FilterSettings filterSettings, final SimpleObjectProperty<SessionTab> tabProperty) {
         this.state = state;
         this.filterSettings = filterSettings;
+        this.tabProperty = tabProperty;
     }
 
     public SessionModel buildModel() {
         ProgressModel progressModel = new ProgressModel();
+        PositionModel positionModel = new PositionModel();
 
-        return new SessionModel(state.getName(), words(state, progressModel), filterSettings, progressModel);
+        positionModel.analysisModeProperty().bind(Bindings.createBooleanBinding(() -> tabProperty.get().equals(SessionTab.ANALYSIS), tabProperty));
+
+        return new SessionModel(state.getName(), words(state, progressModel), filterSettings, progressModel, positionModel);
     }
 
     private List<WordModel> words(final SessionState raw, final ProgressModel progressModel) {
