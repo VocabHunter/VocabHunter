@@ -102,14 +102,14 @@ public class StatusManagerImpl implements StatusManager {
             StringBuilder buffer = new StringBuilder(POSITION_BUFFER_SIZE);
 
             buffer.append(MessageFormat.format("Word {0} of {1} {1,choice,0#words|1#word|1<words}", position.getPositionIndex() + 1, position.getSize()));
-            if (!position.isEditable()) {
+            if (position.isEditable()) {
+                int filtered = progress.unseenFilteredProperty().get();
+
+                if (filtered > 0) {
+                    buffer.append(MessageFormat.format(" ({0} {0,choice,0#words|1#word|1<words} hidden by filter)", filtered));
+                }
+            } else {
                 buffer.append(" marked as unknown");
-            }
-
-            int filtered = progress.unseenFilteredProperty().get();
-
-            if (filtered > 0) {
-                buffer.append(MessageFormat.format(" ({0} {0,choice,0#words|1#word|1<words} hidden by filter)", filtered));
             }
 
             return buffer.toString();
