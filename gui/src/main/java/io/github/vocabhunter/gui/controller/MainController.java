@@ -23,6 +23,7 @@ import io.github.vocabhunter.gui.model.StatusModel;
 import io.github.vocabhunter.gui.settings.SettingsManager;
 import io.github.vocabhunter.gui.status.StatusActionManager;
 import io.github.vocabhunter.gui.status.StatusManager;
+import io.github.vocabhunter.gui.view.SessionTab;
 import io.github.vocabhunter.gui.view.SessionViewTool;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -284,7 +285,7 @@ public class MainController {
             SessionModel sessionModel = addSession(state);
 
             model.replaceSessionModel(state, sessionModel, enrichedState.getFile().orElse(null));
-            statusManager.replaceSession(sessionModel.getPosition());
+            statusManager.replaceSession(sessionModel.getPosition(), sessionModel.getProgress());
 
             return true;
         } catch (final RuntimeException e) {
@@ -365,13 +366,13 @@ public class MainController {
     }
 
     private SessionModel addSession(final SessionState state) {
-        SessionModelTool sessionTool = new SessionModelTool(state, model.getFilterSettings());
-        SessionModel sessionModel = sessionTool.buildModel();
         SessionViewTool viewTool = new SessionViewTool();
+        SessionModelTool sessionTool = new SessionModelTool(state, model.getFilterSettings(), viewTool.selectedProperty());
+        SessionModel sessionModel = sessionTool.buildModel();
         ControllerAndView<SessionController, Node> cav = factory.session(sessionModel);
 
-        viewTool.addAnalysisView(cav.getView());
-        viewTool.addProgressView(factory.progress(sessionModel.getProgress()));
+        viewTool.setTabContent(SessionTab.ANALYSIS, cav.getView());
+        viewTool.setTabContent(SessionTab.PROGRESS, factory.progress(sessionModel.getProgress()));
         mainBorderPane.setCenter(viewTool.getView());
 
         keyPressHandler = cav.getController().getKeyPressHandler();

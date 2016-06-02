@@ -5,6 +5,7 @@
 package io.github.vocabhunter.gui.status;
 
 import io.github.vocabhunter.gui.model.PositionModel;
+import io.github.vocabhunter.gui.model.ProgressModel;
 import io.github.vocabhunter.gui.model.StatusModel;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -26,6 +27,8 @@ public class StatusManagerImpl implements StatusManager {
     private static final String NAME_SAVE_SESSION = "Save the VocabHunter session";
 
     private static final String NAME_EXPORT = "Export the words marked as unknown";
+
+    private static final int POSITION_BUFFER_SIZE = 100;
 
     private String name;
 
@@ -88,12 +91,30 @@ public class StatusManagerImpl implements StatusManager {
     }
 
     @Override
-    public void replaceSession(final PositionModel model) {
+    public void replaceSession(final PositionModel position, final ProgressModel progress) {
         positionDescription.unbind();
-        positionDescription.bind(createStringBinding(() -> positionDescription(model), model.positionIndexProperty(), model.sizeProperty()));
+        positionDescription.bind(createStringBinding(() -> positionDescription(position, progress),
+            position.positionIndexProperty(), position.sizeProperty(), position.analysisModeProperty(), position.editableProperty(), progress.unseenFilteredProperty()));
     }
 
-    private String positionDescription(final PositionModel model) {
-        return MessageFormat.format("Word {0} of {1}", model.getPositionIndex() + 1, model.getSize());
+    private String positionDescription(final PositionModel position, final ProgressModel progress) {
+        if (position.isAnalysisMode()) {
+            StringBuilder buffer = new StringBuilder(POSITION_BUFFER_SIZE);
+
+            buffer.append(MessageFormat.format("Word {0} of {1} {1,choice,0#words|1#word|1<words}", position.getPositionIndex() + 1, position.getSize()));
+            if (!position.isEditable()) {
+                buffer.append(" marked as unknown");
+            }
+
+            int filtered = progress.unseenFilteredProperty().get();
+
+            if (filtered > 0) {
+                buffer.append(MessageFormat.format(" ({0} {0,choice,0#words|1#word|1<words} hidden by filter)", filtered));
+            }
+
+            return buffer.toString();
+        } else {
+            return "";
+        }
     }
 }

@@ -102,6 +102,7 @@ public class SessionController {
 
         position.positionIndexProperty().bind(wordListView.getSelectionModel().selectedIndexProperty());
         position.sizeProperty().bind(Bindings.size(wordListView.getItems()));
+        position.editableProperty().bind(sessionModel.editableProperty());
     }
 
     private void updateWordListIfFilterEnabled() {

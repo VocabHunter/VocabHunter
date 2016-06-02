@@ -4,15 +4,17 @@
 
 package io.github.vocabhunter.gui.model;
 
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleIntegerProperty;
-import javafx.beans.property.SimpleObjectProperty;
 
 public class PositionModel {
     private final SimpleIntegerProperty positionIndex = new SimpleIntegerProperty();
 
     private final SimpleIntegerProperty size = new SimpleIntegerProperty();
 
-    private final SimpleObjectProperty<GuiMode> guiMode = new SimpleObjectProperty<>(GuiMode.EDIT);
+    private final SimpleBooleanProperty analysisMode = new SimpleBooleanProperty();
+
+    private final SimpleBooleanProperty editable = new SimpleBooleanProperty(true);
 
     public SimpleIntegerProperty positionIndexProperty() {
         return positionIndex;
@@ -30,7 +32,19 @@ public class PositionModel {
         return size.get();
     }
 
-    public GuiMode getGuiMode() {
-        return guiMode.get();
+    public SimpleBooleanProperty analysisModeProperty() {
+        return analysisMode;
+    }
+
+    public boolean isAnalysisMode() {
+        return analysisMode.get();
+    }
+
+    public SimpleBooleanProperty editableProperty() {
+        return editable;
+    }
+
+    public boolean isEditable() {
+        return editable.get();
     }
 }
