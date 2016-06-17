@@ -30,6 +30,6 @@ public class AboutDialogue {
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.initStyle(StageStyle.UNDECORATED);
         stage.setScene(new Scene(root));
-        stage.show();
+        stage.showAndWait();
     }
 }

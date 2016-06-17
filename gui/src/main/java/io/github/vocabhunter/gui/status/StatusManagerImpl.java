@@ -30,6 +30,8 @@ public class StatusManagerImpl implements StatusManager {
 
     private static final String NAME_EXIT = "Exit VocabHunter";
 
+    private static final String NAME_ABOUT = "About VocabHunter";
+
     private static final int POSITION_BUFFER_SIZE = 100;
 
     private String name;
@@ -69,6 +71,11 @@ public class StatusManagerImpl implements StatusManager {
     @Override
     public void beginExit() {
         begin(NAME_EXIT);
+    }
+
+    @Override
+    public void beginAbout() {
+        begin(NAME_ABOUT);
     }
 
     private void begin(final String name) {

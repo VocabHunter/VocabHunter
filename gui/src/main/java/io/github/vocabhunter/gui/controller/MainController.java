@@ -153,7 +153,7 @@ public class MainController {
         menuWebsite.setOnAction(e -> webPageTool.showWebPage(GuiConstants.WEBSITE));
         menuHowTo.setOnAction(e -> webPageTool.showWebPage(GuiConstants.WEBPAGE_HELP));
         menuIssue.setOnAction(e -> webPageTool.showWebPage(GuiConstants.WEBPAGE_ISSUE));
-        menuAbout.setOnAction(e -> processAbout());
+        menuAbout.setOnAction(e -> statusActionManager.wrapHandler(this::processAbout, StatusManager::beginAbout));
 
         factory.getExternalEventSource().setListener(e -> processOpenOrNew(e.getFile()));
 
@@ -386,10 +386,12 @@ public class MainController {
         dialogue.show();
     }
 
-    private void processAbout() {
+    private boolean processAbout() {
         AboutDialogue dialogue = factory.aboutDialogue();
 
         dialogue.show();
+
+        return true;
     }
 
     public EventHandler<KeyEvent> getKeyPressHandler() {
