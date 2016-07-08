@@ -16,7 +16,6 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
 import java.util.function.Function;
-import java.util.stream.Collectors;
 
 import static io.github.vocabhunter.analysis.core.CollectionTool.listOf;
 import static org.junit.Assert.assertEquals;
@@ -88,8 +87,7 @@ public class FileStreamerTest {
     private void validateStream(final String file) throws Exception {
         URL resource = getResource(file);
         try (InputStream in = resource.openStream()) {
-            List<String> result = target.stream(in, Paths.get(file))
-                    .collect(Collectors.toList());
+            List<String> result = target.lines(in, Paths.get(file));
 
             assertEquals("Lines from file", LINES, result);
         }

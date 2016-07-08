@@ -52,6 +52,11 @@ public class EnrichedSessionState {
             .isEquals();
     }
 
+    public boolean isEquivalent(final EnrichedSessionState that) {
+        return file.equals(that.file)
+            && state.isEquivalent(that.state);
+    }
+
     @Override
     public int hashCode() {
         return new HashCodeBuilder()

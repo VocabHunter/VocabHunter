@@ -29,7 +29,6 @@ import java.nio.file.Path;
 import java.text.BreakIterator;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Stream;
 
 import static io.github.vocabhunter.analysis.core.CoreConstants.LOCALE;
 
@@ -42,7 +41,7 @@ public class FileStreamer {
         this.analyser = analyser;
     }
 
-    public Stream<String> stream(final InputStream in, final Path file) {
+    public List<String> lines(final InputStream in, final Path file) {
         try {
             ContentHandler textHandler = new BodyContentHandler(-1);
             Metadata metadata = new Metadata();
@@ -56,7 +55,7 @@ public class FileStreamer {
             if (StringUtils.isBlank(fullText)) {
                 throw new VocabHunterException(String.format("No text in file '%s'", file));
             } else {
-                return splitToList(fullText).stream();
+                return splitToList(fullText);
             }
         } catch (IOException | SAXException | TikaException e) {
             throw readError(file, e);
@@ -85,7 +84,7 @@ public class FileStreamer {
 
     public AnalysisResult analyse(final Path file) {
         try (InputStream in = Files.newInputStream(file)) {
-            Stream<String> stream = stream(in, file);
+            List<String> stream = lines(in, file);
 
             return analyser.analyse(stream, FileNameTool.filename(file));
 

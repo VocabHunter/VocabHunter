@@ -5,18 +5,19 @@
 package io.github.vocabhunter.analysis.session;
 
 import io.github.vocabhunter.analysis.core.VocabHunterException;
-import io.github.vocabhunter.analysis.marked.WordState;
+import io.github.vocabhunter.analysis.marked.MarkedWord;
 import org.junit.Test;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.function.Function;
 
-import static io.github.vocabhunter.analysis.core.CollectionTool.listOf;
-import static io.github.vocabhunter.analysis.marked.WordState.*;
+import static io.github.vocabhunter.analysis.session.TestSessionStateTool.buildSession;
+import static java.util.stream.Collectors.toList;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 public class FormatHandlingTest {
     private static final String FORMAT_UNSUPPORTED_VERSION = "format-unsupported-version.wordy";
@@ -27,19 +28,13 @@ public class FormatHandlingTest {
 
     private static final String FORMAT_3 = "format3.wordy";
 
-    private static final String DOCUMENT_NAME = "test-sample.txt";
+    private static final String FORMAT_4 = "format4.wordy";
 
-    private static final String LINE_1 = "The quick brown fox jumped over the lazy dog's back.";
-
-    private static final String LINE_2 = "Now is the time for all good men to come to the aid of the party.";
-
-    private static final String LINE_3 = "This is a simple test document.";
-
-    private static final SessionState EXPECTED_STATE = buildExpected();
+    private static final SessionState EXPECTED_STATE = buildSession();
 
     @Test(expected = VocabHunterException.class)
     public void testUnsupportedVersion() throws Exception {
-        read(FORMAT_UNSUPPORTED_VERSION);
+        readState(FORMAT_UNSUPPORTED_VERSION);
     }
 
     @Test
@@ -57,15 +52,22 @@ public class FormatHandlingTest {
         validate(FORMAT_3);
     }
 
+    @Test
+    public void testVersion4() throws Exception {
+        validate(FORMAT_4);
+    }
+
     private void validate(final String filename) throws Exception {
         Path file = getResourceFile(filename);
         EnrichedSessionState expected = new EnrichedSessionState(EXPECTED_STATE, file);
-        EnrichedSessionState actual = read(file);
 
-        validate(expected, actual);
+        validateMarkedWords(file, expected);
+        validateState(file, expected);
     }
 
-    private void validate(final EnrichedSessionState expected, final EnrichedSessionState actual) {
+    private void validateState(final Path file, final EnrichedSessionState expected) {
+        EnrichedSessionState actual = readState(file);
+
         Optional<Path> expectedFile = expected.getFile();
         Optional<Path> actualFile = actual.getFile();
         assertEquals("Session file reference", expectedFile, actualFile);
@@ -81,72 +83,41 @@ public class FormatHandlingTest {
         String actualName = actualState.getName();
         assertEquals("Session name", expectedName, actualName);
 
-        List<SessionWord> expectedUses = expectedState.getOrderedUses();
-        List<SessionWord> actualUses = actualState.getOrderedUses();
-        assertEquals("Words", expectedUses, actualUses);
+        assertTrue("Equivalent", expectedState.isEquivalent(actualState));
 
         // This catch-all case should already be covered
         assertEquals("Session file", expected, actual);
     }
 
-    private EnrichedSessionState read(final String file) throws Exception {
-        return read(getResourceFile(file));
+    private void validateMarkedWords(final Path file, final EnrichedSessionState expected) {
+        List<SessionWord> expectedWords = expected.getState().getOrderedUses();
+        List<? extends MarkedWord> actualWords = SessionSerialiser.readMarkedWords(file);
+
+        validateMarkedWords(expectedWords, actualWords, MarkedWord::getWordIdentifier);
+        validateMarkedWords(expectedWords, actualWords, MarkedWord::getState);
+        validateMarkedWords(expectedWords, actualWords, MarkedWord::getUseCount);
     }
 
-    private EnrichedSessionState read(final Path file) {
+    private void validateMarkedWords(final List<? extends MarkedWord> expected, final List<? extends MarkedWord> actual, final Function<MarkedWord, Object> f) {
+        List<Object> expectedValues = expected.stream()
+            .map(f)
+            .collect(toList());
+        List<Object> actualValues = actual.stream()
+            .map(f)
+            .collect(toList());
+
+        assertEquals("Values", expectedValues, actualValues);
+    }
+
+    private EnrichedSessionState readState(final String file) throws Exception {
+        return readState(getResourceFile(file));
+    }
+
+    private EnrichedSessionState readState(final Path file) {
         return SessionSerialiser.read(file);
     }
 
     private Path getResourceFile(final String file) throws Exception {
         return Paths.get(FormatHandlingTest.class.getResource("/" + file).toURI());
-    }
-
-    private static SessionState buildExpected() {
-        SessionState state = new SessionState();
-
-        state.setName(DOCUMENT_NAME);
-        List<SessionWord> uses = new ArrayList<>();
-
-        use(uses, "the", KNOWN, 5, LINE_1, LINE_2);
-        use(uses, "is", UNKNOWN, 2, LINE_2, LINE_3);
-        use(uses, "to", KNOWN, 2, LINE_2);
-        use(uses, "a", UNKNOWN, 1, LINE_3);
-        use(uses, "aid", UNSEEN, 1, LINE_2);
-        use(uses, "all", UNSEEN, 1, LINE_2);
-        use(uses, "back", UNSEEN, 1, LINE_1);
-        use(uses, "brown", UNSEEN, 1, LINE_1);
-        use(uses, "come", UNSEEN, 1, LINE_2);
-        use(uses, "document", UNSEEN, 1, LINE_3);
-        use(uses, "dog's", UNSEEN, 1, LINE_1);
-        use(uses, "for", UNSEEN, 1, LINE_2);
-        use(uses, "fox", UNSEEN, 1, LINE_1);
-        use(uses, "good", UNSEEN, 1, LINE_2);
-        use(uses, "jumped", UNSEEN, 1, LINE_1);
-        use(uses, "lazy", UNSEEN, 1, LINE_1);
-        use(uses, "men", UNSEEN, 1, LINE_2);
-        use(uses, "Now", UNSEEN, 1, LINE_2);
-        use(uses, "of", UNSEEN, 1, LINE_2);
-        use(uses, "over", UNSEEN, 1, LINE_1);
-        use(uses, "party", UNSEEN, 1, LINE_2);
-        use(uses, "quick", UNSEEN, 1, LINE_1);
-        use(uses, "simple", UNSEEN, 1, LINE_3);
-        use(uses, "test", UNSEEN, 1, LINE_3);
-        use(uses, "This", UNSEEN, 1, LINE_3);
-        use(uses, "time", UNSEEN, 1, LINE_2);
-
-        state.setOrderedUses(uses);
-
-        return state;
-    }
-
-    private static void use(final List<SessionWord> uses, final String word, final WordState state, final int useCount, final String... lines) {
-        SessionWord sw = new SessionWord();
-
-        sw.setWordIdentifier(word);
-        sw.setState(state);
-        sw.setUses(listOf(lines));
-        sw.setUseCount(useCount);
-
-        uses.add(sw);
     }
 }

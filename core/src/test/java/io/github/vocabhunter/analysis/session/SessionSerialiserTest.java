@@ -79,21 +79,22 @@ public class SessionSerialiserTest {
 
     private SessionState state(final String name) {
         SessionState bean = new SessionState();
-        SessionWord word1 = word("Word1", WordState.UNSEEN, "Use 1", "Use 2");
-        SessionWord word2 = word("Word2", WordState.UNSEEN, "Use 3", "Use 4");
+        SessionWord word1 = word("Word1", WordState.UNSEEN, 0, 1);
+        SessionWord word2 = word("Word2", WordState.UNSEEN, 2, 3);
 
         bean.setName(name);
         bean.setOrderedUses(listOf(word1, word2));
+        bean.setLines(listOf("Use 1", "Use 2", "Use 3", "Use 4"));
 
         return bean;
     }
 
-    private SessionWord word(final String word, final WordState state, final String... uses) {
+    private SessionWord word(final String word, final WordState state, final Integer... lineNos) {
         SessionWord bean = new SessionWord();
 
         bean.setWordIdentifier(word);
         bean.setState(state);
-        bean.setUses(listOf(uses));
+        bean.setLineNos(listOf(lineNos));
 
         return bean;
     }

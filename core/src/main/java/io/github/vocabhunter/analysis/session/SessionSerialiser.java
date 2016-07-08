@@ -6,14 +6,15 @@ package io.github.vocabhunter.analysis.session;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.github.vocabhunter.analysis.core.VocabHunterException;
+import io.github.vocabhunter.analysis.marked.MarkedWord;
 import io.github.vocabhunter.analysis.simple.WordStreamTool;
 
 import java.io.IOException;
 import java.nio.file.Path;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import static io.github.vocabhunter.analysis.session.SessionFormatVersion.*;
+import static java.util.stream.Collectors.toList;
 
 public final class SessionSerialiser {
     private static final ObjectMapper MAPPER = new ObjectMapper();
@@ -30,7 +31,19 @@ public final class SessionSerialiser {
         }
     }
 
+    public static List<? extends MarkedWord> readMarkedWords(final Path file) {
+        return readForMarkedWords(file).getOrderedUses();
+    }
+
     public static EnrichedSessionState read(final Path file) {
+        return new EnrichedSessionState(readInternal(file), file);
+    }
+
+    private static SessionState readInternal(final Path file) {
+        return upgradeVersionStrict(readForMarkedWords(file));
+    }
+
+    private static SessionState readForMarkedWords(final Path file) {
         try {
             SessionState state = MAPPER.readValue(file.toFile(), SessionState.class);
             int formatVersion = state.getFormatVersion();
@@ -38,14 +51,14 @@ public final class SessionSerialiser {
             if (formatVersion < 1 || formatVersion > LATEST_VERSION) {
                 throw new VocabHunterException("This file was created with a newer version of VocabHunter.  Please upgrade and try again.");
             } else {
-                return new EnrichedSessionState(upgradeVersion(state), file);
+                return upgradeForMarkedWords(state);
             }
         } catch (final IOException e) {
             throw new VocabHunterException(String.format("Unable to load file '%s'", file), e);
         }
     }
 
-    private static SessionState upgradeVersion(final SessionState original) {
+    private static SessionState upgradeForMarkedWords(final SessionState original) {
         int version = original.getFormatVersion();
 
         if (version == FORMAT_1 || version == FORMAT_2) {
@@ -60,7 +73,7 @@ public final class SessionSerialiser {
         List<SessionWord> words = original.getOrderedUses().stream()
             .map(SessionSerialiser::upgradeVersion1And2)
             .sorted(WordStreamTool.WORD_COMPARATOR)
-            .collect(Collectors.toList());
+            .collect(toList());
 
         state.setFormatVersion(FORMAT_3);
         state.setName(original.getName());
@@ -78,6 +91,45 @@ public final class SessionSerialiser {
         word.setUses(uses);
         word.setUseCount(countWords(identifier, uses));
         word.setState(original.getState());
+
+        return word;
+    }
+
+    private static SessionState upgradeVersionStrict(final SessionState original) {
+        int version = original.getFormatVersion();
+
+        if (version == FORMAT_3) {
+            return upgradeVersion3(original);
+        } else {
+            return original;
+        }
+    }
+
+    private static SessionState upgradeVersion3(final SessionState original) {
+        SessionState state = new SessionState();
+        LineListTool<SessionWord> tool = new LineListTool<>(original.getOrderedUses(), SessionWord::getUses);
+        List<SessionWord> words = original.getOrderedUses().stream()
+            .map(w -> upgradeVersion3(tool, w))
+            .collect(toList());
+
+        state.setFormatVersion(FORMAT_4);
+        state.setName(original.getName());
+        state.setLines(tool.getLines());
+        state.setOrderedUses(words);
+
+        return state;
+    }
+
+    private static SessionWord upgradeVersion3(final LineListTool<SessionWord> tool, final SessionWord original) {
+        List<Integer> lineNos = original.getUses().stream()
+            .map(tool::getLineNo)
+            .collect(toList());
+        SessionWord word = new SessionWord();
+
+        word.setWordIdentifier(original.getWordIdentifier());
+        word.setState(original.getState());
+        word.setUseCount(original.getUseCount());
+        word.setLineNos(lineNos);
 
         return word;
     }
