@@ -36,7 +36,7 @@ public class SessionViewTool {
             tabMap.put(tabDescription, tab);
             reverseMap.put(tab, tabDescription);
         }
-        selected.bind(Bindings.createObjectBinding(() -> getSelectedTab(), tabPane.getSelectionModel().selectedItemProperty()));
+        selected.bind(Bindings.createObjectBinding(this::getSelectedTab, tabPane.getSelectionModel().selectedItemProperty()));
     }
 
     private SessionTab getSelectedTab() {
