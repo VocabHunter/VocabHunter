@@ -20,7 +20,12 @@ public final class SessionFormatVersion {
      */
     public static final int FORMAT_3 = 3;
 
-    public static final int LATEST_VERSION = FORMAT_3;
+    /**
+     * Switched from storing lines within words to just storing line numbers.
+     */
+    public static final int FORMAT_4 = 4;
+
+    public static final int LATEST_VERSION = FORMAT_4;
 
     private SessionFormatVersion() {
         // Prevent instantiation - only constants are defined.

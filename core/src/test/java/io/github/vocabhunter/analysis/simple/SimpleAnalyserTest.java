@@ -10,6 +10,7 @@ import io.github.vocabhunter.analysis.model.WordUse;
 import org.junit.Test;
 
 import java.util.List;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static io.github.vocabhunter.analysis.core.CollectionTool.listOf;
@@ -17,6 +18,20 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 public class SimpleAnalyserTest {
+    private enum LineReference {
+        FIRST(0), SECOND(1);
+
+        private final int lineNo;
+
+        LineReference(final int lineNo) {
+            this.lineNo = lineNo;
+        }
+
+        public int getLineNo() {
+            return lineNo;
+        }
+    }
+
     private static final String NAME = "Name";
 
     private static final String WORD_1 = "one";
@@ -71,80 +86,82 @@ public class SimpleAnalyserTest {
     public void testSingle() {
         AnalysisResult result = analyse(WORD_1);
 
-        validate(result, use(WORD_1, 1, WORD_1));
+        validate(result, use(WORD_1, 1, LineReference.FIRST));
     }
 
     @Test
     public void testMulti() {
         AnalysisResult result = analyse(LINE_1, LINE_2);
 
-        validate(result, use(WORD_1, 3, LINE_1, LINE_2), use(WORD_3, 2, LINE_2), use(WORD_2, 2, LINE_1));
+        validate(result, use(WORD_1, 3, LineReference.FIRST, LineReference.SECOND), use(WORD_3, 2, LineReference.SECOND), use(WORD_2, 2, LineReference.FIRST));
     }
 
     @Test
     public void testExtraSpaces() {
         AnalysisResult result = analyse(LINE_WITH_SPACES);
 
-        validate(result, use(WORD_1, 1, LINE_WITH_SPACES), use(WORD_3, 1, LINE_WITH_SPACES), use(WORD_2, 1, LINE_WITH_SPACES));
+        validate(result, use(WORD_1, 1, LineReference.FIRST), use(WORD_3, 1, LineReference.FIRST), use(WORD_2, 1, LineReference.FIRST));
     }
 
     @Test
     public void testSpanish() {
         AnalysisResult result = analyse(LINE_WITH_ACCENTS);
 
-        validate(result, use(SPANISH_1, 1, LINE_WITH_ACCENTS), use(SPANISH_2, 1, LINE_WITH_ACCENTS), use(SPANISH_4, 1, LINE_WITH_ACCENTS), use(SPANISH_3, 1, LINE_WITH_ACCENTS));
+        validate(result, use(SPANISH_1, 1, LineReference.FIRST), use(SPANISH_2, 1, LineReference.FIRST), use(SPANISH_4, 1, LineReference.FIRST), use(SPANISH_3, 1, LineReference.FIRST));
     }
 
     @Test
     public void testMixedCase() {
         AnalysisResult result = analyse(UPPER_CASE, LOWER_CASE);
 
-        validate(result, use(LOWER_CASE, 2, UPPER_CASE, LOWER_CASE));
+        validate(result, use(LOWER_CASE, 2, LineReference.FIRST, LineReference.SECOND));
     }
 
     @Test
     public void testLowerCase() {
         AnalysisResult result = analyse(LOWER_CASE, LOWER_CASE);
 
-        validate(result, use(LOWER_CASE, 2, LOWER_CASE, LOWER_CASE));
+        validate(result, use(LOWER_CASE, 2, LineReference.FIRST, LineReference.SECOND));
     }
 
     @Test
     public void testUpperCase() {
         AnalysisResult result = analyse(UPPER_CASE, UPPER_CASE);
 
-        validate(result, use(UPPER_CASE, 2, UPPER_CASE, UPPER_CASE));
+        validate(result, use(UPPER_CASE, 2, LineReference.FIRST, LineReference.SECOND));
     }
 
     @Test
     public void testUpperUpper() {
         AnalysisResult result = analyse(UPPER_UPPER);
 
-        validate(result, use(UPPER_CASE, 2, UPPER_UPPER));
+        validate(result, use(UPPER_CASE, 2, LineReference.FIRST));
     }
 
     @Test
     public void testUpperLower() {
         AnalysisResult result = analyse(UPPER_LOWER);
 
-        validate(result, use(LOWER_CASE, 2, UPPER_LOWER));
+        validate(result, use(LOWER_CASE, 2, LineReference.FIRST));
     }
 
     @Test
     public void testLowerLower() {
         AnalysisResult result = analyse(LOWER_LOWER);
 
-        validate(result, use(LOWER_CASE, 2, LOWER_LOWER));
+        validate(result, use(LOWER_CASE, 2, LineReference.FIRST));
     }
 
     private AnalysisResult analyse(final String... lines) {
-        Stream<String> linesStream = Stream.of(lines);
-
-        return target.analyse(linesStream, NAME);
+        return target.analyse(listOf(lines), NAME);
     }
 
-    private WordUse use(final String wordIdentifier, final int useCount, final String... uses) {
-        return new WordUse(wordIdentifier, useCount, listOf(uses));
+    private WordUse use(final String wordIdentifier, final int useCount, final LineReference... lines) {
+        List<Integer> lineNos = Stream.of(lines)
+            .map(LineReference::getLineNo)
+            .collect(Collectors.toList());
+
+        return new WordUse(wordIdentifier, useCount, lineNos);
     }
 
     private void validate(final AnalysisResult result, final WordUse... expected) {

@@ -4,6 +4,7 @@
 
 package io.github.vocabhunter.analysis.session;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import io.github.vocabhunter.analysis.marked.MarkedWord;
 import io.github.vocabhunter.analysis.marked.WordState;
 import io.github.vocabhunter.analysis.model.WordUse;
@@ -15,11 +16,15 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.function.Function;
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class SessionWord implements MarkedWord {
     private String wordIdentifier;
 
     private List<String> uses;
+
+    private List<Integer> lineNos;
 
     private int useCount;
 
@@ -31,7 +36,7 @@ public class SessionWord implements MarkedWord {
 
     public SessionWord(final WordUse use) {
         wordIdentifier = use.getWordIdentifier();
-        uses = new ArrayList<>(use.getUses());
+        lineNos = new ArrayList<>(use.getLineNos());
         useCount = use.getUseCount();
     }
 
@@ -45,7 +50,15 @@ public class SessionWord implements MarkedWord {
     }
 
     public List<String> getUses() {
-        return Collections.unmodifiableList(uses);
+        if (uses == null) {
+            return null;
+        } else {
+            return Collections.unmodifiableList(uses);
+        }
+    }
+
+    public List<Integer> getLineNos() {
+        return Collections.unmodifiableList(lineNos);
     }
 
     @Override
@@ -59,6 +72,10 @@ public class SessionWord implements MarkedWord {
 
     public void setUses(final List<String> uses) {
         this.uses = new ArrayList<>(uses);
+    }
+
+    public void setLineNos(final List<Integer> lineNos) {
+        this.lineNos = new ArrayList<>(lineNos);
     }
 
     @Override
@@ -81,11 +98,17 @@ public class SessionWord implements MarkedWord {
         }
 
         SessionWord that = (SessionWord) o;
+        Function<SessionWord, List<?>> lineExtractor = s -> s.lineNos;
 
+        return isEquivalent(that, lineExtractor, lineExtractor);
+    }
+
+    public boolean isEquivalent(final SessionWord that, final Function<SessionWord, List<?>> thisExtractor,  final Function<SessionWord, List<?>> thatExtractor) {
         return new EqualsBuilder()
             .append(useCount, that.useCount)
             .append(wordIdentifier, that.wordIdentifier)
             .append(uses, that.uses)
+            .append(thisExtractor.apply(this), thatExtractor.apply(that))
             .append(state, that.state)
             .isEquals();
     }
@@ -95,6 +118,7 @@ public class SessionWord implements MarkedWord {
         return new HashCodeBuilder()
             .append(wordIdentifier)
             .append(uses)
+            .append(lineNos)
             .append(useCount)
             .append(state)
             .toHashCode();
@@ -105,6 +129,7 @@ public class SessionWord implements MarkedWord {
         return new ToStringBuilder(this, ToStringStyle.MULTI_LINE_STYLE)
             .append("wordIdentifier", wordIdentifier)
             .append("uses", uses)
+            .append("lineNos", lineNos)
             .append("useCount", useCount)
             .append("state", state)
             .toString();

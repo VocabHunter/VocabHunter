@@ -5,8 +5,8 @@
 package io.github.vocabhunter.analysis.session;
 
 import io.github.vocabhunter.analysis.core.VocabHunterException;
+import io.github.vocabhunter.analysis.marked.MarkedWord;
 import io.github.vocabhunter.analysis.marked.WordState;
-import io.github.vocabhunter.analysis.model.AnalysisWord;
 
 import java.nio.file.Path;
 import java.util.List;
@@ -20,49 +20,41 @@ public final class SessionWordsTool {
     }
 
     public static List<String> knownWords(final Path file) {
-        return knownWords(readSessionFile(file));
+        return knownWords(readMarkedWords(file));
     }
 
-    public static List<String> knownWords(final EnrichedSessionState state) {
-        return knownWords(state.getState());
-    }
-
-    private static List<String> knownWords(final SessionState state) {
-        return words(state, SessionWordsTool::isKnown);
+    public static List<String> knownWords(final List<? extends MarkedWord> words) {
+        return words(words, SessionWordsTool::isKnown);
     }
 
     public static List<String> seenWords(final Path file) {
-        return seenWords(readSessionFile(file));
+        return seenWords(readMarkedWords(file));
     }
 
-    public static List<String> seenWords(final EnrichedSessionState state) {
-        return seenWords(state.getState());
+    public static List<String> seenWords(final List<? extends MarkedWord> words) {
+        return words(words, SessionWordsTool::isSeen);
     }
 
-    private static List<String> seenWords(final SessionState state) {
-        return words(state, SessionWordsTool::isSeen);
-    }
-
-    private static List<String> words(final SessionState state, final Predicate<SessionWord> wordFilter) {
-        return state.getOrderedUses().stream()
+    private static List<String> words(final List<? extends MarkedWord> words, final Predicate<MarkedWord> wordFilter) {
+        return words.stream()
             .filter(wordFilter)
-            .map(AnalysisWord::getWordIdentifier)
+            .map(MarkedWord::getWordIdentifier)
             .collect(toList());
     }
 
-    private static boolean isKnown(final SessionWord w) {
+    private static boolean isKnown(final MarkedWord w) {
         return w.getState().equals(WordState.KNOWN);
     }
 
-    private static boolean isSeen(final SessionWord w) {
+    private static boolean isSeen(final MarkedWord w) {
         WordState state = w.getState();
 
         return state.equals(WordState.KNOWN) || state.equals(WordState.UNKNOWN);
     }
 
-    private static EnrichedSessionState readSessionFile(final Path file) {
+    private static List<? extends MarkedWord> readMarkedWords(final Path file) {
         try {
-            return SessionSerialiser.read(file);
+            return SessionSerialiser.readMarkedWords(file);
         } catch (Exception e) {
             throw new VocabHunterException(String.format("Unable to read filter file '%s'", file), e);
         }

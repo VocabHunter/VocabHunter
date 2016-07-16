@@ -12,8 +12,9 @@ import javafx.beans.binding.Bindings;
 import javafx.beans.property.SimpleObjectProperty;
 
 import java.util.List;
-import java.util.stream.Collectors;
 import java.util.stream.IntStream;
+
+import static java.util.stream.Collectors.toList;
 
 public class SessionModelTool {
     private final SessionState state;
@@ -38,16 +39,20 @@ public class SessionModelTool {
     }
 
     private List<WordModel> words(final SessionState raw, final ProgressModel progressModel) {
+        List<String> lines = raw.getLines();
         List<SessionWord> orderedUses = raw.getOrderedUses();
         int useCount = orderedUses.size();
 
         return IntStream.range(0, useCount)
-                .mapToObj(n -> wordModel(n, orderedUses.get(n), progressModel))
-                .collect(Collectors.toList());
+                .mapToObj(n -> wordModel(lines, n, orderedUses.get(n), progressModel))
+                .collect(toList());
     }
 
-    private WordModel wordModel(final int n, final SessionWord word, final ProgressModel progressModel) {
-        WordModel model = new WordModel(n, word.getWordIdentifier(), word.getUses(), word.getUseCount(), word.getState());
+    private WordModel wordModel(final List<String> lines, final int n, final SessionWord word, final ProgressModel progressModel) {
+        List<String> uses = word.getLineNos().stream()
+            .map(lines::get)
+            .collect(toList());
+        WordModel model = new WordModel(n, word.getWordIdentifier(), uses, word.getUseCount(), word.getState());
 
         model.stateProperty().addListener((o, old, s) -> word.setState(s));
         model.stateProperty().addListener((o, old, s) -> progressModel.updateWord(old, s));

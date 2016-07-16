@@ -30,7 +30,7 @@ public final class FileFilters {
 
     public static final List<ExtensionFilter> SESSIONS = listOf(FILTER_SESSION);
 
-    public static final List<ExtensionFilter> SESSIONS_OR_ANY = listOf(FILTER_SESSION, FILTER_ALL);
+    public static final List<ExtensionFilter> SESSIONS_OR_ANY = listOf(FILTER_SESSION);
 
     public static final List<ExtensionFilter> EXPORTS = listOf(FILTER_TEXT);
 

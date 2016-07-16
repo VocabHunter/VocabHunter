@@ -17,16 +17,16 @@ public final class WordUse implements AnalysisWord {
 
     private final int useCount;
 
-    private final List<String> uses;
+    private final List<Integer> lineNos;
 
-    public WordUse(final String wordIdentifier, final String use) {
-        this(wordIdentifier, 1, Collections.singletonList(use));
+    public WordUse(final String wordIdentifier, final int lineNo) {
+        this(wordIdentifier, 1, Collections.singletonList(lineNo));
     }
 
-    public WordUse(final String wordIdentifier, final int useCount, final List<String> uses) {
+    public WordUse(final String wordIdentifier, final int useCount, final List<Integer> lineNos) {
         this.wordIdentifier = wordIdentifier;
         this.useCount = useCount;
-        this.uses = new ArrayList<>(uses);
+        this.lineNos = new ArrayList<>(lineNos);
     }
 
     @Override
@@ -39,8 +39,8 @@ public final class WordUse implements AnalysisWord {
         return useCount;
     }
 
-    public List<String> getUses() {
-        return Collections.unmodifiableList(uses);
+    public List<Integer> getLineNos() {
+        return Collections.unmodifiableList(lineNos);
     }
 
     @Override
@@ -58,16 +58,16 @@ public final class WordUse implements AnalysisWord {
         return new EqualsBuilder()
                 .append(useCount, wordUse.useCount)
                 .append(wordIdentifier, wordUse.wordIdentifier)
-                .append(uses, wordUse.uses)
+                .append(lineNos, wordUse.lineNos)
                 .isEquals();
     }
 
     @Override
     public int hashCode() {
-        return new HashCodeBuilder(17, 37)
+        return new HashCodeBuilder()
                 .append(wordIdentifier)
                 .append(useCount)
-                .append(uses)
+                .append(lineNos)
                 .toHashCode();
     }
 
@@ -76,7 +76,7 @@ public final class WordUse implements AnalysisWord {
         return new ToStringBuilder(this)
                 .append("wordIdentifier", wordIdentifier)
                 .append("useCount", useCount)
-                .append("uses", uses)
+                .append("lineNos", lineNos)
                 .toString();
     }
 }

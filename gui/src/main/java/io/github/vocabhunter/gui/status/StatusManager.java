@@ -21,6 +21,8 @@ public interface StatusManager {
 
     void beginExit();
 
+    void beginAbout();
+
     void performAction();
 
     void markSuccess();
