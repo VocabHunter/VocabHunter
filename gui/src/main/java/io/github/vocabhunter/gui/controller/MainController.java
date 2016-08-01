@@ -5,6 +5,7 @@
 package io.github.vocabhunter.gui.controller;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+import io.github.vocabhunter.analysis.core.VocabHunterException;
 import io.github.vocabhunter.analysis.file.FileStreamer;
 import io.github.vocabhunter.analysis.file.SelectionExportTool;
 import io.github.vocabhunter.analysis.session.EnrichedSessionState;
@@ -336,7 +337,7 @@ public class MainController {
 
         try {
             LOG.info("Saving file '{}'", file);
-            SessionSerialiser.write(file, model.getSessionState());
+            SessionSerialiser.write(file, getSessionState());
             model.setChangesSaved(true);
 
             return true;
@@ -355,7 +356,7 @@ public class MainController {
 
         try {
             LOG.info("Exporting to file '{}'", file);
-            SelectionExportTool.exportSelection(model.getSessionState(), file);
+            SelectionExportTool.exportSelection(getSessionState(), file);
 
             return true;
         } catch (final RuntimeException e) {
@@ -363,6 +364,10 @@ public class MainController {
 
             return false;
         }
+    }
+
+    private SessionState getSessionState() {
+        return model.getSessionState().orElseThrow(() -> new VocabHunterException("No session state available"));
     }
 
     private SessionModel addSession(final SessionState state) {
