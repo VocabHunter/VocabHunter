@@ -6,6 +6,8 @@ package io.github.vocabhunter.analysis.settings;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.github.vocabhunter.analysis.core.VocabHunterException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -14,6 +16,8 @@ import java.util.Collections;
 import java.util.List;
 
 public class BaseSettingsManager<T> {
+    private static final Logger LOG = LoggerFactory.getLogger(BaseSettingsManager.class);
+
     private static final ObjectMapper MAPPER = new ObjectMapper();
 
     private static final List<String> MINIMAL_JSON = Collections.singletonList("{}");
@@ -46,13 +50,35 @@ public class BaseSettingsManager<T> {
 
     protected T readSettings() {
         try {
-            if (!Files.isRegularFile(settingsFile)) {
+            T result = readSettingsIfAvailable();
+
+            if (result == null) {
                 Files.write(settingsFile, MINIMAL_JSON);
+                result = readSettingsIfAvailable();
             }
-            return MAPPER.readValue(settingsFile.toFile(), beanClass);
+
+            return result;
         } catch (final IOException e) {
             throw new VocabHunterException(String.format("Unable to load settings file '%s'", settingsFile), e);
         }
+    }
+
+    private T readSettingsIfAvailable() {
+        try {
+            if (Files.isRegularFile(settingsFile)) {
+                return readSettingsInternal();
+            } else {
+                return null;
+            }
+        } catch (Exception e) {
+            LOG.error("Unable to load settings file '{}'", settingsFile, e);
+
+            return null;
+        }
+    }
+
+    private T readSettingsInternal() throws IOException {
+        return MAPPER.readValue(settingsFile.toFile(), beanClass);
     }
 
     protected void writeSettings(final T settings) {
