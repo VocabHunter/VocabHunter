@@ -376,7 +376,7 @@ public class MainController {
 
     private SessionModel addSession(final SessionState state) {
         SessionViewTool viewTool = new SessionViewTool();
-        SessionModelTool sessionTool = new SessionModelTool(state, model.getFilterSettings(), viewTool.selectedProperty(), settingsManager.getWindowSettings().orElseGet(() -> new WindowSettings()));
+        SessionModelTool sessionTool = new SessionModelTool(state, model.getFilterSettings(), viewTool.selectedProperty(), settingsManager.getWindowSettings().orElseGet(WindowSettings::new));
         SessionModel sessionModel = sessionTool.buildModel();
         ControllerAndView<SessionController, Node> cav = factory.session(sessionModel);
 

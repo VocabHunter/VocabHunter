@@ -27,7 +27,7 @@ public class PlacementManagerImpl implements PlacementManager {
 
         return settings.map(this::windowPlacement)
             .filter(environmentManager::isVisible)
-            .orElseGet(() -> defaultWindowPlacement());
+            .orElseGet(this::defaultWindowPlacement);
     }
 
     private Placement windowPlacement(final WindowSettings settings) {

@@ -72,8 +72,8 @@ public final class VocabHunterConsoleExecutable {
             LOG.info("{} ({})", use.getWordIdentifier(), use.getUseCount());
         } else {
             LOG.info("\n{} ({}):", use.getWordIdentifier(), use.getUseCount());
-            use.getLineNos().stream()
-                    .forEach(n -> LOG.info(" - {}", lines.get(n)));
+            use.getLineNos()
+                .forEach(n -> LOG.info(" - {}", lines.get(n)));
         }
     }
 }
