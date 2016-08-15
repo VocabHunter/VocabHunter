@@ -4,10 +4,10 @@
 
 package io.github.vocabhunter.gui.common;
 
-import java.awt.*;
-
 public interface EnvironmentManager {
-    Dimension getScreenSize();
+    Placement getScreenSize();
+
+    boolean isVisible(Placement placement);
 
     boolean useSystemMenuBar();
 }

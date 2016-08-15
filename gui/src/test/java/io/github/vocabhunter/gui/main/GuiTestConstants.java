@@ -9,9 +9,9 @@ public final class GuiTestConstants {
 
     public static final String BOOK2 = "oliver-twist.txt";
 
-    public static final int SCREEN_WIDTH = 1366;
+    public static final int SCREEN_WIDTH = 1280;
 
-    public static final int SCREEN_HEIGHT = 768;
+    public static final int SCREEN_HEIGHT = 800;
 
     private GuiTestConstants() {
         // Prevent instantiation - only constants are defined.

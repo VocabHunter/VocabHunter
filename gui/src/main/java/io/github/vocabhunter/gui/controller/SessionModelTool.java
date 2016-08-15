@@ -7,6 +7,7 @@ package io.github.vocabhunter.gui.controller;
 import io.github.vocabhunter.analysis.session.SessionState;
 import io.github.vocabhunter.analysis.session.SessionWord;
 import io.github.vocabhunter.gui.model.*;
+import io.github.vocabhunter.gui.settings.WindowSettings;
 import io.github.vocabhunter.gui.view.SessionTab;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.SimpleObjectProperty;
@@ -23,10 +24,13 @@ public class SessionModelTool {
 
     private final SimpleObjectProperty<SessionTab> tabProperty;
 
-    public SessionModelTool(final SessionState state, final FilterSettings filterSettings, final SimpleObjectProperty<SessionTab> tabProperty) {
+    private final WindowSettings windowSettings;
+
+    public SessionModelTool(final SessionState state, final FilterSettings filterSettings, final SimpleObjectProperty<SessionTab> tabProperty, final WindowSettings windowSettings) {
         this.state = state;
         this.filterSettings = filterSettings;
         this.tabProperty = tabProperty;
+        this.windowSettings = windowSettings;
     }
 
     public SessionModel buildModel() {
@@ -35,7 +39,7 @@ public class SessionModelTool {
 
         positionModel.analysisModeProperty().bind(Bindings.createBooleanBinding(() -> tabProperty.get().equals(SessionTab.ANALYSIS), tabProperty));
 
-        return new SessionModel(state.getName(), words(state, progressModel), filterSettings, progressModel, positionModel);
+        return new SessionModel(state.getName(), words(state, progressModel), filterSettings, progressModel, positionModel, windowSettings);
     }
 
     private List<WordModel> words(final SessionState raw, final ProgressModel progressModel) {

@@ -9,6 +9,7 @@ import io.github.vocabhunter.analysis.settings.BaseSettingsManager;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Optional;
 import java.util.function.BiConsumer;
 import java.util.function.Function;
 
@@ -81,6 +82,18 @@ public class SettingsManagerImpl extends BaseSettingsManager<VocabHunterSettings
     @Override
     public void setAllowInitialCapitals(final boolean allow) {
         setValue(VocabHunterSettings::setAllowInitialCapitals, allow);
+    }
+
+    @Override
+    public Optional<WindowSettings> getWindowSettings() {
+        WindowSettings value = getValue(VocabHunterSettings::getWindowSettings);
+
+        return Optional.ofNullable(value);
+    }
+
+    @Override
+    public void setWindowSettings(final WindowSettings windowSettings) {
+        setValue(VocabHunterSettings::setWindowSettings, windowSettings);
     }
 
     private <T> T getValue(final Function<VocabHunterSettings, T> getter) {

@@ -22,6 +22,7 @@ import io.github.vocabhunter.gui.model.MainModel;
 import io.github.vocabhunter.gui.model.SessionModel;
 import io.github.vocabhunter.gui.model.StatusModel;
 import io.github.vocabhunter.gui.settings.SettingsManager;
+import io.github.vocabhunter.gui.settings.WindowSettings;
 import io.github.vocabhunter.gui.status.StatusActionManager;
 import io.github.vocabhunter.gui.status.StatusManager;
 import io.github.vocabhunter.gui.view.SessionTab;
@@ -106,6 +107,8 @@ public class MainController {
 
     private FileStreamer fileStreamer;
 
+    private SettingsManager settingsManager;
+
     private StatusManager statusManager;
 
     private EventHandler<KeyEvent> keyPressHandler;
@@ -122,6 +125,7 @@ public class MainController {
         this.stage = stage;
         this.factory = factory;
         this.fileStreamer = fileStreamer;
+        this.settingsManager = settingsManager;
         this.statusManager = statusManager;
         this.statusActionManager = statusActionManager;
 
@@ -372,7 +376,7 @@ public class MainController {
 
     private SessionModel addSession(final SessionState state) {
         SessionViewTool viewTool = new SessionViewTool();
-        SessionModelTool sessionTool = new SessionModelTool(state, model.getFilterSettings(), viewTool.selectedProperty());
+        SessionModelTool sessionTool = new SessionModelTool(state, model.getFilterSettings(), viewTool.selectedProperty(), settingsManager.getWindowSettings().orElseGet(() -> new WindowSettings()));
         SessionModel sessionModel = sessionTool.buildModel();
         ControllerAndView<SessionController, Node> cav = factory.session(sessionModel);
 
@@ -410,11 +414,26 @@ public class MainController {
     private boolean handleExitRequest(final WindowEvent e) {
         boolean isContinue = unsavedChangesCheck();
 
-        if (!isContinue) {
+        if (isContinue) {
+            WindowSettings windowSettings = new WindowSettings();
+
+            windowSettings.setX(stage.getX());
+            windowSettings.setY(stage.getY());
+            windowSettings.setWidth(stage.getWidth());
+            windowSettings.setHeight(stage.getHeight());
+            model.getSessionModel().ifPresent(s -> saveSplitPositions(windowSettings, s));
+
+            settingsManager.setWindowSettings(windowSettings);
+        } else {
             e.consume();
         }
 
         return isContinue;
+    }
+
+    private void saveSplitPositions(final WindowSettings windowSettings, final SessionModel sessionModel) {
+        windowSettings.setSplitUsePosition(sessionModel.getSplitUsePosition());
+        windowSettings.setSplitWordPosition(sessionModel.getSplitWordPosition());
     }
 
     private void handleKeyEvent(final KeyEvent event) {

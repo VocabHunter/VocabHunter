@@ -6,25 +6,26 @@ package io.github.vocabhunter.gui.settings;
 
 import io.github.vocabhunter.test.utils.TestFileManager;
 import org.junit.After;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Optional;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 
 import static io.github.vocabhunter.gui.settings.SettingsManagerImpl.SETTINGS_JSON;
 import static io.github.vocabhunter.gui.settings.VocabHunterSettings.*;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 public class SettingsManagerTest {
     private static final int UPDATE_INT_VALUE = 12345;
 
     private final Path home = Paths.get(System.getProperty("user.home"));
+
+    private final WindowSettings windowSettings = buildWindowSettings();
 
     private TestFileManager files;
 
@@ -113,7 +114,7 @@ public class SettingsManagerTest {
     @Test
     public void testUpdateAllowInitialCapitals() {
         target.setAllowInitialCapitals(false);
-        Assert.assertFalse("Disallow initial capital", target.isAllowInitialCapitals());
+        assertFalse("Disallow initial capital", target.isAllowInitialCapitals());
 
         target.setAllowInitialCapitals(true);
         assertTrue("Allow initial capital", target.isAllowInitialCapitals());
@@ -122,6 +123,16 @@ public class SettingsManagerTest {
     @Test
     public void testMissingAllowInitialCapitals() {
         assertEquals("Missing initial capital", DEFAULT_ALLOW_INITIAL_CAPITALS, target.isAllowInitialCapitals());
+    }
+
+    @Test
+    public void testMissingWindowSettings() {
+        validateEmpty(target::getWindowSettings);
+    }
+
+    @Test
+    public void testUpdateWindowSettings() {
+        validateOptional(target::getWindowSettings, target::setWindowSettings, windowSettings, windowSettings);
     }
 
     private void validateGetDefaultPath(final Supplier<Path> getter) {
@@ -139,11 +150,20 @@ public class SettingsManagerTest {
         validate(getter, setter, home);
     }
 
-    private void validate(final Supplier<Path> getter, final Consumer<Path> setter, final Path expected) {
-        setter.accept(dummyPath);
-        Path path = getter.get();
+    private <T> void validateOptional(final Supplier<Optional<T>> getter, final Consumer<T> setter, final T expected, final T value) {
+        validate(() -> getter.get().get(), setter, expected, value);
+    }
 
-        assertEquals("Saved path", expected, path);
+    private void validate(final Supplier<Path> getter, final Consumer<Path> setter, final Path expected) {
+        Path value = dummyPath;
+        validate(getter, setter, expected, value);
+    }
+
+    private <T> void validate(final Supplier<T> getter, final Consumer<T> setter, final T expected, final T value) {
+        setter.accept(value);
+        T path = getter.get();
+
+        assertEquals("Saved value", expected, path);
     }
 
     private void validateMissingInt(final Supplier<Integer> getter, final int expected) {
@@ -157,5 +177,24 @@ public class SettingsManagerTest {
         int actual = getter.get();
 
         assertEquals("Updated int", UPDATE_INT_VALUE, actual);
+    }
+
+    private void validateEmpty(final Supplier<Optional<?>> getter) {
+        Optional<?> o = getter.get();
+
+        assertFalse("Empty", o.isPresent());
+    }
+
+    private WindowSettings buildWindowSettings() {
+        WindowSettings settings = new WindowSettings();
+
+        settings.setX(1);
+        settings.setY(2);
+        settings.setWidth(3);
+        settings.setHeight(4);
+        settings.setSplitUsePosition(5);
+        settings.setSplitWordPosition(6);
+
+        return settings;
     }
 }

@@ -28,6 +28,8 @@ public class VocabHunterSettings {
 
     private boolean isAllowInitialCapitals = DEFAULT_ALLOW_INITIAL_CAPITALS;
 
+    private WindowSettings windowSettings;
+
     public Path getDocumentsPath() {
         return documentsPath;
     }
@@ -74,5 +76,13 @@ public class VocabHunterSettings {
 
     public void setAllowInitialCapitals(final boolean allowInitialCapitals) {
         isAllowInitialCapitals = allowInitialCapitals;
+    }
+
+    public WindowSettings getWindowSettings() {
+        return windowSettings;
+    }
+
+    public void setWindowSettings(final WindowSettings windowSettings) {
+        this.windowSettings = windowSettings;
     }
 }

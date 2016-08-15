@@ -141,6 +141,10 @@ public class MainModel {
         return Optional.ofNullable(sessionState);
     }
 
+    public Optional<SessionModel> getSessionModel() {
+        return Optional.ofNullable(sessionModel);
+    }
+
     public StatusModel getStatusModel() {
         return statusModel;
     }

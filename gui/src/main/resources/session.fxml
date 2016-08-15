@@ -15,11 +15,11 @@
   ~ Open Source Software published under the Apache Licence, Version 2.0.
   -->
 
-<SplitPane dividerPositions="0.55" orientation="VERTICAL" prefHeight="500.0" prefWidth="700.0" stylesheets="@main.css" xmlns="http://javafx.com/javafx/8.0.82-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="io.github.vocabhunter.gui.controller.SessionController">
+<SplitPane fx:id="splitUseList" dividerPositions="0.55" orientation="VERTICAL" prefHeight="500.0" prefWidth="700.0" stylesheets="@main.css" xmlns="http://javafx.com/javafx/8.0.82-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="io.github.vocabhunter.gui.controller.SessionController">
     <items>
         <AnchorPane>
             <children>
-                <SplitPane dividerPositions="0.65" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                <SplitPane fx:id="splitWordList" dividerPositions="0.65" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                     <items>
                         <AnchorPane>
                             <children>
