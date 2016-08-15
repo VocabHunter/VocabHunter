@@ -6,7 +6,6 @@ package io.github.vocabhunter.analysis.marked;
 
 import io.github.vocabhunter.analysis.filter.WordFilter;
 import io.github.vocabhunter.analysis.model.AnalysisWord;
-import io.github.vocabhunter.analysis.session.SessionWord;
 import org.junit.Test;
 
 import java.util.HashSet;
@@ -19,7 +18,7 @@ import static java.util.Collections.emptyList;
 import static junit.framework.TestCase.*;
 
 public class MarkToolTest {
-    private final List<SessionWord> allWords = listOf(
+    private final List<MarkedWord> allWords = listOf(
         word(KNOWN, 1),
         word(KNOWN, 2),
         word(KNOWN, 3),
@@ -37,7 +36,7 @@ public class MarkToolTest {
         word(UNSEEN, 7)
     );
 
-    private final List<SessionWord> allUnfiltered = allWords.subList(0, allWords.size() - 1);
+    private final List<MarkedWord> allUnfiltered = allWords.subList(0, allWords.size() - 1);
 
     private final Set<AnalysisWord> filterSet = new HashSet<>(listOf(
         word(KNOWN, 3),
@@ -47,9 +46,9 @@ public class MarkToolTest {
 
     private final WordFilter filter = w -> !filterSet.contains(w);
 
-    private final MarkTool<SessionWord> emptyTarget = new MarkTool<>(filter, emptyList());
+    private final MarkTool<MarkedWord> emptyTarget = new MarkTool<>(filter, emptyList());
 
-    private final MarkTool<SessionWord> target = new MarkTool<>(filter, allWords);
+    private final MarkTool<MarkedWord> target = new MarkTool<>(filter, allWords);
 
     @Test
     public void testEmptyIsValidFilter() {
@@ -111,12 +110,9 @@ public class MarkToolTest {
         assertEquals(1, target.getUnseenFiltered());
     }
 
-    private SessionWord word(final WordState state, final int number) {
-        SessionWord bean = new SessionWord();
+    private MarkedWord word(final WordState state, final int number) {
+        String word = String.format("%s %s", state, number);
 
-        bean.setWordIdentifier(String.format("%s %s", state, number));
-        bean.setState(state);
-
-        return bean;
+        return new TestMarkedWord(word, number, state);
     }
 }
