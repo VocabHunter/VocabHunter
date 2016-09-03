@@ -188,7 +188,9 @@ public class MainController {
         StatusModel statusModel = model.getStatusModel();
 
         statusBar.textProperty().bind(statusModel.textProperty());
-        statusBar.progressProperty().bind(statusModel.progressProperty());
+        statusBar.progressProperty().bind(statusModel.activityProperty());
+        statusBar.getRightItems().add(MiniGraphTool.miniGraph(statusModel));
+
         maskerPane.visibleProperty().bind(statusModel.busyProperty());
     }
 

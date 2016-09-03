@@ -11,9 +11,15 @@ import javafx.beans.property.SimpleStringProperty;
 public class StatusModel {
     private final SimpleStringProperty text = new SimpleStringProperty();
 
-    private final SimpleDoubleProperty progress = new SimpleDoubleProperty();
+    private final SimpleDoubleProperty activity = new SimpleDoubleProperty();
 
     private final SimpleBooleanProperty busy = new SimpleBooleanProperty();
+
+    private final SimpleBooleanProperty graphShown = new SimpleBooleanProperty();
+
+    private final SimpleDoubleProperty markedFraction = new SimpleDoubleProperty();
+
+    private final SimpleStringProperty graphText = new SimpleStringProperty();
 
     public SimpleStringProperty textProperty() {
         return text;
@@ -23,19 +29,23 @@ public class StatusModel {
         this.text.set(text);
     }
 
-    public SimpleDoubleProperty progressProperty() {
-        return progress;
-    }
-
-    public void setProgress(final double progress) {
-        this.progress.set(progress);
+    public SimpleDoubleProperty activityProperty() {
+        return activity;
     }
 
     public SimpleBooleanProperty busyProperty() {
         return busy;
     }
 
-    public void setBusy(final boolean busy) {
-        this.busy.set(busy);
+    public SimpleBooleanProperty graphShownProperty() {
+        return graphShown;
+    }
+
+    public SimpleDoubleProperty markedFractionProperty() {
+        return markedFraction;
+    }
+
+    public SimpleStringProperty graphTextProperty() {
+        return graphText;
     }
 }
