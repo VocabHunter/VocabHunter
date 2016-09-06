@@ -5,6 +5,7 @@
 package io.github.vocabhunter.executable.console;
 
 import com.beust.jcommander.JCommander;
+import io.github.vocabhunter.analysis.core.CoreConstants;
 import io.github.vocabhunter.analysis.file.FileStreamer;
 import io.github.vocabhunter.analysis.filter.FilterBuilder;
 import io.github.vocabhunter.analysis.filter.WordFilter;
@@ -15,13 +16,20 @@ import io.github.vocabhunter.analysis.simple.SimpleAnalyser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.time.Duration;
+import java.time.Instant;
 import java.util.List;
 import java.util.function.Function;
 
 public final class VocabHunterConsoleExecutable {
     private static final Logger LOG = LoggerFactory.getLogger(VocabHunterConsoleExecutable.class);
+
+    private static final int HELP_BUFFER_SIZE = 100;
 
     private VocabHunterConsoleExecutable() {
         // Prevent instantiation - all methods are static
@@ -30,10 +38,38 @@ public final class VocabHunterConsoleExecutable {
     public static void main(final String... args) {
         try {
             VocabHunterConsoleArguments bean = new VocabHunterConsoleArguments();
+            JCommander jCommander = new JCommander(bean, args);
 
-            new JCommander(bean, args);
+            if (bean.isHelpRequested()) {
+                StringBuilder buffer = new StringBuilder(HELP_BUFFER_SIZE);
 
-            Path file = Paths.get(bean.getInput());
+                jCommander.usage(buffer);
+                LOG.info("{}", buffer);
+            } else {
+                Instant start = Instant.now();
+                String output = bean.getOutput();
+
+                if (output == null) {
+                    processInput(bean, new PrintWriter(new OutputStreamWriter(System.out, CoreConstants.CHARSET), true));
+                } else {
+                    try (PrintWriter out = new PrintWriter(Files.newBufferedWriter(Paths.get(output)))) {
+                        processInput(bean, out);
+                    }
+                }
+
+                Instant end = Instant.now();
+                Duration duration = Duration.between(start, end);
+                LOG.info("\nExecution time: {}ms", duration.toMillis());
+            }
+        } catch (final Exception e) {
+            LOG.error("Application error", e);
+            LOG.error("Use -help to show the command-line options");
+        }
+    }
+
+    private static void processInput(final VocabHunterConsoleArguments bean, final PrintWriter out) {
+        for (String input : bean.getInput()) {
+            Path file = Paths.get(input);
             SimpleAnalyser analyser = new SimpleAnalyser();
             FileStreamer streamer = new FileStreamer(analyser);
             WordFilter wordFilter = buildFilter(bean);
@@ -41,9 +77,7 @@ public final class VocabHunterConsoleExecutable {
 
             model.getOrderedUses().stream()
                     .filter(wordFilter::isShown)
-                    .forEach(w -> display(model.getLines(), w, bean.isHideUses()));
-        } catch (final Exception e) {
-            LOG.error("Application error", e);
+                    .forEach(w -> display(out, model.getLines(), w, bean.isHideUses()));
         }
     }
 
@@ -67,13 +101,13 @@ public final class VocabHunterConsoleExecutable {
             .forEach(builder::addExcludedWords);
     }
 
-    private static void display(final List<String> lines, final WordUse use, final boolean isHideUses) {
+    private static void display(final PrintWriter out, final List<String> lines, final WordUse use, final boolean isHideUses) {
         if (isHideUses) {
-            LOG.info("{} ({})", use.getWordIdentifier(), use.getUseCount());
+            out.printf("%s (%s)%n", use.getWordIdentifier(), use.getUseCount());
         } else {
-            LOG.info("\n{} ({}):", use.getWordIdentifier(), use.getUseCount());
+            out.printf("%n%s (%s):%n", use.getWordIdentifier(), use.getUseCount());
             use.getLineNos()
-                .forEach(n -> LOG.info(" - {}", lines.get(n)));
+                .forEach(n -> out.printf(" - %s%n", lines.get(n)));
         }
     }
 }
