@@ -37,6 +37,7 @@ public final class VocabHunterConsoleExecutable {
 
     public static void main(final String... args) {
         try {
+            Instant start = Instant.now();
             VocabHunterConsoleArguments bean = new VocabHunterConsoleArguments();
             JCommander jCommander = new JCommander(bean, args);
 
@@ -46,7 +47,6 @@ public final class VocabHunterConsoleExecutable {
                 jCommander.usage(buffer);
                 LOG.info("{}", buffer);
             } else {
-                Instant start = Instant.now();
                 String output = bean.getOutput();
 
                 if (output == null) {
