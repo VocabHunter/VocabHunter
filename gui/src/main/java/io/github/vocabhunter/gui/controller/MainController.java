@@ -5,6 +5,7 @@
 package io.github.vocabhunter.gui.controller;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+import io.github.vocabhunter.analysis.core.VocabHunterException;
 import io.github.vocabhunter.analysis.file.FileStreamer;
 import io.github.vocabhunter.analysis.file.SelectionExportTool;
 import io.github.vocabhunter.analysis.session.EnrichedSessionState;
@@ -21,6 +22,7 @@ import io.github.vocabhunter.gui.model.MainModel;
 import io.github.vocabhunter.gui.model.SessionModel;
 import io.github.vocabhunter.gui.model.StatusModel;
 import io.github.vocabhunter.gui.settings.SettingsManager;
+import io.github.vocabhunter.gui.settings.WindowSettings;
 import io.github.vocabhunter.gui.status.StatusActionManager;
 import io.github.vocabhunter.gui.status.StatusManager;
 import io.github.vocabhunter.gui.view.SessionTab;
@@ -105,6 +107,8 @@ public class MainController {
 
     private FileStreamer fileStreamer;
 
+    private SettingsManager settingsManager;
+
     private StatusManager statusManager;
 
     private EventHandler<KeyEvent> keyPressHandler;
@@ -121,6 +125,7 @@ public class MainController {
         this.stage = stage;
         this.factory = factory;
         this.fileStreamer = fileStreamer;
+        this.settingsManager = settingsManager;
         this.statusManager = statusManager;
         this.statusActionManager = statusActionManager;
 
@@ -183,7 +188,9 @@ public class MainController {
         StatusModel statusModel = model.getStatusModel();
 
         statusBar.textProperty().bind(statusModel.textProperty());
-        statusBar.progressProperty().bind(statusModel.progressProperty());
+        statusBar.progressProperty().bind(statusModel.activityProperty());
+        statusBar.getRightItems().add(MiniGraphTool.miniGraph(statusModel));
+
         maskerPane.visibleProperty().bind(statusModel.busyProperty());
     }
 
@@ -336,7 +343,7 @@ public class MainController {
 
         try {
             LOG.info("Saving file '{}'", file);
-            SessionSerialiser.write(file, model.getSessionState());
+            SessionSerialiser.write(file, getSessionState());
             model.setChangesSaved(true);
 
             return true;
@@ -355,7 +362,7 @@ public class MainController {
 
         try {
             LOG.info("Exporting to file '{}'", file);
-            SelectionExportTool.exportSelection(model.getSessionState(), file);
+            SelectionExportTool.exportSelection(getSessionState(), file);
 
             return true;
         } catch (final RuntimeException e) {
@@ -365,9 +372,13 @@ public class MainController {
         }
     }
 
+    private SessionState getSessionState() {
+        return model.getSessionState().orElseThrow(() -> new VocabHunterException("No session state available"));
+    }
+
     private SessionModel addSession(final SessionState state) {
         SessionViewTool viewTool = new SessionViewTool();
-        SessionModelTool sessionTool = new SessionModelTool(state, model.getFilterSettings(), viewTool.selectedProperty());
+        SessionModelTool sessionTool = new SessionModelTool(state, model.getFilterSettings(), viewTool.selectedProperty(), settingsManager.getWindowSettings().orElseGet(WindowSettings::new));
         SessionModel sessionModel = sessionTool.buildModel();
         ControllerAndView<SessionController, Node> cav = factory.session(sessionModel);
 
@@ -405,11 +416,26 @@ public class MainController {
     private boolean handleExitRequest(final WindowEvent e) {
         boolean isContinue = unsavedChangesCheck();
 
-        if (!isContinue) {
+        if (isContinue) {
+            WindowSettings windowSettings = new WindowSettings();
+
+            windowSettings.setX(stage.getX());
+            windowSettings.setY(stage.getY());
+            windowSettings.setWidth(stage.getWidth());
+            windowSettings.setHeight(stage.getHeight());
+            model.getSessionModel().ifPresent(s -> saveSplitPositions(windowSettings, s));
+
+            settingsManager.setWindowSettings(windowSettings);
+        } else {
             e.consume();
         }
 
         return isContinue;
+    }
+
+    private void saveSplitPositions(final WindowSettings windowSettings, final SessionModel sessionModel) {
+        windowSettings.setSplitUsePosition(sessionModel.getSplitUsePosition());
+        windowSettings.setSplitWordPosition(sessionModel.getSplitWordPosition());
     }
 
     private void handleKeyEvent(final KeyEvent event) {

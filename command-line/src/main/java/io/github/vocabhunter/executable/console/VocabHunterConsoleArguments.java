@@ -15,7 +15,10 @@ import static java.util.Collections.unmodifiableList;
 
 public class VocabHunterConsoleArguments {
     @Parameter(names = "-input", description = "Text input file", required = true)
-    private String input;
+    private List<String> input;
+
+    @Parameter(names = "-output", description = "Results output file")
+    private String output;
 
     @Parameter(names = "-minletters", description = "Minimum number of letters in word for it to be shown")
     private int minLetters = 5;
@@ -35,8 +38,11 @@ public class VocabHunterConsoleArguments {
     @Parameter(names = "-filterseen", description = "Words marked as known or unknown are filtered from these session files")
     private List<Path> filterSeen = emptyList();
 
-    public String getInput() {
-        return input;
+    @Parameter(names = "-help", help = true, description = "Show command help")
+    private boolean isHelpRequested = false;
+
+    public List<String> getInput() {
+        return unmodifiableList(input);
     }
 
     public int getMinLetters() {
@@ -47,8 +53,8 @@ public class VocabHunterConsoleArguments {
         return minOccurrences;
     }
 
-    public void setInput(final String input) {
-        this.input = input;
+    public void setInput(final List<String> input) {
+        this.input = new ArrayList<>(input);
     }
 
     public void setMinLetters(final int minLetters) {
@@ -89,5 +95,21 @@ public class VocabHunterConsoleArguments {
 
     public void setFilterSeen(final List<Path> filterSeen) {
         this.filterSeen = new ArrayList<>(filterSeen);
+    }
+
+    public boolean isHelpRequested() {
+        return isHelpRequested;
+    }
+
+    public void setHelpRequested(final boolean helpRequested) {
+        isHelpRequested = helpRequested;
+    }
+
+    public String getOutput() {
+        return output;
+    }
+
+    public void setOutput(final String output) {
+        this.output = output;
     }
 }

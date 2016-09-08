@@ -11,6 +11,7 @@ import io.github.vocabhunter.analysis.session.SessionSerialiser;
 import io.github.vocabhunter.analysis.settings.FileListManager;
 import io.github.vocabhunter.analysis.settings.FileListManagerImpl;
 import io.github.vocabhunter.gui.common.EnvironmentManager;
+import io.github.vocabhunter.gui.common.Placement;
 import io.github.vocabhunter.gui.common.WebPageTool;
 import io.github.vocabhunter.gui.dialogues.FileDialogue;
 import io.github.vocabhunter.gui.dialogues.FileDialogueFactory;
@@ -21,7 +22,10 @@ import io.github.vocabhunter.gui.status.StatusActionManagerForTesting;
 import io.github.vocabhunter.gui.status.StatusManager;
 import io.github.vocabhunter.test.utils.TestFileManager;
 import javafx.stage.Stage;
-import org.junit.*;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.BeforeClass;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
@@ -30,7 +34,6 @@ import org.mockito.runners.MockitoJUnitRunner;
 import org.picocontainer.MutablePicoContainer;
 import org.testfx.api.FxRobot;
 
-import java.awt.*;
 import java.io.IOException;
 import java.net.URL;
 import java.nio.file.Files;
@@ -91,7 +94,8 @@ public class GuiTest extends FxRobot implements GuiTestValidator {
 
     @Before
     public void setUp() throws Exception {
-        when(environmentManager.getScreenSize()).thenReturn(new Dimension(SCREEN_WIDTH, SCREEN_HEIGHT));
+        when(environmentManager.getScreenSize()).thenReturn(new Placement(SCREEN_WIDTH, SCREEN_HEIGHT));
+        when(environmentManager.isVisible(any(Placement.class))).thenReturn(true);
         when(environmentManager.useSystemMenuBar()).thenReturn(false);
 
         manager = new TestFileManager(getClass());

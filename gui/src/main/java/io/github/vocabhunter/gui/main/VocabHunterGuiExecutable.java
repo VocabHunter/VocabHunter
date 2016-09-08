@@ -5,7 +5,8 @@
 package io.github.vocabhunter.gui.main;
 
 import io.github.vocabhunter.gui.common.ControllerAndView;
-import io.github.vocabhunter.gui.common.EnvironmentManager;
+import io.github.vocabhunter.gui.common.Placement;
+import io.github.vocabhunter.gui.common.PlacementManager;
 import io.github.vocabhunter.gui.controller.GuiFactory;
 import io.github.vocabhunter.gui.controller.MainController;
 import io.github.vocabhunter.gui.event.ExternalEventBroker;
@@ -16,7 +17,6 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import org.picocontainer.MutablePicoContainer;
 
-import java.awt.*;
 import java.util.List;
 import java.util.function.Consumer;
 
@@ -24,8 +24,6 @@ import static io.github.vocabhunter.gui.main.ExecutableLogTool.*;
 import static io.github.vocabhunter.gui.main.GuiContainerBuilder.createGuiContainer;
 
 public class VocabHunterGuiExecutable extends Application {
-    private static final double WINDOW_SIZE_FACTOR = 0.80;
-
     private static MutablePicoContainer pico;
 
     public static void setPico(final MutablePicoContainer pico) {
@@ -36,18 +34,24 @@ public class VocabHunterGuiExecutable extends Application {
     public void start(final Stage stage) {
         Thread.currentThread().setUncaughtExceptionHandler((t, e) -> logError(e));
         try {
-            EnvironmentManager environmentManager = pico.getComponent(EnvironmentManager.class);
-            Dimension screenSize = environmentManager.getScreenSize();
             GuiFactory factory = new GuiFactoryImpl(stage, pico);
             ControllerAndView<MainController, Parent> cav = factory.mainWindow();
-            double width = screenSize.getWidth() * WINDOW_SIZE_FACTOR;
-            double height = screenSize.getHeight() * WINDOW_SIZE_FACTOR;
-            Scene scene = new Scene(cav.getView(), width, height);
+            Scene scene = new Scene(cav.getView());
             MainController controller = cav.getController();
 
             scene.setOnKeyPressed(controller.getKeyPressHandler());
             stage.setOnCloseRequest(controller.getCloseRequestHandler());
+
+            PlacementManager placementManager = pico.getComponent(PlacementManager.class);
+            Placement placement = placementManager.getMainWindow();
+
             stage.setScene(scene);
+            stage.setWidth(placement.getWidth());
+            stage.setHeight(placement.getHeight());
+            if (placement.isPositioned()) {
+                stage.setX(placement.getX());
+                stage.setY(placement.getY());
+            }
             stage.show();
         } catch (final RuntimeException e) {
             logError(e);

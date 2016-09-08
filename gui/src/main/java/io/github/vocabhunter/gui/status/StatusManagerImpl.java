@@ -8,14 +8,14 @@ import io.github.vocabhunter.gui.model.PositionModel;
 import io.github.vocabhunter.gui.model.ProgressModel;
 import io.github.vocabhunter.gui.model.StatusModel;
 import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleStringProperty;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.text.MessageFormat;
 
-import static javafx.beans.binding.Bindings.createStringBinding;
-import static javafx.beans.binding.Bindings.when;
+import static javafx.beans.binding.Bindings.*;
 
 public class StatusManagerImpl implements StatusManager {
     private static final Logger LOG = LoggerFactory.getLogger(StatusManagerImpl.class);
@@ -36,16 +36,25 @@ public class StatusManagerImpl implements StatusManager {
 
     private String name;
 
+    private final SimpleBooleanProperty sessionAvailable = new SimpleBooleanProperty();
+
     private final SimpleBooleanProperty busy = new SimpleBooleanProperty();
 
     private final SimpleStringProperty positionDescription = new SimpleStringProperty();
 
     private final SimpleStringProperty actionDescription = new SimpleStringProperty();
 
+    private final SimpleDoubleProperty markedPercentage = new SimpleDoubleProperty();
+
+    private final SimpleStringProperty graphText = new SimpleStringProperty();
+
     public void initialise(final StatusModel model) {
         model.textProperty().bind(when(busy).then(actionDescription).otherwise(positionDescription));
         model.busyProperty().bind(busy);
-        model.progressProperty().bind(when(busy).then(-1).otherwise(0));
+        model.activityProperty().bind(when(busy).then(-1).otherwise(0));
+        model.graphShownProperty().bind(and(sessionAvailable, not(busy)));
+        model.markedFractionProperty().bind(divide(markedPercentage, 100));
+        model.graphTextProperty().bind(graphText);
     }
 
     @Override
@@ -106,6 +115,14 @@ public class StatusManagerImpl implements StatusManager {
         positionDescription.unbind();
         positionDescription.bind(createStringBinding(() -> positionDescription(position, progress),
             position.positionIndexProperty(), position.sizeProperty(), position.analysisModeProperty(), position.editableProperty(), progress.unseenFilteredProperty()));
+
+        markedPercentage.unbind();
+        markedPercentage.bind(progress.markedPercentVisibleProperty());
+
+        graphText.unbind();
+        graphText.bind(format("%.0f%% of words marked", markedPercentage));
+
+        sessionAvailable.set(true);
     }
 
     private String positionDescription(final PositionModel position, final ProgressModel progress) {

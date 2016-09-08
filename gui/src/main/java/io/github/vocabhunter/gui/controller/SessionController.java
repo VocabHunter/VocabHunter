@@ -21,6 +21,7 @@ import javafx.event.EventHandler;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.control.SplitPane;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
 import org.slf4j.Logger;
@@ -49,6 +50,10 @@ public class SessionController {
 
     public ListView<String> useListView;
 
+    public SplitPane splitUseList;
+
+    public SplitPane splitWordList;
+
     private SessionModel sessionModel;
 
     private ObjectBinding<WordState> wordStateProperty;
@@ -72,6 +77,7 @@ public class SessionController {
         prepareWordStateHandler();
         prepareMainWord();
         preparePositionModel();
+        prepareWindowBindings();
 
         mainWordHandler.processWordUpdate(sessionModel.getCurrentWord());
 
@@ -103,6 +109,11 @@ public class SessionController {
         position.positionIndexProperty().bind(wordListView.getSelectionModel().selectedIndexProperty());
         position.sizeProperty().bind(Bindings.size(wordListView.getItems()));
         position.editableProperty().bind(sessionModel.editableProperty());
+    }
+
+    private void prepareWindowBindings() {
+        splitUseList.getDividers().get(0).positionProperty().bindBidirectional(sessionModel.splitUsePositionProperty());
+        splitWordList.getDividers().get(0).positionProperty().bindBidirectional(sessionModel.splitWordPositionProperty());
     }
 
     private void updateWordListIfFilterEnabled() {

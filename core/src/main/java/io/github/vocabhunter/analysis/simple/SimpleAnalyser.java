@@ -7,8 +7,6 @@ package io.github.vocabhunter.analysis.simple;
 import io.github.vocabhunter.analysis.model.Analyser;
 import io.github.vocabhunter.analysis.model.AnalysisResult;
 import io.github.vocabhunter.analysis.model.WordUse;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,8 +18,6 @@ import java.util.stream.Stream;
 import static java.util.stream.Collectors.*;
 
 public class SimpleAnalyser implements Analyser {
-    private static final Logger LOG = LoggerFactory.getLogger(SimpleAnalyser.class);
-
     @Override
     public AnalysisResult analyse(final List<String> lines, final String name) {
         Map<String, WordUse> map = IntStream.range(0, lines.size())
@@ -34,11 +30,8 @@ public class SimpleAnalyser implements Analyser {
         List<WordUse> uses = map.values().stream()
                 .sorted(WordStreamTool.WORD_COMPARATOR)
                 .collect(toList());
-        AnalysisResult result = new AnalysisResult(name, uses, lines);
 
-        LOG.info("Analysed text and found {} words", uses.size());
-
-        return result;
+        return new AnalysisResult(name, uses, lines);
     }
 
     private Stream<WordUse> uses(final List<String> lines, final int lineNo) {

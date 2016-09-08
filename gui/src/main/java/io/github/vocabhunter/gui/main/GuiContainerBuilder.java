@@ -8,6 +8,7 @@ import io.github.vocabhunter.analysis.file.FileStreamer;
 import io.github.vocabhunter.analysis.settings.FileListManagerImpl;
 import io.github.vocabhunter.analysis.simple.SimpleAnalyser;
 import io.github.vocabhunter.gui.common.EnvironmentManagerImpl;
+import io.github.vocabhunter.gui.common.PlacementManagerImpl;
 import io.github.vocabhunter.gui.common.WebPageToolImpl;
 import io.github.vocabhunter.gui.event.CommandLineEventSource;
 import io.github.vocabhunter.gui.event.ExternalEventBroker;
@@ -29,6 +30,7 @@ public final class GuiContainerBuilder {
         pico.addComponent(SimpleAnalyser.class);
         pico.addComponent(FileStreamer.class);
         pico.addComponent(StatusManagerImpl.class);
+        pico.addComponent(PlacementManagerImpl.class);
 
         pico.addComponent(new CommandLineEventSource(args));
         pico.addComponent(ExternalEventBroker.class);

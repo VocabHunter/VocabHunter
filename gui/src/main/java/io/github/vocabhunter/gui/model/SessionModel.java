@@ -6,9 +6,8 @@ package io.github.vocabhunter.gui.model;
 
 import io.github.vocabhunter.analysis.marked.MarkTool;
 import io.github.vocabhunter.analysis.marked.WordState;
-import javafx.beans.property.SimpleBooleanProperty;
-import javafx.beans.property.SimpleObjectProperty;
-import javafx.beans.property.SimpleStringProperty;
+import io.github.vocabhunter.gui.settings.WindowSettings;
+import javafx.beans.property.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.ObservableSet;
@@ -49,7 +48,13 @@ public final class SessionModel {
 
     private final PositionModel position;
 
-    public SessionModel(final String documentName, final List<WordModel> words, final FilterSettings filterSettings, final ProgressModel progress, final PositionModel position) {
+    private final DoubleProperty splitUsePosition;
+
+    private final DoubleProperty splitWordPosition;
+
+    public SessionModel(
+        final String documentName, final List<WordModel> words, final FilterSettings filterSettings, final ProgressModel progress,
+        final PositionModel position, final WindowSettings windowSettings) {
         this.documentName = new SimpleStringProperty(documentName);
         this.filterSettings = new SimpleObjectProperty<>(filterSettings);
         this.progress = progress;
@@ -61,6 +66,9 @@ public final class SessionModel {
 
         updateWordList(true, new MarkTool<>(words));
         currentWord = new SimpleObjectProperty<>(InitialSelectionTool.nextWord(allWords));
+
+        splitUsePosition = new SimpleDoubleProperty(windowSettings.getSplitUsePosition());
+        splitWordPosition = new SimpleDoubleProperty(windowSettings.getSplitWordPosition());
     }
 
     public void addSelectedWord(final WordModel word) {
@@ -181,5 +189,21 @@ public final class SessionModel {
 
     public PositionModel getPosition() {
         return position;
+    }
+
+    public DoubleProperty splitUsePositionProperty() {
+        return splitUsePosition;
+    }
+
+    public double getSplitUsePosition() {
+        return splitUsePosition.get();
+    }
+
+    public DoubleProperty splitWordPositionProperty() {
+        return splitWordPosition;
+    }
+
+    public double getSplitWordPosition() {
+        return splitWordPosition.get();
     }
 }

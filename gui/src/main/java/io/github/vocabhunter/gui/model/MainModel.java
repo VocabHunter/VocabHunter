@@ -4,7 +4,6 @@
 
 package io.github.vocabhunter.gui.model;
 
-import io.github.vocabhunter.analysis.core.VocabHunterException;
 import io.github.vocabhunter.analysis.session.SessionState;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleObjectProperty;
@@ -18,9 +17,9 @@ import static javafx.beans.binding.Bindings.isNotEmpty;
 public class MainModel {
     private final SimpleStringProperty title = new SimpleStringProperty();
 
-    private Optional<SessionState> sessionState = Optional.empty();
+    private SessionState sessionState;
 
-    private Optional<SessionModel> sessionModel = Optional.empty();
+    private SessionModel sessionModel;
 
     private final SimpleBooleanProperty sessionOpen = new SimpleBooleanProperty(false);
 
@@ -43,8 +42,8 @@ public class MainModel {
     public void replaceSessionModel(final SessionState sessionState, final SessionModel sessionModel, final Path sessionFile) {
         unbindOldSession();
 
-        this.sessionState = Optional.of(sessionState);
-        this.sessionModel = Optional.of(sessionModel);
+        this.sessionState = sessionState;
+        this.sessionModel = sessionModel;
         this.sessionFile.set(sessionFile);
         sessionOpen.set(true);
         selectionAvailable.bind(isNotEmpty(sessionModel.getSelectedWords()));
@@ -58,12 +57,12 @@ public class MainModel {
     private void unbindOldSession() {
         selectionAvailable.unbind();
         documentNameProperty().unbind();
-        sessionModel.ifPresent(m -> {
-            editMode.unbindBidirectional(m.editableProperty());
-            changesSaved.unbindBidirectional(m.changesSavedProperty());
-            m.filterSettingsProperty().unbindBidirectional(filterSettings);
-            m.enableFiltersProperty().unbindBidirectional(enableFilters);
-        });
+        if (sessionState != null) {
+            editMode.unbindBidirectional(sessionModel.editableProperty());
+            changesSaved.unbindBidirectional(sessionModel.changesSavedProperty());
+            sessionModel.filterSettingsProperty().unbindBidirectional(filterSettings);
+            sessionModel.enableFiltersProperty().unbindBidirectional(enableFilters);
+        }
     }
 
     public SimpleObjectProperty<Path> sessionFileProperty() {
@@ -138,8 +137,12 @@ public class MainModel {
         return sessionFile.get();
     }
 
-    public SessionState getSessionState() {
-        return sessionState.orElseThrow(() -> new VocabHunterException("No session state available"));
+    public Optional<SessionState> getSessionState() {
+        return Optional.ofNullable(sessionState);
+    }
+
+    public Optional<SessionModel> getSessionModel() {
+        return Optional.ofNullable(sessionModel);
     }
 
     public StatusModel getStatusModel() {

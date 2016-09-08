@@ -27,6 +27,8 @@ import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.text.BreakIterator;
+import java.time.Duration;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -83,10 +85,19 @@ public class FileStreamer {
     }
 
     public AnalysisResult analyse(final Path file) {
+        Instant start = Instant.now();
+
         try (InputStream in = Files.newInputStream(file)) {
             List<String> stream = lines(in, file);
+            String filename = FileNameTool.filename(file);
+            AnalysisResult result = analyser.analyse(stream, filename);
+            int count = result.getOrderedUses().size();
+            Instant end = Instant.now();
+            Duration duration = Duration.between(start, end);
 
-            return analyser.analyse(stream, FileNameTool.filename(file));
+            LOG.info("Analysed text and found {} words in {}ms ({})", count, duration.toMillis(), filename);
+
+            return result;
 
         } catch (final IOException e) {
             throw readError(file, e);
