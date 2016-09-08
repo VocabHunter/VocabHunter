@@ -33,6 +33,6 @@ public class StatusActionManagerImpl extends AbstractStatusActionManager {
         } catch (InterruptedException e) {
             LOG.debug("Thread woken unexpectedly", e);
         }
-        Platform.runLater(handler::run);
+        Platform.runLater(handler);
     }
 }

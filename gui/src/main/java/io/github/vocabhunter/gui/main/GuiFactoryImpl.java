@@ -27,7 +27,6 @@ import javafx.stage.Stage;
 import org.picocontainer.MutablePicoContainer;
 
 import java.io.IOException;
-import java.util.Optional;
 
 public class GuiFactoryImpl implements GuiFactory {
     private static final String FXML_MAIN = "main.fxml";
@@ -162,7 +161,7 @@ public class GuiFactoryImpl implements GuiFactory {
 
     @Override
     public UnsavedChangesDialogue unsavedChangesDialogue(final MainModel model) {
-        return new UnsavedChangesDialogue(Optional.ofNullable(model.getSessionFile()));
+        return new UnsavedChangesDialogue(model.getSessionFile());
     }
 
     @Override

@@ -25,10 +25,6 @@ public class StatusModel {
         return text;
     }
 
-    public void setText(final String text) {
-        this.text.set(text);
-    }
-
     public SimpleDoubleProperty activityProperty() {
         return activity;
     }
