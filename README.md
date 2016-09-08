@@ -26,16 +26,14 @@ $ ./gradlew :gui:run
 
 # How To Build An Installable Bundle
 
-VocabHunter is distributed as an installable bundle, with everything the user needs packed into the file.  On Mac this is a `.dmg` file, on Windows an `.exe` installer and on Linux a `.deb` package.  To generate this file you first need to ensure the following:
-* The `JAVA_HOME` environment variable must be set.
-* On Windows you need to install [Inno Setup](http://www.jrsoftware.org/isdl.php).
+VocabHunter is distributed as an installable bundle, with everything the user needs packed into the file.  On Mac this is a `.dmg` file, on Windows an `.exe` installer and on Linux a `.deb` package.  On Windows you need to install [Inno Setup](http://www.jrsoftware.org/isdl.php).
 
-You can then launch the following command to create the bundle:
+You can launch the following command to create the bundle:
 ~~~
-$ ./gradlew clean build jfxbundle
+$ ./gradlew clean build jfxNative checkBundle
 ~~~
 
-When the build is complete, you will find the bundle file in the directory `package/build/bundles`.
+When the build is complete, you will find the bundle file in the directory `package/build/jfx/native`.
 
 # How To Run The GUI Test
 

@@ -27,7 +27,7 @@ cache:
 install: true
 
 script:
-  - ./gradlew clean build jfxbundle -info
+  - ./gradlew clean build jfxNative checkBundle -info
 
 deploy:
   provider: releases
@@ -35,7 +35,7 @@ deploy:
     secure: Wlf91YmRm+lGVe3KtUb8n1RGGgRGmCalgc0K2q1OphmgSAsMHGj5xtohHPTDL4pY7t4MbvC6X4fzrhVIs/BytweMXXp4nzHFL4RAs5NLxdyQ4DYsI6kIWm6qqUjSudrZ2nbuXu2RS1guzQbvUq9qqgGDGhDVkcQVqkq0K5vmoNh5IMPdxtJ3BzJAdD/99zkh1RIfeoVw1sbmUBhRI888yfpIJ1JcTDWUtDXwrWCPAgpjkT6J15+0LdrTgekwfO+SaWlRalReVrubXYRo8mH6auwwiocTwKoJYNAoYQgX7YQSyVbMjx1YTnU2+v5K/V4MRrmPc9TiphETcHCvJWCTDvjMJ1GUOZoJmMmQ7548iyJkTaLvZX6z0NfwsJZ9FIGxFdWjKFD2FEW9uM0DfJCr6Zi8PzCUob/Db4Yt5/kN8QdRs1uYH09n8BxEjh9fOlHZh3BxUznMV/g7iqRARo7Wg8JLk0/FmLggL9ZfnKyXv9HphY2YRbeWW0/MHW03/O6UQVwWEIFZuQwVzNHxUZEDmh8Gj29YalTQv8EzOOhtRDgiXNTtGNPp9qgHGP0pxu6dX+Hr8Q84EUvKPJQdxXkcs0j36kAWE5/X/07BIcC8rnsNACjCzMeXqGJP+1u1T6nvZ9HNAQMCOHFbi+wXyz7FrVO3zYDN66YfWkMDNJ8OQ9A=
   file:
     - "gui/build/distributions/VocabHunter-${TRAVIS_TAG}.zip"
-    - "package/build/bundles/vocabhunter-${TRAVIS_TAG}.deb"
+    - "package/build/jfx/native/vocabhunter-${TRAVIS_TAG}.deb"
   skip_cleanup: true
   on:
     tags: true

@@ -4,35 +4,40 @@
 
 import org.gradle.internal.os.OperatingSystem;
 
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+
+    dependencies {
+        classpath 'de.dynamicfiles.projects.gradle.plugins:javafx-gradle-plugin:8.6.0'
+    }
+}
+
+apply plugin: 'javafx-gradle-plugin'
+
 ext {
     publishedVersion = project.version
-    mainClass = 'io.github.vocabhunter.gui.distribution.PackagedVocabHunter'
+    bundleMainClass = 'io.github.vocabhunter.gui.distribution.PackagedVocabHunter'
     operatingSystem = OperatingSystem.current()
     if (operatingSystem.isMacOsX()) {
         packageType = 'dmg'
-        mainClass = 'io.github.vocabhunter.osx.distribution.OsxPackagedVocabHunter'
+        bundleMainClass = 'io.github.vocabhunter.osx.distribution.OsxPackagedVocabHunter'
         appIcon = file('icons/mac/VocabHunter.icns')
-        sessionIcon = file('icons/mac/VocabHunterSession.icns')
+        sessionIcon = 'icons/mac/VocabHunterSession.icns'
         if (publishedVersion.endsWith('-SNAPSHOT')) {
             publishedVersion = '1.0.0'
         }
     } else if (operatingSystem.isLinux()) {
         packageType = 'deb'
         appIcon = file('icons/App1024.png')
-        sessionIcon = file('icons/Doc1024.png')
+        sessionIcon = 'icons/Doc1024.png'
     } else if (operatingSystem.isWindows()) {
         packageType = 'exe'
         appIcon = file('icons/windows/VocabHunter.ico')
-        sessionIcon = file('icons/windows/VocabHunterSession.ico')
+        sessionIcon = 'icons/windows/VocabHunterSession.ico'
     }
 }
-
-ant.version = publishedVersion
-ant.mainClass = mainClass
-ant.packageType = packageType
-ant.appIcon = appIcon
-ant.sessionIcon = sessionIcon
-ant.importBuild 'bundle-ant.xml'
 
 dependencies {
     compile project(':gui')
@@ -49,15 +54,6 @@ if (operatingSystem.isMacOsX()) {
                 srcDir 'src/osx/java'
             }
         }
-    }
-}
-
-def alljars = configurations.runtime
-
-jar {
-    manifest {
-        attributes 'Main-Class': mainClass
-        attributes 'Class-Path': alljars.collect { it.getName() }.join(' ')
     }
 }
 
@@ -85,15 +81,29 @@ task recreateIcons(dependsOn: [recreateIconMacApp, recreateIconMacSession, recre
     description 'Regenerate all the application bundle icons'
 }
 
-task copyJars(type: Copy) {
-    description 'Copy all of the JARs for the bundled version of the application'
-    into "$buildDir/libs"
-    from alljars
+jfx {
+    mainClass = bundleMainClass
+    vendor = 'vocabhunter.github.io'
+    appName = 'VocabHunter'
+    nativeReleaseVersion = publishedVersion
+    bundler = packageType
+    bundleArguments = [
+        icon: appIcon,
+        runtime: null
+    ]
+    fileAssociations = [
+        [
+            description: 'VocabHunter session',
+            extensions: 'wordy',
+            contentType: 'application/x-vnd.VocabHunterSession',
+            icon: sessionIcon
+        ]
+    ]
 }
 
-jfxbundle.doLast {
+task checkBundle << {
     String bundle = "VocabHunter-${publishedVersion}.${packageType}"
-    FileTree tree = fileTree('build/bundles') {
+    FileTree tree = fileTree('build/jfx/native') {
         include {
             it.file.name.equalsIgnoreCase(bundle)
         }
@@ -106,5 +116,3 @@ jfxbundle.doLast {
         }
     }
 }
-
-jfxbundle.dependsOn jar, copyJars
