@@ -12,6 +12,7 @@ import io.github.vocabhunter.analysis.settings.FileListManager;
 import io.github.vocabhunter.analysis.settings.FileListManagerImpl;
 import io.github.vocabhunter.gui.common.EnvironmentManager;
 import io.github.vocabhunter.gui.common.Placement;
+import io.github.vocabhunter.gui.common.PlacementManager;
 import io.github.vocabhunter.gui.common.WebPageTool;
 import io.github.vocabhunter.gui.dialogues.FileDialogue;
 import io.github.vocabhunter.gui.dialogues.FileDialogueFactory;
@@ -56,6 +57,9 @@ public class GuiTest extends FxRobot implements GuiTestValidator {
     EnvironmentManager environmentManager;
 
     @Mock
+    PlacementManager placementManager;
+
+    @Mock
     private FileDialogueFactory fileDialogueFactory;
 
     @Mock
@@ -94,9 +98,8 @@ public class GuiTest extends FxRobot implements GuiTestValidator {
 
     @Before
     public void setUp() throws Exception {
-        when(environmentManager.getScreenSize()).thenReturn(new Placement(SCREEN_WIDTH, SCREEN_HEIGHT));
-        when(environmentManager.isVisible(any(Placement.class))).thenReturn(true);
         when(environmentManager.useSystemMenuBar()).thenReturn(false);
+        when(placementManager.getMainWindow()).thenReturn(new Placement(WINDOW_WIDTH, WINDOW_HEIGHT));
 
         manager = new TestFileManager(getClass());
         exportFile = manager.addFile("export.txt");
@@ -120,6 +123,7 @@ public class GuiTest extends FxRobot implements GuiTestValidator {
         pico.addComponent(fileListManager);
         pico.addComponent(fileDialogueFactory);
         pico.addComponent(environmentManager);
+        pico.addComponent(placementManager);
         pico.addComponent(webPageTool);
         pico.addComponent(new StatusActionManagerForTesting(pico.getComponent(StatusManager.class)));
         VocabHunterGuiExecutable.setPico(pico);

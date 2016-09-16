@@ -30,7 +30,6 @@ public final class GuiContainerBuilder {
         pico.addComponent(SimpleAnalyser.class);
         pico.addComponent(FileStreamer.class);
         pico.addComponent(StatusManagerImpl.class);
-        pico.addComponent(PlacementManagerImpl.class);
 
         pico.addComponent(new CommandLineEventSource(args));
         pico.addComponent(ExternalEventBroker.class);
@@ -44,6 +43,7 @@ public final class GuiContainerBuilder {
         pico.addComponent(SettingsManagerImpl.class);
         pico.addComponent(FileListManagerImpl.class);
         pico.addComponent(FileDialogueFactoryImpl.class);
+        pico.addComponent(PlacementManagerImpl.class);
         pico.addComponent(EnvironmentManagerImpl.class);
         pico.addComponent(WebPageToolImpl.class);
         pico.addComponent(StatusActionManagerImpl.class);

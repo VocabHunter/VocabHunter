@@ -9,9 +9,11 @@ public final class GuiTestConstants {
 
     public static final String BOOK2 = "oliver-twist.txt";
 
-    public static final int SCREEN_WIDTH = 1280;
+    // These values should match those in main.fxml
 
-    public static final int SCREEN_HEIGHT = 800;
+    public static final int WINDOW_WIDTH = 1000;
+
+    public static final int WINDOW_HEIGHT = 500;
 
     private GuiTestConstants() {
         // Prevent instantiation - only constants are defined.
