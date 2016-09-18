@@ -5,7 +5,6 @@
 package io.github.vocabhunter.gui.main;
 
 import io.github.vocabhunter.analysis.core.VocabHunterException;
-import io.github.vocabhunter.analysis.file.FileStreamer;
 import io.github.vocabhunter.analysis.settings.FileListManager;
 import io.github.vocabhunter.gui.common.ControllerAndView;
 import io.github.vocabhunter.gui.common.EnvironmentManager;
@@ -18,7 +17,7 @@ import io.github.vocabhunter.gui.model.MainModel;
 import io.github.vocabhunter.gui.model.ProgressModel;
 import io.github.vocabhunter.gui.model.SessionModel;
 import io.github.vocabhunter.gui.settings.SettingsManager;
-import io.github.vocabhunter.gui.status.StatusActionManager;
+import io.github.vocabhunter.gui.status.StatusActionService;
 import io.github.vocabhunter.gui.status.StatusManager;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -49,39 +48,39 @@ public class GuiFactoryImpl implements GuiFactory {
 
     private final StatusManager statusManager;
 
-    private final StatusActionManager statusActionManager;
-
     private final FileDialogueFactory fileDialogueFactory;
 
     private final ExternalEventBroker externalEventSource;
 
-    private final FileStreamer fileStreamer;
+    private final SessionFileService sessionFileService;
+
+    private final StatusActionService statusActionService;
 
     private final WebPageTool webPageTool;
 
     public GuiFactoryImpl(final Stage stage, final MutablePicoContainer pico) {
         this(stage, pico.getComponent(SettingsManager.class), pico.getComponent(FileListManager.class),
              pico.getComponent(EnvironmentManager.class), pico.getComponent(StatusManager.class),
-             pico.getComponent(StatusActionManager.class), pico.getComponent(FileDialogueFactory.class),
-             pico.getComponent(ExternalEventBroker.class), pico.getComponent(FileStreamer.class),
+             pico.getComponent(FileDialogueFactory.class), pico.getComponent(ExternalEventBroker.class),
+             pico.getComponent(SessionFileService.class), pico.getComponent(StatusActionService.class),
              pico.getComponent(WebPageTool.class));
     }
 
     @SuppressWarnings("PMD.ExcessiveParameterList")
     private GuiFactoryImpl(final Stage stage, final SettingsManager settingsManager, final FileListManager fileListManager,
                            final EnvironmentManager environmentManager, final StatusManager statusManager,
-                           final StatusActionManager statusActionManager, final FileDialogueFactory fileDialogueFactory,
-                           final ExternalEventBroker externalEventSource,
-                           final FileStreamer fileStreamer, final WebPageTool webPageTool) {
+                           final FileDialogueFactory fileDialogueFactory, final ExternalEventBroker externalEventSource,
+                           final SessionFileService sessionFileService, final StatusActionService statusActionService,
+                           final WebPageTool webPageTool) {
         this.stage = stage;
         this.settingsManager = settingsManager;
         this.fileListManager = fileListManager;
         this.environmentManager = environmentManager;
         this.statusManager = statusManager;
-        this.statusActionManager = statusActionManager;
         this.fileDialogueFactory = fileDialogueFactory;
         this.externalEventSource = externalEventSource;
-        this.fileStreamer = fileStreamer;
+        this.sessionFileService = sessionFileService;
+        this.statusActionService = statusActionService;
         this.webPageTool = webPageTool;
     }
 
@@ -94,8 +93,8 @@ public class GuiFactoryImpl implements GuiFactory {
 
         statusManager.initialise(model.getStatusModel());
         controller.initialise(
-            stage, this, fileStreamer, settingsManager, fileListManager, environmentManager,
-            statusManager, statusActionManager, webPageTool, model);
+            stage, this, sessionFileService, settingsManager, fileListManager, environmentManager,
+            statusManager, statusActionService, webPageTool, model);
 
         return new ControllerAndView<>(controller, root);
     }
@@ -162,11 +161,6 @@ public class GuiFactoryImpl implements GuiFactory {
     @Override
     public UnsavedChangesDialogue unsavedChangesDialogue(final MainModel model) {
         return new UnsavedChangesDialogue(model.getSessionFile());
-    }
-
-    @Override
-    public ErrorDialogue errorDialogue(final String title, final String message, final Throwable e) {
-        return new ErrorDialogue(title, e, message);
     }
 
     @Override

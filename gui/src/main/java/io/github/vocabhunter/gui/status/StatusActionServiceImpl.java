@@ -11,20 +11,16 @@ import org.slf4j.LoggerFactory;
 
 import java.util.concurrent.ExecutorService;
 
-public class StatusActionManagerImpl extends AbstractStatusActionManager {
-    private static final Logger LOG = LoggerFactory.getLogger(StatusActionManagerImpl.class);
+public class StatusActionServiceImpl implements StatusActionService {
+    private static final Logger LOG = LoggerFactory.getLogger(StatusActionServiceImpl.class);
 
     private static final int WAIT_MILLIS = 100;
 
     private final ExecutorService service = ThreadPoolTool.singleDaemonExecutor("GUI Status Action");
 
-    public StatusActionManagerImpl(final StatusManager statusManager) {
-        super(statusManager);
-    }
-
     @Override
-    protected void executeHandler(final Runnable handler) {
-        service.execute(() -> waitAndRun(handler));
+    public void updateStatusThenRun(final Runnable runnable) {
+        service.execute(() -> waitAndRun(runnable));
     }
 
     private void waitAndRun(final Runnable handler) {

@@ -31,8 +31,6 @@ public interface GuiFactory {
 
     UnsavedChangesDialogue unsavedChangesDialogue(MainModel model);
 
-    ErrorDialogue errorDialogue(String title, String message, Throwable e);
-
     AboutDialogue aboutDialogue();
 
     SettingsDialogue settingsDialogue(MainModel model);
