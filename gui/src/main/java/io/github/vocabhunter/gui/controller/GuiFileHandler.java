@@ -4,6 +4,7 @@
 
 package io.github.vocabhunter.gui.controller;
 
+import io.github.vocabhunter.analysis.core.GuiTaskHandler;
 import io.github.vocabhunter.analysis.session.EnrichedSessionState;
 import io.github.vocabhunter.analysis.session.FileNameTool;
 import io.github.vocabhunter.analysis.session.SessionState;
@@ -11,6 +12,7 @@ import io.github.vocabhunter.gui.dialogues.FileDialogue;
 import io.github.vocabhunter.gui.dialogues.UnsavedChangesDialogue;
 import io.github.vocabhunter.gui.model.MainModel;
 import io.github.vocabhunter.gui.model.SessionModel;
+import io.github.vocabhunter.gui.status.GuiTask;
 import io.github.vocabhunter.gui.status.StatusActionService;
 import io.github.vocabhunter.gui.status.StatusManager;
 import javafx.stage.Stage;
@@ -37,8 +39,10 @@ public class GuiFileHandler {
 
     private final SessionStateHandler sessionStateHandler;
 
+    private final GuiTaskHandler guiTaskHandler;
+
     public GuiFileHandler(final Stage stage, final GuiFactory factory, final SessionFileService sessionFileService, final StatusManager statusManager,
-                          final MainModel model, final StatusActionService statusActionService, final SessionStateHandler sessionStateHandler) {
+                          final MainModel model, final StatusActionService statusActionService, final SessionStateHandler sessionStateHandler, final GuiTaskHandler guiTaskHandler) {
         this.stage = stage;
         this.factory = factory;
         this.sessionFileService = sessionFileService;
@@ -46,147 +50,135 @@ public class GuiFileHandler {
         this.model = model;
         this.statusActionService = statusActionService;
         this.sessionStateHandler = sessionStateHandler;
+        this.guiTaskHandler = guiTaskHandler;
     }
 
     public void handleExport() {
-        statusManager.beginExport();
-        statusActionService.updateStatusThenRun(this::processExportInternal);
+        if (statusManager.beginExport()) {
+            statusActionService.updateStatusThenRun(this::processExport);
+        }
     }
 
-    private void processExportInternal() {
-        try {
-            if (processFile(factory::exportSelectionChooser, this::processExport)) {
-                statusManager.markSuccess();
-            }
-        } finally {
+    private void processExport() {
+        Path file = chooseFile(factory::exportSelectionChooser);
+
+        if (file == null) {
             statusManager.completeAction();
+        } else {
+            statusManager.performAction();
+
+            Path fileWithSuffix = FileNameTool.ensureExportFileHasSuffix(file);
+            SessionState sessionState = sessionStateHandler.getSessionState();
+            GuiTask<Boolean> task = new GuiTask<>(
+                guiTaskHandler,
+                () -> processExport(fileWithSuffix, sessionState),
+                e -> FileErrorTool.export(fileWithSuffix, e),
+                statusManager
+            );
+
+            guiTaskHandler.executeInBackground(task);
         }
     }
 
-    private boolean processFileWithCheck(final Function<Stage, FileDialogue> chooserFactory, final Function<FileDialogue, Boolean> processor) {
-        boolean isProcessRequired = unsavedChangesCheck();
+    private boolean processExport(final Path file, final SessionState sessionState) {
+        LOG.info("Exporting to file '{}'", file);
+        sessionFileService.exportSelection(sessionState, file);
 
-        if (isProcessRequired) {
-            return processFile(chooserFactory, processor);
-        } else {
-            return false;
-        }
+        return true;
     }
 
     public void processOpenOrNew(final Path file) {
-        boolean isProcessRequired = unsavedChangesCheck();
+        if (statusManager.beginOpenSession()) {
+            statusActionService.updateStatusThenRun(() -> processOpenOrNewInternal(file));
+        }
+    }
 
-        if (isProcessRequired) {
+    private void processOpenOrNewInternal(final Path file) {
+        if (unsavedChangesCheck()) {
             LOG.info("Opening file '{}'", file);
-            processOpen(file, sessionFileService::createOrOpenSession);
-        }
-    }
 
-    private boolean processFile(final Function<Stage, FileDialogue> chooserFactory, final Function<FileDialogue, Boolean> processor) {
-        FileDialogue chooser = chooserFactory.apply(stage);
+            GuiTask<EnrichedSessionState> task = new GuiTask<>(
+                guiTaskHandler,
+                statusManager,
+                () -> sessionFileService.createOrOpenSession(file),
+                this::finishOpen,
+                e -> FileErrorTool.open(file, e));
 
-        chooser.showChooser();
-        if (chooser.isFileSelected()) {
-            return processor.apply(chooser);
+            guiTaskHandler.executeInBackground(task);
         } else {
-            return false;
-        }
-    }
-
-    public boolean unsavedChangesCheck() {
-        if (model.isChangesSaved()) {
-            return true;
-        } else {
-            UnsavedChangesDialogue dialogue = factory.unsavedChangesDialogue(model);
-
-            dialogue.showDialogue();
-
-            switch (dialogue.getUserResponse()) {
-                case SAVE:
-                    return processSave();
-                case DISCARD:
-                    return true;
-                default:
-                    return false;
-            }
+            statusManager.completeAction();
         }
     }
 
     public void handleOpenSession() {
-        statusManager.beginOpenSession();
-        statusActionService.updateStatusThenRun(this::processOpenSessionInternal);
-    }
-
-    private void processOpenSessionInternal() {
-        try {
-            boolean isSuccessfulAction = processFileWithCheck(factory::openSessionChooser, this::processOpenSession);
-
-            if (isSuccessfulAction) {
-                statusManager.markSuccess();
-            }
-        } finally {
-            statusManager.completeAction();
+        if (statusManager.beginOpenSession()) {
+            statusActionService.updateStatusThenRun(this::processOpenSession);
         }
     }
 
-    private boolean processOpenSession(final FileDialogue chooser) {
-        statusManager.performAction();
+    private void processOpenSession() {
+        Path file = checkUnsavedChangesAndChooseFile(factory::openSessionChooser);
 
-        Path file = chooser.getSelectedFile();
+        if (file == null) {
+            statusManager.completeAction();
+        } else {
+            statusManager.performAction();
+            LOG.info("Opening session file '{}'", file);
 
-        LOG.info("Opening session file '{}'", file);
-        return processOpen(file, sessionFileService::read);
+            GuiTask<EnrichedSessionState> task = new GuiTask<>(
+                guiTaskHandler,
+                statusManager,
+                () -> sessionFileService.read(file),
+                this::finishOpen,
+                e -> FileErrorTool.open(file, e));
+
+            guiTaskHandler.executeInBackground(task);
+        }
     }
 
     public void handleNewSession() {
-        statusManager.beginNewSession();
-        statusActionService.updateStatusThenRun(this::processNewSessionInternal);
+        if (statusManager.beginNewSession()) {
+            statusActionService.updateStatusThenRun(this::processNewSession);
+        }
     }
 
-    private void processNewSessionInternal() {
-        try {
-            if (processFileWithCheck(factory::newSessionChooser, this::processNewSession)) {
-                statusManager.markSuccess();
-            }
-        } finally {
+    private void processNewSession() {
+        Path file = checkUnsavedChangesAndChooseFile(factory::newSessionChooser);
+
+        if (file == null) {
             statusManager.completeAction();
+        } else {
+            statusManager.performAction();
+            LOG.info("New session from '{}'", file);
+
+            GuiTask<EnrichedSessionState> task = new GuiTask<>(
+                guiTaskHandler,
+                statusManager,
+                () -> sessionFileService.createNewSession(file),
+                this::finishOpen,
+                e -> FileErrorTool.open(file, e));
+
+            guiTaskHandler.executeInBackground(task);
         }
     }
 
-    private boolean processNewSession(final FileDialogue chooser) {
-        statusManager.performAction();
+    private void finishOpen(final EnrichedSessionState enrichedState) {
+        SessionState state = enrichedState.getState();
+        SessionModel sessionModel = sessionStateHandler.addSession(state);
 
-        Path file = chooser.getSelectedFile();
-
-        LOG.info("New session from '{}'", file);
-        return processOpen(file, sessionFileService::createNewSession);
-    }
-
-    private boolean processOpen(final Path file, final Function<Path, EnrichedSessionState> opener) {
-        try {
-            EnrichedSessionState enrichedState = opener.apply(file);
-            SessionState state = enrichedState.getState();
-            SessionModel sessionModel = sessionStateHandler.addSession(state);
-
-            model.replaceSessionModel(state, sessionModel, enrichedState.getFile().orElse(null));
-            statusManager.replaceSession(sessionModel.getPosition(), sessionModel.getProgress());
-
-            return true;
-        } catch (final RuntimeException e) {
-            FileErrorTool.open(file, e);
-
-            return false;
-        }
+        model.replaceSessionModel(state, sessionModel, enrichedState.getFile().orElse(null));
+        statusManager.replaceSession(sessionModel.getPosition(), sessionModel.getProgress());
     }
 
     public void handleSave() {
-        statusManager.beginSaveSession();
-        statusActionService.updateStatusThenRun(this::processSaveInternal);
+        if (statusManager.beginSaveSession()) {
+            statusActionService.updateStatusThenRun(this::processSave);
+        }
     }
 
-    private void processSaveInternal() {
+    private void processSave() {
         try {
-            if (processSave()) {
+            if (processSaveInternal()) {
                 statusManager.markSuccess();
             }
         } finally {
@@ -194,7 +186,7 @@ public class GuiFileHandler {
         }
     }
 
-    private boolean processSave() {
+    private boolean processSaveInternal() {
         if (model.hasSessionFile()) {
             saveFile();
 
@@ -205,8 +197,9 @@ public class GuiFileHandler {
     }
 
     public void handleSaveAs() {
-        statusManager.beginSaveSession();
-        statusActionService.updateStatusThenRun(this::processSaveAs);
+        if (statusManager.beginSaveSession()) {
+            statusActionService.updateStatusThenRun(this::processSaveAs);
+        }
     }
 
     private void processSaveAs() {
@@ -220,18 +213,16 @@ public class GuiFileHandler {
     }
 
     private boolean saveAsInternal() {
-        FileDialogue chooser = factory.saveSessionChooser(stage);
+        Path file = chooseFile(factory::saveSessionChooser);
 
-        chooser.showChooser();
-        if (chooser.isFileSelected()) {
-            Path file = chooser.getSelectedFile();
+        if (file == null) {
+            return false;
+        } else {
             file = FileNameTool.ensureSessionFileHasSuffix(file);
 
             model.setSessionFile(file);
 
             return saveFile();
-        } else {
-            return false;
         }
     }
 
@@ -253,22 +244,41 @@ public class GuiFileHandler {
         }
     }
 
-    private boolean processExport(final FileDialogue chooser) {
-        statusManager.performAction();
-
-        Path file = chooser.getSelectedFile();
-        file = FileNameTool.ensureExportFileHasSuffix(file);
-
-        try {
-            LOG.info("Exporting to file '{}'", file);
-            sessionFileService.exportSelection(sessionStateHandler.getSessionState(), file);
-
-            return true;
-        } catch (final RuntimeException e) {
-            FileErrorTool.export(file, e);
-
-            return false;
+    private Path checkUnsavedChangesAndChooseFile(final Function<Stage, FileDialogue> f) {
+        if (unsavedChangesCheck()) {
+            return chooseFile(f);
+        } else {
+            return null;
         }
     }
 
+    private Path chooseFile(final Function<Stage, FileDialogue> f) {
+        FileDialogue dialogue = f.apply(stage);
+
+        dialogue.showChooser();
+        if (dialogue.isFileSelected()) {
+            return dialogue.getSelectedFile();
+        } else {
+            return null;
+        }
+    }
+
+    public boolean unsavedChangesCheck() {
+        if (model.isChangesSaved()) {
+            return true;
+        } else {
+            UnsavedChangesDialogue dialogue = factory.unsavedChangesDialogue(model);
+
+            dialogue.showDialogue();
+
+            switch (dialogue.getUserResponse()) {
+                case SAVE:
+                    return processSaveInternal();
+                case DISCARD:
+                    return true;
+                default:
+                    return false;
+            }
+        }
+    }
 }

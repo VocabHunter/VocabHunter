@@ -11,17 +11,17 @@ import io.github.vocabhunter.gui.model.StatusModel;
 public interface StatusManager {
     void initialise(StatusModel model);
 
-    void beginNewSession();
+    boolean beginNewSession();
 
-    void beginOpenSession();
+    boolean beginOpenSession();
 
-    void beginSaveSession();
+    boolean beginSaveSession();
 
-    void beginExport();
+    boolean beginExport();
 
-    void beginExit();
+    boolean beginExit();
 
-    void beginAbout();
+    boolean beginAbout();
 
     void performAction();
 

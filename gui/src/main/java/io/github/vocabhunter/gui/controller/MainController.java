@@ -5,6 +5,7 @@
 package io.github.vocabhunter.gui.controller;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+import io.github.vocabhunter.analysis.core.GuiTaskHandler;
 import io.github.vocabhunter.analysis.settings.FileListManager;
 import io.github.vocabhunter.gui.common.EnvironmentManager;
 import io.github.vocabhunter.gui.common.GuiConstants;
@@ -99,7 +100,7 @@ public class MainController {
     @SuppressWarnings("PMD.ExcessiveParameterList")
     public void initialise(final Stage stage, final GuiFactory factory, final SessionFileService sessionFileService, final SettingsManager settingsManager,
                            final FileListManager fileListManager, final EnvironmentManager environmentManager, final StatusManager statusManager,
-                           final StatusActionService statusActionService, final WebPageTool webPageTool, final MainModel model) {
+                           final StatusActionService statusActionService, final WebPageTool webPageTool, final GuiTaskHandler guiTaskHandler, final MainModel model) {
         this.model = model;
         this.stage = stage;
         this.factory = factory;
@@ -107,7 +108,7 @@ public class MainController {
         this.statusManager = statusManager;
 
         sessionStateHandler = new SessionStateHandler(mainBorderPane, factory, settingsManager, model);
-        guiFileHandler = new GuiFileHandler(stage, factory, sessionFileService, statusManager, model, statusActionService, sessionStateHandler);
+        guiFileHandler = new GuiFileHandler(stage, factory, sessionFileService, statusManager, model, statusActionService, sessionStateHandler, guiTaskHandler);
 
         buildToggleGroup(buttonEditOn, buttonEditOff);
         buildToggleGroup(menuEditOn, menuEditOff);
@@ -199,14 +200,15 @@ public class MainController {
     }
 
     public void processAbout() {
-        statusManager.beginAbout();
-        try {
-            AboutDialogue dialogue = factory.aboutDialogue();
+        if (statusManager.beginAbout()) {
+            try {
+                AboutDialogue dialogue = factory.aboutDialogue();
 
-            dialogue.show();
-            statusManager.markSuccess();
-        } finally {
-            statusManager.completeAction();
+                dialogue.show();
+                statusManager.markSuccess();
+            } finally {
+                statusManager.completeAction();
+            }
         }
     }
 
@@ -219,13 +221,14 @@ public class MainController {
     }
 
     private void processCloseRequest(final WindowEvent e) {
-        statusManager.beginExit();
-        try {
-            if (handleExitRequest(e)) {
-                statusManager.markSuccess();
+        if (statusManager.beginExit()) {
+            try {
+                if (handleExitRequest(e)) {
+                    statusManager.markSuccess();
+                }
+            } finally {
+                statusManager.completeAction();
             }
-        } finally {
-            statusManager.completeAction();
         }
     }
 

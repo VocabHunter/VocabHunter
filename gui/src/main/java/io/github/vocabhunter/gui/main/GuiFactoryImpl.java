@@ -4,6 +4,7 @@
 
 package io.github.vocabhunter.gui.main;
 
+import io.github.vocabhunter.analysis.core.GuiTaskHandler;
 import io.github.vocabhunter.analysis.core.VocabHunterException;
 import io.github.vocabhunter.analysis.settings.FileListManager;
 import io.github.vocabhunter.gui.common.ControllerAndView;
@@ -58,12 +59,14 @@ public class GuiFactoryImpl implements GuiFactory {
 
     private final WebPageTool webPageTool;
 
+    private final GuiTaskHandler guiTaskHandler;
+
     public GuiFactoryImpl(final Stage stage, final MutablePicoContainer pico) {
         this(stage, pico.getComponent(SettingsManager.class), pico.getComponent(FileListManager.class),
              pico.getComponent(EnvironmentManager.class), pico.getComponent(StatusManager.class),
              pico.getComponent(FileDialogueFactory.class), pico.getComponent(ExternalEventBroker.class),
              pico.getComponent(SessionFileService.class), pico.getComponent(StatusActionService.class),
-             pico.getComponent(WebPageTool.class));
+             pico.getComponent(WebPageTool.class), pico.getComponent(GuiTaskHandler.class));
     }
 
     @SuppressWarnings("PMD.ExcessiveParameterList")
@@ -71,7 +74,7 @@ public class GuiFactoryImpl implements GuiFactory {
                            final EnvironmentManager environmentManager, final StatusManager statusManager,
                            final FileDialogueFactory fileDialogueFactory, final ExternalEventBroker externalEventSource,
                            final SessionFileService sessionFileService, final StatusActionService statusActionService,
-                           final WebPageTool webPageTool) {
+                           final WebPageTool webPageTool, final GuiTaskHandler guiTaskHandler) {
         this.stage = stage;
         this.settingsManager = settingsManager;
         this.fileListManager = fileListManager;
@@ -82,6 +85,7 @@ public class GuiFactoryImpl implements GuiFactory {
         this.sessionFileService = sessionFileService;
         this.statusActionService = statusActionService;
         this.webPageTool = webPageTool;
+        this.guiTaskHandler = guiTaskHandler;
     }
 
     @Override
@@ -94,7 +98,7 @@ public class GuiFactoryImpl implements GuiFactory {
         statusManager.initialise(model.getStatusModel());
         controller.initialise(
             stage, this, sessionFileService, settingsManager, fileListManager, environmentManager,
-            statusManager, statusActionService, webPageTool, model);
+            statusManager, statusActionService, webPageTool, guiTaskHandler, model);
 
         return new ControllerAndView<>(controller, root);
     }

@@ -5,6 +5,7 @@
 package io.github.vocabhunter.gui.main;
 
 import io.github.vocabhunter.analysis.core.CoreConstants;
+import io.github.vocabhunter.analysis.core.GuiTaskHandlerForTesting;
 import io.github.vocabhunter.analysis.core.VocabHunterException;
 import io.github.vocabhunter.analysis.session.EnrichedSessionState;
 import io.github.vocabhunter.analysis.session.SessionSerialiser;
@@ -126,6 +127,7 @@ public class GuiTest extends FxRobot implements GuiTestValidator {
         pico.addComponent(placementManager);
         pico.addComponent(webPageTool);
         pico.addComponent((StatusActionService) Runnable::run);
+        pico.addComponent(new GuiTaskHandlerForTesting());
         VocabHunterGuiExecutable.setPico(pico);
 
         setupApplication(VocabHunterGuiExecutable.class);

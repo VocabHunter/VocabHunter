@@ -14,6 +14,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.text.MessageFormat;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import static javafx.beans.binding.Bindings.*;
 
@@ -48,6 +49,8 @@ public class StatusManagerImpl implements StatusManager {
 
     private final SimpleStringProperty graphText = new SimpleStringProperty();
 
+    private final AtomicBoolean gatekeeper = new AtomicBoolean();
+
     public void initialise(final StatusModel model) {
         model.textProperty().bind(when(busy).then(actionDescription).otherwise(positionDescription));
         model.busyProperty().bind(busy);
@@ -58,40 +61,46 @@ public class StatusManagerImpl implements StatusManager {
     }
 
     @Override
-    public void beginNewSession() {
-        begin(NAME_NEW_SESSION);
+    public boolean beginNewSession() {
+        return begin(NAME_NEW_SESSION);
     }
 
     @Override
-    public void beginOpenSession() {
-        begin(NAME_OPEN_SESSION);
+    public boolean beginOpenSession() {
+        return begin(NAME_OPEN_SESSION);
     }
 
     @Override
-    public void beginSaveSession() {
-        begin(NAME_SAVE_SESSION);
+    public boolean beginSaveSession() {
+        return begin(NAME_SAVE_SESSION);
     }
 
     @Override
-    public void beginExport() {
-        begin(NAME_EXPORT);
+    public boolean beginExport() {
+        return begin(NAME_EXPORT);
     }
 
     @Override
-    public void beginExit() {
-        begin(NAME_EXIT);
+    public boolean beginExit() {
+        return begin(NAME_EXIT);
     }
 
     @Override
-    public void beginAbout() {
-        begin(NAME_ABOUT);
+    public boolean beginAbout() {
+        return begin(NAME_ABOUT);
     }
 
-    private void begin(final String name) {
-        this.name = name;
-        LOG.debug("Begin: {}", name);
-        actionDescription.setValue(name);
-        busy.setValue(true);
+    private boolean begin(final String name) {
+        if (gatekeeper.compareAndSet(false, true)) {
+            this.name = name;
+            LOG.debug("Begin: {}", name);
+            actionDescription.setValue(name);
+            busy.setValue(true);
+
+            return true;
+        } else {
+            return false;
+        }
     }
 
     @Override
@@ -108,6 +117,7 @@ public class StatusManagerImpl implements StatusManager {
     public void completeAction() {
         LOG.debug("Complete: {}", name);
         busy.setValue(false);
+        gatekeeper.set(false);
     }
 
     @Override
