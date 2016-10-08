@@ -10,7 +10,7 @@ buildscript {
     }
 
     dependencies {
-        classpath 'de.dynamicfiles.projects.gradle.plugins:javafx-gradle-plugin:8.6.0'
+        classpath 'de.dynamicfiles.projects.gradle.plugins:javafx-gradle-plugin:8.7.0'
     }
 }
 
