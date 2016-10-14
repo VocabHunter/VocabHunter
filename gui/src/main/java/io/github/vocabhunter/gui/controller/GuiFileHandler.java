@@ -71,9 +71,9 @@ public class GuiFileHandler {
             SessionState sessionState = sessionStateHandler.getSessionState();
             GuiTask<Boolean> task = new GuiTask<>(
                 guiTaskHandler,
+                statusManager,
                 () -> processExport(fileWithSuffix, sessionState),
-                e -> FileErrorTool.export(fileWithSuffix, e),
-                statusManager
+                e -> FileErrorTool.export(fileWithSuffix, e)
             );
 
             guiTaskHandler.executeInBackground(task);
@@ -171,28 +171,12 @@ public class GuiFileHandler {
     }
 
     public void handleSave() {
-        if (statusManager.beginSaveSession()) {
-            statusActionService.updateStatusThenRun(this::processSave);
-        }
-    }
-
-    private void processSave() {
-        try {
-            if (processSaveInternal()) {
-                statusManager.markSuccess();
-            }
-        } finally {
-            statusManager.completeAction();
-        }
-    }
-
-    private boolean processSaveInternal() {
         if (model.hasSessionFile()) {
-            saveFile();
-
-            return true;
+            if (statusManager.beginSaveSession()) {
+                statusActionService.updateStatusThenRun(this::processSave);
+            }
         } else {
-            return saveAsInternal();
+            handleSaveAs();
         }
     }
 
@@ -203,45 +187,39 @@ public class GuiFileHandler {
     }
 
     private void processSaveAs() {
-        try {
-            if (saveAsInternal()) {
-                statusManager.markSuccess();
-            }
-        } finally {
-            statusManager.completeAction();
-        }
-    }
-
-    private boolean saveAsInternal() {
         Path file = chooseFile(factory::saveSessionChooser);
 
         if (file == null) {
-            return false;
+            statusManager.completeAction();
         } else {
             file = FileNameTool.ensureSessionFileHasSuffix(file);
-
             model.setSessionFile(file);
-
-            return saveFile();
+            processSave();
         }
     }
 
-    private boolean saveFile() {
-        statusManager.performAction();
-
+    private void processSave() {
         Path file = model.getSessionFile();
 
-        try {
-            LOG.info("Saving file '{}'", file);
-            sessionFileService.write(file, sessionStateHandler.getSessionState());
-            model.setChangesSaved(true);
+        statusManager.performAction();
+        LOG.info("Saving file '{}'", file);
 
-            return true;
-        } catch (final RuntimeException e) {
-            FileErrorTool.save(file, e);
+        SessionState sessionState = sessionStateHandler.getSessionState();
+        GuiTask<Boolean> task = new GuiTask<>(
+            guiTaskHandler,
+            statusManager,
+            () -> saveFile(file, sessionState),
+            b -> model.setChangesSaved(true),
+            e -> FileErrorTool.save(file, e)
+        );
 
-            return false;
-        }
+        guiTaskHandler.executeInBackground(task);
+    }
+
+    private boolean saveFile(final Path file, final SessionState sessionState) {
+        sessionFileService.write(file, sessionState);
+
+        return true;
     }
 
     private Path checkUnsavedChangesAndChooseFile(final Function<Stage, FileDialogue> f) {
@@ -273,12 +251,52 @@ public class GuiFileHandler {
 
             switch (dialogue.getUserResponse()) {
                 case SAVE:
-                    return processSaveInternal();
+                    return saveChanges();
                 case DISCARD:
                     return true;
                 default:
                     return false;
             }
+        }
+    }
+
+    private boolean saveChanges() {
+        if (model.hasSessionFile()) {
+            saveChangesInternal();
+
+            return true;
+        } else {
+            return saveChangesAs();
+        }
+    }
+
+    private boolean saveChangesAs() {
+        Path file = chooseFile(factory::saveSessionChooser);
+
+        if (file == null) {
+            return false;
+        } else {
+            file = FileNameTool.ensureSessionFileHasSuffix(file);
+
+            model.setSessionFile(file);
+
+            return saveChangesInternal();
+        }
+    }
+
+    private boolean saveChangesInternal() {
+        Path file = model.getSessionFile();
+
+        try {
+            LOG.info("Saving file '{}'", file);
+            sessionFileService.write(file, sessionStateHandler.getSessionState());
+            model.setChangesSaved(true);
+
+            return true;
+        } catch (final RuntimeException e) {
+            FileErrorTool.save(file, e);
+
+            return false;
         }
     }
 }

@@ -21,7 +21,7 @@ public class GuiTask<T> extends Task<Void> {
 
     private final Consumer<RuntimeException> errorHandler;
 
-    public GuiTask(final GuiTaskHandler guiTaskHandler, final Supplier<T> body, final Consumer<RuntimeException> errorHandler, final StatusManager statusManager) {
+    public GuiTask(final GuiTaskHandler guiTaskHandler, final StatusManager statusManager, final Supplier<T> body, final Consumer<RuntimeException> errorHandler) {
         this(guiTaskHandler, statusManager, body, t -> doNothingFinisher(), errorHandler);
     }
 
