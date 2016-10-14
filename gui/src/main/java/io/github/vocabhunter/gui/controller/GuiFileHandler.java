@@ -65,7 +65,7 @@ public class GuiFileHandler {
         if (file == null) {
             statusManager.completeAction();
         } else {
-            statusManager.performAction();
+            statusManager.performAction(file);
 
             Path fileWithSuffix = FileNameTool.ensureExportFileHasSuffix(file);
             SessionState sessionState = sessionStateHandler.getSessionState();
@@ -122,7 +122,7 @@ public class GuiFileHandler {
         if (file == null) {
             statusManager.completeAction();
         } else {
-            statusManager.performAction();
+            statusManager.performAction(file);
             LOG.info("Opening session file '{}'", file);
 
             GuiTask<EnrichedSessionState> task = new GuiTask<>(
@@ -148,7 +148,7 @@ public class GuiFileHandler {
         if (file == null) {
             statusManager.completeAction();
         } else {
-            statusManager.performAction();
+            statusManager.performAction(file);
             LOG.info("New session from '{}'", file);
 
             GuiTask<EnrichedSessionState> task = new GuiTask<>(
@@ -201,7 +201,7 @@ public class GuiFileHandler {
     private void processSave() {
         Path file = model.getSessionFile();
 
-        statusManager.performAction();
+        statusManager.performAction(file);
         LOG.info("Saving file '{}'", file);
 
         SessionState sessionState = sessionStateHandler.getSessionState();

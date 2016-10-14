@@ -4,6 +4,7 @@
 
 package io.github.vocabhunter.gui.status;
 
+import io.github.vocabhunter.analysis.session.FileNameTool;
 import io.github.vocabhunter.gui.model.PositionModel;
 import io.github.vocabhunter.gui.model.ProgressModel;
 import io.github.vocabhunter.gui.model.StatusModel;
@@ -13,6 +14,7 @@ import javafx.beans.property.SimpleStringProperty;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.nio.file.Path;
 import java.text.MessageFormat;
 import java.util.concurrent.atomic.AtomicBoolean;
 
@@ -104,8 +106,9 @@ public class StatusManagerImpl implements StatusManager {
     }
 
     @Override
-    public void performAction() {
+    public void performAction(final Path file) {
         LOG.debug("Perform: {}", name);
+        actionDescription.setValue(String.format("%s: '%s'...", name, FileNameTool.filename(file)));
     }
 
     @Override

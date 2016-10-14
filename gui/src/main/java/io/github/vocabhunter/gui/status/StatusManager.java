@@ -8,6 +8,8 @@ import io.github.vocabhunter.gui.model.PositionModel;
 import io.github.vocabhunter.gui.model.ProgressModel;
 import io.github.vocabhunter.gui.model.StatusModel;
 
+import java.nio.file.Path;
+
 public interface StatusManager {
     void initialise(StatusModel model);
 
@@ -23,7 +25,7 @@ public interface StatusManager {
 
     boolean beginAbout();
 
-    void performAction();
+    void performAction(Path file);
 
     void markSuccess();
 
