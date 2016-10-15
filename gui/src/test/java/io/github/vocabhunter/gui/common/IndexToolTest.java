@@ -2,7 +2,7 @@
  * Open Source Software published under the Apache Licence, Version 2.0.
  */
 
-package io.github.vocabhunter.gui.controller;
+package io.github.vocabhunter.gui.common;
 
 import io.github.vocabhunter.analysis.core.VocabHunterException;
 import org.junit.Assert;

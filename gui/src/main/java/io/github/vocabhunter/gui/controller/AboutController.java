@@ -7,7 +7,7 @@ package io.github.vocabhunter.gui.controller;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import io.github.vocabhunter.gui.common.BuildInfo;
 import io.github.vocabhunter.gui.common.GuiConstants;
-import io.github.vocabhunter.gui.common.WebPageTool;
+import io.github.vocabhunter.gui.services.WebPageTool;
 import javafx.scene.control.Button;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;

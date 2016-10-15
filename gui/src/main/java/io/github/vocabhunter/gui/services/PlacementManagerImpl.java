@@ -2,8 +2,9 @@
  * Open Source Software published under the Apache Licence, Version 2.0.
  */
 
-package io.github.vocabhunter.gui.common;
+package io.github.vocabhunter.gui.services;
 
+import io.github.vocabhunter.gui.common.Placement;
 import io.github.vocabhunter.gui.settings.SettingsManager;
 import io.github.vocabhunter.gui.settings.WindowSettings;
 

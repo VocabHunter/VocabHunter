@@ -6,11 +6,11 @@ package io.github.vocabhunter.gui.main;
 
 import io.github.vocabhunter.gui.common.ControllerAndView;
 import io.github.vocabhunter.gui.common.Placement;
-import io.github.vocabhunter.gui.common.PlacementManager;
 import io.github.vocabhunter.gui.controller.GuiFactory;
 import io.github.vocabhunter.gui.controller.MainController;
 import io.github.vocabhunter.gui.event.ExternalEventBroker;
 import io.github.vocabhunter.gui.event.SingleExternalEventSource;
+import io.github.vocabhunter.gui.services.PlacementManager;
 import javafx.application.Application;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
