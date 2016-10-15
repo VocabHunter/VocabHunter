@@ -14,4 +14,9 @@ public class GuiTaskHandlerForTesting implements GuiTaskHandler {
     public void executeOnGuiThread(final Runnable task) {
         task.run();
     }
+
+    @Override
+    public void pauseThenExecuteOnGuiThread(final Runnable task) {
+        task.run();
+    }
 }

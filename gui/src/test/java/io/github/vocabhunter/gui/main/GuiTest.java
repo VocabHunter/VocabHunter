@@ -20,7 +20,6 @@ import io.github.vocabhunter.gui.dialogues.FileDialogueFactory;
 import io.github.vocabhunter.gui.dialogues.FileDialogueType;
 import io.github.vocabhunter.gui.settings.SettingsManager;
 import io.github.vocabhunter.gui.settings.SettingsManagerImpl;
-import io.github.vocabhunter.gui.status.StatusActionService;
 import io.github.vocabhunter.test.utils.TestFileManager;
 import javafx.stage.Stage;
 import org.junit.After;
@@ -126,7 +125,6 @@ public class GuiTest extends FxRobot implements GuiTestValidator {
         pico.addComponent(environmentManager);
         pico.addComponent(placementManager);
         pico.addComponent(webPageTool);
-        pico.addComponent((StatusActionService) Runnable::run);
         pico.addComponent(new GuiTaskHandlerForTesting());
         VocabHunterGuiExecutable.setPico(pico);
 

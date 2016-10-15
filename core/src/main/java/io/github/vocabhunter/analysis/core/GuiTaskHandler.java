@@ -8,4 +8,6 @@ public interface GuiTaskHandler {
     void executeInBackground(Runnable task);
 
     void executeOnGuiThread(Runnable task);
+
+    void pauseThenExecuteOnGuiThread(Runnable task);
 }

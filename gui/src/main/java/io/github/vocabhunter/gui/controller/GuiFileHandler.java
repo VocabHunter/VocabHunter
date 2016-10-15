@@ -13,7 +13,6 @@ import io.github.vocabhunter.gui.dialogues.UnsavedChangesDialogue;
 import io.github.vocabhunter.gui.model.MainModel;
 import io.github.vocabhunter.gui.model.SessionModel;
 import io.github.vocabhunter.gui.status.GuiTask;
-import io.github.vocabhunter.gui.status.StatusActionService;
 import io.github.vocabhunter.gui.status.StatusManager;
 import javafx.stage.Stage;
 import org.slf4j.Logger;
@@ -35,27 +34,24 @@ public class GuiFileHandler {
 
     private final MainModel model;
 
-    private final StatusActionService statusActionService;
-
     private final SessionStateHandler sessionStateHandler;
 
     private final GuiTaskHandler guiTaskHandler;
 
     public GuiFileHandler(final Stage stage, final GuiFactory factory, final SessionFileService sessionFileService, final StatusManager statusManager,
-                          final MainModel model, final StatusActionService statusActionService, final SessionStateHandler sessionStateHandler, final GuiTaskHandler guiTaskHandler) {
+                          final MainModel model, final SessionStateHandler sessionStateHandler, final GuiTaskHandler guiTaskHandler) {
         this.stage = stage;
         this.factory = factory;
         this.sessionFileService = sessionFileService;
         this.statusManager = statusManager;
         this.model = model;
-        this.statusActionService = statusActionService;
         this.sessionStateHandler = sessionStateHandler;
         this.guiTaskHandler = guiTaskHandler;
     }
 
     public void handleExport() {
         if (statusManager.beginExport()) {
-            statusActionService.updateStatusThenRun(this::processExport);
+            guiTaskHandler.pauseThenExecuteOnGuiThread(this::processExport);
         }
     }
 
@@ -89,7 +85,7 @@ public class GuiFileHandler {
 
     public void processOpenOrNew(final Path file) {
         if (statusManager.beginOpenSession()) {
-            statusActionService.updateStatusThenRun(() -> processOpenOrNewInternal(file));
+            guiTaskHandler.pauseThenExecuteOnGuiThread(() -> processOpenOrNewInternal(file));
         }
     }
 
@@ -112,7 +108,7 @@ public class GuiFileHandler {
 
     public void handleOpenSession() {
         if (statusManager.beginOpenSession()) {
-            statusActionService.updateStatusThenRun(this::processOpenSession);
+            guiTaskHandler.pauseThenExecuteOnGuiThread(this::processOpenSession);
         }
     }
 
@@ -138,7 +134,7 @@ public class GuiFileHandler {
 
     public void handleNewSession() {
         if (statusManager.beginNewSession()) {
-            statusActionService.updateStatusThenRun(this::processNewSession);
+            guiTaskHandler.pauseThenExecuteOnGuiThread(this::processNewSession);
         }
     }
 
@@ -173,7 +169,7 @@ public class GuiFileHandler {
     public void handleSave() {
         if (model.hasSessionFile()) {
             if (statusManager.beginSaveSession()) {
-                statusActionService.updateStatusThenRun(this::processSave);
+                guiTaskHandler.pauseThenExecuteOnGuiThread(this::processSave);
             }
         } else {
             handleSaveAs();
@@ -182,7 +178,7 @@ public class GuiFileHandler {
 
     public void handleSaveAs() {
         if (statusManager.beginSaveSession()) {
-            statusActionService.updateStatusThenRun(this::processSaveAs);
+            guiTaskHandler.pauseThenExecuteOnGuiThread(this::processSaveAs);
         }
     }
 

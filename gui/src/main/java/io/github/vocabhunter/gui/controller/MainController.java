@@ -17,7 +17,6 @@ import io.github.vocabhunter.gui.model.SessionModel;
 import io.github.vocabhunter.gui.model.StatusModel;
 import io.github.vocabhunter.gui.settings.SettingsManager;
 import io.github.vocabhunter.gui.settings.WindowSettings;
-import io.github.vocabhunter.gui.status.StatusActionService;
 import io.github.vocabhunter.gui.status.StatusManager;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -100,7 +99,7 @@ public class MainController {
     @SuppressWarnings("PMD.ExcessiveParameterList")
     public void initialise(final Stage stage, final GuiFactory factory, final SessionFileService sessionFileService, final SettingsManager settingsManager,
                            final FileListManager fileListManager, final EnvironmentManager environmentManager, final StatusManager statusManager,
-                           final StatusActionService statusActionService, final WebPageTool webPageTool, final GuiTaskHandler guiTaskHandler, final MainModel model) {
+                           final WebPageTool webPageTool, final GuiTaskHandler guiTaskHandler, final MainModel model) {
         this.model = model;
         this.stage = stage;
         this.factory = factory;
@@ -108,7 +107,7 @@ public class MainController {
         this.statusManager = statusManager;
 
         sessionStateHandler = new SessionStateHandler(mainBorderPane, factory, settingsManager, model);
-        guiFileHandler = new GuiFileHandler(stage, factory, sessionFileService, statusManager, model, statusActionService, sessionStateHandler, guiTaskHandler);
+        guiFileHandler = new GuiFileHandler(stage, factory, sessionFileService, statusManager, model, sessionStateHandler, guiTaskHandler);
 
         buildToggleGroup(buttonEditOn, buttonEditOff);
         buildToggleGroup(menuEditOn, menuEditOff);
