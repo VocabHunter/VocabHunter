@@ -6,7 +6,7 @@ import org.gradle.internal.os.OperatingSystem;
 
 buildscript {
     repositories {
-        mavenCentral()
+        jcenter()
     }
 
     dependencies {
