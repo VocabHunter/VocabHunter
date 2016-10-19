@@ -58,7 +58,7 @@ FILE_ASSOCIATION_INSTALL
 
                     # Look for the right JVM to use (use the first one)
                     for potentialjdkdir in $KNOWN_JDK_DIRS; do
-                        if [ -r "$jdir/bin/java" -a -z "$FOUND_JAVA_HOME" ]; then
+                        if [ -r "$potentialjdkdir/bin/java" -a -z "$FOUND_JAVA_HOME" ]; then
                             FOUND_JAVA_HOME="$potentialjdkdir"
                         fi
                     done
