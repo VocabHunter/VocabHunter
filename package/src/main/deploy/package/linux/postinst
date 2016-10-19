@@ -50,10 +50,29 @@ FILE_ASSOCIATION_INSTALL
             if [ -z "$JRE_HOME" ]; then
                 echo JRE_HOME is not set, checking for JAVA_HOME being set
                 if [ -z "$JAVA_HOME" ]; then
-                    # TODO look for known locations
-                    echo Please make sure to set JRE_HOME variable before running APPLICATION_LAUNCHER_FILENAME
+                    echo JAVA_HOME is not set, checking for known locations
+
+                    # look for known locations
+                    KNOWN_JDK_DIRS="/usr/lib/jvm/java-8-oracle /usr/lib/jvm/java-8-openjdk-amd64 /usr/lib/jvm/java-8-openjdk-i386"
+                    FOUND_JAVA_HOME=""
+
+                    # Look for the right JVM to use (use the first one)
+                    for potentialjdkdir in $KNOWN_JDK_DIRS; do
+                        if [ -r "$jdir/bin/java" -a -z "$FOUND_JAVA_HOME" ]; then
+                            FOUND_JAVA_HOME="$potentialjdkdir"
+                        fi
+                    done
+
+                    if [ -z "$FOUND_JAVA_HOME" ]; then
+                        # still nothing found :(
+                        echo Please make sure to have Java installed and JRE_HOME variable set before running APPLICATION_LAUNCHER_FILENAME
+                    else
+                        echo Updating runtime-settings using known location
+                        # JAVA_HOME is set, use that value
+                        sed -i "s|app.runtime=.*|app.runtime=$FOUND_JAVA_HOME|g" /opt/APPLICATION_FS_NAME/app/APPLICATION_LAUNCHER_FILENAME.cfg
+                    fi
                 else
-                    echo Updating runtime-settings
+                    echo Updating runtime-settings using JAVA_HOME
                     # JAVA_HOME is set, use that value
                     sed -i "s|app.runtime=.*|app.runtime=$JAVA_HOME|g" /opt/APPLICATION_FS_NAME/app/APPLICATION_LAUNCHER_FILENAME.cfg
                 fi
