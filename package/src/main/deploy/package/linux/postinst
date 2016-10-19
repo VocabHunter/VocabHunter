@@ -66,6 +66,8 @@ FILE_ASSOCIATION_INSTALL
                     if [ -z "$FOUND_JAVA_HOME" ]; then
                         # still nothing found :(
                         echo Please make sure to have Java installed and JRE_HOME variable set before running APPLICATION_LAUNCHER_FILENAME
+                        # remove stored value in case of dpkg-reconfigure
+                        sed -i "s|app.runtime=.*|app.runtime=|g" /opt/APPLICATION_FS_NAME/app/APPLICATION_LAUNCHER_FILENAME.cfg
                     else
                         echo Updating runtime-settings using known location
                         # JAVA_HOME is set, use that value
@@ -76,6 +78,9 @@ FILE_ASSOCIATION_INSTALL
                     # JAVA_HOME is set, use that value
                     sed -i "s|app.runtime=.*|app.runtime=$JAVA_HOME|g" /opt/APPLICATION_FS_NAME/app/APPLICATION_LAUNCHER_FILENAME.cfg
                 fi
+            else
+                # remove stored value in case of dpkg-reconfigure
+                sed -i "s|app.runtime=.*|app.runtime=|g" /opt/APPLICATION_FS_NAME/app/APPLICATION_LAUNCHER_FILENAME.cfg
             fi
         fi
     ;;
