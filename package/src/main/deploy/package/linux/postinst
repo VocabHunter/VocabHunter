@@ -46,7 +46,10 @@ FILE_ASSOCIATION_INSTALL
         if [ -f /etc/profile ]; then
             # load special environment variables
             . /etc/profile
-     
+
+            # remove stored value in case of dpkg-reconfigure
+            RUNTIME_PATH_TO_SET=""
+
             if [ -z "$JRE_HOME" ]; then
                 echo JRE_HOME is not set, checking for JAVA_HOME being set
                 if [ -z "$JAVA_HOME" ]; then
@@ -66,22 +69,19 @@ FILE_ASSOCIATION_INSTALL
                     if [ -z "$FOUND_JAVA_HOME" ]; then
                         # still nothing found :(
                         echo Please make sure to have Java installed and JRE_HOME variable set before running APPLICATION_LAUNCHER_FILENAME
-                        # remove stored value in case of dpkg-reconfigure
-                        sed -i "s|app.runtime=.*|app.runtime=|g" /opt/APPLICATION_FS_NAME/app/APPLICATION_LAUNCHER_FILENAME.cfg
                     else
                         echo Updating runtime-settings using known location
-                        # JAVA_HOME is set, use that value
-                        sed -i "s|app.runtime=.*|app.runtime=$FOUND_JAVA_HOME|g" /opt/APPLICATION_FS_NAME/app/APPLICATION_LAUNCHER_FILENAME.cfg
+                        RUNTIME_PATH_TO_SET="$FOUND_JAVA_HOME"
                     fi
                 else
                     echo Updating runtime-settings using JAVA_HOME
                     # JAVA_HOME is set, use that value
-                    sed -i "s|app.runtime=.*|app.runtime=$JAVA_HOME|g" /opt/APPLICATION_FS_NAME/app/APPLICATION_LAUNCHER_FILENAME.cfg
+                    RUNTIME_PATH_TO_SET="$JAVA_HOME"
                 fi
-            else
-                # remove stored value in case of dpkg-reconfigure
-                sed -i "s|app.runtime=.*|app.runtime=|g" /opt/APPLICATION_FS_NAME/app/APPLICATION_LAUNCHER_FILENAME.cfg
             fi
+
+            # always write runtime-location, as it might get removed again when user calls dpkg-reconfigure
+            sed -i "s|app.runtime=.*|app.runtime=$RUNTIME_PATH_TO_SET|g" /opt/APPLICATION_FS_NAME/app/APPLICATION_LAUNCHER_FILENAME.cfg
         fi
     ;;
 
