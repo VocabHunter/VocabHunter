@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.CheckMenuItem?>
@@ -73,27 +74,42 @@
                                         <tooltip>
                                             <Tooltip text="Analyse a document and start a new session" />
                                         </tooltip>
+                                        <graphic>
+                                          <FontAwesomeIconView styleClass="buttonNewIcon" />
+                                        </graphic>
                                     </Button>
                                     <Button fx:id="buttonOpen" mnemonicParsing="false" styleClass="buttonOpen" text="Open">
                                         <tooltip>
                                             <Tooltip text="Open a saved session" />
                                         </tooltip>
+                                        <graphic>
+                                            <FontAwesomeIconView styleClass="buttonOpenIcon" />
+                                        </graphic>
                                     </Button>
                                     <Button fx:id="buttonSave" mnemonicParsing="false" styleClass="buttonSave" text="Save">
                                         <tooltip>
                                             <Tooltip text="Save the session" />
                                         </tooltip>
+                                        <graphic>
+                                            <FontAwesomeIconView styleClass="buttonSaveIcon" />
+                                        </graphic>
                                     </Button>
                                     <Button fx:id="buttonExport" mnemonicParsing="false" styleClass="buttonExport" text="Export Selection">
                                         <tooltip>
                                             <Tooltip text="Export the list of words marked as unknown to a file" />
                                         </tooltip>
+                                        <graphic>
+                                            <FontAwesomeIconView styleClass="buttonExportIcon" />
+                                        </graphic>
                                     </Button>
                                     <Separator orientation="VERTICAL" />
                                     <Button fx:id="buttonSetupFilters" mnemonicParsing="false" styleClass="buttonSetupFilters" text="Setup Filters">
                                         <tooltip>
                                             <Tooltip text="Define the filters that are used to hide words" />
                                         </tooltip>
+                                        <graphic>
+                                            <FontAwesomeIconView styleClass="buttonSetupFiltersIcon" />
+                                        </graphic>
                                     </Button>
                                     <CheckBox fx:id="buttonEnableFilters" mnemonicParsing="false" selected="true" text="Enable Filters">
                                         <tooltip>
@@ -129,8 +145,16 @@
                                <children>
                                    <VBox>
                                        <children>
-                                           <Label styleClass="new" text="Choose 'New' to analyse a document and start a new session." />
-                                           <Label styleClass="open" text="Choose 'Open' to load a saved session." />
+                                           <Label styleClass="new" text="Choose 'New' to analyse a document and start a new session.">
+                                               <graphic>
+                                                   <FontAwesomeIconView styleClass="buttonNewIcon" />
+                                               </graphic>
+                                           </Label>
+                                           <Label styleClass="open" text="Choose 'Open' to load a saved session.">
+                                               <graphic>
+                                                   <FontAwesomeIconView styleClass="buttonOpenIcon" />
+                                               </graphic>
+                                           </Label>
                                        </children>
                                    </VBox>
                                </children>

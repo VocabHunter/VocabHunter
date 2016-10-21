@@ -43,32 +43,47 @@
 .wordList .list-cell:unknown {
     -fx-background-color: -gradient-unknown;
 }
-.buttonSave {
-    -fx-graphic: url("images/buttonSave.png");
+.buttonSaveIcon {
+    -glyph-name: SAVE;
 }
-.buttonOpen {
-    -fx-graphic: url("images/buttonOpen.png");
+.buttonOpenIcon {
+    -glyph-name: FOLDER_OPEN_ALT;
 }
-.buttonNew {
-    -fx-graphic: url("images/buttonNew.png");
+.buttonNewIcon {
+    -glyph-name: FILE_ALT;
 }
-.buttonExport {
-    -fx-graphic: url("images/buttonExport.png");
+.buttonExportIcon {
+    -glyph-name: SHARE_SQUARE_ALT;
 }
-.buttonSetupFilters {
-    -fx-graphic: url("images/buttonFilter.png");
+.buttonSetupFiltersIcon {
+    -glyph-name: FILTER;
+}
+.buttonSaveIcon, .buttonOpenIcon, .buttonNewIcon, .buttonExportIcon, .buttonSetupFiltersIcon {
+    -glyph-size: 24;
 }
 .buttonKnown {
-    -fx-graphic: url("images/known.png");
     -fx-base: -colour-known;
 }
+.buttonKnownIcon {
+    -glyph-name: CHECK_CIRCLE;
+    -fx-fill: -colour-known-end;
+}
 .buttonUnknown {
-    -fx-graphic: url("images/unknown.png");
     -fx-base: -colour-unknown;
 }
+.buttonUnknownIcon {
+    -glyph-name: TIMES_CIRCLE;
+    -fx-fill: -colour-unknown-end;
+}
+.buttonKnownIcon, .buttonUnknownIcon {
+    -glyph-size: 30;
+}
 .buttonUnseen {
-    -fx-graphic: url("images/unseen.png");
     -fx-background-color: transparent;
+}
+.buttonUnseenIcon {
+    -glyph-size: 40;
+    -glyph-name: REFRESH;
 }
 .noSession {
     -fx-font-size: 16;
@@ -122,11 +137,9 @@
     -fx-graphic: url("images/twitter.png");
 }
 .noSession .new {
-    -fx-graphic: url("images/buttonNew.png");
     -fx-padding: 10 0 10 5;
 }
 .noSession .open {
-    -fx-graphic: url("images/buttonOpen.png");
     -fx-padding: 10 0 0 5;
 }
 .wordUse {
