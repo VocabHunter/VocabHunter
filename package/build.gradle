@@ -31,7 +31,7 @@ ext {
     } else if (operatingSystem.isLinux()) {
         packageType = 'deb'
         appIcon = file('icons/App1024.png')
-        sessionIcon = 'icons/Doc1024.png'
+        sessionIcon = 'icons/application-x-vnd.VocabHunterSession.png'
     } else if (operatingSystem.isWindows()) {
         packageType = 'exe'
         appIcon = file('icons/windows/VocabHunter.ico')
@@ -82,6 +82,7 @@ task recreateIcons(dependsOn: [recreateIconMacApp, recreateIconMacSession, recre
 }
 
 jfx {
+    verbose = true
     mainClass = bundleMainClass
     vendor = 'vocabhunter.github.io'
     appName = 'VocabHunter'
@@ -89,7 +90,8 @@ jfx {
     bundler = packageType
     bundleArguments = [
         icon: appIcon,
-        runtime: null
+        runtime: null,
+        installdirChooser: true
     ]
     fileAssociations = [
         [
