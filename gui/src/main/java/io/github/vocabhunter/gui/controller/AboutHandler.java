@@ -14,10 +14,16 @@ import javafx.stage.StageStyle;
 
 import javax.inject.Inject;
 import javax.inject.Provider;
+import javax.inject.Singleton;
 
+@Singleton
 public class AboutHandler {
+    private final Provider<FXMLLoader> loaderProvider;
+
     @Inject
-    private Provider<FXMLLoader> loaderProvider;
+    public AboutHandler(final Provider<FXMLLoader> loaderProvider) {
+        this.loaderProvider = loaderProvider;
+    }
 
     public void show() {
         Stage stage = new Stage();

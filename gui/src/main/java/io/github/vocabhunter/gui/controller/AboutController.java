@@ -17,6 +17,8 @@ import javax.inject.Inject;
 
 @SuppressFBWarnings({"NP_UNWRITTEN_PUBLIC_OR_PROTECTED_FIELD", "UWF_UNWRITTEN_PUBLIC_OR_PROTECTED_FIELD"})
 public class AboutController {
+    private final WebPageTool webPageTool;
+
     public Button buttonClose;
 
     public Hyperlink linkWebsite;
@@ -26,7 +28,9 @@ public class AboutController {
     public Label labelVersion;
 
     @Inject
-    private WebPageTool webPageTool;
+    public AboutController(final WebPageTool webPageTool) {
+        this.webPageTool = webPageTool;
+    }
 
     public void initialise(final Stage stage) {
         buttonClose.setOnAction(e -> stage.close());
