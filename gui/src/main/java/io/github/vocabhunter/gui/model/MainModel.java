@@ -11,9 +11,11 @@ import javafx.beans.property.SimpleStringProperty;
 
 import java.nio.file.Path;
 import java.util.Optional;
+import javax.inject.Singleton;
 
 import static javafx.beans.binding.Bindings.isNotEmpty;
 
+@Singleton
 public class MainModel {
     private final SimpleStringProperty title = new SimpleStringProperty();
 
@@ -36,8 +38,6 @@ public class MainModel {
     private final SimpleObjectProperty<FilterSettings> filterSettings = new SimpleObjectProperty<>();
 
     private final SimpleBooleanProperty enableFilters = new SimpleBooleanProperty(true);
-
-    private final StatusModel statusModel = new StatusModel();
 
     public void replaceSessionModel(final SessionState sessionState, final SessionModel sessionModel, final Path sessionFile) {
         unbindOldSession();
@@ -143,9 +143,5 @@ public class MainModel {
 
     public Optional<SessionModel> getSessionModel() {
         return Optional.ofNullable(sessionModel);
-    }
-
-    public StatusModel getStatusModel() {
-        return statusModel;
     }
 }

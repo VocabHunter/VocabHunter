@@ -5,32 +5,27 @@
 package io.github.vocabhunter.gui.controller;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
-import io.github.vocabhunter.analysis.core.GuiTaskHandler;
-import io.github.vocabhunter.analysis.settings.FileListManager;
 import io.github.vocabhunter.gui.common.GuiConstants;
-import io.github.vocabhunter.gui.dialogues.AboutDialogue;
-import io.github.vocabhunter.gui.dialogues.SettingsDialogue;
+import io.github.vocabhunter.gui.event.ExternalEventSource;
 import io.github.vocabhunter.gui.model.MainModel;
-import io.github.vocabhunter.gui.model.SessionModel;
 import io.github.vocabhunter.gui.model.StatusModel;
 import io.github.vocabhunter.gui.services.EnvironmentManager;
-import io.github.vocabhunter.gui.services.SessionFileService;
 import io.github.vocabhunter.gui.services.WebPageTool;
-import io.github.vocabhunter.gui.settings.SettingsManager;
-import io.github.vocabhunter.gui.settings.WindowSettings;
 import io.github.vocabhunter.gui.status.StatusManager;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.*;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
-import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import org.controlsfx.control.StatusBar;
 
+import javax.inject.Inject;
+import javax.inject.Singleton;
+
 import static javafx.beans.binding.Bindings.not;
 
+@Singleton
 @SuppressFBWarnings({"NP_UNWRITTEN_PUBLIC_OR_PROTECTED_FIELD", "UWF_UNWRITTEN_PUBLIC_OR_PROTECTED_FIELD"})
 public class MainController {
     public MenuItem menuNew;
@@ -83,32 +78,41 @@ public class MainController {
 
     public Pane maskerPane;
 
-    private Stage stage;
+    @Inject
+    private AboutHandler aboutHandler;
 
-    private GuiFactory factory;
-
-    private SettingsManager settingsManager;
-
+    @Inject
     private StatusManager statusManager;
 
+    @Inject
     private MainModel model;
 
+    @Inject
+    private StatusModel statusModel;
+
+    @Inject
+    private EnvironmentManager environmentManager;
+
+    @Inject
+    private WebPageTool webPageTool;
+
+    @Inject
     private SessionStateHandler sessionStateHandler;
 
+    @Inject
     private GuiFileHandler guiFileHandler;
 
-    @SuppressWarnings("PMD.ExcessiveParameterList")
-    public void initialise(final Stage stage, final GuiFactory factory, final SessionFileService sessionFileService, final SettingsManager settingsManager,
-                           final FileListManager fileListManager, final EnvironmentManager environmentManager, final StatusManager statusManager,
-                           final WebPageTool webPageTool, final GuiTaskHandler guiTaskHandler, final MainModel model) {
-        this.model = model;
-        this.stage = stage;
-        this.factory = factory;
-        this.settingsManager = settingsManager;
-        this.statusManager = statusManager;
+    @Inject
+    private SettingsHandler settingsHandler;
 
-        sessionStateHandler = new SessionStateHandler(mainBorderPane, factory, settingsManager, model);
-        guiFileHandler = new GuiFileHandler(stage, factory, sessionFileService, statusManager, model, sessionStateHandler, guiTaskHandler);
+    @Inject
+    private ExternalEventSource externalEventSource;
+
+    @Inject
+    private ExitRequestHandler exitRequestHandler;
+
+    public void initialise() {
+        sessionStateHandler.initialise(mainBorderPane);
 
         buildToggleGroup(buttonEditOn, buttonEditOff);
         buildToggleGroup(menuEditOn, menuEditOff);
@@ -141,33 +145,20 @@ public class MainController {
         menuIssue.setOnAction(e -> webPageTool.showWebPage(GuiConstants.WEBPAGE_ISSUE));
         menuAbout.setOnAction(e -> processAbout());
 
-        factory.getExternalEventSource().setListener(e -> guiFileHandler.processOpenOrNew(e.getFile()));
+        externalEventSource.setListener(e -> guiFileHandler.processOpenOrNew(e.getFile()));
 
-        prepareTitleHandler();
-        prepareFilterHandler(settingsManager, fileListManager);
+        prepareFilterEnable();
         prepareStatusInformation();
 
         menuBar.setUseSystemMenuBar(environmentManager.useSystemMenuBar());
     }
 
-    private void prepareTitleHandler() {
-        TitleHandler handler = new TitleHandler(model);
-
-        handler.prepare();
-        stage.titleProperty().bind(model.titleProperty());
-    }
-
-    private void prepareFilterHandler(final SettingsManager settingsManager, final FileListManager fileListManager) {
-        FilterHandler handler = new FilterHandler(model, settingsManager, fileListManager);
-
-        handler.prepare();
+    private void prepareFilterEnable() {
         buttonEnableFilters.selectedProperty().bindBidirectional(menuEnableFilters.selectedProperty());
         buttonEnableFilters.selectedProperty().bindBidirectional(model.enableFiltersProperty());
     }
 
     private void prepareStatusInformation() {
-        StatusModel statusModel = model.getStatusModel();
-
         statusBar.textProperty().bind(statusModel.textProperty());
         statusBar.progressProperty().bind(statusModel.activityProperty());
         statusBar.getRightItems().add(MiniGraphTool.miniGraph(statusModel));
@@ -194,26 +185,18 @@ public class MainController {
     }
 
     private void processSetupFilters() {
-        SettingsDialogue dialogue = factory.settingsDialogue(model);
-
-        dialogue.show();
+        settingsHandler.show();
     }
 
     public void processAbout() {
         if (statusManager.beginAbout()) {
             try {
-                AboutDialogue dialogue = factory.aboutDialogue();
-
-                dialogue.show();
+                aboutHandler.show();
                 statusManager.markSuccess();
             } finally {
                 statusManager.completeAction();
             }
         }
-    }
-
-    public EventHandler<KeyEvent> getKeyPressHandler() {
-        return this::handleKeyEvent;
     }
 
     public EventHandler<WindowEvent> getCloseRequestHandler() {
@@ -223,41 +206,12 @@ public class MainController {
     private void processCloseRequest(final WindowEvent e) {
         if (statusManager.beginExit()) {
             try {
-                if (handleExitRequest(e)) {
+                if (exitRequestHandler.handleExitRequest(e)) {
                     statusManager.markSuccess();
                 }
             } finally {
                 statusManager.completeAction();
             }
         }
-    }
-
-    private boolean handleExitRequest(final WindowEvent e) {
-        boolean isContinue = guiFileHandler.unsavedChangesCheck();
-
-        if (isContinue) {
-            WindowSettings windowSettings = new WindowSettings();
-
-            windowSettings.setX(stage.getX());
-            windowSettings.setY(stage.getY());
-            windowSettings.setWidth(stage.getWidth());
-            windowSettings.setHeight(stage.getHeight());
-            model.getSessionModel().ifPresent(s -> saveSplitPositions(windowSettings, s));
-
-            settingsManager.setWindowSettings(windowSettings);
-        } else {
-            e.consume();
-        }
-
-        return isContinue;
-    }
-
-    private void saveSplitPositions(final WindowSettings windowSettings, final SessionModel sessionModel) {
-        windowSettings.setSplitUsePosition(sessionModel.getSplitUsePosition());
-        windowSettings.setSplitWordPosition(sessionModel.getSplitWordPosition());
-    }
-
-    private void handleKeyEvent(final KeyEvent event) {
-        sessionStateHandler.getKeyPressHandler().ifPresent(k -> k.handle(event));
     }
 }

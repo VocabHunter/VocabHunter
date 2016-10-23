@@ -4,6 +4,9 @@
 
 package io.github.vocabhunter.analysis.core;
 
+import javax.inject.Singleton;
+
+@Singleton
 public class GuiTaskHandlerForTesting implements GuiTaskHandler {
     @Override
     public void executeInBackground(final Runnable task) {

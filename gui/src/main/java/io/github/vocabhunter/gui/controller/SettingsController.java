@@ -6,6 +6,8 @@ package io.github.vocabhunter.gui.controller;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import io.github.vocabhunter.gui.dialogues.FileDialogue;
+import io.github.vocabhunter.gui.dialogues.FileDialogueFactory;
+import io.github.vocabhunter.gui.dialogues.FileDialogueType;
 import io.github.vocabhunter.gui.model.*;
 import io.github.vocabhunter.gui.view.FilterFileCell;
 import javafx.beans.property.ReadOnlyBooleanProperty;
@@ -22,6 +24,7 @@ import java.util.List;
 import java.util.function.BooleanSupplier;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
+import javax.inject.Inject;
 
 @SuppressFBWarnings({"NP_UNWRITTEN_PUBLIC_OR_PROTECTED_FIELD", "UWF_UNWRITTEN_PUBLIC_OR_PROTECTED_FIELD"})
 public class SettingsController {
@@ -41,17 +44,17 @@ public class SettingsController {
 
     public Button buttonCancel;
 
+    @Inject
     private MainModel model;
 
-    private GuiFactory factory;
+    @Inject
+    private FileDialogueFactory factory;
 
     private Stage stage;
 
     private FilterFileListModel filterFilesModel;
 
-    public void initialise(final MainModel model, final GuiFactory factory, final Stage stage) {
-        this.model = model;
-        this.factory = factory;
+    public void initialise(final Stage stage) {
         this.stage = stage;
 
         buttonOk.setOnAction(e -> exit(true));
@@ -73,7 +76,7 @@ public class SettingsController {
     }
 
     private void processAddFile() {
-        FileDialogue dialogue = factory.openSessionChooser(stage);
+        FileDialogue dialogue = factory.create(FileDialogueType.OPEN_SESSION, stage);
 
         dialogue.showChooser();
         if (dialogue.isFileSelected()) {

@@ -13,6 +13,8 @@ import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
 
+import javax.inject.Inject;
+
 @SuppressFBWarnings({"NP_UNWRITTEN_PUBLIC_OR_PROTECTED_FIELD", "UWF_UNWRITTEN_PUBLIC_OR_PROTECTED_FIELD"})
 public class AboutController {
     public Button buttonClose;
@@ -23,7 +25,10 @@ public class AboutController {
 
     public Label labelVersion;
 
-    public void initialise(final Stage stage, final WebPageTool webPageTool) {
+    @Inject
+    private WebPageTool webPageTool;
+
+    public void initialise(final Stage stage) {
         buttonClose.setOnAction(e -> stage.close());
         linkWebsite.setOnAction(e -> webPageTool.showWebPage(GuiConstants.WEBSITE));
         linkTwitter.setOnAction(e -> webPageTool.showWebPage(GuiConstants.TWITTER));

@@ -9,7 +9,10 @@ import io.github.vocabhunter.gui.settings.SettingsManager;
 import io.github.vocabhunter.gui.settings.WindowSettings;
 
 import java.util.Optional;
+import javax.inject.Inject;
+import javax.inject.Singleton;
 
+@Singleton
 public class PlacementManagerImpl implements PlacementManager {
     private static final double WINDOW_SIZE_FACTOR = 0.85;
 
@@ -17,6 +20,7 @@ public class PlacementManagerImpl implements PlacementManager {
 
     private final SettingsManager settingsManager;
 
+    @Inject
     public PlacementManagerImpl(final EnvironmentManager environmentManager, final SettingsManager settingsManager) {
         this.environmentManager = environmentManager;
         this.settingsManager = settingsManager;

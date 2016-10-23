@@ -9,6 +9,9 @@ import javafx.collections.ObservableList;
 import javafx.geometry.Rectangle2D;
 import javafx.stage.Screen;
 
+import javax.inject.Singleton;
+
+@Singleton
 public class EnvironmentManagerImpl implements EnvironmentManager {
     @Override
     public Placement getScreenSize() {

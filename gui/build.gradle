@@ -37,7 +37,7 @@ startScripts {
 
 dependencies {
     compile project(':core')
-    compile 'org.picocontainer:picocontainer:2.15'
+    compile 'com.gluonhq:ignite-guice:1.0.1'
     compile 'org.controlsfx:controlsfx:8.40.12'
     testCompile project(path: ':core', configuration: 'tests')
     testCompile 'org.testfx:testfx-core:4.0.4-alpha'

@@ -8,11 +8,16 @@ import io.github.vocabhunter.gui.common.GuiConstants;
 import io.github.vocabhunter.gui.model.MainModel;
 import javafx.beans.value.ChangeListener;
 
+import javax.inject.Inject;
+import javax.inject.Singleton;
+
+@Singleton
 public class TitleHandler {
     private static final int TITLE_BUFFER_SIZE = 100;
 
     private final MainModel model;
 
+    @Inject
     public TitleHandler(final MainModel model) {
         this.model = model;
     }

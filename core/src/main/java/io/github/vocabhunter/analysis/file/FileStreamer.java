@@ -31,14 +31,18 @@ import java.time.Duration;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
+import javax.inject.Inject;
+import javax.inject.Singleton;
 
 import static io.github.vocabhunter.analysis.core.CoreConstants.LOCALE;
 
+@Singleton
 public class FileStreamer {
     private static final Logger LOG = LoggerFactory.getLogger(FileStreamer.class);
 
     private final Analyser analyser;
 
+    @Inject
     public FileStreamer(final Analyser analyser) {
         this.analyser = analyser;
     }

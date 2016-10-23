@@ -19,23 +19,29 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
 
 import java.util.Optional;
+import javax.inject.Inject;
+import javax.inject.Singleton;
 
+@Singleton
 public class SessionStateHandler {
-    private final BorderPane mainBorderPane;
+    @Inject
+    private SettingsManager settingsManager;
 
-    private final GuiFactory factory;
+    @Inject
+    private MainModel model;
 
-    private final SettingsManager settingsManager;
+    @Inject
+    private SessionProvider sessionProvider;
 
-    private final MainModel model;
+    @Inject
+    private ProgressProvider progressProvider;
+
+    private BorderPane mainBorderPane;
 
     private EventHandler<KeyEvent> keyPressHandler;
 
-    public SessionStateHandler(final BorderPane mainBorderPane, final GuiFactory factory, final SettingsManager settingsManager, final MainModel model) {
+    public void initialise(final BorderPane mainBorderPane) {
         this.mainBorderPane = mainBorderPane;
-        this.factory = factory;
-        this.settingsManager = settingsManager;
-        this.model = model;
     }
 
     public SessionState getSessionState() {
@@ -46,15 +52,25 @@ public class SessionStateHandler {
         SessionViewTool viewTool = new SessionViewTool();
         SessionModelTool sessionTool = new SessionModelTool(state, model.getFilterSettings(), viewTool.selectedProperty(), settingsManager.getWindowSettings().orElseGet(WindowSettings::new));
         SessionModel sessionModel = sessionTool.buildModel();
-        ControllerAndView<SessionController, Node> cav = factory.session(sessionModel);
+        ControllerAndView<SessionController, Node> cav = sessionProvider.get();
+        SessionController controller = cav.getController();
 
+        controller.initialise(sessionModel);
         viewTool.setTabContent(SessionTab.ANALYSIS, cav.getView());
-        viewTool.setTabContent(SessionTab.PROGRESS, factory.progress(sessionModel.getProgress()));
+        viewTool.setTabContent(SessionTab.PROGRESS, progressView(sessionModel));
         mainBorderPane.setCenter(viewTool.getView());
 
-        keyPressHandler = cav.getController().getKeyPressHandler();
+        keyPressHandler = controller.getKeyPressHandler();
 
         return sessionModel;
+    }
+
+    private Node progressView(final SessionModel sessionModel) {
+        ControllerAndView<ProgressController, Node> cav = progressProvider.get();
+
+        cav.getController().initialise(sessionModel.getProgress());
+
+        return cav.getView();
     }
 
     public Optional<EventHandler<KeyEvent>> getKeyPressHandler() {

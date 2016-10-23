@@ -8,9 +8,7 @@ import io.github.vocabhunter.analysis.core.GuiTaskHandler;
 import io.github.vocabhunter.analysis.session.EnrichedSessionState;
 import io.github.vocabhunter.analysis.session.FileNameTool;
 import io.github.vocabhunter.analysis.session.SessionState;
-import io.github.vocabhunter.gui.dialogues.FileDialogue;
-import io.github.vocabhunter.gui.dialogues.FileErrorTool;
-import io.github.vocabhunter.gui.dialogues.UnsavedChangesDialogue;
+import io.github.vocabhunter.gui.dialogues.*;
 import io.github.vocabhunter.gui.model.MainModel;
 import io.github.vocabhunter.gui.model.SessionModel;
 import io.github.vocabhunter.gui.services.SessionFileService;
@@ -21,34 +19,35 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.nio.file.Path;
-import java.util.function.Function;
+import javax.inject.Inject;
+import javax.inject.Singleton;
 
+@Singleton
 public class GuiFileHandler {
     private static final Logger LOG = LoggerFactory.getLogger(GuiFileHandler.class);
 
-    private final Stage stage;
+    private Stage stage;
 
-    private final GuiFactory factory;
+    @Inject
+    private FileDialogueFactory fileDialogueFactory;
 
-    private final SessionFileService sessionFileService;
+    @Inject
+    private SessionFileService sessionFileService;
 
-    private final StatusManager statusManager;
+    @Inject
+    private StatusManager statusManager;
 
-    private final MainModel model;
+    @Inject
+    private MainModel model;
 
-    private final SessionStateHandler sessionStateHandler;
+    @Inject
+    private SessionStateHandler sessionStateHandler;
 
-    private final GuiTaskHandler guiTaskHandler;
+    @Inject
+    private GuiTaskHandler guiTaskHandler;
 
-    public GuiFileHandler(final Stage stage, final GuiFactory factory, final SessionFileService sessionFileService, final StatusManager statusManager,
-                          final MainModel model, final SessionStateHandler sessionStateHandler, final GuiTaskHandler guiTaskHandler) {
+    public void initialise(final Stage stage) {
         this.stage = stage;
-        this.factory = factory;
-        this.sessionFileService = sessionFileService;
-        this.statusManager = statusManager;
-        this.model = model;
-        this.sessionStateHandler = sessionStateHandler;
-        this.guiTaskHandler = guiTaskHandler;
     }
 
     public void handleExport() {
@@ -58,7 +57,7 @@ public class GuiFileHandler {
     }
 
     private void processExport() {
-        Path file = chooseFile(factory::exportSelectionChooser);
+        Path file = chooseFile(FileDialogueType.EXPORT_SELECTION);
 
         if (file == null) {
             statusManager.completeAction();
@@ -115,7 +114,7 @@ public class GuiFileHandler {
     }
 
     private void processOpenSession() {
-        Path file = checkUnsavedChangesAndChooseFile(factory::openSessionChooser);
+        Path file = checkUnsavedChangesAndChooseFile(FileDialogueType.OPEN_SESSION);
 
         if (file == null) {
             statusManager.completeAction();
@@ -141,7 +140,7 @@ public class GuiFileHandler {
     }
 
     private void processNewSession() {
-        Path file = checkUnsavedChangesAndChooseFile(factory::newSessionChooser);
+        Path file = checkUnsavedChangesAndChooseFile(FileDialogueType.NEW_SESSION);
 
         if (file == null) {
             statusManager.completeAction();
@@ -185,7 +184,7 @@ public class GuiFileHandler {
     }
 
     private void processSaveAs() {
-        Path file = chooseFile(factory::saveSessionChooser);
+        Path file = chooseFile(FileDialogueType.SAVE_SESSION);
 
         if (file == null) {
             statusManager.completeAction();
@@ -220,16 +219,16 @@ public class GuiFileHandler {
         return true;
     }
 
-    private Path checkUnsavedChangesAndChooseFile(final Function<Stage, FileDialogue> f) {
+    private Path checkUnsavedChangesAndChooseFile(final FileDialogueType type) {
         if (unsavedChangesCheck()) {
-            return chooseFile(f);
+            return chooseFile(type);
         } else {
             return null;
         }
     }
 
-    private Path chooseFile(final Function<Stage, FileDialogue> f) {
-        FileDialogue dialogue = f.apply(stage);
+    private Path chooseFile(final FileDialogueType type) {
+        FileDialogue dialogue = fileDialogueFactory.create(type, stage);
 
         dialogue.showChooser();
         if (dialogue.isFileSelected()) {
@@ -243,7 +242,7 @@ public class GuiFileHandler {
         if (model.isChangesSaved()) {
             return true;
         } else {
-            UnsavedChangesDialogue dialogue = factory.unsavedChangesDialogue(model);
+            UnsavedChangesDialogue dialogue = new UnsavedChangesDialogue(model.getSessionFile());
 
             dialogue.showDialogue();
 
@@ -269,7 +268,7 @@ public class GuiFileHandler {
     }
 
     private boolean saveChangesAs() {
-        Path file = chooseFile(factory::saveSessionChooser);
+        Path file = chooseFile(FileDialogueType.SAVE_SESSION);
 
         if (file == null) {
             return false;

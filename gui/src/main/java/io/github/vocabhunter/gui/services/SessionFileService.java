@@ -11,10 +11,14 @@ import io.github.vocabhunter.analysis.session.SessionSerialiser;
 import io.github.vocabhunter.analysis.session.SessionState;
 
 import java.nio.file.Path;
+import javax.inject.Inject;
+import javax.inject.Singleton;
 
+@Singleton
 public class SessionFileService {
     private final FileStreamer streamer;
 
+    @Inject
     public SessionFileService(final FileStreamer streamer) {
         this.streamer = streamer;
     }

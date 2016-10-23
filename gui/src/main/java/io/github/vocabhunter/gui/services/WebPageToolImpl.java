@@ -11,7 +11,9 @@ import org.slf4j.LoggerFactory;
 import java.awt.*;
 import java.net.URI;
 import java.util.concurrent.ExecutorService;
+import javax.inject.Singleton;
 
+@Singleton
 public final class WebPageToolImpl implements WebPageTool {
     private static final Logger LOG = LoggerFactory.getLogger(WebPageToolImpl.class);
 

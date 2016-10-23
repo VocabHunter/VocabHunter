@@ -9,7 +9,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.concurrent.ExecutorService;
+import javax.inject.Singleton;
 
+@Singleton
 public class GuiTaskHandlerImpl implements GuiTaskHandler {
     private static final Logger LOG = LoggerFactory.getLogger(GuiTaskHandlerImpl.class);
 

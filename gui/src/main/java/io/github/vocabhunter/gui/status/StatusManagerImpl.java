@@ -18,8 +18,12 @@ import java.nio.file.Path;
 import java.text.MessageFormat;
 import java.util.concurrent.atomic.AtomicBoolean;
 
+import javax.inject.Inject;
+import javax.inject.Singleton;
+
 import static javafx.beans.binding.Bindings.*;
 
+@Singleton
 public class StatusManagerImpl implements StatusManager {
     private static final Logger LOG = LoggerFactory.getLogger(StatusManagerImpl.class);
 
@@ -53,7 +57,8 @@ public class StatusManagerImpl implements StatusManager {
 
     private final AtomicBoolean gatekeeper = new AtomicBoolean();
 
-    public void initialise(final StatusModel model) {
+    @Inject
+    public void setStatusModel(final StatusModel model) {
         model.textProperty().bind(when(busy).then(actionDescription).otherwise(positionDescription));
         model.busyProperty().bind(busy);
         model.activityProperty().bind(when(busy).then(-1).otherwise(0));

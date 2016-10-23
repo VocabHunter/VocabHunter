@@ -4,12 +4,13 @@
 
 package io.github.vocabhunter.osx.distribution;
 
+import io.github.vocabhunter.gui.main.CoreGuiModule;
+import io.github.vocabhunter.gui.main.LiveGuiModule;
 import io.github.vocabhunter.gui.main.VocabHunterGuiExecutable;
-
-import static io.github.vocabhunter.osx.OsxGuiContainerBuilder.createGuiContainer;
+import io.github.vocabhunter.osx.OsxEventSourceModule;
 
 public class OsxPackagedVocabHunter extends VocabHunterGuiExecutable {
     public static void main(final String... args) {
-        VocabHunterGuiExecutable.runApp(args, createGuiContainer(args), a -> launch(a));
+        runApp(args, a -> launch(a), new CoreGuiModule(), new LiveGuiModule(), new OsxEventSourceModule(args));
     }
 }

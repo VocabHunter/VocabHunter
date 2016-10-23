@@ -4,7 +4,10 @@
 
 package io.github.vocabhunter.gui.main;
 
+import com.google.inject.AbstractModule;
+import com.google.inject.Module;
 import io.github.vocabhunter.analysis.core.CoreConstants;
+import io.github.vocabhunter.analysis.core.GuiTaskHandler;
 import io.github.vocabhunter.analysis.core.GuiTaskHandlerForTesting;
 import io.github.vocabhunter.analysis.core.VocabHunterException;
 import io.github.vocabhunter.analysis.session.EnrichedSessionState;
@@ -31,7 +34,6 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-import org.picocontainer.MutablePicoContainer;
 import org.testfx.api.FxRobot;
 
 import java.io.IOException;
@@ -118,15 +120,20 @@ public class GuiTest extends FxRobot implements GuiTestValidator {
         Path fileListManagerFile = manager.addFile(FileListManagerImpl.SETTINGS_JSON);
         FileListManager fileListManager = new FileListManagerImpl(fileListManagerFile);
 
-        MutablePicoContainer pico = GuiContainerBuilder.createBaseContainer();
-        pico.addComponent(settingsManager);
-        pico.addComponent(fileListManager);
-        pico.addComponent(fileDialogueFactory);
-        pico.addComponent(environmentManager);
-        pico.addComponent(placementManager);
-        pico.addComponent(webPageTool);
-        pico.addComponent(new GuiTaskHandlerForTesting());
-        VocabHunterGuiExecutable.setPico(pico);
+        CoreGuiModule coreModule = new CoreGuiModule();
+        Module testModule = new AbstractModule() {
+            @Override
+            protected void configure() {
+                bind(SettingsManager.class).toInstance(settingsManager);
+                bind(FileListManager.class).toInstance(fileListManager);
+                bind(FileDialogueFactory.class).toInstance(fileDialogueFactory);
+                bind(EnvironmentManager.class).toInstance(environmentManager);
+                bind(PlacementManager.class).toInstance(placementManager);
+                bind(WebPageTool.class).toInstance(webPageTool);
+                bind(GuiTaskHandler.class).to(GuiTaskHandlerForTesting.class);
+            }
+        };
+        VocabHunterGuiExecutable.setModules(coreModule, testModule, new StandardEventSourceModule());
 
         setupApplication(VocabHunterGuiExecutable.class);
     }

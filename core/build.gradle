@@ -22,4 +22,5 @@ dependencies {
     compile 'org.apache.tika:tika-parsers:1.13'
     compile 'org.slf4j:slf4j-api:1.7.21'
     compile 'com.google.code.findbugs:annotations:3.0.1'
+    compile 'javax.inject:javax.inject:1'
 }
