@@ -82,7 +82,6 @@ task recreateIcons(dependsOn: [recreateIconMacApp, recreateIconMacSession, recre
 }
 
 jfx {
-    verbose = true
     mainClass = bundleMainClass
     vendor = 'vocabhunter.github.io'
     appName = 'VocabHunter'
