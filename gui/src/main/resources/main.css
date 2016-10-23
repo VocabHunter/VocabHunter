@@ -11,6 +11,7 @@
    -colour-done: royalblue;
    -colour-remaining: lightcoral;
    -colour-unseen-unfiltered: powderblue;
+   -colour-about-link: #0095C9;
 }
 
 .mainWord {
@@ -130,11 +131,15 @@
     -fx-font-size: 20;
     -fx-padding: 7 0 7 0;
 }
-.about .website {
-    -fx-graphic: url("images/home.png");
+.websiteIcon {
+    -glyph-name: HOME;
 }
-.about .twitter {
-    -fx-graphic: url("images/twitter.png");
+.twitterIcon {
+    -glyph-name: TWITTER;
+}
+.websiteIcon, .twitterIcon {
+    -fx-fill: -colour-about-link;
+    -glyph-size: 30;
 }
 .noSession .new {
     -fx-padding: 10 0 10 5;
