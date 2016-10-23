@@ -16,7 +16,7 @@ artifacts {
 }
 
 dependencies {
-    compile 'org.apache.commons:commons-lang3:3.4'
+    compile 'org.apache.commons:commons-lang3:3.5'
     compile 'com.fasterxml.jackson.core:jackson-databind:2.8.2'
     compile 'commons-io:commons-io:2.5'
     compile 'org.apache.tika:tika-parsers:1.13'
