@@ -24,7 +24,7 @@ public class TitleHandlerTest {
 
     @Before
     public void setUp() {
-        target.prepare();
+        target.initialise();
     }
 
     @Test

@@ -73,10 +73,10 @@ public class VocabHunterGui {
         mainController.initialise();
         guiFileHandler.initialise(stage);
         exitRequestHandler.initialise(stage);
+        titleHandler.initialise();
+        filterHandler.initialise();
 
-        titleHandler.prepare();
         stage.titleProperty().bind(model.titleProperty());
-        filterHandler.prepare();
     }
 
     private void handleKeyEvent(final KeyEvent event) {

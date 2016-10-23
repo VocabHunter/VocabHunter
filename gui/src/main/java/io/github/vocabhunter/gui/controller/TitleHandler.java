@@ -22,7 +22,7 @@ public class TitleHandler {
         this.model = model;
     }
 
-    public void prepare() {
+    public void initialise() {
         ChangeListener<Object> listener = (o, old, v) -> updateTitle();
 
         model.sessionFileProperty().addListener(listener);

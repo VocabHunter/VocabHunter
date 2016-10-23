@@ -36,7 +36,7 @@ public class FilterHandler {
         this.fileListManager = fileListManager;
     }
 
-    public void prepare() {
+    public void initialise() {
         int minimumLetters = settingsManager.getFilterMinimumLetters();
         int minimumOccurrences = settingsManager.getFilterMinimumOccurrences();
         boolean allowInitialCapitals = settingsManager.isAllowInitialCapitals();
