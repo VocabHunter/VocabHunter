@@ -42,7 +42,7 @@ public class VocabHunterGuiExecutable extends Application {
     }
 
     public static void main(final String... args) {
-        runApp(args, a -> launch(a), new CoreGuiModule(), new LiveGuiModule(), new StandardEventSourceModule(args));
+        runApp(args, Application::launch, new CoreGuiModule(), new LiveGuiModule(), new StandardEventSourceModule(args));
     }
 
     protected static void runApp(final String[] args, final Consumer<String[]> launcher, final Module... modules) {

@@ -2,6 +2,9 @@
  * Open Source Software published under the Apache Licence, Version 2.0.
  */
 
+import io.github.vocabhunter.gui.main.CoreGuiModule;
+import io.github.vocabhunter.gui.main.LiveGuiModule;
+import io.github.vocabhunter.gui.main.StandardEventSourceModule;
 import io.github.vocabhunter.gui.main.VocabHunterGuiExecutable;
 
 /**
@@ -10,6 +13,9 @@ import io.github.vocabhunter.gui.main.VocabHunterGuiExecutable;
  */
 public class VocabHunter extends VocabHunterGuiExecutable {
     public static void main(final String... args) {
-        VocabHunterGuiExecutable.main(args);
+        runApp(
+            args,
+            a -> launch(a), // This should remain as a lambda, to keep the short name for the quit menu item
+            new CoreGuiModule(), new LiveGuiModule(), new StandardEventSourceModule(args));
     }
 }

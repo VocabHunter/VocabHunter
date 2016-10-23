@@ -7,7 +7,5 @@ package io.github.vocabhunter.gui.distribution;
 import io.github.vocabhunter.gui.main.VocabHunterGuiExecutable;
 
 public class PackagedVocabHunter extends VocabHunterGuiExecutable {
-    public static void main(final String... args) {
-        VocabHunterGuiExecutable.main(args);
-    }
+    // All behaviour is inherited from the super class
 }
