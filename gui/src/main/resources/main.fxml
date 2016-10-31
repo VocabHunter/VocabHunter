@@ -15,8 +15,11 @@
 <?import javafx.scene.control.ToolBar?>
 <?import javafx.scene.control.Tooltip?>
 <?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Text?>
@@ -143,20 +146,30 @@
                            </HBox>
                            <HBox alignment="CENTER">
                                <children>
-                                   <VBox>
+                                    <GridPane>
+                                      <columnConstraints>
+                                        <ColumnConstraints hgrow="NEVER" />
+                                        <ColumnConstraints hgrow="ALWAYS" />
+                                      </columnConstraints>
+                                      <rowConstraints>
+                                        <RowConstraints />
+                                        <RowConstraints />
+                                      </rowConstraints>
                                        <children>
-                                           <Label styleClass="new" text="Choose 'New' to analyse a document and start a new session.">
-                                               <graphic>
-                                                   <FontAwesomeIconView styleClass="buttonNewIcon" />
-                                               </graphic>
-                                           </Label>
-                                           <Label styleClass="open" text="Choose 'Open' to load a saved session.">
-                                               <graphic>
-                                                   <FontAwesomeIconView styleClass="buttonOpenIcon" />
-                                               </graphic>
-                                           </Label>
+                                          <Label styleClass="new">
+                                              <graphic>
+                                                  <FontAwesomeIconView styleClass="buttonNewIcon" />
+                                              </graphic>
+                                          </Label>
+                                           <Label styleClass="new" text="Choose 'New' to analyse a document and start a new session." GridPane.columnIndex="1" />
+                                          <Label styleClass="open" GridPane.rowIndex="1" >
+                                              <graphic>
+                                                  <FontAwesomeIconView styleClass="buttonOpenIcon" />
+                                              </graphic>
+                                          </Label>
+                                           <Label styleClass="open" text="Choose 'Open' to load a saved session." GridPane.columnIndex="1" GridPane.rowIndex="1" />
                                        </children>
-                                   </VBox>
+                                    </GridPane>
                                </children>
                            </HBox>
                        </children>
