@@ -11,9 +11,14 @@ import io.github.vocabhunter.gui.dialogues.FileDialogueType;
 import io.github.vocabhunter.gui.settings.SettingsManager;
 import javafx.stage.Stage;
 
+import javax.inject.Inject;
+import javax.inject.Singleton;
+
+@Singleton
 public class FileDialogueFactoryImpl implements FileDialogueFactory {
     private final SettingsManager settingsManager;
 
+    @Inject
     public FileDialogueFactoryImpl(final SettingsManager settingsManager) {
         this.settingsManager = settingsManager;
     }

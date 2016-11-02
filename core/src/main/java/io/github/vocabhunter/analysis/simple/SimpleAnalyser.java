@@ -15,8 +15,11 @@ import java.util.Optional;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
+import javax.inject.Singleton;
+
 import static java.util.stream.Collectors.*;
 
+@Singleton
 public class SimpleAnalyser implements Analyser {
     @Override
     public AnalysisResult analyse(final List<String> lines, final String name) {

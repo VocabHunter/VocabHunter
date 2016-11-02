@@ -6,11 +6,11 @@ import org.gradle.internal.os.OperatingSystem;
 
 buildscript {
     repositories {
-        mavenCentral()
+        jcenter()
     }
 
     dependencies {
-        classpath 'de.dynamicfiles.projects.gradle.plugins:javafx-gradle-plugin:8.6.0'
+        classpath 'de.dynamicfiles.projects.gradle.plugins:javafx-gradle-plugin:8.7.0'
     }
 }
 
@@ -31,7 +31,7 @@ ext {
     } else if (operatingSystem.isLinux()) {
         packageType = 'deb'
         appIcon = file('icons/App1024.png')
-        sessionIcon = 'icons/Doc1024.png'
+        sessionIcon = 'icons/application-x-vnd.VocabHunterSession.png'
     } else if (operatingSystem.isWindows()) {
         packageType = 'exe'
         appIcon = file('icons/windows/VocabHunter.ico')
@@ -89,7 +89,8 @@ jfx {
     bundler = packageType
     bundleArguments = [
         icon: appIcon,
-        runtime: null
+        runtime: null,
+        installdirChooser: true
     ]
     fileAssociations = [
         [

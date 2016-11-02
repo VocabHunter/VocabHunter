@@ -16,8 +16,12 @@ import io.github.vocabhunter.gui.settings.SettingsManager;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import javax.inject.Inject;
+import javax.inject.Singleton;
+
 import static io.github.vocabhunter.gui.model.FilterFileMode.getMode;
 
+@Singleton
 public class FilterHandler {
     private final MainModel model;
 
@@ -25,13 +29,14 @@ public class FilterHandler {
 
     private final FileListManager fileListManager;
 
+    @Inject
     public FilterHandler(final MainModel model, final SettingsManager settingsManager, final FileListManager fileListManager) {
         this.model = model;
         this.settingsManager = settingsManager;
         this.fileListManager = fileListManager;
     }
 
-    public void prepare() {
+    public void initialise() {
         int minimumLetters = settingsManager.getFilterMinimumLetters();
         int minimumOccurrences = settingsManager.getFilterMinimumOccurrences();
         boolean allowInitialCapitals = settingsManager.isAllowInitialCapitals();

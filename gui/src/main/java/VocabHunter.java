@@ -2,9 +2,10 @@
  * Open Source Software published under the Apache Licence, Version 2.0.
  */
 
+import io.github.vocabhunter.gui.main.CoreGuiModule;
+import io.github.vocabhunter.gui.main.LiveGuiModule;
+import io.github.vocabhunter.gui.main.StandardEventSourceModule;
 import io.github.vocabhunter.gui.main.VocabHunterGuiExecutable;
-
-import static io.github.vocabhunter.gui.main.GuiContainerBuilder.createGuiContainer;
 
 /**
  * This class is used instead of VocabHunterGuiExecutable to avoid showing the package name in the JavaFX menu.
@@ -12,6 +13,9 @@ import static io.github.vocabhunter.gui.main.GuiContainerBuilder.createGuiContai
  */
 public class VocabHunter extends VocabHunterGuiExecutable {
     public static void main(final String... args) {
-        VocabHunterGuiExecutable.runApp(args, createGuiContainer(args), a -> launch(a));
+        runApp(
+            args,
+            a -> launch(a), // This should remain as a lambda, to keep the short name for the quit menu item
+            new CoreGuiModule(), new LiveGuiModule(), new StandardEventSourceModule(args));
     }
 }

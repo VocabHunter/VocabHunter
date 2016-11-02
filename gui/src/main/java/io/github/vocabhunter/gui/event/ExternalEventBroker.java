@@ -11,7 +11,9 @@ import javafx.application.Platform;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.LinkedBlockingQueue;
+import javax.inject.Singleton;
 
+@Singleton
 public final class ExternalEventBroker implements ExternalEventListener, ExternalEventSource {
     private final BlockingQueue<ExternalOpenFileEvent> openFileEvents = new LinkedBlockingQueue<>();
 

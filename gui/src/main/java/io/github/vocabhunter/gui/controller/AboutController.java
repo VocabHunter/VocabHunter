@@ -7,14 +7,18 @@ package io.github.vocabhunter.gui.controller;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import io.github.vocabhunter.gui.common.BuildInfo;
 import io.github.vocabhunter.gui.common.GuiConstants;
-import io.github.vocabhunter.gui.common.WebPageTool;
+import io.github.vocabhunter.gui.services.WebPageTool;
 import javafx.scene.control.Button;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
 
+import javax.inject.Inject;
+
 @SuppressFBWarnings({"NP_UNWRITTEN_PUBLIC_OR_PROTECTED_FIELD", "UWF_UNWRITTEN_PUBLIC_OR_PROTECTED_FIELD"})
 public class AboutController {
+    private final WebPageTool webPageTool;
+
     public Button buttonClose;
 
     public Hyperlink linkWebsite;
@@ -23,7 +27,12 @@ public class AboutController {
 
     public Label labelVersion;
 
-    public void initialise(final Stage stage, final WebPageTool webPageTool) {
+    @Inject
+    public AboutController(final WebPageTool webPageTool) {
+        this.webPageTool = webPageTool;
+    }
+
+    public void initialise(final Stage stage) {
         buttonClose.setOnAction(e -> stage.close());
         linkWebsite.setOnAction(e -> webPageTool.showWebPage(GuiConstants.WEBSITE));
         linkTwitter.setOnAction(e -> webPageTool.showWebPage(GuiConstants.TWITTER));

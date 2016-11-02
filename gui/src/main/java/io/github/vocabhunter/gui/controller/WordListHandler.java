@@ -5,6 +5,7 @@
 package io.github.vocabhunter.gui.controller;
 
 import io.github.vocabhunter.analysis.filter.WordFilter;
+import io.github.vocabhunter.gui.common.IndexTool;
 import io.github.vocabhunter.gui.model.SessionModel;
 import io.github.vocabhunter.gui.model.WordModel;
 import io.github.vocabhunter.gui.view.WordListCell;

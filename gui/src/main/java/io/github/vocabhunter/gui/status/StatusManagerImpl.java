@@ -4,6 +4,7 @@
 
 package io.github.vocabhunter.gui.status;
 
+import io.github.vocabhunter.analysis.session.FileNameTool;
 import io.github.vocabhunter.gui.model.PositionModel;
 import io.github.vocabhunter.gui.model.ProgressModel;
 import io.github.vocabhunter.gui.model.StatusModel;
@@ -13,10 +14,16 @@ import javafx.beans.property.SimpleStringProperty;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.nio.file.Path;
 import java.text.MessageFormat;
+import java.util.concurrent.atomic.AtomicBoolean;
+
+import javax.inject.Inject;
+import javax.inject.Singleton;
 
 import static javafx.beans.binding.Bindings.*;
 
+@Singleton
 public class StatusManagerImpl implements StatusManager {
     private static final Logger LOG = LoggerFactory.getLogger(StatusManagerImpl.class);
 
@@ -48,7 +55,10 @@ public class StatusManagerImpl implements StatusManager {
 
     private final SimpleStringProperty graphText = new SimpleStringProperty();
 
-    public void initialise(final StatusModel model) {
+    private final AtomicBoolean gatekeeper = new AtomicBoolean();
+
+    @Inject
+    public void setStatusModel(final StatusModel model) {
         model.textProperty().bind(when(busy).then(actionDescription).otherwise(positionDescription));
         model.busyProperty().bind(busy);
         model.activityProperty().bind(when(busy).then(-1).otherwise(0));
@@ -58,45 +68,52 @@ public class StatusManagerImpl implements StatusManager {
     }
 
     @Override
-    public void beginNewSession() {
-        begin(NAME_NEW_SESSION);
+    public boolean beginNewSession() {
+        return begin(NAME_NEW_SESSION);
     }
 
     @Override
-    public void beginOpenSession() {
-        begin(NAME_OPEN_SESSION);
+    public boolean beginOpenSession() {
+        return begin(NAME_OPEN_SESSION);
     }
 
     @Override
-    public void beginSaveSession() {
-        begin(NAME_SAVE_SESSION);
+    public boolean beginSaveSession() {
+        return begin(NAME_SAVE_SESSION);
     }
 
     @Override
-    public void beginExport() {
-        begin(NAME_EXPORT);
+    public boolean beginExport() {
+        return begin(NAME_EXPORT);
     }
 
     @Override
-    public void beginExit() {
-        begin(NAME_EXIT);
+    public boolean beginExit() {
+        return begin(NAME_EXIT);
     }
 
     @Override
-    public void beginAbout() {
-        begin(NAME_ABOUT);
+    public boolean beginAbout() {
+        return begin(NAME_ABOUT);
     }
 
-    private void begin(final String name) {
-        this.name = name;
-        LOG.debug("Begin: {}", name);
-        actionDescription.setValue(name);
-        busy.setValue(true);
+    private boolean begin(final String name) {
+        if (gatekeeper.compareAndSet(false, true)) {
+            this.name = name;
+            LOG.debug("Begin: {}", name);
+            actionDescription.setValue(name);
+            busy.setValue(true);
+
+            return true;
+        } else {
+            return false;
+        }
     }
 
     @Override
-    public void performAction() {
+    public void performAction(final Path file) {
         LOG.debug("Perform: {}", name);
+        actionDescription.setValue(String.format("%s: '%s'...", name, FileNameTool.filename(file)));
     }
 
     @Override
@@ -108,6 +125,7 @@ public class StatusManagerImpl implements StatusManager {
     public void completeAction() {
         LOG.debug("Complete: {}", name);
         busy.setValue(false);
+        gatekeeper.set(false);
     }
 
     @Override

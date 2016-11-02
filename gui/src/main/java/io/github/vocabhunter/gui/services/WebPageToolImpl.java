@@ -2,7 +2,7 @@
  * Open Source Software published under the Apache Licence, Version 2.0.
  */
 
-package io.github.vocabhunter.gui.common;
+package io.github.vocabhunter.gui.services;
 
 import io.github.vocabhunter.analysis.core.ThreadPoolTool;
 import org.slf4j.Logger;
@@ -11,7 +11,9 @@ import org.slf4j.LoggerFactory;
 import java.awt.*;
 import java.net.URI;
 import java.util.concurrent.ExecutorService;
+import javax.inject.Singleton;
 
+@Singleton
 public final class WebPageToolImpl implements WebPageTool {
     private static final Logger LOG = LoggerFactory.getLogger(WebPageToolImpl.class);
 

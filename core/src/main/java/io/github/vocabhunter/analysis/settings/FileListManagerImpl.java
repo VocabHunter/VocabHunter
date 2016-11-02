@@ -6,7 +6,9 @@ package io.github.vocabhunter.analysis.settings;
 
 import java.nio.file.Path;
 import java.util.List;
+import javax.inject.Singleton;
 
+@Singleton
 public class FileListManagerImpl extends BaseSettingsManager<FileList> implements FileListManager {
     public static final String SETTINGS_JSON = "file-list.json";
 

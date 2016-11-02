@@ -6,24 +6,23 @@ package io.github.vocabhunter.gui.status;
 
 import io.github.vocabhunter.gui.model.PositionModel;
 import io.github.vocabhunter.gui.model.ProgressModel;
-import io.github.vocabhunter.gui.model.StatusModel;
+
+import java.nio.file.Path;
 
 public interface StatusManager {
-    void initialise(StatusModel model);
+    boolean beginNewSession();
 
-    void beginNewSession();
+    boolean beginOpenSession();
 
-    void beginOpenSession();
+    boolean beginSaveSession();
 
-    void beginSaveSession();
+    boolean beginExport();
 
-    void beginExport();
+    boolean beginExit();
 
-    void beginExit();
+    boolean beginAbout();
 
-    void beginAbout();
-
-    void performAction();
+    void performAction(Path file);
 
     void markSuccess();
 

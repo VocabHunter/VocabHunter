@@ -8,6 +8,9 @@ import com.apple.eawt.Application;
 import io.github.vocabhunter.gui.event.ExternalEventListener;
 import io.github.vocabhunter.gui.event.SingleExternalEventSource;
 
+import javax.inject.Singleton;
+
+@Singleton
 public class OsxEventSource implements SingleExternalEventSource {
     @Override
     public void setListener(final ExternalEventListener listener) {

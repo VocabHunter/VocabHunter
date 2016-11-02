@@ -14,14 +14,14 @@ task wrapper(type: Wrapper) {
 
 buildscript {
     repositories {
-        mavenCentral()
+        jcenter()
         maven {
             url 'https://plugins.gradle.org/m2/'
         }
     }
 
     dependencies {
-        classpath 'com.github.ben-manes:gradle-versions-plugin:0.11.1'
+        classpath 'com.github.ben-manes:gradle-versions-plugin:0.13.0'
         classpath 'net.researchgate:gradle-release:2.3.4'
     }
 }
@@ -41,7 +41,7 @@ subprojects {
     sourceCompatibility = 1.8
 
     repositories {
-        mavenCentral()
+        jcenter()
     }
 
     dependencies {

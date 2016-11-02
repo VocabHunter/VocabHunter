@@ -8,8 +8,11 @@ import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.List;
 
+import javax.inject.Singleton;
+
 import static java.util.stream.Collectors.toList;
 
+@Singleton
 public class CommandLineEventSource implements SingleExternalEventSource {
     private final List<ExternalOpenFileEvent> events;
 

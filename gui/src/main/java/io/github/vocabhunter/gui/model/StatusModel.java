@@ -8,6 +8,9 @@ import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleStringProperty;
 
+import javax.inject.Singleton;
+
+@Singleton
 public class StatusModel {
     private final SimpleStringProperty text = new SimpleStringProperty();
 
@@ -23,10 +26,6 @@ public class StatusModel {
 
     public SimpleStringProperty textProperty() {
         return text;
-    }
-
-    public void setText(final String text) {
-        this.text.set(text);
     }
 
     public SimpleDoubleProperty activityProperty() {
