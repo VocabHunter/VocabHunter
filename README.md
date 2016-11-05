@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.org/VocabHunter/VocabHunter.svg?branch=master)](https://travis-ci.org/VocabHunter/VocabHunter)
 
-VocabHunter is a system to help learners of foreign languages.  The best place to go for information about VocabHunter is the project website: [vocabhunter.github.io](http://vocabhunter.github.io/).
+VocabHunter is a system to help learners of foreign languages.  The best place to go for information about VocabHunter is the project website: [vocabhunter.github.io](https://vocabhunter.github.io/).
 
 To get all the latest news about VocabHunter including announcements of new releases, follow [@vocabhunterapp](https://twitter.com/vocabhunterapp) on Twitter.
 
@@ -19,7 +19,7 @@ $ ./gradlew clean build
 
 # How To Run VocabHunter
 
-Go to the [download](http://vocabhunter.github.io/download/) page of the website to get the latest release of VocabHunter.  Alternatively, you can run the development version from the command line as follows:
+Go to the [download](https://vocabhunter.github.io/download/) page of the website to get the latest release of VocabHunter.  Alternatively, you can run the development version from the command line as follows:
 ~~~
 $ ./gradlew :gui:run
 ~~~
