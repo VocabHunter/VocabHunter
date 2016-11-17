@@ -5,6 +5,7 @@
 package io.github.vocabhunter.gui.controller;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+import io.github.vocabhunter.analysis.core.GuiTaskHandler;
 import io.github.vocabhunter.analysis.core.VocabHunterException;
 import io.github.vocabhunter.analysis.filter.WordFilter;
 import io.github.vocabhunter.analysis.marked.MarkTool;
@@ -18,12 +19,10 @@ import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
 import javafx.beans.binding.ObjectBinding;
 import javafx.event.EventHandler;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
-import javafx.scene.control.SplitPane;
+import javafx.scene.control.*;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
+import org.controlsfx.control.textfield.CustomTextField;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -54,6 +53,14 @@ public class SessionController {
 
     public SplitPane splitWordList;
 
+    public ToolBar barSearch;
+
+    public CustomTextField fieldSearch;
+
+    public Label labelMatches;
+
+    public Button buttonCloseSearch;
+
     private SessionModel sessionModel;
 
     private ObjectBinding<WordState> wordStateProperty;
@@ -64,7 +71,7 @@ public class SessionController {
 
     private EventHandler<KeyEvent> keyPressHandler;
 
-    public void initialise(final SessionModel sessionModel) {
+    public void initialise(final GuiTaskHandler guiTaskHandler, final SessionModel sessionModel) {
         this.sessionModel = sessionModel;
 
         wordStateProperty = Bindings.select(sessionModel.currentWordProperty(), "state");
@@ -76,6 +83,7 @@ public class SessionController {
         prepareWordListHandler();
         prepareWordStateHandler();
         prepareMainWord();
+        prepareSearchBar(guiTaskHandler);
         preparePositionModel();
         prepareWindowBindings();
 
@@ -101,6 +109,12 @@ public class SessionController {
     private void prepareMainWord() {
         mainWordHandler = new MainWordHandler(mainWord, useCountLabel, mainWordPane, sessionModel, wordStateProperty);
         mainWordHandler.prepare();
+    }
+
+    private void prepareSearchBar(final GuiTaskHandler guiTaskHandler) {
+        SearchHandler handler = new SearchHandler(guiTaskHandler, sessionModel, wordListHandler, barSearch, fieldSearch, labelMatches, buttonCloseSearch);
+
+        handler.prepare();
     }
 
     private void preparePositionModel() {

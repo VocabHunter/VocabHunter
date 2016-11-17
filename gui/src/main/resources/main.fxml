@@ -45,6 +45,8 @@
                                             <MenuItem fx:id="menuOpen" accelerator="Shortcut+O" mnemonicParsing="false" text="Open..." />
                                             <MenuItem fx:id="menuSave" accelerator="Shortcut+S" mnemonicParsing="false" text="Save" />
                                             <MenuItem fx:id="menuSaveAs" accelerator="Shift+Shortcut+S" mnemonicParsing="false" text="Save As..." />
+                                            <SeparatorMenuItem mnemonicParsing="false" />
+                                            <MenuItem fx:id="menuFind" accelerator="Shortcut+F" mnemonicParsing="false" text="Find" />
                                         </items>
                                     </Menu>
                                     <Menu mnemonicParsing="false" text="Selection">

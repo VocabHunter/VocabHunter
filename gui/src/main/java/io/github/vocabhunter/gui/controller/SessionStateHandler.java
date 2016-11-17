@@ -4,6 +4,7 @@
 
 package io.github.vocabhunter.gui.controller;
 
+import io.github.vocabhunter.analysis.core.GuiTaskHandler;
 import io.github.vocabhunter.analysis.core.VocabHunterException;
 import io.github.vocabhunter.analysis.session.SessionState;
 import io.github.vocabhunter.gui.common.ControllerAndView;
@@ -36,6 +37,9 @@ public class SessionStateHandler {
     @Inject
     private ProgressProvider progressProvider;
 
+    @Inject
+    private GuiTaskHandler guiTaskHandler;
+
     private BorderPane mainBorderPane;
 
     private EventHandler<KeyEvent> keyPressHandler;
@@ -55,7 +59,7 @@ public class SessionStateHandler {
         ControllerAndView<SessionController, Node> cav = sessionProvider.get();
         SessionController controller = cav.getController();
 
-        controller.initialise(sessionModel);
+        controller.initialise(guiTaskHandler, sessionModel);
         viewTool.setTabContent(SessionTab.ANALYSIS, cav.getView());
         viewTool.setTabContent(SessionTab.PROGRESS, progressView(sessionModel));
         mainBorderPane.setCenter(viewTool.getView());

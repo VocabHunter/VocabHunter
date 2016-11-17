@@ -86,6 +86,29 @@
     -glyph-size: 40;
     -glyph-name: REFRESH;
 }
+.buttonSearchClose, .buttonSearchUp, .buttonSearchDown {
+    -fx-background-color: transparent;
+}
+.buttonSearchCloseIcon {
+    -glyph-size: 15;
+    -glyph-name: CLOSE;
+}
+.buttonSearchUpIcon, .buttonSearchDownIcon {
+    -glyph-size: 15;
+}
+.buttonSearchUpIcon {
+    -glyph-name: CHEVRON_UP;
+}
+.buttonSearchDownIcon {
+    -glyph-name: CHEVRON_DOWN;
+}
+.searchBoxLabel {
+    -fx-padding: 0 2 0 7;
+}
+.searchBoxLabelIcon {
+    -glyph-size: 13;
+    -glyph-name: SEARCH;
+}
 .noSession {
     -fx-font-size: 16;
 }

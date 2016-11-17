@@ -78,6 +78,8 @@ public class MainController {
 
     public Pane maskerPane;
 
+    public MenuItem menuFind;
+
     @Inject
     private AboutHandler aboutHandler;
 
@@ -151,6 +153,8 @@ public class MainController {
         prepareStatusInformation();
 
         menuBar.setUseSystemMenuBar(environmentManager.useSystemMenuBar());
+
+        menuFind.setOnAction(e -> model.setFindOpen(true));
     }
 
     private void prepareFilterEnable() {
