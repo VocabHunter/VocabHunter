@@ -61,6 +61,10 @@ public class SessionController {
 
     public Button buttonCloseSearch;
 
+    public Button buttonSearchUp;
+
+    public Button buttonSearchDown;
+
     private SessionModel sessionModel;
 
     private ObjectBinding<WordState> wordStateProperty;
@@ -112,7 +116,7 @@ public class SessionController {
     }
 
     private void prepareSearchBar(final GuiTaskHandler guiTaskHandler) {
-        SearchHandler handler = new SearchHandler(guiTaskHandler, sessionModel, wordListHandler, barSearch, fieldSearch, labelMatches, buttonCloseSearch);
+        SearchHandler handler = new SearchHandler(guiTaskHandler, sessionModel, wordListHandler, barSearch, fieldSearch, labelMatches, buttonCloseSearch, buttonSearchUp, buttonSearchDown);
 
         handler.prepare();
     }

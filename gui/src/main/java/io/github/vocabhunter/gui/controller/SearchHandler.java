@@ -5,21 +5,15 @@
 package io.github.vocabhunter.gui.controller;
 
 import io.github.vocabhunter.analysis.core.GuiTaskHandler;
+import io.github.vocabhunter.gui.model.SearchModel;
 import io.github.vocabhunter.gui.model.SessionModel;
 import io.github.vocabhunter.gui.model.WordModel;
-import javafx.beans.binding.Bindings;
-import javafx.beans.binding.BooleanBinding;
-import javafx.beans.binding.IntegerBinding;
-import javafx.beans.binding.StringBinding;
-import javafx.beans.value.ObservableBooleanValue;
-import javafx.beans.value.ObservableNumberValue;
+import javafx.beans.property.ObjectProperty;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ToolBar;
 import org.apache.commons.lang3.StringUtils;
 import org.controlsfx.control.textfield.CustomTextField;
-
-import java.text.MessageFormat;
 
 public class SearchHandler {
     private final GuiTaskHandler guiTaskHandler;
@@ -36,9 +30,13 @@ public class SearchHandler {
 
     private final Button buttonCloseSearch;
 
+    private final Button buttonSearchUp;
+
+    private final Button buttonSearchDown;
+
     public SearchHandler(
         final GuiTaskHandler guiTaskHandler, final SessionModel model, final WordListHandler wordListHandler, final ToolBar barSearch, final CustomTextField fieldSearch,
-        final Label labelMatches, final Button buttonCloseSearch) {
+        final Label labelMatches, final Button buttonCloseSearch, final Button buttonSearchUp, final Button buttonSearchDown) {
         this.guiTaskHandler = guiTaskHandler;
         this.model = model;
         this.wordListHandler = wordListHandler;
@@ -46,22 +44,29 @@ public class SearchHandler {
         this.fieldSearch = fieldSearch;
         this.labelMatches = labelMatches;
         this.buttonCloseSearch = buttonCloseSearch;
+        this.buttonSearchUp = buttonSearchUp;
+        this.buttonSearchDown = buttonSearchDown;
     }
 
 
     public void prepare() {
-        BooleanBinding blankSearch = fieldSearch.textProperty().isEmpty();
-        IntegerBinding matchCount = Bindings.createIntegerBinding(() -> matchCount(), fieldSearch.textProperty(), model.getWordList());
-        StringBinding matchText = Bindings.createStringBinding(() -> formatMatches(matchCount, blankSearch), matchCount, blankSearch);
+        SearchModel searchModel = new SearchModel(fieldSearch.textProperty(), model.currentWordProperty(), model.getWordList());
 
-        labelMatches.textProperty().bind(matchText);
+        labelMatches.textProperty().bind(searchModel.matchDescriptionProperty());
         fieldSearch.textProperty().addListener((o, old, v) -> processTextUpdate(v));
 
         buttonCloseSearch.setOnAction(e -> closeSearch());
+        buttonSearchUp.setOnAction(e -> selectWord(searchModel.previousMatchProperty()));
+        buttonSearchDown.setOnAction(e -> selectWord(searchModel.nextMatchProperty()));
 
         barSearch.visibleProperty().bindBidirectional(model.searchOpenProperty());
         barSearch.managedProperty().bindBidirectional(model.searchOpenProperty());
         barSearch.visibleProperty().addListener((o, old, v) -> focus(v));
+
+        buttonSearchUp.setDisable(true);
+        buttonSearchDown.setDisable(true);
+        searchModel.previousButtonDisabledProperty().addListener((o, n, v) -> buttonSearchUp.setDisable(v));
+        searchModel.nextButtonDisabledProperty().addListener((o, n, v) -> buttonSearchDown.setDisable(v));
     }
 
     private void focus(final boolean isVisible) {
@@ -75,23 +80,11 @@ public class SearchHandler {
         model.setSearchOpen(false);
     }
 
-    private String formatMatches(final ObservableNumberValue matchCount, final ObservableBooleanValue blankSearch) {
-        if (blankSearch.get()) {
-            return "";
-        } else {
-            return MessageFormat.format("{0} {0,choice,0#matches|1#match|1<matches}", matchCount.intValue());
-        }
-    }
+    private void selectWord(final ObjectProperty<WordModel> property) {
+        WordModel word = property.get();
 
-    private int matchCount() {
-        String searchText = fieldSearch.getText().trim().toLowerCase();
-
-        if ("".equals(searchText)) {
-            return 0;
-        } else {
-            return (int) model.getWordList().stream()
-                .filter(w -> isMatch(w, searchText))
-                .count();
+        if (word != null) {
+            wordListHandler.selectWord(word);
         }
     }
 
