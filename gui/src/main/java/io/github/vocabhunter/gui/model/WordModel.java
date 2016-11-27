@@ -6,6 +6,7 @@ package io.github.vocabhunter.gui.model;
 
 import io.github.vocabhunter.analysis.marked.MarkedWord;
 import io.github.vocabhunter.analysis.marked.WordState;
+import io.github.vocabhunter.gui.common.SequencedWord;
 import javafx.beans.Observable;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -14,7 +15,7 @@ import javafx.util.Callback;
 import java.util.Collections;
 import java.util.List;
 
-public class WordModel implements MarkedWord {
+public class WordModel implements MarkedWord, SequencedWord {
     public static final Callback<WordModel, Observable[]> PROPERTY_EXTRACTOR
             = w -> new Observable[] {w.identifier, w.state};
 
@@ -36,6 +37,7 @@ public class WordModel implements MarkedWord {
         this.state = new SimpleObjectProperty<>(state);
     }
 
+    @Override
     public int getSequenceNo() {
         return sequenceNo;
     }

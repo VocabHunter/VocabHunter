@@ -5,15 +5,20 @@
 package io.github.vocabhunter.gui.controller;
 
 import io.github.vocabhunter.analysis.core.GuiTaskHandler;
+import io.github.vocabhunter.gui.common.SequencedWord;
 import io.github.vocabhunter.gui.model.SearchModel;
 import io.github.vocabhunter.gui.model.SessionModel;
 import io.github.vocabhunter.gui.model.WordModel;
+import io.github.vocabhunter.gui.search.SearchTool;
+import io.github.vocabhunter.gui.view.SearchFieldClassTool;
 import javafx.beans.property.ObjectProperty;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ToolBar;
 import org.apache.commons.lang3.StringUtils;
 import org.controlsfx.control.textfield.CustomTextField;
+
+import java.util.function.Predicate;
 
 public class SearchHandler {
     private final GuiTaskHandler guiTaskHandler;
@@ -50,7 +55,7 @@ public class SearchHandler {
 
 
     public void prepare() {
-        SearchModel searchModel = new SearchModel(fieldSearch.textProperty(), model.currentWordProperty(), model.getWordList());
+        SearchModel<WordModel> searchModel = new SearchModel<>(SearchTool::matchMaker, fieldSearch.textProperty(), model.currentWordProperty(), model.getWordList());
 
         labelMatches.textProperty().bind(searchModel.matchDescriptionProperty());
         fieldSearch.textProperty().addListener((o, old, v) -> processTextUpdate(v));
@@ -67,6 +72,8 @@ public class SearchHandler {
         buttonSearchDown.setDisable(true);
         searchModel.previousButtonDisabledProperty().addListener((o, n, v) -> buttonSearchUp.setDisable(v));
         searchModel.nextButtonDisabledProperty().addListener((o, n, v) -> buttonSearchDown.setDisable(v));
+
+        searchModel.searchFailProperty().addListener((o, n, v) -> SearchFieldClassTool.updateStateClass(fieldSearch, v));
     }
 
     private void focus(final boolean isVisible) {
@@ -90,16 +97,12 @@ public class SearchHandler {
 
     private void processTextUpdate(final String value) {
         if (StringUtils.isNotBlank(value)) {
-            String searchText = value.trim().toLowerCase();
+            Predicate<SequencedWord> matcher = SearchTool.matchMaker(value);
 
             model.getWordList().stream()
-                .filter(w -> isMatch(w, searchText))
+                .filter(matcher)
                 .findFirst()
                 .ifPresent(wordListHandler::selectWord);
         }
-    }
-
-    private boolean isMatch(final WordModel w, final String searchText) {
-        return w.getWordIdentifier().toLowerCase().contains(searchText);
     }
 }

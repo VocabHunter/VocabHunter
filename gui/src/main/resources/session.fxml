@@ -27,7 +27,7 @@
                     <FontAwesomeIconView styleClass="buttonSearchCloseIcon" />
                 </graphic>
             </Button>
-            <CustomTextField fx:id="fieldSearch" >
+            <CustomTextField fx:id="fieldSearch" styleClass="searchField" >
                 <left>
                     <Label styleClass="searchBoxLabel">
                         <graphic>

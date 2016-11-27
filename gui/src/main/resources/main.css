@@ -12,6 +12,7 @@
    -colour-remaining: lightcoral;
    -colour-unseen-unfiltered: powderblue;
    -colour-about-link: #0095C9;
+   -colour-search-fail: lightcoral;
 }
 
 .mainWord {
@@ -108,6 +109,9 @@
 .searchBoxLabelIcon {
     -glyph-size: 13;
     -glyph-name: SEARCH;
+}
+.searchField:fail {
+    -fx-background-color: -colour-search-fail;
 }
 .noSession {
     -fx-font-size: 16;
