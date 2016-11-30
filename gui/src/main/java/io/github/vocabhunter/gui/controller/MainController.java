@@ -155,6 +155,7 @@ public class MainController {
         menuBar.setUseSystemMenuBar(environmentManager.useSystemMenuBar());
 
         menuFind.setOnAction(e -> model.setFindOpen(true));
+        menuFind.disableProperty().bind(not(model.sessionOpenProperty()));
     }
 
     private void prepareFilterEnable() {

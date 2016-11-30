@@ -133,6 +133,10 @@ public final class SessionModel {
         searchOpen.set(isSearchOpen);
     }
 
+    public boolean isSearchOpen() {
+        return searchOpen.get();
+    }
+
     public boolean isEditable() {
         return editable.get();
     }

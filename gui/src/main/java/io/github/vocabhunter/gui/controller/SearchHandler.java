@@ -12,6 +12,7 @@ import io.github.vocabhunter.gui.model.WordModel;
 import io.github.vocabhunter.gui.search.SearchTool;
 import io.github.vocabhunter.gui.view.SearchFieldClassTool;
 import javafx.beans.property.ObjectProperty;
+import javafx.collections.ListChangeListener;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ToolBar;
@@ -39,6 +40,8 @@ public class SearchHandler {
 
     private final Button buttonSearchDown;
 
+    private SearchModel<WordModel> searchModel;
+
     public SearchHandler(
         final GuiTaskHandler guiTaskHandler, final SessionModel model, final WordListHandler wordListHandler, final ToolBar barSearch, final CustomTextField fieldSearch,
         final Label labelMatches, final Button buttonCloseSearch, final Button buttonSearchUp, final Button buttonSearchDown) {
@@ -55,8 +58,7 @@ public class SearchHandler {
 
 
     public void prepare() {
-        SearchModel<WordModel> searchModel = new SearchModel<>(SearchTool::matchMaker, fieldSearch.textProperty(), model.currentWordProperty(), model.getWordList());
-
+        searchModel = new SearchModel<>(SearchTool::matchMaker, fieldSearch.textProperty(), model.currentWordProperty(), model.getWordList());
         labelMatches.textProperty().bind(searchModel.matchDescriptionProperty());
         fieldSearch.textProperty().addListener((o, old, v) -> processTextUpdate(v));
 
@@ -74,11 +76,25 @@ public class SearchHandler {
         searchModel.nextButtonDisabledProperty().addListener((o, n, v) -> buttonSearchDown.setDisable(v));
 
         searchModel.searchFailProperty().addListener((o, n, v) -> SearchFieldClassTool.updateStateClass(fieldSearch, v));
+
+        fieldSearch.textProperty().addListener((o, n, v) -> updateIfRequired());
+        model.currentWordProperty().addListener((o, n, v) -> updateIfRequired());
+        model.getWordList().addListener((ListChangeListener<WordModel>) c -> updateIfRequired());
+
+        searchModel.resetValues();
     }
 
     private void focus(final boolean isVisible) {
         if (isVisible) {
             guiTaskHandler.pauseThenExecuteOnGuiThread(() -> fieldSearch.requestFocus());
+        } else {
+            searchModel.resetValues();
+        }
+    }
+
+    private void updateIfRequired() {
+        if (model.isSearchOpen()) {
+            searchModel.updateValues();
         }
     }
 

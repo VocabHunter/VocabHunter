@@ -8,7 +8,6 @@ import io.github.vocabhunter.gui.common.SequencedWord;
 import io.github.vocabhunter.gui.search.SearchResult;
 import io.github.vocabhunter.gui.search.Searcher;
 import javafx.beans.property.*;
-import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 
 import java.util.function.Function;
@@ -42,15 +41,21 @@ public class SearchModel<T extends SequencedWord> {
         this.searchField = searchField;
         this.currentWord = currentWord;
         this.wordList = wordList;
-
-        searchField.addListener((o, n, v) -> updateValues());
-        currentWord.addListener((o, n, v) -> updateValues());
-        wordList.addListener((ListChangeListener<T>) c -> updateValues());
     }
 
-    private void updateValues() {
+    public void resetValues() {
+        SearchResult<T> result = new SearchResult<>("", null, null, false);
+
+        updateValues(result);
+    }
+
+    public void updateValues() {
         SearchResult<T> result = searcher.buildResult(wordList, currentWord.get(), searchField.get());
 
+        updateValues(result);
+    }
+
+    private void updateValues(final SearchResult<T> result) {
         matchDescription.set(result.getMatchDescription());
         previousMatch.set(result.getPreviousMatch());
         previousButtonDisabled.set(result.getPreviousMatch() == null);
