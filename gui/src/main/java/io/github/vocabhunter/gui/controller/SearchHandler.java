@@ -68,7 +68,6 @@ public class SearchHandler {
 
         barSearch.visibleProperty().bindBidirectional(model.searchOpenProperty());
         barSearch.managedProperty().bindBidirectional(model.searchOpenProperty());
-        barSearch.visibleProperty().addListener((o, old, v) -> focus(v));
 
         buttonSearchUp.setDisable(true);
         buttonSearchDown.setDisable(true);
@@ -84,23 +83,10 @@ public class SearchHandler {
         searchModel.resetValues();
     }
 
-    private void focus(final boolean isVisible) {
-        if (isVisible) {
-            guiTaskHandler.pauseThenExecuteOnGuiThread(() -> fieldSearch.requestFocus());
-        } else {
-            searchModel.resetValues();
-        }
-    }
-
     private void updateIfRequired() {
         if (model.isSearchOpen()) {
             searchModel.updateValues();
         }
-    }
-
-    private void closeSearch() {
-        fieldSearch.setText("");
-        model.setSearchOpen(false);
     }
 
     private void selectWord(final ObjectProperty<WordModel> property) {
@@ -120,5 +106,16 @@ public class SearchHandler {
                 .findFirst()
                 .ifPresent(wordListHandler::selectWord);
         }
+    }
+
+    public void openSearch() {
+        model.setSearchOpen(true);
+        guiTaskHandler.pauseThenExecuteOnGuiThread(() -> fieldSearch.requestFocus());
+    }
+
+    public void closeSearch() {
+        fieldSearch.setText("");
+        searchModel.resetValues();
+        model.setSearchOpen(false);
     }
 }

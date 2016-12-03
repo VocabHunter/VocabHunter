@@ -29,8 +29,6 @@ public class MainModel {
 
     private final SimpleBooleanProperty editMode = new SimpleBooleanProperty(true);
 
-    private final SimpleBooleanProperty findOpen = new SimpleBooleanProperty(false);
-
     private final SimpleObjectProperty<Path> sessionFile = new SimpleObjectProperty<>(null);
 
     private final SimpleStringProperty documentName = new SimpleStringProperty();
@@ -54,7 +52,6 @@ public class MainModel {
         sessionModel.enableFiltersProperty().bindBidirectional(enableFilters);
         documentName.bind(sessionModel.documentNameProperty());
         changesSaved.bindBidirectional(sessionModel.changesSavedProperty());
-        findOpen.bindBidirectional(sessionModel.searchOpenProperty());
     }
 
     private void unbindOldSession() {
@@ -63,7 +60,6 @@ public class MainModel {
         if (sessionState != null) {
             editMode.unbindBidirectional(sessionModel.editableProperty());
             changesSaved.unbindBidirectional(sessionModel.changesSavedProperty());
-            findOpen.unbindBidirectional(sessionModel.searchOpenProperty());
             sessionModel.filterSettingsProperty().unbindBidirectional(filterSettings);
             sessionModel.enableFiltersProperty().unbindBidirectional(enableFilters);
         }
@@ -107,10 +103,6 @@ public class MainModel {
 
     public SimpleBooleanProperty editModeProperty() {
         return editMode;
-    }
-
-    public void setFindOpen(final boolean findOpen) {
-        this.findOpen.set(findOpen);
     }
 
     public SimpleObjectProperty<FilterSettings> filterSettingsProperty() {

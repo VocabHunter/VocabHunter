@@ -14,9 +14,7 @@ import io.github.vocabhunter.gui.settings.SettingsManager;
 import io.github.vocabhunter.gui.settings.WindowSettings;
 import io.github.vocabhunter.gui.view.SessionTab;
 import io.github.vocabhunter.gui.view.SessionViewTool;
-import javafx.event.EventHandler;
 import javafx.scene.Node;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
 
 import java.util.Optional;
@@ -42,7 +40,7 @@ public class SessionStateHandler {
 
     private BorderPane mainBorderPane;
 
-    private EventHandler<KeyEvent> keyPressHandler;
+    private SessionActions sessionActions;
 
     public void initialise(final BorderPane mainBorderPane) {
         this.mainBorderPane = mainBorderPane;
@@ -64,7 +62,7 @@ public class SessionStateHandler {
         viewTool.setTabContent(SessionTab.PROGRESS, progressView(sessionModel));
         mainBorderPane.setCenter(viewTool.getView());
 
-        keyPressHandler = controller.getKeyPressHandler();
+        sessionActions = controller.getSessionActions();
 
         return sessionModel;
     }
@@ -77,7 +75,7 @@ public class SessionStateHandler {
         return cav.getView();
     }
 
-    public Optional<EventHandler<KeyEvent>> getKeyPressHandler() {
-        return Optional.ofNullable(keyPressHandler);
+    public Optional<SessionActions> getSessionActions() {
+        return Optional.ofNullable(sessionActions);
     }
 }

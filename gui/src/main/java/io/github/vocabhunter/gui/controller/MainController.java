@@ -154,7 +154,7 @@ public class MainController {
 
         menuBar.setUseSystemMenuBar(environmentManager.useSystemMenuBar());
 
-        menuFind.setOnAction(e -> model.setFindOpen(true));
+        menuFind.setOnAction(e -> openFind());
         menuFind.disableProperty().bind(not(model.sessionOpenProperty()));
     }
 
@@ -218,5 +218,11 @@ public class MainController {
                 statusManager.completeAction();
             }
         }
+    }
+
+    private void openFind() {
+        sessionStateHandler.getSessionActions()
+            .map(SessionActions::getOpenSearchAction)
+            .ifPresent(Runnable::run);
     }
 }

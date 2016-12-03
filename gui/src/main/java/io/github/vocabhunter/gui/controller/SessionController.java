@@ -18,14 +18,15 @@ import io.github.vocabhunter.gui.view.UseListCell;
 import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
 import javafx.beans.binding.ObjectBinding;
-import javafx.event.EventHandler;
 import javafx.scene.control.*;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
 import org.controlsfx.control.textfield.CustomTextField;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import static io.github.vocabhunter.gui.common.EventHandlerTool.combine;
 import static io.github.vocabhunter.gui.dialogues.AlertTool.filterErrorAlert;
 import static io.github.vocabhunter.gui.model.FilterSettingsTool.filter;
 
@@ -73,7 +74,11 @@ public class SessionController {
 
     private MainWordHandler mainWordHandler;
 
-    private EventHandler<KeyEvent> keyPressHandler;
+    private WordStateHandler wordStateHandler;
+
+    private SearchHandler searchHandler;
+
+    private SessionActions sessionActions;
 
     public void initialise(final GuiTaskHandler guiTaskHandler, final SessionModel sessionModel) {
         this.sessionModel = sessionModel;
@@ -96,6 +101,8 @@ public class SessionController {
         sessionModel.editableProperty().addListener((p, o, v) -> updateWordList());
         sessionModel.filterSettingsProperty().addListener((p, o, v) -> updateWordListIfFilterEnabled());
         sessionModel.enableFiltersProperty().addListener((p, o, v) -> updateWordList());
+
+        sessionActions = new SessionActions(combine(wordStateHandler::processKeyPress, this::processKeyPress), searchHandler::openSearch);
     }
 
     private void prepareWordListHandler() {
@@ -104,10 +111,15 @@ public class SessionController {
     }
 
     private void prepareWordStateHandler() {
-        WordStateHandler handler = new WordStateHandler(buttonUnseen, buttonKnown, buttonUnknown, sessionModel, wordStateProperty, wordListHandler::selectNextWord);
+        wordStateHandler = new WordStateHandler(buttonUnseen, buttonKnown, buttonUnknown, sessionModel, wordStateProperty, wordListHandler::selectNextWord);
 
-        handler.prepareEditButtons();
-        keyPressHandler = handler::processKeyPress;
+        wordStateHandler.prepareEditButtons();
+    }
+
+    private void processKeyPress(final KeyEvent event) {
+        if (KeyCode.ESCAPE.equals(event.getCode())) {
+            searchHandler.closeSearch();
+        }
     }
 
     private void prepareMainWord() {
@@ -116,9 +128,9 @@ public class SessionController {
     }
 
     private void prepareSearchBar(final GuiTaskHandler guiTaskHandler) {
-        SearchHandler handler = new SearchHandler(guiTaskHandler, sessionModel, wordListHandler, barSearch, fieldSearch, labelMatches, buttonCloseSearch, buttonSearchUp, buttonSearchDown);
+        searchHandler = new SearchHandler(guiTaskHandler, sessionModel, wordListHandler, barSearch, fieldSearch, labelMatches, buttonCloseSearch, buttonSearchUp, buttonSearchDown);
 
-        handler.prepare();
+        searchHandler.prepare();
     }
 
     private void preparePositionModel() {
@@ -187,8 +199,7 @@ public class SessionController {
         }
     }
 
-    public EventHandler<KeyEvent> getKeyPressHandler() {
-        return keyPressHandler;
+    public SessionActions getSessionActions() {
+        return sessionActions;
     }
-
 }
