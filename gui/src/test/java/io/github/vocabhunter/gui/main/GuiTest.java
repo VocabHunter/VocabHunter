@@ -159,6 +159,7 @@ public class GuiTest extends FxRobot implements GuiTestValidator {
         steps.part4ReopenFirstSession();
         steps.part5AboutDialogue();
         steps.part6WebLinks();
+        steps.part7Search();
     }
 
     @Override

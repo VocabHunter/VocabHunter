@@ -47,7 +47,7 @@
                                             <MenuItem fx:id="menuSaveAs" accelerator="Shift+Shortcut+S" mnemonicParsing="false" text="Save As..." />
                                         </items>
                                     </Menu>
-                                    <Menu mnemonicParsing="false" text="Words">
+                                    <Menu fx:id="menuWords" mnemonicParsing="false" text="Words">
                                         <items>
                                             <RadioMenuItem fx:id="menuEditOn" mnemonicParsing="false" text="Select Words" />
                                             <RadioMenuItem fx:id="menuEditOff" mnemonicParsing="false" text="Show Selection" />

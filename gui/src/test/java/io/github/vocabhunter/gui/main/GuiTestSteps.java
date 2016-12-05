@@ -153,6 +153,33 @@ public class GuiTestSteps {
         });
     }
 
+    public void part7Search() {
+        step("Open Search", () -> {
+            robot.clickOn("#menuWords");
+            robot.clickOn("#menuFind");
+            verifyThat("#barSearch", isVisible());
+        });
+        step("Enter search word", () -> {
+            robot.doubleClickOn("#fieldSearch").write("try");
+            verifyThat("#mainWord", hasText("country"));
+            verifyThat("#labelMatches", hasText("1 of 2 matches"));
+        });
+        step("Select next match", () -> {
+            robot.clickOn("#buttonSearchDown");
+            verifyThat("#mainWord", hasText("trying"));
+            verifyThat("#labelMatches", hasText("2 of 2 matches"));
+        });
+        step("Seach with no match", () -> {
+            robot.doubleClickOn("#fieldSearch").write("bananas");
+            verifyThat("#mainWord", hasText("back"));
+            verifyThat("#labelMatches", hasText("No matches"));
+        });
+        step("Close Search", () -> {
+            robot.clickOn("#buttonCloseSearch");
+            verifyThat("#barSearch", isInvisible());
+        });
+    }
+
     private void step(final String step, final Runnable runnable) {
         ++stepNo;
         LOG.info("STEP {}: Begin - {}", stepNo, step);
