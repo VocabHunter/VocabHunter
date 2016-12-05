@@ -4,7 +4,9 @@
 
 package io.github.vocabhunter.gui.search;
 
+import io.github.vocabhunter.analysis.core.CoreConstants;
 import io.github.vocabhunter.gui.common.SequencedWord;
+import org.apache.commons.lang3.StringUtils;
 
 import java.util.List;
 import java.util.function.Predicate;
@@ -16,13 +18,17 @@ public final class SearchTool {
     }
 
     public static final Predicate<SequencedWord> matchMaker(final String text) {
-        String search = text.trim().toLowerCase();
+        String search = normalise(text.trim());
 
         return w -> isMatch(w, search);
     }
 
     private static boolean isMatch(final SequencedWord w, final String searchText) {
-        return w.getWordIdentifier().toLowerCase().contains(searchText);
+        return normalise(w.getWordIdentifier()).contains(searchText);
+    }
+
+    private static String normalise(final String s) {
+        return StringUtils.stripAccents(s).toLowerCase(CoreConstants.LOCALE);
     }
 
     public static int getMatchIndex(final List<? extends SequencedWord> matches, final SequencedWord currentWord) {

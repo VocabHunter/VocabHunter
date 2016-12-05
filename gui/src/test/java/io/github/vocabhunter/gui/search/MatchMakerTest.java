@@ -14,6 +14,8 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 public class MatchMakerTest {
+    private static final String ACCENTED_MATCH = "\u00F3r";
+
     private static final SequencedWord WORD = new TestSequencedWord("Word");
 
     private static final SequencedWord EMPTY = new TestSequencedWord("");
@@ -58,6 +60,13 @@ public class MatchMakerTest {
         Predicate<SequencedWord> target = SearchTool.matchMaker("Word");
 
         assertTrue("Exact match", target.test(WORD));
+    }
+
+    @Test
+    public void testAccentedMatch() {
+        Predicate<SequencedWord> target = SearchTool.matchMaker(ACCENTED_MATCH);
+
+        assertTrue("Accented match", target.test(WORD));
     }
 
     @Test
