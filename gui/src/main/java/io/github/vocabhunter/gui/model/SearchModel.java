@@ -28,6 +28,8 @@ public class SearchModel<T extends SequencedWord> {
 
     private final ObjectProperty<T> nextMatch = new SimpleObjectProperty<>();
 
+    private final ObjectProperty<T> wrapMatch = new SimpleObjectProperty<T>();
+
     private final BooleanProperty previousButtonDisabled = new SimpleBooleanProperty();
 
     private final BooleanProperty nextButtonDisabled = new SimpleBooleanProperty();
@@ -44,9 +46,7 @@ public class SearchModel<T extends SequencedWord> {
     }
 
     public void resetValues() {
-        SearchResult<T> result = new SearchResult<>("", null, null, false);
-
-        updateValues(result);
+        updateValues(new SearchResult<>());
     }
 
     public void updateValues() {
@@ -60,6 +60,7 @@ public class SearchModel<T extends SequencedWord> {
         previousMatch.set(result.getPreviousMatch());
         previousButtonDisabled.set(result.getPreviousMatch() == null);
         nextMatch.set(result.getNextMatch());
+        wrapMatch.set(result.getWrapMatch());
         nextButtonDisabled.set(result.getNextMatch() == null);
         searchFail.set(result.isSearchFail());
     }
@@ -74,6 +75,10 @@ public class SearchModel<T extends SequencedWord> {
 
     public ObjectProperty<T> nextMatchProperty() {
         return nextMatch;
+    }
+
+    public ObjectProperty<T> wrapMatchProperty() {
+        return wrapMatch;
     }
 
     public BooleanProperty previousButtonDisabledProperty() {

@@ -16,16 +16,19 @@ public final class SearchResult<T extends SequencedWord> {
 
     private final T nextMatch;
 
+    private final T wrapMatch;
+
     private final boolean isSearchFail;
 
     public SearchResult() {
-        this("", null, null, false);
+        this("", null, null, null, false);
     }
 
-    public SearchResult(final String matchDescription, final T previousMatch, final T nextMatch, final boolean isSearchFail) {
+    public SearchResult(final String matchDescription, final T previousMatch, final T nextMatch, final T wrapMatch, final boolean isSearchFail) {
         this.matchDescription = matchDescription;
         this.previousMatch = previousMatch;
         this.nextMatch = nextMatch;
+        this.wrapMatch = wrapMatch;
         this.isSearchFail = isSearchFail;
     }
 
@@ -39,6 +42,10 @@ public final class SearchResult<T extends SequencedWord> {
 
     public T getNextMatch() {
         return nextMatch;
+    }
+
+    public T getWrapMatch() {
+        return wrapMatch;
     }
 
     public boolean isSearchFail() {
@@ -61,6 +68,7 @@ public final class SearchResult<T extends SequencedWord> {
             .append(isSearchFail, that.isSearchFail)
             .append(matchDescription, that.matchDescription)
             .append(previousMatch, that.previousMatch)
+            .append(wrapMatch, that.wrapMatch)
             .append(nextMatch, that.nextMatch)
             .isEquals();
     }
@@ -71,6 +79,7 @@ public final class SearchResult<T extends SequencedWord> {
             .append(matchDescription)
             .append(previousMatch)
             .append(nextMatch)
+            .append(wrapMatch)
             .append(isSearchFail)
             .toHashCode();
     }
@@ -81,6 +90,7 @@ public final class SearchResult<T extends SequencedWord> {
             .append("matchDescription", matchDescription)
             .append("previousMatch", previousMatch)
             .append("nextMatch", nextMatch)
+            .append("wrapMatch", wrapMatch)
             .append("isSearchFail", isSearchFail)
             .toString();
     }

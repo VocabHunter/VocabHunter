@@ -31,7 +31,7 @@ public class Searcher<T extends SequencedWord> {
                 .collect(toList());
 
             if (matches.isEmpty()) {
-                return new SearchResult<>("No matches", null, null, true);
+                return new SearchResult<>("No matches", null, null, null, true);
             } else {
                 return updateForMatch(matches, currentWord);
             }
@@ -52,15 +52,18 @@ public class Searcher<T extends SequencedWord> {
         int matchCount = matches.size();
         int previousIndex = SearchTool.getPreviousMatchIndex(matches, currentWord);
         String description = MessageFormat.format("{0} {0,choice,0#matches|1#match|1<matches}", matchCount);
+        T first = matches.get(0);
 
         if (previousIndex == -1) {
-            return new SearchResult<>(description, null, matches.get(0), false);
+            return new SearchResult<>(description, null, first, first, false);
         } else {
             T previous = matches.get(previousIndex);
             if (previousIndex == matchCount - 1) {
-                return new SearchResult<>(description, previous, null, false);
+                return new SearchResult<>(description, previous, null, first, false);
             } else {
-                return new SearchResult<>(description, previous, matches.get(previousIndex + 1), false);
+                T next = matches.get(previousIndex + 1);
+
+                return new SearchResult<>(description, previous, next, next, false);
             }
         }
     }
@@ -70,6 +73,7 @@ public class Searcher<T extends SequencedWord> {
         String description = MessageFormat.format("{0} of {1} {1,choice,0#matches|1#match|1<matches}", matchIndex + 1, matchCount);
         T previous;
         T next;
+        T wrap;
 
         if (matchIndex == 0) {
             previous = null;
@@ -78,10 +82,12 @@ public class Searcher<T extends SequencedWord> {
         }
         if (matchIndex == matchCount - 1) {
             next = null;
+            wrap = matches.get(0);
         } else {
             next = matches.get(matchIndex + 1);
+            wrap = next;
         }
 
-        return new SearchResult<>(description, previous, next, false);
+        return new SearchResult<>(description, previous, next, wrap, false);
     }
 }

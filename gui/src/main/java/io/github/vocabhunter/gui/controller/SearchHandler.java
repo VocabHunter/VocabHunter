@@ -16,6 +16,8 @@ import javafx.collections.ListChangeListener;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ToolBar;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import org.apache.commons.lang3.StringUtils;
 import org.controlsfx.control.textfield.CustomTextField;
 
@@ -77,10 +79,17 @@ public class SearchHandler {
         searchModel.searchFailProperty().addListener((o, n, v) -> SearchFieldClassTool.updateStateClass(fieldSearch, v));
 
         fieldSearch.textProperty().addListener((o, n, v) -> updateIfRequired());
+        fieldSearch.setOnKeyPressed(e -> processSearchKeyPress(e));
         model.currentWordProperty().addListener((o, n, v) -> updateIfRequired());
         model.getWordList().addListener((ListChangeListener<WordModel>) c -> updateIfRequired());
 
         searchModel.resetValues();
+    }
+
+    private void processSearchKeyPress(final KeyEvent event) {
+        if (event.getCode() == KeyCode.ENTER) {
+            selectWord(searchModel.wrapMatchProperty());
+        }
     }
 
     private void updateIfRequired() {
