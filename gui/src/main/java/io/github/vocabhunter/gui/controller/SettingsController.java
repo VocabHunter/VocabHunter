@@ -109,7 +109,7 @@ public class SettingsController {
 
         try {
             return Integer.parseInt(text);
-        } catch (NumberFormatException e) {
+        } catch (final NumberFormatException e) {
             LOG.debug("Illegal field value", e);
 
             return defaultValue;
@@ -157,7 +157,7 @@ public class SettingsController {
                 if (n >= 0) {
                     return Integer.toString(n);
                 }
-            } catch (NumberFormatException e) {
+            } catch (final NumberFormatException e) {
                 LOG.debug("Illegal field value", e);
             }
 

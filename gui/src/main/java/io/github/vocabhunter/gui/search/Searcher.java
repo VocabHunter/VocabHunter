@@ -82,6 +82,6 @@ public class Searcher<T extends SequencedWord> {
             next = matches.get(matchIndex + 1);
         }
 
-        return new SearchResult<T>(description, previous, next, false);
+        return new SearchResult<>(description, previous, next, false);
     }
 }

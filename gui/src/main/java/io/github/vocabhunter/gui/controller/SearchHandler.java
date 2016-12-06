@@ -110,7 +110,7 @@ public class SearchHandler {
 
     public void openSearch() {
         model.setSearchOpen(true);
-        guiTaskHandler.pauseThenExecuteOnGuiThread(() -> fieldSearch.requestFocus());
+        guiTaskHandler.pauseThenExecuteOnGuiThread(fieldSearch::requestFocus);
     }
 
     public void closeSearch() {

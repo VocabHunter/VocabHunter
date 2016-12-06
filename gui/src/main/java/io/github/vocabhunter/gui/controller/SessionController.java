@@ -171,7 +171,7 @@ public class SessionController {
                 wordListHandler.selectClosestWord(isEditable, filter);
             }
             exception = null;
-        } catch (VocabHunterException e) {
+        } catch (final VocabHunterException e) {
             LOG.error("Failed to activate filter", e);
             exception = e;
             isFilterSuccess = false;

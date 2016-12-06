@@ -17,7 +17,7 @@ public final class SearchTool {
         // Prevent instantiation - all methods are static
     }
 
-    public static final Predicate<SequencedWord> matchMaker(final String text) {
+    public static Predicate<SequencedWord> matchMaker(final String text) {
         String search = normalise(text.trim());
 
         return w -> isMatch(w, search);

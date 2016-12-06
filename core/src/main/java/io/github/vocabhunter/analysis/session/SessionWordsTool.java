@@ -62,7 +62,7 @@ public final class SessionWordsTool {
     private static List<? extends MarkedWord> readMarkedWords(final Path file) {
         try {
             return SessionSerialiser.readMarkedWords(file);
-        } catch (Exception e) {
+        } catch (final Exception e) {
             throw new VocabHunterException(String.format("Unable to read filter file '%s'", file), e);
         }
     }
