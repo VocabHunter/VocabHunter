@@ -23,7 +23,7 @@ public class Searcher<T extends SequencedWord> {
 
     public SearchResult<T> buildResult(final List<T> wordList, final T currentWord, final String searchText) {
         if (StringUtils.isBlank(searchText)) {
-            return new SearchResult<>("", null, null, false);
+            return new SearchResult<>();
         } else {
             Predicate<SequencedWord> matcher = matchMaker.apply(searchText);
             List<T> matches = wordList.stream()

@@ -5,6 +5,9 @@
 package io.github.vocabhunter.gui.search;
 
 import io.github.vocabhunter.gui.common.SequencedWord;
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.apache.commons.lang3.builder.ToStringBuilder;
 
 public final class SearchResult<T extends SequencedWord> {
     private final String matchDescription;
@@ -14,6 +17,10 @@ public final class SearchResult<T extends SequencedWord> {
     private final T nextMatch;
 
     private final boolean isSearchFail;
+
+    public SearchResult() {
+        this("", null, null, false);
+    }
 
     public SearchResult(final String matchDescription, final T previousMatch, final T nextMatch, final boolean isSearchFail) {
         this.matchDescription = matchDescription;
@@ -36,5 +43,45 @@ public final class SearchResult<T extends SequencedWord> {
 
     public boolean isSearchFail() {
         return isSearchFail;
+    }
+
+    @Override
+    public boolean equals(final Object o) {
+        if (this == o) {
+            return true;
+        }
+
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+
+        SearchResult<?> that = (SearchResult<?>) o;
+
+        return new EqualsBuilder()
+            .append(isSearchFail, that.isSearchFail)
+            .append(matchDescription, that.matchDescription)
+            .append(previousMatch, that.previousMatch)
+            .append(nextMatch, that.nextMatch)
+            .isEquals();
+    }
+
+    @Override
+    public int hashCode() {
+        return new HashCodeBuilder()
+            .append(matchDescription)
+            .append(previousMatch)
+            .append(nextMatch)
+            .append(isSearchFail)
+            .toHashCode();
+    }
+
+    @Override
+    public String toString() {
+        return new ToStringBuilder(this)
+            .append("matchDescription", matchDescription)
+            .append("previousMatch", previousMatch)
+            .append("nextMatch", nextMatch)
+            .append("isSearchFail", isSearchFail)
+            .toString();
     }
 }
