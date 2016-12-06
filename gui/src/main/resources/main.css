@@ -80,15 +80,13 @@
 .buttonKnownIcon, .buttonUnknownIcon {
     -glyph-size: 30;
 }
-.buttonUnseen {
-    -fx-background-color: transparent;
-}
 .buttonUnseenIcon {
     -glyph-size: 40;
     -glyph-name: REFRESH;
 }
-.buttonSearchClose, .buttonSearchUp, .buttonSearchDown {
+.buttonUnseen, .buttonSearchClose, .buttonSearchUp, .buttonSearchDown {
     -fx-background-color: transparent;
+    -fx-background-insets: 0;
 }
 .buttonSearchCloseIcon {
     -glyph-size: 15;
