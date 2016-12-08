@@ -88,6 +88,17 @@ public class GuiTestSteps {
             verifyThat("#mainWord", hasText("the"));
         });
 
+        step("Define impossible filter", () -> {
+            robot.clickOn("#buttonSetupFilters");
+            robot.doubleClickOn("#fieldMinimumLetters").write("1000");
+            robot.clickOn("#buttonOk");
+            verifyThat("#filterErrorDialogue", isVisible());
+        });
+
+        step("Close filter error", () -> {
+            robot.clickOn("OK");
+        });
+
         step("Define filter", () -> {
             robot.clickOn("#buttonSetupFilters");
             robot.doubleClickOn("#fieldMinimumLetters").write("6");
