@@ -5,9 +5,11 @@
 package io.github.vocabhunter.gui.main;
 
 public final class GuiTestConstants {
-    public static final String BOOK1 = "great-expectations.txt";
+    public static final String BOOK_1 = "great-expectations.txt";
 
-    public static final String BOOK2 = "oliver-twist.txt";
+    public static final String BOOK_2 = "oliver-twist.txt";
+
+    public static final String BOOK_EMPTY = "empty.txt";
 
     // These values should match those in main.fxml
 

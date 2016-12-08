@@ -28,11 +28,12 @@ public class ErrorDialogue {
 
         TextArea textArea = new TextArea(exceptionText(e));
         VBox expContent = new VBox();
-        DialogPane dialogPane = alert.getDialogPane();
+        DialogPane dialoguePane = alert.getDialogPane();
 
         expContent.getChildren().setAll(new Label("Error details:"), textArea);
-        dialogPane.setExpandableContent(expContent);
-        dialogPane.expandedProperty().addListener(p -> Platform.runLater(this::resizeAlert));
+        dialoguePane.setExpandableContent(expContent);
+        dialoguePane.expandedProperty().addListener(p -> Platform.runLater(this::resizeAlert));
+        dialoguePane.setId("errorDialogue");
     }
 
     private String headerText(final String... messages) {

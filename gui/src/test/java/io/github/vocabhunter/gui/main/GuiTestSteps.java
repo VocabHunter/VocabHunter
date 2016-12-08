@@ -9,7 +9,7 @@ import org.slf4j.LoggerFactory;
 import org.testfx.api.FxRobot;
 
 import static io.github.vocabhunter.gui.common.GuiConstants.*;
-import static io.github.vocabhunter.gui.main.GuiTestConstants.BOOK1;
+import static io.github.vocabhunter.gui.main.GuiTestConstants.BOOK_1;
 import static org.testfx.api.FxAssert.verifyThat;
 import static org.testfx.matcher.base.NodeMatchers.*;
 
@@ -65,7 +65,7 @@ public class GuiTestSteps {
 
         step("Save the session", () -> {
             robot.clickOn("#buttonSave");
-            validator.validateSavedSession(BOOK1);
+            validator.validateSavedSession(BOOK_1);
         });
     }
 
@@ -116,7 +116,17 @@ public class GuiTestSteps {
         });
     }
 
-    public void part5AboutDialogue() {
+    public void part5ErrorHandling() {
+        step("Start session from empty file", () -> {
+            robot.clickOn("#buttonNew");
+            verifyThat("#errorDialogue", isVisible());
+        });
+        step("Close error dialogue", () -> {
+            robot.clickOn("OK");
+        });
+    }
+
+    public void part6AboutDialogue() {
         step("Open About dialogue", () -> {
             robot.clickOn("#menuHelp");
             robot.clickOn("#menuAbout");
@@ -133,7 +143,7 @@ public class GuiTestSteps {
         });
     }
 
-    public void part6WebLinks() {
+    public void part7WebLinks() {
         step("Open website", () -> {
             robot.clickOn("#menuHelp");
             robot.clickOn("#menuWebsite");
@@ -153,7 +163,7 @@ public class GuiTestSteps {
         });
     }
 
-    public void part7Search() {
+    public void part8Search() {
         step("Open Search", () -> {
             robot.clickOn("#menuWords");
             robot.clickOn("#menuFind");
