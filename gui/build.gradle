@@ -44,7 +44,7 @@ dependencies {
     testCompile 'org.mockito:mockito-core:2.2.9'
     testRuntime 'org.jfxtras:openjfx-monocle:1.8.0_20'
     runtime 'org.codehaus.janino:janino:3.0.6'
-    runtime 'de.jensd:fontawesomefx-fontawesome:4.6.3'
+    runtime 'de.jensd:fontawesomefx-fontawesome:4.7.0'
 }
 
 test {
