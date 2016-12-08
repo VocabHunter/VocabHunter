@@ -22,7 +22,7 @@ buildscript {
 
     dependencies {
         classpath 'com.github.ben-manes:gradle-versions-plugin:0.13.0'
-        classpath 'net.researchgate:gradle-release:2.3.4'
+        classpath 'net.researchgate:gradle-release:2.3.5'
     }
 }
 
