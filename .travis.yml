@@ -29,6 +29,9 @@ install: true
 script:
   - ./gradlew clean build jacoco jfxNative checkBundle -info
 
+after_success:
+  - bash <(curl -s https://codecov.io/bash)
+
 deploy:
   provider: releases
   api_key:
