@@ -80,6 +80,13 @@ subprojects {
         toolVersion = '0.7.7.201606060606'
     }
 
+    jacocoTestReport {
+        reports {
+            xml.enabled true
+            xml.destination "${buildDir}/reports/jacoco/report.xml"
+        }
+    }
+
     [compileJava, compileTestJava].each { task ->
         task.options.compilerArgs << "-Xlint:unchecked" << "-Xlint:deprecation" << "-Werror"
     }
