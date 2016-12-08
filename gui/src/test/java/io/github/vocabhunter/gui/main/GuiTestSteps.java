@@ -169,6 +169,11 @@ public class GuiTestSteps {
             verifyThat("#mainWord", hasText("trying"));
             verifyThat("#labelMatches", hasText("2 of 2 matches"));
         });
+        step("Select previous match", () -> {
+            robot.clickOn("#buttonSearchUp");
+            verifyThat("#mainWord", hasText("country"));
+            verifyThat("#labelMatches", hasText("1 of 2 matches"));
+        });
         step("Seach with no match", () -> {
             robot.doubleClickOn("#fieldSearch").write("bananas");
             verifyThat("#mainWord", hasText("back"));
