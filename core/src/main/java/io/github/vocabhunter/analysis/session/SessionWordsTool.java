@@ -30,7 +30,7 @@ public final class SessionWordsTool {
         return timedCollect("known", () -> knownWords(readMarkedWords(file)), file);
     }
 
-    public static List<String> knownWords(final List<? extends MarkedWord> words) {
+    private static List<String> knownWords(final List<? extends MarkedWord> words) {
         return words(words, SessionWordsTool::isKnown);
     }
 
@@ -38,7 +38,7 @@ public final class SessionWordsTool {
         return timedCollect("known or unknown", () -> seenWords(readMarkedWords(file)), file);
     }
 
-    public static List<String> seenWords(final List<? extends MarkedWord> words) {
+    private static List<String> seenWords(final List<? extends MarkedWord> words) {
         return words(words, SessionWordsTool::isSeen);
     }
 
