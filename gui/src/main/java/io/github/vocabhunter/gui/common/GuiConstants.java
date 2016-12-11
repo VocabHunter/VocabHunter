@@ -7,7 +7,7 @@ package io.github.vocabhunter.gui.common;
 public final class GuiConstants {
     public static final String UNTITLED = "Untitled";
 
-    public static final String WEBSITE = "http://vocabhunter.github.io/";
+    public static final String WEBSITE = "https://vocabhunter.github.io/";
 
     public static final String WEBPAGE_HELP = WEBSITE + "help/";
 

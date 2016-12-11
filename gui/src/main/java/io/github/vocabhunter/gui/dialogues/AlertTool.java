@@ -27,6 +27,7 @@ public final class AlertTool {
         alert.setTitle(TITLE);
         alert.setHeaderText(FILTER_ALL_WORDS);
         alert.setContentText(FILTERS_DISABLED);
+        alert.getDialogPane().setId("filterErrorDialogue");
 
         alert.showAndWait();
     }

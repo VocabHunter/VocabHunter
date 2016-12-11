@@ -38,7 +38,7 @@ public class SessionWordsToolTest {
             "men", "Now", "of", "over", "party", "quick", "simple", "test", "This", "time"));
     }
 
-    private void validate(final Function<List<? extends MarkedWord>, List<String>> filterMethod, final List<String> expected) throws Exception {
+    private void validate(final Function<Path, List<String>> filterMethod, final List<String> expected) throws Exception {
         WordFilter filter = buildFilter(filterMethod);
         List<? extends MarkedWord> words = read(SESSION_FILE);
         MarkTool<? extends MarkedWord> markTool = new MarkTool<>(filter, words);
@@ -50,9 +50,9 @@ public class SessionWordsToolTest {
         assertEquals("Filtered words", expected, actual);
     }
 
-    private WordFilter buildFilter(final Function<List<? extends MarkedWord>, List<String>> filterMethod) throws Exception {
-        List<? extends MarkedWord> words = read(FILTER_FILE);
-        List<String> exclusions = filterMethod.apply(words);
+    private WordFilter buildFilter(final Function<Path, List<String>> filterMethod) throws Exception {
+        Path file = getResourceFile(FILTER_FILE);
+        List<String> exclusions = filterMethod.apply(file);
 
         return new FilterBuilder().addExcludedWords(exclusions).build();
     }

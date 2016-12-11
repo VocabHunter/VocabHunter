@@ -4,6 +4,7 @@
 
 package io.github.vocabhunter.gui.controller;
 
+import io.github.vocabhunter.analysis.core.GuiTaskHandler;
 import io.github.vocabhunter.analysis.core.VocabHunterException;
 import io.github.vocabhunter.analysis.session.SessionState;
 import io.github.vocabhunter.gui.common.ControllerAndView;
@@ -13,9 +14,7 @@ import io.github.vocabhunter.gui.settings.SettingsManager;
 import io.github.vocabhunter.gui.settings.WindowSettings;
 import io.github.vocabhunter.gui.view.SessionTab;
 import io.github.vocabhunter.gui.view.SessionViewTool;
-import javafx.event.EventHandler;
 import javafx.scene.Node;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
 
 import java.util.Optional;
@@ -36,9 +35,12 @@ public class SessionStateHandler {
     @Inject
     private ProgressProvider progressProvider;
 
+    @Inject
+    private GuiTaskHandler guiTaskHandler;
+
     private BorderPane mainBorderPane;
 
-    private EventHandler<KeyEvent> keyPressHandler;
+    private SessionActions sessionActions;
 
     public void initialise(final BorderPane mainBorderPane) {
         this.mainBorderPane = mainBorderPane;
@@ -55,12 +57,12 @@ public class SessionStateHandler {
         ControllerAndView<SessionController, Node> cav = sessionProvider.get();
         SessionController controller = cav.getController();
 
-        controller.initialise(sessionModel);
+        controller.initialise(guiTaskHandler, sessionModel);
         viewTool.setTabContent(SessionTab.ANALYSIS, cav.getView());
         viewTool.setTabContent(SessionTab.PROGRESS, progressView(sessionModel));
         mainBorderPane.setCenter(viewTool.getView());
 
-        keyPressHandler = controller.getKeyPressHandler();
+        sessionActions = controller.getSessionActions();
 
         return sessionModel;
     }
@@ -73,7 +75,7 @@ public class SessionStateHandler {
         return cav.getView();
     }
 
-    public Optional<EventHandler<KeyEvent>> getKeyPressHandler() {
-        return Optional.ofNullable(keyPressHandler);
+    public Optional<SessionActions> getSessionActions() {
+        return Optional.ofNullable(sessionActions);
     }
 }

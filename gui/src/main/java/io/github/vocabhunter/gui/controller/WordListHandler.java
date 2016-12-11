@@ -55,7 +55,7 @@ public class WordListHandler {
         selectWord(closestWord);
     }
 
-    private void selectWord(final WordModel word) {
+    public void selectWord(final WordModel word) {
         wordSelectionModel.select(word);
         wordListView.scrollTo(word);
     }

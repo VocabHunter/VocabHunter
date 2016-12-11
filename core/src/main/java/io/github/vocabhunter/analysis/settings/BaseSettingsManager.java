@@ -70,7 +70,7 @@ public class BaseSettingsManager<T> {
             } else {
                 return null;
             }
-        } catch (Exception e) {
+        } catch (final Exception e) {
             LOG.error("Unable to load settings file '{}'", settingsFile, e);
 
             return null;

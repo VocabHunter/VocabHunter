@@ -24,4 +24,4 @@ cache:
 install: true
 
 script:
-  - ./gradlew clean build -info
+  - ./gradlew clean build jacoco -info

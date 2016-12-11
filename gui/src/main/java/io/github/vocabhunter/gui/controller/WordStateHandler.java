@@ -15,7 +15,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 
 import java.util.Collections;
-import java.util.HashMap;
+import java.util.EnumMap;
 import java.util.Map;
 
 import static javafx.beans.binding.Bindings.notEqual;
@@ -82,7 +82,7 @@ public class WordStateHandler {
     }
 
     private Map<KeyCode, Runnable> buildKeyHandlerMap() {
-        Map<KeyCode, Runnable> map = new HashMap<>();
+        Map<KeyCode, Runnable> map = new EnumMap<>(KeyCode.class);
 
         map.put(KeyCode.K, () -> processResponse(WordState.KNOWN, true));
         map.put(KeyCode.X, () -> processResponse(WordState.UNKNOWN, true));

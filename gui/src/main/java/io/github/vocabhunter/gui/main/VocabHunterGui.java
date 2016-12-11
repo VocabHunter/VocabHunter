@@ -80,6 +80,8 @@ public class VocabHunterGui {
     }
 
     private void handleKeyEvent(final KeyEvent event) {
-        sessionStateHandler.getKeyPressHandler().ifPresent(k -> k.handle(event));
+        sessionStateHandler.getSessionActions()
+            .map(SessionActions::getKeyPressHandler)
+            .ifPresent(k -> k.handle(event));
     }
 }

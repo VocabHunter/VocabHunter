@@ -43,7 +43,8 @@ public class WordUseTool {
                 result.add(remaining.substring(0, wordLength));
                 remaining = remaining.substring(wordLength);
             }
-        } while (!"".equals(remaining));
+        }
+        while (!"".equals(remaining));
 
         return result.stream();
     }

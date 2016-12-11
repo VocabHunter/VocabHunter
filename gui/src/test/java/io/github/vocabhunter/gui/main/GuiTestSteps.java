@@ -9,7 +9,7 @@ import org.slf4j.LoggerFactory;
 import org.testfx.api.FxRobot;
 
 import static io.github.vocabhunter.gui.common.GuiConstants.*;
-import static io.github.vocabhunter.gui.main.GuiTestConstants.BOOK1;
+import static io.github.vocabhunter.gui.main.GuiTestConstants.BOOK_1;
 import static org.testfx.api.FxAssert.verifyThat;
 import static org.testfx.matcher.base.NodeMatchers.*;
 
@@ -65,7 +65,7 @@ public class GuiTestSteps {
 
         step("Save the session", () -> {
             robot.clickOn("#buttonSave");
-            validator.validateSavedSession(BOOK1);
+            validator.validateSavedSession(BOOK_1);
         });
     }
 
@@ -86,6 +86,17 @@ public class GuiTestSteps {
         step("Open a new session for a different book", () -> {
             robot.clickOn("#buttonNew");
             verifyThat("#mainWord", hasText("the"));
+        });
+
+        step("Define impossible filter", () -> {
+            robot.clickOn("#buttonSetupFilters");
+            robot.doubleClickOn("#fieldMinimumLetters").write("1000");
+            robot.clickOn("#buttonOk");
+            verifyThat("#filterErrorDialogue", isVisible());
+        });
+
+        step("Close filter error", () -> {
+            robot.clickOn("OK");
         });
 
         step("Define filter", () -> {
@@ -116,7 +127,17 @@ public class GuiTestSteps {
         });
     }
 
-    public void part5AboutDialogue() {
+    public void part5ErrorHandling() {
+        step("Start session from empty file", () -> {
+            robot.clickOn("#buttonNew");
+            verifyThat("#errorDialogue", isVisible());
+        });
+        step("Close error dialogue", () -> {
+            robot.clickOn("OK");
+        });
+    }
+
+    public void part6AboutDialogue() {
         step("Open About dialogue", () -> {
             robot.clickOn("#menuHelp");
             robot.clickOn("#menuAbout");
@@ -133,7 +154,7 @@ public class GuiTestSteps {
         });
     }
 
-    public void part6WebLinks() {
+    public void part7WebLinks() {
         step("Open website", () -> {
             robot.clickOn("#menuHelp");
             robot.clickOn("#menuWebsite");
@@ -150,6 +171,38 @@ public class GuiTestSteps {
             robot.clickOn("#menuHelp");
             robot.clickOn("#menuIssue");
             validator.validateWebPage(WEBPAGE_ISSUE);
+        });
+    }
+
+    public void part8Search() {
+        step("Open Search", () -> {
+            robot.clickOn("#menuWords");
+            robot.clickOn("#menuFind");
+            verifyThat("#barSearch", isVisible());
+        });
+        step("Enter search word", () -> {
+            robot.doubleClickOn("#fieldSearch").write("try");
+            verifyThat("#mainWord", hasText("country"));
+            verifyThat("#labelMatches", hasText("1 of 2 matches"));
+        });
+        step("Select next match", () -> {
+            robot.clickOn("#buttonSearchDown");
+            verifyThat("#mainWord", hasText("trying"));
+            verifyThat("#labelMatches", hasText("2 of 2 matches"));
+        });
+        step("Select previous match", () -> {
+            robot.clickOn("#buttonSearchUp");
+            verifyThat("#mainWord", hasText("country"));
+            verifyThat("#labelMatches", hasText("1 of 2 matches"));
+        });
+        step("Seach with no match", () -> {
+            robot.doubleClickOn("#fieldSearch").write("bananas");
+            verifyThat("#mainWord", hasText("back"));
+            verifyThat("#labelMatches", hasText("No matches"));
+        });
+        step("Close Search", () -> {
+            robot.clickOn("#buttonCloseSearch");
+            verifyThat("#barSearch", isInvisible());
         });
     }
 

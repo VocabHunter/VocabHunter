@@ -8,7 +8,7 @@ allprojects {
 
 task wrapper(type: Wrapper) {
     description 'Setup the Gradle wrapper'
-    gradleVersion = '2.14'
+    gradleVersion = '3.2.1'
     distributionUrl = "https://services.gradle.org/distributions/gradle-${gradleVersion}-all.zip"
 }
 
@@ -22,7 +22,7 @@ buildscript {
 
     dependencies {
         classpath 'com.github.ben-manes:gradle-versions-plugin:0.13.0'
-        classpath 'net.researchgate:gradle-release:2.3.4'
+        classpath 'net.researchgate:gradle-release:2.3.5'
     }
 }
 
@@ -46,16 +46,16 @@ subprojects {
 
     dependencies {
         testCompile 'junit:junit:4.12'
-        runtime 'ch.qos.logback:logback-classic:1.1.7'
+        runtime 'ch.qos.logback:logback-classic:1.1.8'
     }
 
     pmd {
-        toolVersion = '5.4.1'
+        toolVersion = '5.5.2'
         ruleSetFiles = files("$rootProject.projectDir/config/pmd/ruleset.xml")
     }
 
     checkstyle {
-        toolVersion = '6.15'
+        toolVersion = '7.3'
         configFile = file("$rootProject.projectDir/config/checkstyle/checkstyle.xml")
     }
 
@@ -77,7 +77,14 @@ subprojects {
     }
 
     jacoco {
-        toolVersion = '0.7.6.201602180812'
+        toolVersion = '0.7.7.201606060606'
+    }
+
+    jacocoTestReport {
+        reports {
+            xml.enabled true
+            xml.destination "${buildDir}/reports/jacoco/report.xml"
+        }
     }
 
     [compileJava, compileTestJava].each { task ->

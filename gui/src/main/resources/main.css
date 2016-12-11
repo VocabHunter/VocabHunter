@@ -12,6 +12,7 @@
    -colour-remaining: lightcoral;
    -colour-unseen-unfiltered: powderblue;
    -colour-about-link: #0095C9;
+   -colour-search-fail: lightcoral;
 }
 
 .mainWord {
@@ -79,12 +80,36 @@
 .buttonKnownIcon, .buttonUnknownIcon {
     -glyph-size: 30;
 }
-.buttonUnseen {
-    -fx-background-color: transparent;
-}
 .buttonUnseenIcon {
     -glyph-size: 40;
     -glyph-name: REFRESH;
+}
+.buttonUnseen, .buttonSearchClose, .buttonSearchUp, .buttonSearchDown {
+    -fx-background-color: transparent;
+    -fx-background-insets: 0;
+}
+.buttonSearchCloseIcon {
+    -glyph-size: 15;
+    -glyph-name: CLOSE;
+}
+.buttonSearchUpIcon, .buttonSearchDownIcon {
+    -glyph-size: 15;
+}
+.buttonSearchUpIcon {
+    -glyph-name: CHEVRON_UP;
+}
+.buttonSearchDownIcon {
+    -glyph-name: CHEVRON_DOWN;
+}
+.searchBoxLabel {
+    -fx-padding: 0 2 0 7;
+}
+.searchBoxLabelIcon {
+    -glyph-size: 13;
+    -glyph-name: SEARCH;
+}
+.searchField:fail {
+    -fx-background-color: -colour-search-fail;
 }
 .noSession {
     -fx-font-size: 16;

@@ -33,7 +33,7 @@ import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
 import org.mockito.Mock;
-import org.mockito.runners.MockitoJUnitRunner;
+import org.mockito.junit.MockitoJUnitRunner;
 import org.testfx.api.FxRobot;
 
 import java.io.IOException;
@@ -107,10 +107,11 @@ public class GuiTest extends FxRobot implements GuiTestValidator {
         exportFile = manager.addFile("export.txt");
         sessionFile = manager.addFile("session.wordy");
 
-        Path document1 = getResource(BOOK1);
-        Path document2 = getResource(BOOK2);
+        Path document1 = getResource(BOOK_1);
+        Path document2 = getResource(BOOK_2);
+        Path document3 = getResource(BOOK_EMPTY);
 
-        setUpFileDialogue(FileDialogueType.NEW_SESSION, newSessionDialogue, document1, document2);
+        setUpFileDialogue(FileDialogueType.NEW_SESSION, newSessionDialogue, document1, document2, document3);
         setUpFileDialogue(FileDialogueType.SAVE_SESSION, saveSessionDialogue, sessionFile);
         setUpFileDialogue(FileDialogueType.OPEN_SESSION, openSessionDialogue, sessionFile);
         setUpFileDialogue(FileDialogueType.EXPORT_SELECTION, exportDialogue, exportFile);
@@ -157,8 +158,10 @@ public class GuiTest extends FxRobot implements GuiTestValidator {
         steps.part2Progress();
         steps.part3StartNewSessionAndFilter();
         steps.part4ReopenFirstSession();
-        steps.part5AboutDialogue();
-        steps.part6WebLinks();
+        steps.part5ErrorHandling();
+        steps.part6AboutDialogue();
+        steps.part7WebLinks();
+        steps.part8Search();
     }
 
     @Override
@@ -176,7 +179,7 @@ public class GuiTest extends FxRobot implements GuiTestValidator {
     private String readFile(final Path file) {
         try {
             return new String(Files.readAllBytes(file), CoreConstants.CHARSET);
-        } catch (IOException e) {
+        } catch (final IOException e) {
             throw new VocabHunterException(String.format("Unable to read file %s", file), e);
         }
     }

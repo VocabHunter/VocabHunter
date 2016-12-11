@@ -78,6 +78,8 @@ public class MainController {
 
     public Pane maskerPane;
 
+    public MenuItem menuFind;
+
     @Inject
     private AboutHandler aboutHandler;
 
@@ -151,6 +153,9 @@ public class MainController {
         prepareStatusInformation();
 
         menuBar.setUseSystemMenuBar(environmentManager.useSystemMenuBar());
+
+        menuFind.setOnAction(e -> openFind());
+        menuFind.disableProperty().bind(not(model.sessionOpenProperty()));
     }
 
     private void prepareFilterEnable() {
@@ -213,5 +218,11 @@ public class MainController {
                 statusManager.completeAction();
             }
         }
+    }
+
+    private void openFind() {
+        sessionStateHandler.getSessionActions()
+            .map(SessionActions::getOpenSearchAction)
+            .ifPresent(Runnable::run);
     }
 }

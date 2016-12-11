@@ -41,7 +41,7 @@ public class GuiTask<T> extends Task<Void> {
             if (result != null) {
                 guiTaskHandler.executeOnGuiThread(() -> afterBody(result));
             }
-        } catch (RuntimeException e) {
+        } catch (final RuntimeException e) {
             guiTaskHandler.executeOnGuiThread(() -> errorHandler.accept(e));
         } finally {
             guiTaskHandler.executeOnGuiThread(statusManager::completeAction);

@@ -36,6 +36,8 @@ public final class SessionModel {
 
     private final SimpleBooleanProperty editable = new SimpleBooleanProperty(true);
 
+    private final SimpleBooleanProperty searchOpen = new SimpleBooleanProperty(false);
+
     private final SimpleStringProperty documentName;
 
     private final SimpleBooleanProperty changesSaved = new SimpleBooleanProperty(true);
@@ -121,6 +123,18 @@ public final class SessionModel {
 
     public SimpleBooleanProperty editableProperty() {
         return editable;
+    }
+
+    public SimpleBooleanProperty searchOpenProperty() {
+        return searchOpen;
+    }
+
+    public void setSearchOpen(final boolean isSearchOpen) {
+        searchOpen.set(isSearchOpen);
+    }
+
+    public boolean isSearchOpen() {
+        return searchOpen.get();
     }
 
     public boolean isEditable() {
