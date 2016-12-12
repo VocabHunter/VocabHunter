@@ -48,4 +48,6 @@
     <exclude-pattern>.*/TestGuiApplication.java</exclude-pattern>
     <exclude-pattern>.*/*PackagedVocabHunter.java</exclude-pattern>
 
+    <exclude-pattern>.*/*AbstractBeanTest.java</exclude-pattern>
+
 </ruleset>
