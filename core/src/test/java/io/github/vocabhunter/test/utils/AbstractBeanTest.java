@@ -16,7 +16,8 @@ public abstract class AbstractBeanTest<T> {
 
     @Test
     public void testIdentical() {
-        assertEquals("Identical", buildPrimary(), buildPrimary());
+        T t = buildPrimary();
+        assertEquals("Identical", t, t);
     }
 
     @Test
