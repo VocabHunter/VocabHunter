@@ -26,6 +26,11 @@ public abstract class AbstractBeanTest<T> {
     }
 
     @Test
+    public void testNotEqualToDifferentClass() {
+        assertFalse("Not equal to different class", buildPrimary().equals(new Object()));
+    }
+
+    @Test
     public void testEqual() {
         assertEquals("Equal", buildPrimary(), buildPrimary());
     }
