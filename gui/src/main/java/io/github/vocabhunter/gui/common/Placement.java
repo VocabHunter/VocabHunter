@@ -4,6 +4,10 @@
 
 package io.github.vocabhunter.gui.common;
 
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+
 public final class Placement {
     private final boolean isPositioned;
 
@@ -49,5 +53,48 @@ public final class Placement {
 
     public double getY() {
         return y;
+    }
+
+    @Override
+    public boolean equals(final Object o) {
+        if (this == o) {
+            return true;
+        }
+
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+
+        Placement placement = (Placement) o;
+
+        return new EqualsBuilder()
+            .append(isPositioned, placement.isPositioned)
+            .append(width, placement.width)
+            .append(height, placement.height)
+            .append(x, placement.x)
+            .append(y, placement.y)
+            .isEquals();
+    }
+
+    @Override
+    public int hashCode() {
+        return new HashCodeBuilder()
+            .append(isPositioned)
+            .append(width)
+            .append(height)
+            .append(x)
+            .append(y)
+            .toHashCode();
+    }
+
+    @Override
+    public String toString() {
+        return new ToStringBuilder(this)
+            .append("isPositioned", isPositioned)
+            .append("width", width)
+            .append("height", height)
+            .append("x", x)
+            .append("y", y)
+            .toString();
     }
 }
