@@ -17,6 +17,7 @@ import javafx.event.EventHandler;
 import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
+import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import org.controlsfx.control.StatusBar;
 
@@ -80,6 +81,8 @@ public class MainController {
 
     public MenuItem menuFind;
 
+    public MenuItem menuExit;
+
     @Inject
     private AboutHandler aboutHandler;
 
@@ -113,7 +116,7 @@ public class MainController {
     @Inject
     private ExitRequestHandler exitRequestHandler;
 
-    public void initialise() {
+    public void initialise(final Stage stage) {
         sessionStateHandler.initialise(mainBorderPane);
 
         buildToggleGroup(buttonEditOn, buttonEditOff);
@@ -156,6 +159,9 @@ public class MainController {
 
         menuFind.setOnAction(e -> openFind());
         menuFind.disableProperty().bind(not(model.sessionOpenProperty()));
+
+        menuExit.setOnAction(e -> stage.fireEvent(new WindowEvent(stage, WindowEvent.WINDOW_CLOSE_REQUEST)));
+        menuExit.setVisible(environmentManager.isExitOptionShown());
     }
 
     private void prepareFilterEnable() {

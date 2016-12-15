@@ -39,12 +39,14 @@
                         <children>
                             <MenuBar fx:id="menuBar">
                                 <menus>
-                                    <Menu mnemonicParsing="false" text="File">
+                                    <Menu fx:id="menuFile" mnemonicParsing="false" text="File">
                                         <items>
                                             <MenuItem fx:id="menuNew" accelerator="Shortcut+N" mnemonicParsing="false" text="New..." />
                                             <MenuItem fx:id="menuOpen" accelerator="Shortcut+O" mnemonicParsing="false" text="Open..." />
                                             <MenuItem fx:id="menuSave" accelerator="Shortcut+S" mnemonicParsing="false" text="Save" />
                                             <MenuItem fx:id="menuSaveAs" accelerator="Shift+Shortcut+S" mnemonicParsing="false" text="Save As..." />
+                                            <SeparatorMenuItem mnemonicParsing="false" />
+                                            <MenuItem fx:id="menuExit" mnemonicParsing="false" text="Exit VocabHunter" />
                                         </items>
                                     </Menu>
                                     <Menu fx:id="menuWords" mnemonicParsing="false" text="Words">

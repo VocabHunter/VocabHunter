@@ -4,12 +4,15 @@
 
 package io.github.vocabhunter.gui.main;
 
+import javafx.scene.Node;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testfx.api.FxRobot;
+import org.testfx.service.query.NodeQuery;
 
 import static io.github.vocabhunter.gui.common.GuiConstants.*;
 import static io.github.vocabhunter.gui.main.GuiTestConstants.BOOK_1;
+import static io.github.vocabhunter.gui.main.GuiTestConstants.BOOK_2;
 import static org.testfx.api.FxAssert.verifyThat;
 import static org.testfx.matcher.base.NodeMatchers.*;
 
@@ -206,10 +209,44 @@ public class GuiTestSteps {
         });
     }
 
+    public void part9Exit() {
+        step("Restart new session", () -> {
+            robot.clickOn("#buttonNew");
+            verifyThat("#mainWordPane", isVisible());
+            verifyThat("#mainWord", hasText("the"));
+        });
+        step("Make change to session", () -> {
+            robot.clickOn("#buttonKnown");
+            verifyThat("#mainWord", hasText("a"));
+        });
+        step("Cancel exit", () -> {
+            robot.clickOn("#menuFile");
+            robot.clickOn("#menuExit");
+            robot.clickOn(lookup("#unsavedChanges", "Cancel"));
+            verifyThat("#mainWord", hasText("a"));
+        });
+        step("Exit with save", () -> {
+            robot.clickOn("#menuFile");
+            robot.clickOn("#menuExit");
+            robot.clickOn(lookup("#unsavedChanges", "Save"));
+            validator.validateSavedSession(BOOK_2);
+        });
+    }
+
     private void step(final String step, final Runnable runnable) {
         ++stepNo;
         LOG.info("STEP {}: Begin - {}", stepNo, step);
         runnable.run();
         LOG.info("STEP {}:   End - {}", stepNo, step);
+    }
+
+    private Node lookup(final String first, final String... queries) {
+        NodeQuery nodeQuery = robot.lookup(first);
+
+        for (String query : queries) {
+            nodeQuery = nodeQuery.lookup(query);
+        }
+
+        return nodeQuery.query();
     }
 }

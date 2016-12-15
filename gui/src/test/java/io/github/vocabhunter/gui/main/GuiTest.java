@@ -101,6 +101,7 @@ public class GuiTest extends FxRobot implements GuiTestValidator {
     @Before
     public void setUp() throws Exception {
         when(environmentManager.useSystemMenuBar()).thenReturn(false);
+        when(environmentManager.isExitOptionShown()).thenReturn(true);
         when(placementManager.getMainWindow()).thenReturn(new Placement(WINDOW_WIDTH, WINDOW_HEIGHT));
 
         manager = new TestFileManager(getClass());
@@ -111,7 +112,7 @@ public class GuiTest extends FxRobot implements GuiTestValidator {
         Path document2 = getResource(BOOK_2);
         Path document3 = getResource(BOOK_EMPTY);
 
-        setUpFileDialogue(FileDialogueType.NEW_SESSION, newSessionDialogue, document1, document2, document3);
+        setUpFileDialogue(FileDialogueType.NEW_SESSION, newSessionDialogue, document1, document2, document3, document2);
         setUpFileDialogue(FileDialogueType.SAVE_SESSION, saveSessionDialogue, sessionFile);
         setUpFileDialogue(FileDialogueType.OPEN_SESSION, openSessionDialogue, sessionFile);
         setUpFileDialogue(FileDialogueType.EXPORT_SELECTION, exportDialogue, exportFile);
@@ -162,6 +163,7 @@ public class GuiTest extends FxRobot implements GuiTestValidator {
         steps.part6AboutDialogue();
         steps.part7WebLinks();
         steps.part8Search();
+        steps.part9Exit();
     }
 
     @Override
