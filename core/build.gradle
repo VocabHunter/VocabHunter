@@ -20,7 +20,7 @@ dependencies {
     compile 'com.fasterxml.jackson.core:jackson-databind:2.8.5'
     compile 'commons-io:commons-io:2.5'
     compile 'org.apache.tika:tika-parsers:1.14'
-    compile 'org.slf4j:slf4j-api:1.7.21'
+    compile 'org.slf4j:slf4j-api:1.7.22'
     compile 'com.google.code.findbugs:annotations:3.0.1'
     compile 'javax.inject:javax.inject:1'
 }
