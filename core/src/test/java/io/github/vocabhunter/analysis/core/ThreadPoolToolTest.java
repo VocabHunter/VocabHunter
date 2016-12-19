@@ -16,17 +16,19 @@ import static org.junit.Assert.assertNotNull;
 public class ThreadPoolToolTest {
     private static final int EXPECTED_RESULT = 123;
 
+    private final ThreadPoolTool target = new ThreadPoolToolImpl();
+
     private ExecutorService service;
 
     @Test
     public void testSingleDaemonExecutor() {
-        service = ThreadPoolTool.singleDaemonExecutor("test");
+        service = target.singleDaemonExecutor("test");
         assertNotNull("Executor service", service);
     }
 
     @Test
     public void testDaemonThreadRun() throws Exception {
-        service = ThreadPoolTool.singleDaemonExecutor("test");
+        service = target.singleDaemonExecutor("test");
 
         Future<Integer> future = service.submit(() -> EXPECTED_RESULT);
         int result = future.get();

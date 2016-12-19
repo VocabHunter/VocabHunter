@@ -5,9 +5,11 @@
 package io.github.vocabhunter.osx;
 
 import com.google.inject.AbstractModule;
+import com.google.inject.Provides;
+import io.github.vocabhunter.analysis.core.ThreadPoolTool;
 import io.github.vocabhunter.gui.event.CommandLineEventSource;
 import io.github.vocabhunter.gui.event.ExternalEventBroker;
-import io.github.vocabhunter.gui.event.ExternalEventSource;
+import io.github.vocabhunter.gui.event.ExternalEventBrokerImpl;
 
 public class OsxEventSourceModule extends AbstractModule {
     private final String[] args;
@@ -18,12 +20,16 @@ public class OsxEventSourceModule extends AbstractModule {
 
     @Override
     protected void configure() {
-        ExternalEventSource commandLineEventSource = new CommandLineEventSource(args);
-        OsxEventSource osxEventSource = new OsxEventSource();
-        ExternalEventBroker externalEventBroker = new ExternalEventBroker();
+        bind(CommandLineEventSource.class).toInstance(new CommandLineEventSource(args));
+    }
+
+    @Provides
+    public ExternalEventBroker provideExternalEventBroker(final CommandLineEventSource commandLineEventSource, final OsxEventSource osxEventSource, final ThreadPoolTool threadPoolTool) {
+        ExternalEventBrokerImpl externalEventBroker = new ExternalEventBrokerImpl(threadPoolTool);
 
         commandLineEventSource.setListener(externalEventBroker);
         osxEventSource.setListener(externalEventBroker);
-        bind(ExternalEventSource.class).toInstance(externalEventBroker);
+
+        return externalEventBroker;
     }
 }

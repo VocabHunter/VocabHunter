@@ -11,13 +11,19 @@ import org.slf4j.LoggerFactory;
 import java.awt.*;
 import java.net.URI;
 import java.util.concurrent.ExecutorService;
+import javax.inject.Inject;
 import javax.inject.Singleton;
 
 @Singleton
 public final class WebPageToolImpl implements WebPageTool {
     private static final Logger LOG = LoggerFactory.getLogger(WebPageToolImpl.class);
 
-    private final ExecutorService executorService = ThreadPoolTool.singleDaemonExecutor("Web Page Opener");
+    private final ExecutorService executorService;
+
+    @Inject
+    public WebPageToolImpl(final ThreadPoolTool threadPoolTool) {
+        executorService = threadPoolTool.singleDaemonExecutor("Web Page Opener");
+    }
 
     @Override
     public void showWebPage(final String page) {

@@ -5,6 +5,8 @@
 package io.github.vocabhunter.gui.main;
 
 import com.google.inject.AbstractModule;
+import io.github.vocabhunter.analysis.core.ThreadPoolTool;
+import io.github.vocabhunter.analysis.core.ThreadPoolToolImpl;
 import io.github.vocabhunter.analysis.model.Analyser;
 import io.github.vocabhunter.analysis.simple.SimpleAnalyser;
 import io.github.vocabhunter.gui.status.StatusManager;
@@ -15,5 +17,6 @@ public class CoreGuiModule extends AbstractModule {
     protected void configure() {
         bind(Analyser.class).to(SimpleAnalyser.class);
         bind(StatusManager.class).to(StatusManagerImpl.class);
+        bind(ThreadPoolTool.class).to(ThreadPoolToolImpl.class);
     }
 }

@@ -6,7 +6,7 @@ package io.github.vocabhunter.gui.controller;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import io.github.vocabhunter.gui.common.GuiConstants;
-import io.github.vocabhunter.gui.event.ExternalEventSource;
+import io.github.vocabhunter.gui.event.ExternalEventBroker;
 import io.github.vocabhunter.gui.model.MainModel;
 import io.github.vocabhunter.gui.model.StatusModel;
 import io.github.vocabhunter.gui.services.EnvironmentManager;
@@ -111,7 +111,7 @@ public class MainController {
     private SettingsHandler settingsHandler;
 
     @Inject
-    private ExternalEventSource externalEventSource;
+    private ExternalEventBroker externalEventSource;
 
     @Inject
     private ExitRequestHandler exitRequestHandler;
