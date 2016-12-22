@@ -17,8 +17,6 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.List;
 import java.util.function.BooleanSupplier;
@@ -26,10 +24,10 @@ import java.util.function.Supplier;
 import java.util.stream.Collectors;
 import javax.inject.Inject;
 
+import static io.github.vocabhunter.gui.common.FieldValueTool.*;
+
 @SuppressFBWarnings({"NP_UNWRITTEN_PUBLIC_OR_PROTECTED_FIELD", "UWF_UNWRITTEN_PUBLIC_OR_PROTECTED_FIELD"})
 public class SettingsController {
-    private static final Logger LOG = LoggerFactory.getLogger(SettingsController.class);
-
     public TextField fieldMinimumLetters;
 
     public TextField fieldMinimumOccurrences;
@@ -89,8 +87,8 @@ public class SettingsController {
     private void exit(final boolean isSaveRequested) {
         if (isSaveRequested) {
             FilterSettings old = model.getFilterSettings();
-            int minimumLetters = valueOf(fieldMinimumLetters, old.getMinimumLetters());
-            int minimumOccurrences = valueOf(fieldMinimumOccurrences, old.getMinimumOccurrences());
+            int minimumLetters = getAsInteger(fieldMinimumLetters::getText, old.getMinimumLetters());
+            int minimumOccurrences = getAsInteger(fieldMinimumOccurrences::getText, old.getMinimumOccurrences());
             boolean allowInitialCapitals = fieldInitialCapital.isSelected();
             List<FilterFile> filterFiles = filterFilesModel.getFiles().stream()
                 .map(f -> new FilterFile(f.getFile(), f.getMode()))
@@ -104,64 +102,18 @@ public class SettingsController {
         stage.close();
     }
 
-    private int valueOf(final TextField field, final int defaultValue) {
-        String text = field.getText();
-
-        try {
-            return Integer.parseInt(text);
-        } catch (final NumberFormatException e) {
-            LOG.debug("Illegal field value", e);
-
-            return defaultValue;
-        }
-    }
-
-    private void initialiseField(final TextField field, final Supplier<Integer> settingGetter) {
+    private void initialiseField(final TextField field, final Supplier<Object> settingGetter) {
         StringProperty textProperty = field.textProperty();
         ReadOnlyBooleanProperty focusedProperty = field.focusedProperty();
 
         field.setText(settingGetter.get().toString());
-        textProperty.addListener((o, oldValue, newValue) -> processFieldChange(field, oldValue, newValue));
-        focusedProperty.addListener((o, old, isFocused) -> processFocusChange(field, settingGetter));
+        textProperty.addListener((o, oldValue, newValue) -> cleanNonNegativeInteger(field::setText, newValue, oldValue));
+        focusedProperty.addListener((o, old, isFocused) -> applyDefaultIfEmpty(field::setText, field::getText, settingGetter));
     }
 
     private void initialiseField(final CheckBox field, final BooleanSupplier settingGetter) {
         boolean value = settingGetter.getAsBoolean();
 
         field.setSelected(value);
-    }
-
-    private void processFocusChange(final TextField field, final Supplier<Integer> settingGetter) {
-        String text = field.getText();
-
-        if (text.isEmpty()) {
-            field.setText(settingGetter.get().toString());
-        }
-    }
-
-    private void processFieldChange(final TextField field, final String oldValue, final String newValue) {
-        String clean = cleanInt(oldValue, newValue);
-
-        if (!clean.equals(newValue)) {
-            field.setText(clean);
-        }
-    }
-
-    private String cleanInt(final String oldValue, final String newValue) {
-        if (newValue.isEmpty()) {
-            return newValue;
-        } else {
-            try {
-                int n = Integer.parseInt(newValue);
-
-                if (n >= 0) {
-                    return Integer.toString(n);
-                }
-            } catch (final NumberFormatException e) {
-                LOG.debug("Illegal field value", e);
-            }
-
-            return oldValue;
-        }
     }
 }
