@@ -5,6 +5,7 @@
 package io.github.vocabhunter.gui.main;
 
 import javafx.scene.Node;
+import javafx.scene.input.KeyCode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testfx.api.FxRobot;
@@ -51,6 +52,16 @@ public class GuiTestSteps {
             verifyThat("#mainWord", hasText("to"));
         });
 
+        step("Mark word as known with keyboard", () -> {
+            robot.type(KeyCode.K);
+            verifyThat("#mainWord", hasText("me"));
+        });
+
+        step("Mark word as unknown with keyboard", () -> {
+            robot.type(KeyCode.X);
+            verifyThat("#mainWord", hasText("of"));
+        });
+
         step("Show selection", () -> {
             robot.clickOn("#buttonEditOff");
             verifyThat("#buttonKnown", isInvisible());
@@ -75,12 +86,12 @@ public class GuiTestSteps {
     public void part2Progress() {
         step("Check progress", () -> {
             robot.clickOn("#tabProgress");
-            verifyThat("#labelValueDone", hasText("2 Words"));
+            verifyThat("#labelValueDone", hasText("4 Words"));
         });
 
         step("Return to analysis", () -> {
             robot.clickOn("#tabAnalysis");
-            verifyThat("#mainWord", hasText("the"));
+            verifyThat("#mainWord", hasText("me"));
         });
 
     }
@@ -126,7 +137,7 @@ public class GuiTestSteps {
         step("Re-open the old session", () -> {
             robot.clickOn("#buttonOpen");
             robot.clickOn("Discard");
-            verifyThat("#mainWord", hasText("a"));
+            verifyThat("#mainWord", hasText("of"));
         });
     }
 
