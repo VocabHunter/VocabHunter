@@ -11,6 +11,8 @@ public final class GuiTestConstants {
 
     public static final String BOOK_EMPTY = "empty.txt";
 
+    public static final String SESSION_1 = "oliver-twist.wordy";
+
     // These values should match those in main.fxml
 
     public static final int WINDOW_WIDTH = 1000;

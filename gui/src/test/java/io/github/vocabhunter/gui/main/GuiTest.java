@@ -111,10 +111,11 @@ public class GuiTest extends FxRobot implements GuiTestValidator {
         Path document1 = getResource(BOOK_1);
         Path document2 = getResource(BOOK_2);
         Path document3 = getResource(BOOK_EMPTY);
+        Path prerecordedSession = getResource(SESSION_1);
 
         setUpFileDialogue(FileDialogueType.NEW_SESSION, newSessionDialogue, document1, document2, document3, document2);
         setUpFileDialogue(FileDialogueType.SAVE_SESSION, saveSessionDialogue, sessionFile);
-        setUpFileDialogue(FileDialogueType.OPEN_SESSION, openSessionDialogue, sessionFile);
+        setUpFileDialogue(FileDialogueType.OPEN_SESSION, openSessionDialogue, prerecordedSession, sessionFile);
         setUpFileDialogue(FileDialogueType.EXPORT_SELECTION, exportDialogue, exportFile);
 
         Path settingsFile = manager.addFile(SettingsManagerImpl.SETTINGS_JSON);

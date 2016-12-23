@@ -31,6 +31,7 @@ public class FilterFileCell extends ListCell<FilterFileModel> {
 
     public FilterFileCell(final Consumer<FilterFileModel> removalHandler) {
         choiceBox.getItems().setAll(FilterFileMode.values());
+        choiceBox.setId("filterMode");
 
         HBox.setHgrow(spacer, Priority.ALWAYS);
         hbox.setAlignment(Pos.CENTER_LEFT);

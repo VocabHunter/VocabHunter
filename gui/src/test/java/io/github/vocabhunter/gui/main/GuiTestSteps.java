@@ -122,14 +122,23 @@ public class GuiTestSteps {
             verifyThat("#mainWord", hasText("surgeon"));
         });
 
+        step("Add file to filter", () -> {
+            robot.clickOn("#buttonSetupFilters");
+            robot.clickOn("#buttonAddList");
+            robot.clickOn("#filterMode");
+            robot.clickOn("Known & Unknown Words");
+            robot.clickOn("#buttonOk");
+            verifyThat("#mainWord", hasText("workhouse"));
+        });
+
         step("Mark filtered word as known", () -> {
             robot.clickOn("#buttonKnown");
-            verifyThat("#mainWord", hasText("workhouse"));
+            verifyThat("#mainWord", hasText("parish"));
         });
 
         step("Disable filter", () -> {
             robot.clickOn("#buttonEnableFilters");
-            verifyThat("#mainWord", hasText("workhouse"));
+            verifyThat("#mainWord", hasText("parish"));
         });
     }
 
