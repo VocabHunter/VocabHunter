@@ -28,7 +28,7 @@ public class SearchModel<T extends SequencedWord> {
 
     private final ObjectProperty<T> nextMatch = new SimpleObjectProperty<>();
 
-    private final ObjectProperty<T> wrapMatch = new SimpleObjectProperty<T>();
+    private final ObjectProperty<T> wrapMatch = new SimpleObjectProperty<>();
 
     private final BooleanProperty previousButtonDisabled = new SimpleBooleanProperty();
 
