@@ -26,6 +26,10 @@ public class TestFileManager {
         return file;
     }
 
+    public Path getDirectory() {
+        return directory;
+    }
+
     public void cleanup() throws IOException {
         FileUtils.deleteDirectory(directory.toFile());
     }

@@ -4,12 +4,11 @@
 
 package io.github.vocabhunter.analysis.session;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
+import io.github.vocabhunter.analysis.core.FileTool;
 import io.github.vocabhunter.analysis.core.VocabHunterException;
 import io.github.vocabhunter.analysis.marked.MarkedWord;
 import io.github.vocabhunter.analysis.simple.WordStreamTool;
 
-import java.io.IOException;
 import java.nio.file.Path;
 import java.util.List;
 
@@ -17,18 +16,12 @@ import static io.github.vocabhunter.analysis.session.SessionFormatVersion.*;
 import static java.util.stream.Collectors.toList;
 
 public final class SessionSerialiser {
-    private static final ObjectMapper MAPPER = new ObjectMapper();
-
     private SessionSerialiser() {
         // Prevent instantiation - all methods are static
     }
 
     public static void write(final Path file, final SessionState state) {
-        try {
-            MAPPER.writeValue(file.toFile(), state);
-        } catch (final IOException e) {
-            throw new VocabHunterException(String.format("Unable to save file '%s'", file), e);
-        }
+        FileTool.writeAsJson(file, state, "Unable to save file '%s'");
     }
 
     public static List<? extends MarkedWord> readMarkedWords(final Path file) {
@@ -44,17 +37,13 @@ public final class SessionSerialiser {
     }
 
     private static SessionState readForMarkedWords(final Path file) {
-        try {
-            SessionState state = MAPPER.readValue(file.toFile(), SessionState.class);
-            int formatVersion = state.getFormatVersion();
+        SessionState state = FileTool.readFromJson(SessionState.class, file, "Unable to load file '%s'");
+        int formatVersion = state.getFormatVersion();
 
-            if (formatVersion < 1 || formatVersion > LATEST_VERSION) {
-                throw new VocabHunterException("This file was created with a newer version of VocabHunter.  Please upgrade and try again.");
-            } else {
-                return upgradeForMarkedWords(state);
-            }
-        } catch (final IOException e) {
-            throw new VocabHunterException(String.format("Unable to load file '%s'", file), e);
+        if (formatVersion < 1 || formatVersion > LATEST_VERSION) {
+            throw new VocabHunterException("This file was created with a newer version of VocabHunter.  Please upgrade and try again.");
+        } else {
+            return upgradeForMarkedWords(state);
         }
     }
 

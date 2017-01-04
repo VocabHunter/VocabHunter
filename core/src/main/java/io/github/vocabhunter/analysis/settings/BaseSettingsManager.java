@@ -4,23 +4,15 @@
 
 package io.github.vocabhunter.analysis.settings;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import io.github.vocabhunter.analysis.core.VocabHunterException;
+import io.github.vocabhunter.analysis.core.FileTool;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.Collections;
-import java.util.List;
 
 public class BaseSettingsManager<T> {
     private static final Logger LOG = LoggerFactory.getLogger(BaseSettingsManager.class);
-
-    private static final ObjectMapper MAPPER = new ObjectMapper();
-
-    private static final List<String> MINIMAL_JSON = Collections.singletonList("{}");
 
     private final Path settingsFile;
 
@@ -33,59 +25,35 @@ public class BaseSettingsManager<T> {
     protected BaseSettingsManager(final Path settingsFile, final Class<T> beanClass) {
         this.settingsFile = settingsFile;
         this.beanClass = beanClass;
-        ensureDirectoryExists(settingsFile);
-    }
-
-    private void ensureDirectoryExists(final Path settingsFile) {
-        Path parent = settingsFile.getParent();
-
-        try {
-            if (parent != null) {
-                Files.createDirectories(parent);
-            }
-        } catch (final IOException e) {
-            throw new VocabHunterException(String.format("Unable to create directory %s", parent), e);
-        }
+        FileTool.ensureDirectoryExists(settingsFile, "Unable to create directory %s");
     }
 
     protected T readSettings() {
-        try {
-            T result = readSettingsIfAvailable();
+        T result = readSettingsIfAvailable();
 
-            if (result == null) {
-                Files.write(settingsFile, MINIMAL_JSON);
-                result = readSettingsIfAvailable();
-            }
-
-            return result;
-        } catch (final IOException e) {
-            throw new VocabHunterException(String.format("Unable to load settings file '%s'", settingsFile), e);
+        if (result == null) {
+            FileTool.writeMinimalJson(settingsFile, "Unable to save settings file '%s'");
+            result = readSettingsIfAvailable();
         }
+
+        return result;
     }
 
     private T readSettingsIfAvailable() {
         try {
             if (Files.isRegularFile(settingsFile)) {
-                return readSettingsInternal();
+                return FileTool.readFromJson(beanClass, settingsFile, "Unable to load settings file '%s'");
             } else {
                 return null;
             }
         } catch (final Exception e) {
-            LOG.error("Unable to load settings file '{}'", settingsFile, e);
+            LOG.error("Discarding unreadable settings file '{}'", settingsFile, e);
 
             return null;
         }
     }
 
-    private T readSettingsInternal() throws IOException {
-        return MAPPER.readValue(settingsFile.toFile(), beanClass);
-    }
-
     protected void writeSettings(final T settings) {
-        try {
-            MAPPER.writeValue(settingsFile.toFile(), settings);
-        } catch (final IOException e) {
-            throw new VocabHunterException(String.format("Unable to save settings file '%s'", settingsFile), e);
-        }
+        FileTool.writeAsJson(settingsFile, settings, "Unable to save settings file '%s'");
     }
 }

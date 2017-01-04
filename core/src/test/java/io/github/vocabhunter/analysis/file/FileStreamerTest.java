@@ -141,7 +141,7 @@ public class FileStreamerTest {
             URL resource = getResource(fileName);
 
             return Paths.get(resource.toURI());
-        } catch (URISyntaxException e) {
+        } catch (final URISyntaxException e) {
             throw new VocabHunterException("Filename error", e);
         }
     }
