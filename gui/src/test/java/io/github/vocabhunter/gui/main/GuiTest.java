@@ -43,8 +43,8 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 import static io.github.vocabhunter.gui.main.GuiTestConstants.*;
+import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.containsString;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.*;
 import static org.testfx.api.FxToolkit.registerPrimaryStage;
