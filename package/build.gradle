@@ -102,18 +102,20 @@ jfx {
     ]
 }
 
-task checkBundle << {
-    String bundle = "VocabHunter-${publishedVersion}.${packageType}"
-    FileTree tree = fileTree('build/jfx/native') {
-        include {
-            it.file.name.equalsIgnoreCase(bundle)
+task checkBundle {
+    doLast {
+        String bundle = "VocabHunter-${publishedVersion}.${packageType}"
+        FileTree tree = fileTree('build/jfx/native') {
+            include {
+                it.file.name.equalsIgnoreCase(bundle)
+            }
         }
-    }
-    if (tree.isEmpty()) {
-        throw new GradleException("Unable to create bundle file '$bundle'")
-    } else {
-        tree.each {File f ->
-            println "Created bundle '$f'"
+        if (tree.isEmpty()) {
+            throw new GradleException("Unable to create bundle file '$bundle'")
+        } else {
+            tree.each {File f ->
+                println "Created bundle '$f'"
+            }
         }
     }
 }
