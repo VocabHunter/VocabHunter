@@ -5,7 +5,7 @@
 [![Latest Release](https://img.shields.io/github/release/VocabHunter/VocabHunter.svg)](https://github.com/VocabHunter/VocabHunter/releases/latest)
 [![Twitter Follow](https://img.shields.io/twitter/follow/vocabhunterapp.svg?style=social&label=Follow)](https://twitter.com/vocabhunterapp)
 
-[![VocabHunter](/assets/VocabHunter.png)][VocabHunter]
+[![VocabHunter](/assets/VocabHunter.png)](https://vocabhunter.github.io/)
 
 VocabHunter is a system to help learners of foreign languages.  The best place to go for information about VocabHunter is the project website: [vocabhunter.github.io](https://vocabhunter.github.io/).
 
