@@ -11,6 +11,8 @@ VocabHunter is a system to help learners of foreign languages.  The best place t
 
 To get all the latest news about VocabHunter including announcements of new releases, follow [@vocabhunterapp](https://twitter.com/vocabhunterapp) on Twitter.
 
+[![VocabHunter](/assets/VocabHunter-in-use.png)](https://vocabhunter.github.io/)
+
 # Prerequisites
 
 You will need Java 8 to build and run VocabHunter.  You can download it from the [Oracle Website](http://www.oracle.com/technetwork/java/javase/downloads/index.html).  Everything else, including Gradle, will be downloaded by the build process.
