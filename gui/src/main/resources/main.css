@@ -66,16 +66,19 @@
 .buttonKnown {
     -fx-base: -colour-known;
 }
-.buttonKnownIcon {
+.buttonKnownIcon, .filterKnownIcon {
     -glyph-name: CHECK_CIRCLE;
     -fx-fill: -colour-known-end;
 }
 .buttonUnknown {
     -fx-base: -colour-unknown;
 }
-.buttonUnknownIcon {
+.buttonUnknownIcon, .filterUnknownIcon {
     -glyph-name: TIMES_CIRCLE;
     -fx-fill: -colour-unknown-end;
+}
+.filterKnownIcon, .filterUnknownIcon {
+    -glyph-size: 20;
 }
 .buttonKnownIcon, .buttonUnknownIcon {
     -glyph-size: 30;

@@ -5,24 +5,16 @@
 package io.github.vocabhunter.gui.model;
 
 public enum FilterFileMode {
-    KNOWN("Known Words", false), SEEN("Known & Unknown Words", true);
-
-    private final String name;
+    KNOWN(false), SEEN(true);
 
     private final boolean isIncludeUnknown;
 
-    FilterFileMode(final String name, final boolean isIncludeUnknown) {
-        this.name = name;
+    FilterFileMode(final boolean isIncludeUnknown) {
         this.isIncludeUnknown = isIncludeUnknown;
     }
 
     public boolean isIncludeUnknown() {
         return isIncludeUnknown;
-    }
-
-    @Override
-    public String toString() {
-        return name;
     }
 
     public static FilterFileMode getMode(final boolean includeUnknown) {

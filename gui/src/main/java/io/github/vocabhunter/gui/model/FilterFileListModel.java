@@ -14,7 +14,8 @@ public class FilterFileListModel {
     private final ObservableList<FilterFileModel> files;
 
     public FilterFileListModel(final List<FilterFileModel> files) {
-        this.files = FXCollections.observableArrayList(files);
+        this.files = FXCollections.observableArrayList(FilterFileModel.PROPERTY_EXTRACTOR);
+        this.files.addAll(files);
     }
 
     public ObservableList<FilterFileModel> getFiles() {

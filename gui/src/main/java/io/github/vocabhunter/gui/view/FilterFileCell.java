@@ -4,7 +4,6 @@
 
 package io.github.vocabhunter.gui.view;
 
-import io.github.vocabhunter.gui.model.FilterFileMode;
 import io.github.vocabhunter.gui.model.FilterFileModel;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
@@ -23,20 +22,24 @@ public class FilterFileCell extends ListCell<FilterFileModel> {
 
     private final Pane spacer = new Pane();
 
-    private final ChoiceBox<FilterFileMode> choiceBox = new ChoiceBox<>();
+    private final Label firstIcon = new Label();
 
-    private final HBox hbox = new HBox(SPACING, label, spacer, choiceBox, buttonRemoveList);
+    private final Label secondIcon = new Label();
+
+    private final ChoiceBox<FilterFileModeView> choiceBox = new ChoiceBox<>();
+
+    private final HBox hbox = new HBox(SPACING, label, spacer, firstIcon, secondIcon, choiceBox, buttonRemoveList);
 
     private FilterFileModel lastItem;
 
     public FilterFileCell(final Consumer<FilterFileModel> removalHandler) {
-        choiceBox.getItems().setAll(FilterFileMode.values());
+        choiceBox.getItems().setAll(FilterFileModeView.values());
         choiceBox.setId("filterMode");
 
         HBox.setHgrow(spacer, Priority.ALWAYS);
         hbox.setAlignment(Pos.CENTER_LEFT);
         buttonRemoveList.setOnAction(e -> removalHandler.accept(lastItem));
-        choiceBox.setOnAction(e -> lastItem.setMode(choiceBox.getValue()));
+        choiceBox.setOnAction(e -> lastItem.setMode(choiceBox.getValue().getMode()));
     }
 
     @Override
@@ -51,7 +54,10 @@ public class FilterFileCell extends ListCell<FilterFileModel> {
             lastItem = item;
             label.setText(item.getName());
             label.setTooltip(new Tooltip(item.getFile().toString()));
-            choiceBox.getSelectionModel().select(item.getMode());
+            FilterFileModeView modeView = FilterFileModeView.getView(item.getMode());
+
+            choiceBox.getSelectionModel().select(modeView);
+            modeView.updateIcons(firstIcon, secondIcon);
             setGraphic(hbox);
         }
     }

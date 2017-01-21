@@ -5,13 +5,19 @@
 package io.github.vocabhunter.gui.model;
 
 import io.github.vocabhunter.analysis.session.FileNameTool;
+import javafx.beans.Observable;
+import javafx.beans.property.SimpleObjectProperty;
+import javafx.util.Callback;
 
 import java.nio.file.Path;
 
 public class FilterFileModel {
+    public static final Callback<FilterFileModel, Observable[]> PROPERTY_EXTRACTOR
+        = m -> new Observable[] {m.modeProperty};
+
     private final Path file;
 
-    private FilterFileMode mode;
+    private SimpleObjectProperty<FilterFileMode> modeProperty;
 
     public FilterFileModel(final Path file) {
         this(file, FilterFileMode.KNOWN);
@@ -19,15 +25,15 @@ public class FilterFileModel {
 
     public FilterFileModel(final Path file, final FilterFileMode mode) {
         this.file = file;
-        this.mode = mode;
+        this.modeProperty = new SimpleObjectProperty<>(mode);
     }
 
     public FilterFileMode getMode() {
-        return mode;
+        return modeProperty.get();
     }
 
     public void setMode(final FilterFileMode mode) {
-        this.mode = mode;
+        modeProperty.set(mode);
     }
 
     public String getName() {
