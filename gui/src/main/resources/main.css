@@ -66,19 +66,22 @@
 .buttonKnown {
     -fx-base: -colour-known;
 }
-.buttonKnownIcon, .filterKnownIcon {
+.buttonKnownIcon, .filterKnownIcon, .filterKnownIconSmall {
     -glyph-name: CHECK_CIRCLE;
     -fx-fill: -colour-known-end;
 }
 .buttonUnknown {
     -fx-base: -colour-unknown;
 }
-.buttonUnknownIcon, .filterUnknownIcon {
+.buttonUnknownIcon, .filterUnknownIcon, .filterUnknownIconSmall {
     -glyph-name: TIMES_CIRCLE;
     -fx-fill: -colour-unknown-end;
 }
 .filterKnownIcon, .filterUnknownIcon {
     -glyph-size: 20;
+}
+.filterKnownIconSmall, .filterUnknownIconSmall {
+    -glyph-size: 15;
 }
 .buttonKnownIcon, .buttonUnknownIcon {
     -glyph-size: 30;
@@ -130,17 +133,17 @@
 .title.right {
     -fx-fill: -gradient-unknown;
 }
-.settings {
+.settings, .filter {
     -fx-padding: 20 20 20 20;
 }
-.settings .description {
+.settings .description, .filter .description {
     -fx-font-size: 18;
     -fx-padding: 0 0 10 0;
 }
 .settings .fieldLabel {
     -fx-padding: 10 5 10 5;
 }
-.settings .buttonBar {
+.settings .buttonBar, .filter .buttonBar {
     -fx-padding: 20 0 0 0;
 }
 .settings .settingsGroup {
@@ -148,6 +151,14 @@
     -fx-border-width: 1;
     -fx-padding: 10 10 10 10;
     -fx-border-insets: 5 0 5 0;
+}
+.filter .mainContent {
+    -fx-spacing: 7;
+}
+.filter .iconBox {
+    -fx-min-width: 30;
+    -fx-alignment: center-right;
+    -fx-spacing: 2;
 }
 .about BorderPane {
     -fx-padding: 10 20 10 10;

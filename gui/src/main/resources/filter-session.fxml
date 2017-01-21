@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+  ~ Open Source Software published under the Apache Licence, Version 2.0.
+  -->
+
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ButtonBar?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane styleClass="filter" stylesheets="@main.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
+   <top>
+      <Label styleClass="description" text="Choose the words to filter" BorderPane.alignment="CENTER" />
+   </top>
+   <center>
+      <VBox styleClass="mainContent" BorderPane.alignment="CENTER">
+         <children>
+            <HBox alignment="CENTER_LEFT">
+               <children>
+                  <Label text="Session file: " />
+                  <TextField editable="false" text="my-session.wordy" HBox.hgrow="ALWAYS" />
+                  <Button mnemonicParsing="false" text="Change file..." />
+               </children>
+            </HBox>
+            <ListView prefHeight="150.0" prefWidth="600.0">
+                <placeholder>
+                    <Label text="Word list coming soon.  Watch this space..." />
+                </placeholder>
+            </ListView>
+             <RadioButton mnemonicParsing="false" selected="true" text="Known words">
+                 <graphic>
+                     <HBox styleClass="iconBox">
+                         <FontAwesomeIconView styleClass="filterKnownIconSmall" />
+                     </HBox>
+                 </graphic>
+             </RadioButton>
+             <RadioButton mnemonicParsing="false" text="Known &amp; unknown words">
+                 <graphic>
+                     <HBox styleClass="iconBox">
+                         <FontAwesomeIconView styleClass="filterKnownIconSmall" />
+                         <FontAwesomeIconView styleClass="filterUnknownIconSmall" />
+                     </HBox>
+                 </graphic>
+             </RadioButton>
+            <Label text="Total words: 1,234" />
+         </children>
+      </VBox>
+   </center>
+   <bottom>
+       <ButtonBar styleClass="buttonBar" BorderPane.alignment="CENTER">
+           <buttons>
+               <Button fx:id="buttonOk" mnemonicParsing="false" text="Add Filter" />
+               <Button fx:id="buttonCancel" mnemonicParsing="false" text="Cancel" />
+           </buttons>
+       </ButtonBar>
+   </bottom>
+</BorderPane>
