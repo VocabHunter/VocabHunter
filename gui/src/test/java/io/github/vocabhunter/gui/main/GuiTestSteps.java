@@ -125,8 +125,10 @@ public class GuiTestSteps {
         step("Add file to filter", () -> {
             robot.clickOn("#buttonSetupFilters");
             robot.clickOn("#buttonAddList");
-            robot.clickOn("#filterMode");
-            robot.clickOn("Known & Unknown Words");
+            robot.clickOn("#buttonAddFilterFile");
+            robot.clickOn("#buttonEdit");
+            robot.clickOn("#buttonSeen");
+            robot.clickOn("#buttonAddFilterFile");
             robot.clickOn("#buttonOk");
             verifyThat("#mainWord", hasText("workhouse"));
         });

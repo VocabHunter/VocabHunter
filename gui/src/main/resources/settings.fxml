@@ -16,7 +16,15 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane styleClass="settings" stylesheets="@main.css" xmlns="http://javafx.com/javafx/null" xmlns:fx="http://javafx.com/fxml/1" fx:controller="io.github.vocabhunter.gui.controller.SettingsController">
+<BorderPane styleClass="settings" stylesheets="@main.css" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="io.github.vocabhunter.gui.controller.SettingsController">
+    <bottom>
+        <ButtonBar styleClass="buttonBar" BorderPane.alignment="CENTER">
+            <buttons>
+                <Button fx:id="buttonOk" mnemonicParsing="false" text="Enable Filters" />
+                <Button fx:id="buttonCancel" mnemonicParsing="false" text="Cancel" />
+            </buttons>
+        </ButtonBar>
+    </bottom>
    <top>
       <Label styleClass="description" text="Choose the words you want to show" BorderPane.alignment="CENTER" />
    </top>
@@ -64,12 +72,4 @@
          </children>
       </VBox>
    </center>
-   <bottom>
-       <ButtonBar styleClass="buttonBar" BorderPane.alignment="CENTER">
-           <buttons>
-               <Button fx:id="buttonOk" mnemonicParsing="false" text="Enable Filters" />
-               <Button fx:id="buttonCancel" mnemonicParsing="false" text="Cancel" />
-           </buttons>
-       </ButtonBar>
-   </bottom>
 </BorderPane>

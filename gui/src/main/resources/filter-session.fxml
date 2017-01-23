@@ -15,7 +15,15 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane styleClass="filter" stylesheets="@main.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane styleClass="filter" stylesheets="@main.css" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="io.github.vocabhunter.gui.controller.FilterSessionController">
+    <bottom>
+        <ButtonBar styleClass="buttonBar" BorderPane.alignment="CENTER">
+            <buttons>
+                <Button fx:id="buttonAddFilterFile" mnemonicParsing="false" text="Add Filter" />
+                <Button fx:id="buttonCancel" mnemonicParsing="false" text="Cancel" />
+            </buttons>
+        </ButtonBar>
+    </bottom>
    <top>
       <Label styleClass="description" text="Choose the words to filter" BorderPane.alignment="CENTER" />
    </top>
@@ -25,8 +33,8 @@
             <HBox alignment="CENTER_LEFT">
                <children>
                   <Label text="Session file: " />
-                  <TextField editable="false" text="my-session.wordy" HBox.hgrow="ALWAYS" />
-                  <Button mnemonicParsing="false" text="Change file..." />
+                  <TextField fx:id="fieldFile" editable="false" text="my-session.wordy" HBox.hgrow="ALWAYS" />
+                  <Button mnemonicParsing="false" text="Change file..." disable="true"/>
                </children>
             </HBox>
             <ListView prefHeight="150.0" prefWidth="600.0">
@@ -34,14 +42,14 @@
                     <Label text="Word list coming soon.  Watch this space..." />
                 </placeholder>
             </ListView>
-             <RadioButton mnemonicParsing="false" selected="true" text="Known words">
+             <RadioButton fx:id="buttonKnown" mnemonicParsing="false" selected="true" text="Known words">
                  <graphic>
                      <HBox styleClass="iconBox">
                          <FontAwesomeIconView styleClass="filterKnownIconSmall" />
                      </HBox>
                  </graphic>
              </RadioButton>
-             <RadioButton mnemonicParsing="false" text="Known &amp; unknown words">
+             <RadioButton fx:id="buttonSeen" mnemonicParsing="false" text="Known &amp; unknown words">
                  <graphic>
                      <HBox styleClass="iconBox">
                          <FontAwesomeIconView styleClass="filterKnownIconSmall" />
@@ -49,16 +57,8 @@
                      </HBox>
                  </graphic>
              </RadioButton>
-            <Label text="Total words: 1,234" />
+            <Label text="Total words: TO BE IMPLEMENTED" />
          </children>
       </VBox>
    </center>
-   <bottom>
-       <ButtonBar styleClass="buttonBar" BorderPane.alignment="CENTER">
-           <buttons>
-               <Button fx:id="buttonOk" mnemonicParsing="false" text="Add Filter" />
-               <Button fx:id="buttonCancel" mnemonicParsing="false" text="Cancel" />
-           </buttons>
-       </ButtonBar>
-   </bottom>
 </BorderPane>

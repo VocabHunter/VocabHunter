@@ -15,7 +15,7 @@ import java.util.stream.Stream;
 import static java.util.stream.Collectors.toMap;
 
 public enum FilterFileModeView {
-    SESSION_KNOWN(FilterFileMode.KNOWN, "Known Words", null, "filterKnownIcon"), SESSION_SEEN(FilterFileMode.SEEN, "Known & Unknown Words", "filterKnownIcon", "filterUnknownIcon");
+    SESSION_KNOWN(FilterFileMode.KNOWN, "Known words", null, "filterKnownIcon"), SESSION_SEEN(FilterFileMode.SEEN, "Known & unknown words", "filterKnownIcon", "filterUnknownIcon");
 
     private static final Map<FilterFileMode, FilterFileModeView> VIEW_MAP = Stream.of(FilterFileModeView.values())
         .collect(toMap(FilterFileModeView::getMode, Function.identity()));

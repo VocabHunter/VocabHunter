@@ -48,6 +48,9 @@ public class SettingsController {
     @Inject
     private FileDialogueFactory factory;
 
+    @Inject
+    private FilterSessionHandler filterSessionHandler;
+
     private Stage stage;
 
     private FilterFileListModel filterFilesModel;
@@ -70,7 +73,7 @@ public class SettingsController {
         filterFilesModel = new FilterFileListModel(filterFiles);
         listExcludedFiles.setItems(filterFilesModel.getFiles());
         buttonAddList.setOnAction(e -> processAddFile());
-        listExcludedFiles.setCellFactory(p -> new FilterFileCell(filterFilesModel::remove));
+        listExcludedFiles.setCellFactory(p -> new FilterFileCell(filterFilesModel::remove, filterSessionHandler::show));
     }
 
     private void processAddFile() {
@@ -78,10 +81,15 @@ public class SettingsController {
 
         dialogue.showChooser();
         if (dialogue.isFileSelected()) {
-            FilterFileModel fileModel = filterFilesModel.addFile(dialogue.getSelectedFile());
+            FilterFileModel fileModel = new FilterFileModel(dialogue.getSelectedFile());
 
-            listExcludedFiles.scrollTo(fileModel);
+            filterSessionHandler.show(fileModel, () -> addFile(fileModel));
         }
+    }
+
+    private void addFile(final FilterFileModel fileModel) {
+        filterFilesModel.addFile(fileModel);
+        listExcludedFiles.scrollTo(fileModel);
     }
 
     private void exit(final boolean isSaveRequested) {
