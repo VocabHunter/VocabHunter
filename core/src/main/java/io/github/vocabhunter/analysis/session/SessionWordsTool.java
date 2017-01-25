@@ -59,7 +59,7 @@ public final class SessionWordsTool {
         return state.equals(WordState.KNOWN) || state.equals(WordState.UNKNOWN);
     }
 
-    private static List<? extends MarkedWord> readMarkedWords(final Path file) {
+    public static List<? extends MarkedWord> readMarkedWords(final Path file) {
         try {
             return SessionSerialiser.readMarkedWords(file);
         } catch (final Exception e) {

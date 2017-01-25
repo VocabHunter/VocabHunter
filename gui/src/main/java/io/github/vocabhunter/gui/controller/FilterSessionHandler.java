@@ -4,6 +4,7 @@
 
 package io.github.vocabhunter.gui.controller;
 
+import io.github.vocabhunter.gui.dialogues.FileErrorTool;
 import io.github.vocabhunter.gui.model.FilterFileModel;
 import io.github.vocabhunter.gui.view.ViewFxml;
 import io.github.vocabhunter.gui.view.WindowTool;
@@ -28,8 +29,12 @@ public class FilterSessionHandler {
         Parent root = ViewFxml.FILTER_SESSION.loadNode(loader);
         FilterSessionController controller = loader.getController();
 
-        controller.initialise(stage, model, onSave);
-        WindowTool.setupModal(stage, root, "Filter Session");
+        try {
+            controller.initialise(stage, model, onSave);
+            WindowTool.setupModal(stage, root, "Filter Session");
+        } catch (RuntimeException e) {
+            FileErrorTool.open(model.getFile(), e);
+        }
     }
 
     private static void noOperation() {

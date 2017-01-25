@@ -57,7 +57,7 @@
                      </HBox>
                  </graphic>
              </RadioButton>
-            <Label text="Total words: TO BE IMPLEMENTED" />
+            <Label fx:id="labelTotalWords" text="Total words: 1,234" />
          </children>
       </VBox>
    </center>
