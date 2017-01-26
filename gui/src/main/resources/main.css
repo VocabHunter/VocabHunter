@@ -32,18 +32,21 @@
     -fx-font-weight: bold;
     -fx-border-color: black;
 }
-.wordList .list-cell {
+.wordList .list-cell, .wordList .table-cell {
     -fx-border-color: white;
     -fx-border-width: 1 0 1 0;
 }
-.wordList .list-cell:unseen {
+.wordList .list-cell:unseen, .wordList .table-cell:unseen {
     -fx-background-color: -colour-unseen;
 }
-.wordList .list-cell:known {
+.wordList .list-cell:known, .wordList .table-cell:known {
     -fx-background-color: -gradient-known;
 }
-.wordList .list-cell:unknown {
+.wordList .list-cell:unknown, .wordList .table-cell:unknown {
     -fx-background-color: -gradient-unknown;
+}
+.filterSessionStateColumn {
+    -fx-alignment: CENTER;
 }
 .buttonSaveIcon {
     -glyph-name: SAVE;

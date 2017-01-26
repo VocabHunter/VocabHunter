@@ -8,8 +8,9 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ButtonBar?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
@@ -34,14 +35,21 @@
                <children>
                   <Label text="Session file: " />
                   <TextField fx:id="fieldFile" editable="false" text="my-session.wordy" HBox.hgrow="ALWAYS" />
-                  <Button mnemonicParsing="false" text="Change file..." disable="true"/>
+                  <Button disable="true" mnemonicParsing="false" text="Change file..." />
                </children>
             </HBox>
-            <ListView prefHeight="150.0" prefWidth="600.0">
+            <TableView fx:id="tableWords" prefHeight="300.0" prefWidth="600.0" VBox.vgrow="ALWAYS" editable="false" styleClass="wordList">
                 <placeholder>
                     <Label text="Word list coming soon.  Watch this space..." />
                 </placeholder>
-            </ListView>
+               <columnResizePolicy>
+                  <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+               </columnResizePolicy>
+               <columns>
+                  <TableColumn fx:id="columnType" maxWidth="150.0" minWidth="150.0" text="Known / Unknown" styleClass="filterSessionStateColumn" />
+                  <TableColumn fx:id="columnWord" text="Word" styleClass="filterSessionWordColumn" />
+               </columns>
+            </TableView>
              <RadioButton fx:id="buttonKnown" mnemonicParsing="false" selected="true" text="Known words">
                  <graphic>
                      <HBox styleClass="iconBox">

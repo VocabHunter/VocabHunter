@@ -10,10 +10,15 @@ import io.github.vocabhunter.analysis.session.SessionWordsTool;
 import io.github.vocabhunter.gui.model.FilterFileMode;
 import io.github.vocabhunter.gui.model.FilterFileModel;
 import io.github.vocabhunter.gui.model.FilterSessionModel;
+import io.github.vocabhunter.gui.model.FilterSessionWord;
+import io.github.vocabhunter.gui.view.FilterSessionStateTableCell;
+import io.github.vocabhunter.gui.view.FilterSessionWordTableCell;
 import javafx.beans.binding.Bindings;
 import javafx.beans.binding.StringBinding;
+import javafx.beans.value.ObservableValue;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
+import javafx.util.Callback;
 
 import java.nio.file.Path;
 import java.text.MessageFormat;
@@ -21,6 +26,9 @@ import java.util.List;
 
 @SuppressFBWarnings({"NP_UNWRITTEN_PUBLIC_OR_PROTECTED_FIELD", "UWF_UNWRITTEN_PUBLIC_OR_PROTECTED_FIELD"})
 public class FilterSessionController {
+    private static final Callback<TableColumn.CellDataFeatures<FilterSessionWord, FilterSessionWord>, ObservableValue<FilterSessionWord>> WORD_SELF_FACTORY
+        = x -> x.getValue().selfProperty();
+
     public TextField fieldFile;
 
     public RadioButton buttonKnown;
@@ -32,6 +40,12 @@ public class FilterSessionController {
     public Button buttonCancel;
 
     public Label labelTotalWords;
+
+    public TableView<FilterSessionWord> tableWords;
+
+    public TableColumn<FilterSessionWord, FilterSessionWord> columnType;
+
+    public TableColumn<FilterSessionWord, FilterSessionWord> columnWord;
 
     private Stage stage;
 
@@ -51,6 +65,7 @@ public class FilterSessionController {
         buttonCancel.setOnAction(e -> exit(false));
 
         bindTotalWordsLabel();
+        prepareTable();
     }
 
     private FilterSessionModel buildFilterSessionModel(final FilterFileModel model) {
@@ -99,5 +114,18 @@ public class FilterSessionController {
         }
 
         return MessageFormat.format("Total words: {0}", count);
+    }
+
+    private void prepareTable() {
+        tableWords.setItems(model.getSeenWords());
+        tableWords.setSelectionModel(null);
+
+        columnType.setCellValueFactory(WORD_SELF_FACTORY);
+        columnType.setCellFactory(c -> new FilterSessionStateTableCell());
+        columnType.setSortable(false);
+
+        columnWord.setCellValueFactory(WORD_SELF_FACTORY);
+        columnWord.setCellFactory(c -> new FilterSessionWordTableCell());
+        columnWord.setSortable(false);
     }
 }
