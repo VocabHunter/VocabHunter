@@ -125,7 +125,9 @@ public class FilterSessionController {
         columnType.setSortable(false);
 
         columnWord.setCellValueFactory(WORD_SELF_FACTORY);
-        columnWord.setCellFactory(c -> new FilterSessionWordTableCell());
+        columnWord.setCellFactory(c -> new FilterSessionWordTableCell(model.includeUnknownProperty()));
         columnWord.setSortable(false);
+
+        model.includeUnknownProperty().addListener((t, o, v) -> tableWords.refresh());
     }
 }

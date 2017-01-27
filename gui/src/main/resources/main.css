@@ -45,6 +45,10 @@
 .wordList .list-cell:unknown, .wordList .table-cell:unknown {
     -fx-background-color: -gradient-unknown;
 }
+.wordList .table-cell:excluded .text {
+    -fx-strikethrough: true;
+    -fx-fill: red;
+}
 .filterSessionStateColumn {
     -fx-alignment: CENTER;
 }
