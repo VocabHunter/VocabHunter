@@ -114,6 +114,15 @@
 .buttonSearchDownIcon {
     -glyph-name: CHEVRON_DOWN;
 }
+.buttonEditIcon {
+    -glyph-name: PENCIL;
+}
+.buttonDeleteIcon {
+    -glyph-name: TRASH;
+}
+.buttonEditIcon, .buttonDeleteIcon {
+    -glyph-size: 17;
+}
 .searchBoxLabel {
     -fx-padding: 0 2 0 7;
 }
@@ -162,10 +171,22 @@
 .filter .mainContent {
     -fx-spacing: 7;
 }
-.filter .iconBox {
+.filter .filterInclusionBox {
+    -fx-spacing: 7;
+    -fx-border-color: lightgrey;
+    -fx-border-width: 1;
+    -fx-padding: 10;
+    -fx-border-insets: 5 0 5 0;
+}
+.iconBox {
+    -fx-min-width: 60;
+}
+.iconBoxSmall {
     -fx-min-width: 30;
-    -fx-alignment: center-right;
     -fx-spacing: 2;
+}
+.iconBox, .iconBoxSmall {
+    -fx-alignment: center;
 }
 .about BorderPane {
     -fx-padding: 10 20 10 10;

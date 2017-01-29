@@ -4,6 +4,7 @@
 
 package io.github.vocabhunter.gui.view;
 
+import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import io.github.vocabhunter.gui.model.FilterFileModel;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
@@ -24,22 +25,36 @@ public class FilterFileCell extends ListCell<FilterFileModel> {
 
     private final Label secondIcon = new Label();
 
+    private final HBox iconBox = new HBox(SPACING, firstIcon, secondIcon);
+
     private final Label labelType = new Label();
 
-    private final Button buttonEdit = new Button("Edit...");
+    private final FontAwesomeIconView editIcon = new FontAwesomeIconView();
 
-    private final Button buttonRemoveList = new Button("Remove List");
+    private final Button buttonEdit = new Button(null, editIcon);
 
-    private final HBox hbox = new HBox(SPACING, labelName, spacer, firstIcon, secondIcon, labelType, buttonEdit, buttonRemoveList);
+    private final FontAwesomeIconView removeListIcon = new FontAwesomeIconView();
+
+    private final Button buttonRemoveList = new Button(null, removeListIcon);
+
+    private final HBox hbox = new HBox(SPACING, labelName, spacer, labelType, iconBox, buttonEdit, buttonRemoveList);
 
     private FilterFileModel lastItem;
 
     public FilterFileCell(final Consumer<FilterFileModel> removalHandler, final Consumer<FilterFileModel> editHandler) {
         HBox.setHgrow(spacer, Priority.ALWAYS);
         hbox.setAlignment(Pos.CENTER_LEFT);
+        iconBox.setAlignment(Pos.CENTER_LEFT);
+        iconBox.getStyleClass().add("iconBox");
+
         buttonEdit.setOnAction(e -> editHandler.accept(lastItem));
-        buttonRemoveList.setOnAction(e -> removalHandler.accept(lastItem));
         buttonEdit.setId("buttonEdit");
+        buttonEdit.setTooltip(new Tooltip("View/change the filter file"));
+        editIcon.setStyleClass("buttonEditIcon");
+
+        buttonRemoveList.setOnAction(e -> removalHandler.accept(lastItem));
+        buttonRemoveList.setTooltip(new Tooltip("Remove the filter file"));
+        removeListIcon.setStyleClass("buttonDeleteIcon");
     }
 
     @Override
