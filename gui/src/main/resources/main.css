@@ -70,6 +70,20 @@
 .buttonSaveIcon, .buttonOpenIcon, .buttonNewIcon, .buttonExportIcon, .buttonSetupFiltersIcon {
     -glyph-size: 24;
 }
+.buttonFilterSessionIcon {
+    -glyph-name: CHECK_SQUARE;
+    -fx-fill: -colour-known-end;
+}
+.buttonFilterFileIcon {
+    -glyph-name: TABLE;
+}
+.buttonAddIcon {
+    -glyph-name: PLUS;
+    -glyph-size: 10;
+}
+.buttonFilterSessionIcon, .buttonFilterFileIcon {
+    -glyph-size: 20;
+}
 .buttonKnown {
     -fx-base: -colour-known;
 }
@@ -167,6 +181,8 @@
     -fx-border-width: 1;
     -fx-padding: 10 10 10 10;
     -fx-border-insets: 5 0 5 0;
+    -fx-hgap: 5;
+    -fx-vgap: 5;
 }
 .filter .mainContent {
     -fx-spacing: 7;
