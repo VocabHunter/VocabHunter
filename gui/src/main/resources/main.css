@@ -49,6 +49,10 @@
     -fx-strikethrough: true;
     -fx-fill: red;
 }
+.wordList .error {
+    -fx-text-fill: red;
+    -fx-font-size: 18;
+}
 .filterSessionStateColumn {
     -fx-alignment: CENTER;
 }
