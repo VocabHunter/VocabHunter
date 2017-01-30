@@ -39,7 +39,7 @@ dependencies {
     compile project(':core')
     compile 'com.gluonhq:ignite-guice:1.0.1'
     compile 'org.controlsfx:controlsfx:8.40.12'
-    compile 'de.jensd:fontawesomefx-fontawesome:4.7.0'
+    compile 'de.jensd:fontawesomefx-fontawesome:4.7.0-3'
     testCompile project(path: ':core', configuration: 'tests')
     testCompile 'org.testfx:testfx-core:4.0.5-alpha'
     testRuntime 'org.jfxtras:openjfx-monocle:1.8.0_20'
