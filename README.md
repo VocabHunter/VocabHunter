@@ -58,3 +58,20 @@ $ sudo apt-get install openjfx
 ~~~
 
 Unfortunately the headless tests don't currently work on the OpenJDK when running the Gradle command line build (see [related issue #13](../../issues/13)).   To work around this either run the build without the headless option by adding `-PnoHeadless` or skip the GUI tests using `-PskipGuiTests`.
+
+# Technical Articles
+
+If you'd like to know more about how VocabHunter works and the technologies used to build it, take a look at the following articles that explore various aspects of the implementation:
+
+* [VocabHunter – A tool for learners of foreign languages][KingTechBlog1] (King Tech Blog) - An introduction to some of the technologies being used in VocabHunter.
+* [Building a JavaFX Search Bar] (VocabHunter Blog) - How the user interface for the VocabHunter search bar works with details of the use of ControlsFX and FontAwesomeFX in giving the bar a distinctive style.
+* [How JavaFX was used to build a desktop application][KingTechBlog2] (King Tech Blog) - A detailed look at several important features of JavaFX using VocabHunter as an example.
+* [Dependency Injection in JavaFX][DependencyInjection] (VocabHunter Blog) - How to Gluon Ignite and Google Guice are used for the  Dependency Injection in VocabHunter.
+* [User Interface Testing with TestFX][TestFXBlog] (VocabHunter Blog) - A guide to automating user interface tests using TestFX.  VocabHunter includes a complete automated GUI test suite and here you can learn how it works.
+
+[TestFXBlog]:https://vocabhunter.github.io/2016/07/27/TestFX.html
+[DependencyInjection]:https://vocabhunter.github.io/2016/11/13/JavaFX-Dependency-Injection.html
+[Building a JavaFX Search Bar]:https://vocabhunter.github.io/2017/01/15/Search-Bar.html
+
+[KingTechBlog1]:https://techblog.king.com/vocabhunter-a-tool-for-learners-of-foreign-languages/
+[KingTechBlog2]:https://techblog.king.com/javafx-used-build-desktop-application/
