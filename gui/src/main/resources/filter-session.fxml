@@ -40,7 +40,7 @@
             </HBox>
             <TableView fx:id="tableWords" editable="false" prefHeight="300.0" prefWidth="600.0" styleClass="wordList" VBox.vgrow="ALWAYS">
                 <placeholder>
-                    <Label text="File doesn't contain any words marked as known/unknown" styleClass="error" />
+                    <Label styleClass="error" text="File doesn't contain any words marked as known/unknown" />
                 </placeholder>
                <columnResizePolicy>
                   <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
@@ -68,7 +68,12 @@
                            </HBox>
                        </graphic>
                    </RadioButton>
-                  <Label fx:id="labelTotalWords" text="Total words: 1,234" />
+                  <HBox>
+                     <children>
+                        <Label text="Total words: " />
+                        <Label fx:id="labelTotalWords" text="1,234" styleClass="wordCount" />
+                     </children>
+                  </HBox>
                </children>
             </VBox>
          </children>

@@ -11,17 +11,15 @@ import io.github.vocabhunter.gui.model.FilterFileMode;
 import io.github.vocabhunter.gui.model.FilterFileModel;
 import io.github.vocabhunter.gui.model.FilterSessionModel;
 import io.github.vocabhunter.gui.model.FilterSessionWord;
+import io.github.vocabhunter.gui.view.ErrorClassTool;
 import io.github.vocabhunter.gui.view.FilterSessionStateTableCell;
 import io.github.vocabhunter.gui.view.FilterSessionWordTableCell;
-import javafx.beans.binding.Bindings;
-import javafx.beans.binding.StringBinding;
 import javafx.beans.value.ObservableValue;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 
 import java.nio.file.Path;
-import java.text.MessageFormat;
 import java.util.List;
 
 @SuppressFBWarnings({"NP_UNWRITTEN_PUBLIC_OR_PROTECTED_FIELD", "UWF_UNWRITTEN_PUBLIC_OR_PROTECTED_FIELD"})
@@ -49,22 +47,30 @@ public class FilterSessionController {
 
     private Stage stage;
 
+    private FilterFileModel parentModel;
+
     private FilterSessionModel model;
 
     private Runnable onSave;
 
-    public void initialise(final Stage stage, final FilterFileModel model, final Runnable onSave) {
+    public void initialise(final Stage stage, final FilterFileModel parentModel, final Runnable onSave) {
         this.stage = stage;
         this.onSave = onSave;
-        this.model = buildFilterSessionModel(model);
+        this.parentModel = parentModel;
+        this.model = buildFilterSessionModel(parentModel);
 
         buildToggleGroup();
-        fieldFile.setText(model.getName());
+        fieldFile.setText(parentModel.getName());
 
         buttonAddFilterFile.setOnAction(e -> exit(true));
         buttonCancel.setOnAction(e -> exit(false));
 
-        bindTotalWordsLabel();
+        labelTotalWords.textProperty().bind(model.countDescriptionProperty());
+        buttonAddFilterFile.disableProperty().bind(model.errorProperty());
+
+        ErrorClassTool.updateClass(labelTotalWords, model.isError());
+        model.errorProperty().addListener((o, n, v) -> ErrorClassTool.updateClass(labelTotalWords, v));
+
         prepareTable();
     }
 
@@ -72,14 +78,14 @@ public class FilterSessionController {
         Path file = model.getFile();
         List<? extends MarkedWord> words = SessionWordsTool.readMarkedWords(file);
 
-        return new FilterSessionModel(words, model);
+        return new FilterSessionModel(words);
     }
 
     private void exit(final boolean isSaveRequested) {
         if (isSaveRequested) {
             FilterFileMode mode = FilterFileMode.getMode(model.isIncludeUnknown());
 
-            model.getFilterFileModel().setMode(mode);
+            parentModel.setMode(mode);
             onSave.run();
         }
         stage.close();
@@ -91,29 +97,11 @@ public class FilterSessionController {
         buttonKnown.setToggleGroup(toggleGroup);
         buttonSeen.setToggleGroup(toggleGroup);
 
-        boolean isIncludeUnknown = model.getFilterFileModel().getMode().isIncludeUnknown();
+        boolean isIncludeUnknown = parentModel.getMode().isIncludeUnknown();
 
         buttonKnown.setSelected(!isIncludeUnknown);
         buttonSeen.setSelected(isIncludeUnknown);
         model.includeUnknownProperty().bind(buttonSeen.selectedProperty());
-    }
-
-    private void bindTotalWordsLabel() {
-        StringBinding binding = Bindings.createStringBinding(() -> formatTotalWords(), model.includeUnknownProperty());
-
-        labelTotalWords.textProperty().bind(binding);
-    }
-
-    private String formatTotalWords() {
-        long count;
-
-        if (model.isIncludeUnknown()) {
-            count = model.getSeenCount();
-        } else {
-            count = model.getKnownCount();
-        }
-
-        return MessageFormat.format("Total words: {0}", count);
     }
 
     private void prepareTable() {

@@ -7,14 +7,14 @@ package io.github.vocabhunter.gui.view;
 import javafx.css.PseudoClass;
 import javafx.scene.Node;
 
-public final class SearchFieldClassTool {
+public final class ErrorClassTool {
     private static final PseudoClass CLASS_FAIL = PseudoClass.getPseudoClass("fail");
 
-    private SearchFieldClassTool() {
+    private ErrorClassTool() {
         // Prevent instantiation - all methods are private
     }
 
-    public static void updateStateClass(final Node node, final boolean isFail) {
+    public static void updateClass(final Node node, final boolean isFail) {
         node.pseudoClassStateChanged(CLASS_FAIL, isFail);
     }
 }

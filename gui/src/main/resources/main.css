@@ -53,6 +53,10 @@
     -fx-text-fill: red;
     -fx-font-size: 18;
 }
+.wordCount:fail {
+    -fx-text-fill: red;
+    -fx-font-weight: bold;
+}
 .filterSessionStateColumn {
     -fx-alignment: CENTER;
 }

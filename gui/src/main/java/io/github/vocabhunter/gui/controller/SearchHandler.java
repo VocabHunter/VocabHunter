@@ -10,7 +10,7 @@ import io.github.vocabhunter.gui.model.SearchModel;
 import io.github.vocabhunter.gui.model.SessionModel;
 import io.github.vocabhunter.gui.model.WordModel;
 import io.github.vocabhunter.gui.search.SearchTool;
-import io.github.vocabhunter.gui.view.SearchFieldClassTool;
+import io.github.vocabhunter.gui.view.ErrorClassTool;
 import javafx.beans.property.ObjectProperty;
 import javafx.collections.ListChangeListener;
 import javafx.scene.control.Button;
@@ -76,7 +76,7 @@ public class SearchHandler {
         searchModel.previousButtonDisabledProperty().addListener((o, n, v) -> buttonSearchUp.setDisable(v));
         searchModel.nextButtonDisabledProperty().addListener((o, n, v) -> buttonSearchDown.setDisable(v));
 
-        searchModel.searchFailProperty().addListener((o, n, v) -> SearchFieldClassTool.updateStateClass(fieldSearch, v));
+        searchModel.searchFailProperty().addListener((o, n, v) -> ErrorClassTool.updateClass(fieldSearch, v));
 
         fieldSearch.textProperty().addListener((o, n, v) -> updateIfRequired());
         fieldSearch.setOnKeyPressed(e -> processSearchKeyPress(e));
