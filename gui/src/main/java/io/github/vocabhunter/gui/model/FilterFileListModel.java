@@ -21,8 +21,11 @@ public class FilterFileListModel {
         return files;
     }
 
+    public void removeIfExists(final FilterFileModel fileModel) {
+        files.removeIf(f -> f != fileModel && f.getFile().equals(fileModel.getFile()));
+    }
+
     public void addFile(final FilterFileModel fileModel) {
-        files.removeIf(f -> f.getFile().equals(fileModel.getFile()));
         files.add(fileModel);
     }
 

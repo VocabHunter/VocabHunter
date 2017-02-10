@@ -10,24 +10,24 @@ import io.github.vocabhunter.analysis.marked.WordState;
 import javafx.beans.binding.Bindings;
 import javafx.beans.binding.NumberBinding;
 import javafx.beans.binding.StringBinding;
-import javafx.beans.property.ReadOnlyBooleanProperty;
-import javafx.beans.property.ReadOnlyStringProperty;
-import javafx.beans.property.SimpleBooleanProperty;
-import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
+import java.nio.file.Path;
 import java.text.NumberFormat;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import static io.github.vocabhunter.analysis.session.FileNameTool.filename;
+
 public class FilterSessionModel {
     public static final String ERROR = "No words selected";
 
-    private final long knownCount;
+    private final SimpleLongProperty knownCount = new SimpleLongProperty();
 
-    private final long seenCount;
+    private final SimpleLongProperty seenCount = new SimpleLongProperty();
 
     private final SimpleBooleanProperty includeUnknown = new SimpleBooleanProperty();
 
@@ -37,26 +37,41 @@ public class FilterSessionModel {
 
     private final ObservableList<FilterSessionWord> seenWords = FXCollections.observableArrayList();
 
-    public FilterSessionModel(final List<? extends MarkedWord> words) {
+    private final SimpleObjectProperty<Path> file = new SimpleObjectProperty<>();
+
+    private final SimpleStringProperty filename = new SimpleStringProperty();
+
+    public FilterSessionModel(final Path file, final List<? extends MarkedWord> words) {
+        setupValues(file, words);
+        bindValues();
+    }
+
+    public void replaceContent(final Path file, final List<? extends MarkedWord> words) {
+        setupValues(file, words);
+    }
+
+    private void setupValues(final Path file, final List<? extends MarkedWord> words) {
         Map<WordState, Long> counts = words.stream()
             .collect(Collectors.groupingBy(MarkedWord::getState, Collectors.counting()));
 
-        knownCount = counts.getOrDefault(WordState.KNOWN, 0L);
-        seenCount = counts.getOrDefault(WordState.UNKNOWN, 0L) + knownCount;
+        knownCount.set(counts.getOrDefault(WordState.KNOWN, 0L));
+        seenCount.set(counts.getOrDefault(WordState.UNKNOWN, 0L) + knownCount.get());
+        seenWords.clear();
         words.stream()
             .filter(w -> w.getState() != WordState.UNSEEN)
             .map(FilterSessionWord::new)
             .forEach(seenWords::add);
-
-        bindValues();
+        this.file.set(file);
     }
 
     private void bindValues() {
         NumberBinding count = Bindings.when(includeUnknown).then(seenCount).otherwise(knownCount);
         StringBinding countText = Bindings.createStringBinding(() -> formatTotalWords(count), count);
+        StringBinding filenameText = Bindings.createStringBinding(() -> filename(file.get()), file);
 
         error.bind(count.isEqualTo(0));
         countDescription.bind(Bindings.when(error).then(ERROR).otherwise(countText));
+        filename.bind(filenameText);
     }
 
     private String formatTotalWords(final NumberBinding count) {
@@ -64,11 +79,11 @@ public class FilterSessionModel {
     }
 
     public long getKnownCount() {
-        return knownCount;
+        return knownCount.get();
     }
 
     public long getSeenCount() {
-        return seenCount;
+        return seenCount.get();
     }
 
     public SimpleBooleanProperty includeUnknownProperty() {
@@ -101,5 +116,21 @@ public class FilterSessionModel {
 
     public String getCountDescription() {
         return countDescription.get();
+    }
+
+    public ReadOnlyObjectProperty<Path> fileProperty() {
+        return file;
+    }
+
+    public Path getFile() {
+        return file.get();
+    }
+
+    public ReadOnlyStringProperty filenameProperty() {
+        return filename;
+    }
+
+    public String getFilename() {
+        return filename.get();
     }
 }

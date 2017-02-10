@@ -35,7 +35,7 @@
                <children>
                   <Label text="Session file: " />
                   <TextField fx:id="fieldFile" editable="false" text="my-session.wordy" HBox.hgrow="ALWAYS" />
-                  <Button disable="true" mnemonicParsing="false" text="Change file..." />
+                  <Button fx:id="buttonChangeFile" mnemonicParsing="false" text="Change file..." />
                </children>
             </HBox>
             <TableView fx:id="tableWords" editable="false" prefHeight="300.0" prefWidth="600.0" styleClass="wordList" VBox.vgrow="ALWAYS">

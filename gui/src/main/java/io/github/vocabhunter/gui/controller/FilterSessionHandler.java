@@ -19,10 +19,6 @@ public class FilterSessionHandler {
     @Inject
     private Provider<FXMLLoader> loaderProvider;
 
-    public void show(final FilterFileModel model) {
-        show(model, FilterSessionHandler::noOperation);
-    }
-
     public void show(final FilterFileModel model, final Runnable onSave) {
         Stage stage = new Stage();
         FXMLLoader loader = loaderProvider.get();
@@ -35,9 +31,5 @@ public class FilterSessionHandler {
         } catch (RuntimeException e) {
             FileErrorTool.open(model.getFile(), e);
         }
-    }
-
-    private static void noOperation() {
-        // No operation required - used where operation is required for save
     }
 }

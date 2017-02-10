@@ -73,13 +73,18 @@ public class SettingsController {
         filterFilesModel = new FilterFileListModel(filterFiles);
         listExcludedFiles.setItems(filterFilesModel.getFiles());
         buttonAddList.setOnAction(e -> processAddFile());
-        listExcludedFiles.setCellFactory(p -> new FilterFileCell(filterFilesModel::remove, filterSessionHandler::show));
+        listExcludedFiles.setCellFactory(p -> new FilterFileCell(filterFilesModel::remove, this::editHandler));
+    }
+
+    private void editHandler(final FilterFileModel model) {
+        filterSessionHandler.show(model, () -> filterFilesModel.removeIfExists(model));
     }
 
     private void processAddFile() {
         FileDialogue dialogue = factory.create(FileDialogueType.OPEN_SESSION, stage);
 
         dialogue.showChooser();
+
         if (dialogue.isFileSelected()) {
             FilterFileModel fileModel = new FilterFileModel(dialogue.getSelectedFile());
 
@@ -88,6 +93,7 @@ public class SettingsController {
     }
 
     private void addFile(final FilterFileModel fileModel) {
+        filterFilesModel.removeIfExists(fileModel);
         filterFilesModel.addFile(fileModel);
         listExcludedFiles.scrollTo(fileModel);
     }

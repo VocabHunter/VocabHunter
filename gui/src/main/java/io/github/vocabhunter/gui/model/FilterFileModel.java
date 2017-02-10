@@ -13,18 +13,18 @@ import java.nio.file.Path;
 
 public class FilterFileModel {
     public static final Callback<FilterFileModel, Observable[]> PROPERTY_EXTRACTOR
-        = m -> new Observable[] {m.modeProperty};
+        = m -> new Observable[] {m.file, m.modeProperty};
 
-    private final Path file;
+    private final SimpleObjectProperty<Path> file;
 
-    private SimpleObjectProperty<FilterFileMode> modeProperty;
+    private final SimpleObjectProperty<FilterFileMode> modeProperty;
 
     public FilterFileModel(final Path file) {
         this(file, FilterFileMode.KNOWN);
     }
 
     public FilterFileModel(final Path file, final FilterFileMode mode) {
-        this.file = file;
+        this.file = new SimpleObjectProperty<>(file);
         this.modeProperty = new SimpleObjectProperty<>(mode);
     }
 
@@ -37,10 +37,14 @@ public class FilterFileModel {
     }
 
     public String getName() {
-        return FileNameTool.filename(file);
+        return FileNameTool.filename(file.get());
     }
 
     public Path getFile() {
-        return file;
+        return file.get();
+    }
+
+    public void setFile(final Path file) {
+        this.file.set(file);
     }
 }
