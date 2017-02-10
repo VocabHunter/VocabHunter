@@ -79,7 +79,7 @@ public class SearchHandler {
         searchModel.searchFailProperty().addListener((o, n, v) -> ErrorClassTool.updateClass(fieldSearch, v));
 
         fieldSearch.textProperty().addListener((o, n, v) -> updateIfRequired());
-        fieldSearch.setOnKeyPressed(e -> processSearchKeyPress(e));
+        fieldSearch.setOnKeyPressed(this::processSearchKeyPress);
         model.currentWordProperty().addListener((o, n, v) -> updateIfRequired());
         model.getWordList().addListener((ListChangeListener<WordModel>) c -> updateIfRequired());
 

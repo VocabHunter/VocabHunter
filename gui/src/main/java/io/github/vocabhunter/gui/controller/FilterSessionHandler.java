@@ -28,7 +28,7 @@ public class FilterSessionHandler {
         try {
             controller.initialise(stage, model, onSave);
             WindowTool.setupModal(stage, root, "Filter Session");
-        } catch (RuntimeException e) {
+        } catch (final RuntimeException e) {
             FileErrorTool.open(model.getFile(), e);
         }
     }
