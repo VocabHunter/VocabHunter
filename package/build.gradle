@@ -10,7 +10,7 @@ buildscript {
     }
 
     dependencies {
-        classpath 'de.dynamicfiles.projects.gradle.plugins:javafx-gradle-plugin:8.7.0'
+        classpath 'de.dynamicfiles.projects.gradle.plugins:javafx-gradle-plugin:8.8.2'
     }
 }
 
@@ -25,9 +25,6 @@ ext {
         bundleMainClass = 'io.github.vocabhunter.osx.distribution.OsxPackagedVocabHunter'
         appIcon = file('icons/mac/VocabHunter.icns')
         sessionIcon = 'icons/mac/VocabHunterSession.icns'
-        if (publishedVersion.endsWith('-SNAPSHOT')) {
-            publishedVersion = '1.0.0'
-        }
     } else if (operatingSystem.isLinux()) {
         packageType = 'deb'
         appIcon = file('icons/App1024.png')
@@ -36,6 +33,9 @@ ext {
         packageType = 'exe'
         appIcon = file('icons/windows/VocabHunter.ico')
         sessionIcon = 'icons/windows/VocabHunterSession.ico'
+    }
+    if (publishedVersion.endsWith('-SNAPSHOT')) {
+        publishedVersion = '1.0.0'
     }
 }
 
