@@ -4,7 +4,7 @@
 
 package io.github.vocabhunter.analysis.settings;
 
-import io.github.vocabhunter.analysis.core.CollectionTool;
+import io.github.vocabhunter.analysis.core.CoreTool;
 import io.github.vocabhunter.test.utils.TestFileManager;
 import org.junit.After;
 import org.junit.Before;
@@ -53,7 +53,7 @@ public class FileListManagerTest {
 
     @Test
     public void testAdd() {
-        List<ListedFile> files = CollectionTool.listOf(file1, file2);
+        List<ListedFile> files = CoreTool.listOf(file1, file2);
 
         target.setFilteredSessionFiles(files);
 

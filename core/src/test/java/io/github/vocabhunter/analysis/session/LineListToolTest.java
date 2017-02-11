@@ -9,7 +9,7 @@ import org.junit.Test;
 import java.util.List;
 import java.util.stream.IntStream;
 
-import static io.github.vocabhunter.analysis.core.CollectionTool.listOf;
+import static io.github.vocabhunter.analysis.core.CoreTool.listOf;
 import static java.util.Collections.emptyList;
 import static java.util.function.Function.identity;
 import static org.junit.Assert.assertEquals;

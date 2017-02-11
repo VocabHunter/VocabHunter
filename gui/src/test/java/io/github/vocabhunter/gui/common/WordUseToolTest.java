@@ -8,7 +8,7 @@ import org.junit.Test;
 
 import java.util.List;
 
-import static io.github.vocabhunter.analysis.core.CollectionTool.listOf;
+import static io.github.vocabhunter.analysis.core.CoreTool.listOf;
 import static java.util.stream.Collectors.toList;
 import static org.junit.Assert.assertEquals;
 

@@ -4,7 +4,7 @@
 
 package io.github.vocabhunter.gui.search;
 
-import io.github.vocabhunter.analysis.core.CoreConstants;
+import io.github.vocabhunter.analysis.core.CoreTool;
 import io.github.vocabhunter.gui.common.SequencedWord;
 import org.apache.commons.lang3.StringUtils;
 
@@ -28,7 +28,7 @@ public final class SearchTool {
     }
 
     private static String normalise(final String s) {
-        return StringUtils.stripAccents(s).toLowerCase(CoreConstants.LOCALE);
+        return CoreTool.toLowerCase(StringUtils.stripAccents(s));
     }
 
     public static int getMatchIndex(final List<? extends SequencedWord> matches, final SequencedWord currentWord) {

@@ -12,7 +12,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import static io.github.vocabhunter.analysis.core.CollectionTool.listOf;
+import static io.github.vocabhunter.analysis.core.CoreTool.listOf;
 import static io.github.vocabhunter.analysis.marked.WordState.*;
 import static java.util.Collections.emptyList;
 import static junit.framework.TestCase.*;

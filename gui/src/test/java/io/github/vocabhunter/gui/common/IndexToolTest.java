@@ -8,7 +8,7 @@ import io.github.vocabhunter.analysis.core.VocabHunterException;
 import org.junit.Assert;
 import org.junit.Test;
 
-import static io.github.vocabhunter.analysis.core.CollectionTool.listOf;
+import static io.github.vocabhunter.analysis.core.CoreTool.listOf;
 
 public class IndexToolTest {
     private static final int SIZE = 10;
