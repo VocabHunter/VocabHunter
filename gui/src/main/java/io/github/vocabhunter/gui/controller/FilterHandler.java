@@ -4,9 +4,10 @@
 
 package io.github.vocabhunter.gui.controller;
 
+import io.github.vocabhunter.analysis.core.VocabHunterException;
+import io.github.vocabhunter.analysis.settings.BaseListedFile;
 import io.github.vocabhunter.analysis.settings.FileListManager;
-import io.github.vocabhunter.analysis.settings.ListedFile;
-import io.github.vocabhunter.analysis.settings.ListedFileType;
+import io.github.vocabhunter.analysis.settings.SessionListedFile;
 import io.github.vocabhunter.gui.model.FilterFile;
 import io.github.vocabhunter.gui.model.FilterFileMode;
 import io.github.vocabhunter.gui.model.FilterSettings;
@@ -15,7 +16,6 @@ import io.github.vocabhunter.gui.settings.SettingsManager;
 
 import java.util.List;
 import java.util.stream.Collectors;
-
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
@@ -60,15 +60,20 @@ public class FilterHandler {
                 .collect(Collectors.toList());
     }
 
-    private FilterFile getFilterFile(final ListedFile file) {
-        FilterFileMode mode = getMode(file.isIncludeUnknown());
+    private FilterFile getFilterFile(final BaseListedFile file) {
+        if (file instanceof SessionListedFile) {
+            SessionListedFile sessionFile = (SessionListedFile) file;
+            FilterFileMode mode = getMode(sessionFile.isIncludeUnknown());
 
-        return new FilterFile(file.getFile(), mode);
+            return new FilterFile(file.getFile(), mode);
+        } else {
+            throw new VocabHunterException("Unknown file type " + file);
+        }
     }
 
-    private List<ListedFile> getListedFiles(final FilterSettings settings) {
+    private List<BaseListedFile> getListedFiles(final FilterSettings settings) {
         return settings.getFilterFiles().stream()
-                .map(f -> new ListedFile(f.getFile(), ListedFileType.SESSION, f.getMode().isIncludeUnknown()))
+                .map(f -> new SessionListedFile(f.getFile(), f.getMode().isIncludeUnknown()))
                 .collect(Collectors.toList());
     }
 }
