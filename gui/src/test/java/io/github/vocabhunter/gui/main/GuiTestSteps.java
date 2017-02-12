@@ -124,7 +124,7 @@ public class GuiTestSteps {
 
         step("Add file to filter", () -> {
             robot.clickOn("#buttonSetupFilters");
-            robot.clickOn("#buttonAddList");
+            robot.clickOn("#buttonAddSessionFile");
             robot.clickOn("#buttonAddFilterFile");
             robot.clickOn("#buttonEdit");
             robot.clickOn("#buttonSeen");

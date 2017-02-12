@@ -36,7 +36,7 @@ public class SettingsController {
 
     public ListView<FilterFileModel> listExcludedFiles;
 
-    public Button buttonAddList;
+    public Button buttonAddSessionFile;
 
     public Button buttonOk;
 
@@ -72,7 +72,7 @@ public class SettingsController {
 
         filterFilesModel = new FilterFileListModel(filterFiles);
         listExcludedFiles.setItems(filterFilesModel.getFiles());
-        buttonAddList.setOnAction(e -> processAddFile());
+        buttonAddSessionFile.setOnAction(e -> processAddSessionFile());
         listExcludedFiles.setCellFactory(p -> new FilterFileCell(filterFilesModel::remove, this::editHandler));
     }
 
@@ -80,7 +80,7 @@ public class SettingsController {
         filterSessionHandler.show(model, () -> filterFilesModel.removeIfExists(model));
     }
 
-    private void processAddFile() {
+    private void processAddSessionFile() {
         FileDialogue dialogue = factory.create(FileDialogueType.OPEN_SESSION, stage);
 
         dialogue.showChooser();
