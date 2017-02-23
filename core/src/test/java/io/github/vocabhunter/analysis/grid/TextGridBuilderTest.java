@@ -6,29 +6,31 @@ package io.github.vocabhunter.analysis.grid;
 
 import org.junit.Test;
 
-import java.util.Collections;
-
+import static io.github.vocabhunter.analysis.grid.GridTestTool.*;
+import static java.util.Collections.emptyList;
 import static org.junit.Assert.assertEquals;
 
 public class TextGridBuilderTest {
-    private static final TextGrid EMPTY = GridTestTool.emptyGrid();
-
-    private static final TextGrid GRID = GridTestTool.grid();
 
     private final TextGridBuilder target = new TextGridBuilderImpl();
 
     @Test
     public void testEmpty() {
-        assertEquals(EMPTY, target.build(Collections.emptyList()));
+        assertEquals(emptyGrid(), target.build(emptyList()));
     }
 
     @Test
     public void testUnchanged() {
-        assertEquals(GRID, target.build(GridTestTool.normalisedLines()));
+        assertEquals(grid(), target.build(normalisedLines()));
     }
 
     @Test
     public void testNormalise() {
-        assertEquals(GRID, target.build(GridTestTool.unnormalisedLines()));
+        assertEquals(grid(), target.build(unnormalisedLines()));
+    }
+
+    @Test
+    public void testLegalSpacing() {
+        assertEquals(legalSpacingGrid(), target.build(legalSpacingLines()));
     }
 }

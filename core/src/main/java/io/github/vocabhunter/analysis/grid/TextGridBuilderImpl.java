@@ -4,6 +4,8 @@
 
 package io.github.vocabhunter.analysis.grid;
 
+import io.github.vocabhunter.analysis.core.CoreTool;
+
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
@@ -24,18 +26,19 @@ public class TextGridBuilderImpl implements TextGridBuilder {
     }
 
     private List<GridLine> normalise(final List<GridLine> lines) {
-        return lines.stream()
+        List<GridLine> normalised = lines.stream()
             .map(this::normalise)
-            .filter(l -> !l.getCells().isEmpty())
             .collect(toList());
+        int last = CoreTool.findLast(normalised, l -> !l.getCells().isEmpty())
+            .orElse(-1) + 1;
+
+        return normalised.subList(0, last);
     }
 
     private GridLine normalise(final GridLine input) {
         List<GridCell> cells = input.getCells();
         int fullCount = cells.size();
-        int newCount = revRange(0, fullCount)
-            .filter(i -> !cells.get(i).isEmpty())
-            .findFirst()
+        int newCount = CoreTool.findLast(cells, c -> !c.isEmpty())
             .orElse(-1) + 1;
 
         if (fullCount == newCount) {
@@ -43,10 +46,6 @@ public class TextGridBuilderImpl implements TextGridBuilder {
         } else {
             return new GridLine(cells.subList(0, newCount));
         }
-    }
-
-    private static IntStream revRange(final int from, final int to) {
-        return IntStream.range(from, to).map(i -> to - i + from - 1);
     }
 
     private Map<Integer, Integer> countMap(final List<GridLine> lines) {

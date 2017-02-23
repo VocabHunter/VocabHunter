@@ -42,6 +42,19 @@ public final class GridTestTool {
         return asList(line1, line2, line3, line4, line5);
     }
 
+    public static TextGrid legalSpacingGrid() {
+        return new TextGrid(legalSpacingLines(), columns(2));
+    }
+
+    public static List<GridLine> legalSpacingLines() {
+        GridLine line1 = new GridLine();
+        GridLine line2 = new GridLine(acceptedCell("Content1"));
+        GridLine line3 = new GridLine();
+        GridLine line4 = new GridLine(acceptedCell("Content2"));
+
+        return asList(line1, line2, line3, line4);
+    }
+
     private static List<GridColumn> columns(final int... columns) {
         return IntStream.of(columns)
             .mapToObj(GridColumn::new)
