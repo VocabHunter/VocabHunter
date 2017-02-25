@@ -29,6 +29,14 @@ public final class GridLine {
         return Collections.unmodifiableList(cells);
     }
 
+    public GridCell getCell(final int index) {
+        if (index < cells.size()) {
+            return cells.get(index);
+        } else {
+            return GridCell.EMPTY_CELL;
+        }
+    }
+
     @Override
     public boolean equals(final Object o) {
         if (this == o) {

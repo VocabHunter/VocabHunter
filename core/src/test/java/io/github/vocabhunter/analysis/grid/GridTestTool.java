@@ -61,11 +61,11 @@ public final class GridTestTool {
             .collect(toList());
     }
 
-    private static GridCell acceptedCell(final String content) {
+    public static GridCell acceptedCell(final String content) {
         return new GridCell(content, false);
     }
 
-    private static GridCell rejectedCell(final String content) {
+    public static GridCell rejectedCell(final String content) {
         return new GridCell(content, true);
     }
 }

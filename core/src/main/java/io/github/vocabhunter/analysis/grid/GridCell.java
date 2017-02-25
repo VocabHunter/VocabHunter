@@ -8,6 +8,8 @@ import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 public final class GridCell {
+    public static final GridCell EMPTY_CELL = new GridCell("", false);
+
     private final String content;
 
     private final boolean isRejected;
@@ -27,6 +29,10 @@ public final class GridCell {
 
     public boolean isEmpty() {
         return content.isEmpty();
+    }
+
+    public boolean isIncluded() {
+        return !(isRejected() || isEmpty());
     }
 
     @Override

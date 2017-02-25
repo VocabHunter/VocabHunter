@@ -63,10 +63,10 @@ public class TextGridBuilderImpl implements TextGridBuilder {
     private void addToCounts(final Map<Integer, Integer> counts, final int index, final GridCell cell) {
         int inc;
 
-        if (cell.isEmpty() || cell.isRejected()) {
-            inc = 0;
-        } else {
+        if (cell.isIncluded()) {
             inc = 1;
+        } else {
+            inc = 0;
         }
 
         counts.merge(index, inc, (x, y) -> x + y);
