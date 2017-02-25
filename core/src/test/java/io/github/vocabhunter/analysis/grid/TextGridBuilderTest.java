@@ -21,16 +21,16 @@ public class TextGridBuilderTest {
 
     @Test
     public void testUnchanged() {
-        assertEquals(grid(), target.build(normalisedLines()));
+        assertEquals(grid(), target.build(normalisedGridLines()));
     }
 
     @Test
     public void testNormalise() {
-        assertEquals(grid(), target.build(unnormalisedLines()));
+        assertEquals(grid(), target.build(unnormalisedGridLines()));
     }
 
     @Test
     public void testLegalSpacing() {
-        assertEquals(legalSpacingGrid(), target.build(legalSpacingLines()));
+        assertEquals(legalSpacingGrid(), target.build(legalSpacingGridLines()));
     }
 }

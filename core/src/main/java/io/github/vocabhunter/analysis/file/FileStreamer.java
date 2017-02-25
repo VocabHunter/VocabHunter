@@ -12,15 +12,9 @@ import io.github.vocabhunter.analysis.session.FileNameTool;
 import io.github.vocabhunter.analysis.session.SessionSerialiser;
 import io.github.vocabhunter.analysis.session.SessionState;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.tika.Tika;
-import org.apache.tika.exception.TikaException;
-import org.apache.tika.io.TikaInputStream;
-import org.apache.tika.metadata.Metadata;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.IOException;
-import java.io.InputStream;
 import java.nio.file.Path;
 import java.text.BreakIterator;
 import java.time.Duration;
@@ -44,19 +38,12 @@ public class FileStreamer {
     }
 
     public List<String> lines(final Path file) {
-        Metadata metadata = new Metadata();
+        String fullText = TikaTool.read(file);
 
-        try (InputStream in = TikaInputStream.get(file, metadata))  {
-            Tika tika = new Tika();
-            String fullText = tika.parseToString(in, metadata, -1);
-
-            if (StringUtils.isBlank(fullText)) {
-                throw new VocabHunterException(String.format("No text in file '%s'", file));
-            } else {
-                return splitToList(fullText);
-            }
-        } catch (IOException | TikaException e) {
-            throw new VocabHunterException(String.format("Unable to read file '%s'", file), e);
+        if (StringUtils.isBlank(fullText)) {
+            throw new VocabHunterException(String.format("No text in file '%s'", file));
+        } else {
+            return splitToList(fullText);
         }
     }
 
