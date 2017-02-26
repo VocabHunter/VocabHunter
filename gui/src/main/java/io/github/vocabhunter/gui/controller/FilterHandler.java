@@ -51,11 +51,11 @@ public class FilterHandler {
         settingsManager.setFilterMinimumLetters(settings.getMinimumLetters());
         settingsManager.setFilterMinimumOccurrences(settings.getMinimumOccurrences());
         settingsManager.setAllowInitialCapitals(settings.isAllowInitialCapitals());
-        fileListManager.setFilteredSessionFiles(getListedFiles(settings));
+        fileListManager.setFilterFiles(getListedFiles(settings));
     }
 
     private List<FilterFile> getFilterFiles(final FileListManager fileListManager) {
-        return fileListManager.getFilteredSessionFiles().stream()
+        return fileListManager.getFilterFiles().stream()
                 .map(this::getFilterFile)
                 .collect(Collectors.toList());
     }

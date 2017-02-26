@@ -52,7 +52,7 @@ public class FileListManagerTest {
 
     @Test
     public void testEmpty() {
-        List<BaseListedFile> actual = target.getFilteredSessionFiles();
+        List<BaseListedFile> actual = target.getFilterFiles();
 
         assertTrue("Empty file list", actual.isEmpty());
     }
@@ -61,9 +61,9 @@ public class FileListManagerTest {
     public void testAdd() {
         List<BaseListedFile> files = CoreTool.listOf(file1, file2, file3);
 
-        target.setFilteredSessionFiles(files);
+        target.setFilterFiles(files);
 
-        List<BaseListedFile> actual = target.getFilteredSessionFiles();
+        List<BaseListedFile> actual = target.getFilterFiles();
 
         assertEquals("Files", files, actual);
     }
