@@ -21,6 +21,7 @@ public class DocumentGridReaderImpl implements DocumentGridReader {
         String fullText = TikaTool.read(file);
 
         return SPLITTER.splitAsStream(fullText)
+            .map(String::trim)
             .map(s -> new GridCell(s, filter.test(s)))
             .map(GridLine::new)
             .collect(toList());
