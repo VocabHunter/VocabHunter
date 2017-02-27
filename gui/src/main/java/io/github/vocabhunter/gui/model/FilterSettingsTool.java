@@ -4,19 +4,19 @@
 
 package io.github.vocabhunter.gui.model;
 
-import io.github.vocabhunter.analysis.core.VocabHunterException;
 import io.github.vocabhunter.analysis.filter.FilterBuilder;
 import io.github.vocabhunter.analysis.filter.WordFilter;
-import io.github.vocabhunter.analysis.session.SessionWordsTool;
+import io.github.vocabhunter.analysis.grid.FilterFileWordsExtractor;
+import io.github.vocabhunter.analysis.settings.BaseListedFile;
 
 import java.util.List;
+import javax.inject.Inject;
 
-public final class FilterSettingsTool {
-    private FilterSettingsTool() {
-        // Prevent instantiation - all methods are static
-    }
+public class FilterSettingsTool {
+    @Inject
+    private FilterFileWordsExtractor extractor;
 
-    public static WordFilter filter(final FilterSettings settings, final boolean isFilterEnabled) {
+    public WordFilter filter(final FilterSettings settings, final boolean isFilterEnabled) {
         FilterBuilder builder = new FilterBuilder();
 
         if (isFilterEnabled) {
@@ -26,7 +26,7 @@ public final class FilterSettingsTool {
             if (!settings.isAllowInitialCapitals()) {
                 builder = builder.excludeInitialCapital();
             }
-            for (FilterFile file : settings.getFilterFiles()) {
+            for (BaseListedFile file : settings.getFilterFiles()) {
                 builder = addFilter(builder, file);
             }
         }
@@ -34,22 +34,9 @@ public final class FilterSettingsTool {
         return builder.build();
     }
 
-    private static FilterBuilder addFilter(final FilterBuilder builder, final FilterFile file) {
-        List<String> words = getFilteredWords(file);
+    private FilterBuilder addFilter(final FilterBuilder builder, final BaseListedFile file) {
+        List<String> words = extractor.extract(file);
 
         return builder.addExcludedWords(words);
-    }
-
-    private static List<String> getFilteredWords(final FilterFile file) {
-        FilterFileMode mode = file.getMode();
-
-        switch (mode) {
-            case KNOWN:
-                return SessionWordsTool.knownWords(file.getFile());
-            case SEEN:
-                return SessionWordsTool.seenWords(file.getFile());
-            default:
-                throw new VocabHunterException(String.format("Unknown filter mode %s", mode));
-        }
     }
 }

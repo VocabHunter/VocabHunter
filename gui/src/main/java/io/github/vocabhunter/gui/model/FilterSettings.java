@@ -4,6 +4,7 @@
 
 package io.github.vocabhunter.gui.model;
 
+import io.github.vocabhunter.analysis.settings.BaseListedFile;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
@@ -19,9 +20,9 @@ public final class FilterSettings {
 
     private final boolean allowInitialCapitals;
 
-    private final List<FilterFile> filterFiles;
+    private final List<BaseListedFile> filterFiles;
 
-    public FilterSettings(final int minimumLetters, final int minimumOccurrences, final boolean allowInitialCapitals, final List<FilterFile> filterFiles) {
+    public FilterSettings(final int minimumLetters, final int minimumOccurrences, final boolean allowInitialCapitals, final List<BaseListedFile> filterFiles) {
         this.minimumLetters = minimumLetters;
         this.minimumOccurrences = minimumOccurrences;
         this.allowInitialCapitals = allowInitialCapitals;
@@ -40,7 +41,7 @@ public final class FilterSettings {
         return allowInitialCapitals;
     }
 
-    public List<FilterFile> getFilterFiles() {
+    public List<BaseListedFile> getFilterFiles() {
         return Collections.unmodifiableList(filterFiles);
     }
 

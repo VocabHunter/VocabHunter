@@ -4,13 +4,14 @@
 
 package io.github.vocabhunter.gui.model;
 
+import io.github.vocabhunter.analysis.settings.BaseListedFile;
 import io.github.vocabhunter.test.utils.AbstractBeanTest;
 
 import java.util.Collections;
 import java.util.List;
 
 public class FilterSettingsTest extends AbstractBeanTest<FilterSettings> {
-    private static final List<FilterFile> FILES = Collections.emptyList();
+    private static final List<BaseListedFile> FILES = Collections.emptyList();
 
     @Override
     protected FilterSettings buildPrimary() {

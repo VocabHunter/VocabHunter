@@ -35,6 +35,9 @@ public class FilterSessionController {
     @Inject
     private FileDialogueFactory factory;
 
+    @Inject
+    private SessionWordsTool sessionWordsTool;
+
     public TextField fieldFile;
 
     public Button buttonChangeFile;
@@ -87,14 +90,14 @@ public class FilterSessionController {
 
     private FilterSessionModel buildFilterSessionModel(final FilterFileModel model) {
         Path file = model.getFile();
-        List<? extends MarkedWord> words = SessionWordsTool.readMarkedWords(file);
+        List<? extends MarkedWord> words = sessionWordsTool.readMarkedWords(file);
 
         return new FilterSessionModel(file, words);
     }
 
     private void exit(final boolean isSaveRequested) {
         if (isSaveRequested) {
-            FilterFileMode mode = FilterFileMode.getMode(model.isIncludeUnknown());
+            FilterFileMode mode = model.isIncludeUnknown() ? FilterFileMode.SESSION_SEEN : FilterFileMode.SESSION_KNOWN;
 
             parentModel.setMode(mode);
             parentModel.setFile(model.getFile());
@@ -109,7 +112,7 @@ public class FilterSessionController {
         buttonKnown.setToggleGroup(toggleGroup);
         buttonSeen.setToggleGroup(toggleGroup);
 
-        boolean isIncludeUnknown = parentModel.getMode().isIncludeUnknown();
+        boolean isIncludeUnknown = parentModel.getMode() == FilterFileMode.SESSION_SEEN;
 
         buttonKnown.setSelected(!isIncludeUnknown);
         buttonSeen.setSelected(isIncludeUnknown);
@@ -138,7 +141,7 @@ public class FilterSessionController {
 
         if (dialogue.isFileSelected()) {
             Path file = dialogue.getSelectedFile();
-            List<? extends MarkedWord> words = SessionWordsTool.readMarkedWords(file);
+            List<? extends MarkedWord> words = sessionWordsTool.readMarkedWords(file);
 
             model.replaceContent(file, words);
             buttonKnown.setSelected(true);

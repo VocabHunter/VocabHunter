@@ -5,10 +5,12 @@
 package io.github.vocabhunter.gui.controller;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+import io.github.vocabhunter.analysis.settings.BaseListedFile;
 import io.github.vocabhunter.gui.dialogues.FileDialogue;
 import io.github.vocabhunter.gui.dialogues.FileDialogueFactory;
 import io.github.vocabhunter.gui.dialogues.FileDialogueType;
 import io.github.vocabhunter.gui.model.*;
+import io.github.vocabhunter.gui.services.FilterFileModelTranslator;
 import io.github.vocabhunter.gui.view.FilterFileCell;
 import javafx.beans.property.ReadOnlyBooleanProperty;
 import javafx.beans.property.StringProperty;
@@ -51,6 +53,9 @@ public class SettingsController {
     @Inject
     private FilterSessionHandler filterSessionHandler;
 
+    @Inject
+    private FilterFileModelTranslator translator;
+
     private Stage stage;
 
     private FilterFileListModel filterFilesModel;
@@ -67,7 +72,7 @@ public class SettingsController {
         initialiseField(fieldInitialCapital, settings::isAllowInitialCapitals);
 
         List<FilterFileModel> filterFiles = settings.getFilterFiles().stream()
-            .map(f -> new FilterFileModel(f.getFile(), f.getMode()))
+            .map(translator::toModel)
             .collect(Collectors.toList());
 
         filterFilesModel = new FilterFileListModel(filterFiles);
@@ -104,8 +109,8 @@ public class SettingsController {
             int minimumLetters = getAsInteger(fieldMinimumLetters::getText, old.getMinimumLetters());
             int minimumOccurrences = getAsInteger(fieldMinimumOccurrences::getText, old.getMinimumOccurrences());
             boolean allowInitialCapitals = fieldInitialCapital.isSelected();
-            List<FilterFile> filterFiles = filterFilesModel.getFiles().stream()
-                .map(f -> new FilterFile(f.getFile(), f.getMode()))
+            List<BaseListedFile> filterFiles = filterFilesModel.getFiles().stream()
+                .map(translator::fromModel)
                 .collect(Collectors.toList());
 
             FilterSettings settings = new FilterSettings(minimumLetters, minimumOccurrences, allowInitialCapitals, filterFiles);

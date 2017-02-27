@@ -24,16 +24,18 @@ public class SessionWordsToolTest {
 
     private static final String FILTER_FILE = "format1.wordy";
 
+    private final SessionWordsTool target = new SessionWordsToolImpl();
+
     @Test
     public void testKnown() throws Exception {
-        validate(SessionWordsTool::knownWords, listOf(
+        validate(target::knownWords, listOf(
             "is", "a", "aid", "all", "back", "brown", "come", "document", "dog's", "for", "fox", "good", "jumped", "lazy",
             "men", "Now", "of", "over", "party", "quick", "simple", "test", "This", "time"));
     }
 
     @Test
     public void testSeen() throws Exception {
-        validate(SessionWordsTool::seenWords, listOf(
+        validate(target::seenWords, listOf(
             "aid", "all", "back", "brown", "come", "document", "dog's", "for", "fox", "good", "jumped", "lazy",
             "men", "Now", "of", "over", "party", "quick", "simple", "test", "This", "time"));
     }
