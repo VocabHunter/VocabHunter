@@ -8,10 +8,11 @@ import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
+
+import static java.util.Collections.unmodifiableList;
 
 public final class TextGrid {
     private final List<GridLine> lines;
@@ -23,12 +24,12 @@ public final class TextGrid {
         this.columns = new ArrayList<>(columns);
     }
 
-    public int getColumnCount() {
-        return columns.size();
+    public List<GridColumn> getColumns() {
+        return unmodifiableList(columns);
     }
 
     public List<GridLine> getLines() {
-        return Collections.unmodifiableList(lines);
+        return unmodifiableList(lines);
     }
 
     @Override

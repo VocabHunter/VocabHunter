@@ -10,22 +10,13 @@ import io.github.vocabhunter.analysis.marked.WordState;
 import org.junit.Test;
 
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.List;
 import java.util.stream.IntStream;
 
 import static java.util.stream.Collectors.toList;
 import static org.junit.Assert.assertEquals;
 
-public class FilterSessionModelTest {
-    private static final String FILENAME_1 = "file1.wordy";
-
-    private static final String FILENAME_2 = "file2.wordy";
-
-    private static final Path FILE_1 = Paths.get("directory", FILENAME_1);
-
-    private static final Path FILE_2 = Paths.get("directory", FILENAME_2);
-
+public class FilterSessionModelTest extends BaseFilterModelTest {
     @Test
     public void testEmpty() {
         FilterSessionModel target = build(0, 0);
@@ -98,7 +89,7 @@ public class FilterSessionModelTest {
     }
 
     private void validateError(final FilterSessionModel target, final int knownCount, final int seenCount, final boolean isIncludeUnknown) {
-        validate(target, FILE_1, FILENAME_1, isIncludeUnknown, FilterSessionModel.ERROR, true, knownCount, seenCount);
+        validate(target, FILE_1, FILENAME_1, isIncludeUnknown, AbstractFilterModel.ERROR, true, knownCount, seenCount);
     }
 
     private void validateReplaceOk(final FilterSessionModel target, final int knownCount, final int seenCount, final boolean isIncludeUnknown, final String countDescription) {
@@ -106,18 +97,15 @@ public class FilterSessionModelTest {
     }
 
     private void validateReplaceError(final FilterSessionModel target, final int knownCount, final int seenCount, final boolean isIncludeUnknown) {
-        validate(target, FILE_2, FILENAME_2, isIncludeUnknown, FilterSessionModel.ERROR, true, knownCount, seenCount);
+        validate(target, FILE_2, FILENAME_2, isIncludeUnknown, AbstractFilterModel.ERROR, true, knownCount, seenCount);
     }
 
     private void validate(final FilterSessionModel target, final Path file, final String filename, final boolean isIncludeUnknown,
                           final String countDescription, final boolean isError, final int knownCount, final int seenCount) {
-        assertEquals("File", file, target.getFile());
-        assertEquals("Filename", filename, target.getFilename());
+        validateCommon(target, file, filename, countDescription, isError);
         assertEquals("Known count", knownCount, target.getKnownCount());
         assertEquals("Seen count", seenCount, target.getSeenCount());
         assertEquals("Include unknown", isIncludeUnknown, target.isIncludeUnknown());
-        assertEquals("Error state", isError, target.isError());
-        assertEquals("Count description", countDescription, target.getCountDescription());
         assertEquals("Words", filterSessionWords(knownCount, seenCount - knownCount), target.getSeenWords());
     }
 
