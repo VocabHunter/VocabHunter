@@ -4,6 +4,8 @@
 
 package io.github.vocabhunter.gui.main;
 
+import io.github.vocabhunter.gui.dialogues.FileDialogueType;
+import io.github.vocabhunter.test.utils.TestFileManager;
 import javafx.scene.Node;
 import javafx.scene.input.KeyCode;
 import org.slf4j.Logger;
@@ -11,9 +13,10 @@ import org.slf4j.LoggerFactory;
 import org.testfx.api.FxRobot;
 import org.testfx.service.query.NodeQuery;
 
+import java.nio.file.Path;
+
 import static io.github.vocabhunter.gui.common.GuiConstants.*;
-import static io.github.vocabhunter.gui.main.GuiTestConstants.BOOK_1;
-import static io.github.vocabhunter.gui.main.GuiTestConstants.BOOK_2;
+import static io.github.vocabhunter.gui.main.GuiTestConstants.*;
 import static org.testfx.api.FxAssert.verifyThat;
 import static org.testfx.matcher.base.NodeMatchers.*;
 
@@ -24,11 +27,18 @@ public class GuiTestSteps {
 
     private final GuiTestValidator validator;
 
+    private final Path exportFile;
+
+    private final Path sessionFile;
+
     private int stepNo;
 
-    public GuiTestSteps(final FxRobot robot, final GuiTestValidator validator) {
+    public GuiTestSteps(final FxRobot robot, final GuiTestValidator validator, final TestFileManager manager) {
         this.robot = robot;
         this.validator = validator;
+
+        exportFile = manager.addFile("export.txt");
+        sessionFile = manager.addFile("session.wordy");
     }
 
     public void part1BasicWalkThrough() {
@@ -37,6 +47,7 @@ public class GuiTestSteps {
         });
 
         step("Start new session", () -> {
+            validator.setUpFileDialogue(FileDialogueType.NEW_SESSION, BOOK_1);
             robot.clickOn("#buttonNew");
             verifyThat("#mainWordPane", isVisible());
             verifyThat("#mainWord", hasText("and"));
@@ -73,13 +84,15 @@ public class GuiTestSteps {
         });
 
         step("Export the selection", () -> {
+            validator.setUpFileDialogue(FileDialogueType.EXPORT_SELECTION, exportFile);
             robot.clickOn("#buttonExport");
-            validator.validateExportFile();
+            validator.validateExportFile(exportFile);
         });
 
         step("Save the session", () -> {
+            validator.setUpFileDialogue(FileDialogueType.SAVE_SESSION, sessionFile);
             robot.clickOn("#buttonSave");
-            validator.validateSavedSession(BOOK_1);
+            validator.validateSavedSession(sessionFile, BOOK_1);
         });
     }
 
@@ -98,6 +111,7 @@ public class GuiTestSteps {
 
     public void part3StartNewSessionAndFilter() {
         step("Open a new session for a different book", () -> {
+            validator.setUpFileDialogue(FileDialogueType.NEW_SESSION, BOOK_2);
             robot.clickOn("#buttonNew");
             verifyThat("#mainWord", hasText("the"));
         });
@@ -115,14 +129,15 @@ public class GuiTestSteps {
 
         step("Define filter", () -> {
             robot.clickOn("#buttonSetupFilters");
-            robot.doubleClickOn("#fieldMinimumLetters").write("6");
-            robot.doubleClickOn("#fieldMinimumOccurrences").write("4");
+            robot.doubleClickOn("#fieldMinimumLetters").write("4");
+            robot.doubleClickOn("#fieldMinimumOccurrences").write("3");
             robot.clickOn("#fieldInitialCapital");
             robot.clickOn("#buttonOk");
-            verifyThat("#mainWord", hasText("surgeon"));
+            verifyThat("#mainWord", hasText("have"));
         });
 
         step("Add file to filter", () -> {
+            validator.setUpFileDialogue(FileDialogueType.OPEN_SESSION, SESSION_1);
             robot.clickOn("#buttonSetupFilters");
             robot.clickOn("#buttonAddSessionFile");
             robot.clickOn("#buttonAddFilterFile");
@@ -130,22 +145,23 @@ public class GuiTestSteps {
             robot.clickOn("#buttonSeen");
             robot.clickOn("#buttonAddFilterFile");
             robot.clickOn("#buttonOk");
-            verifyThat("#mainWord", hasText("workhouse"));
+            verifyThat("#mainWord", hasText("that"));
         });
 
         step("Mark filtered word as known", () -> {
             robot.clickOn("#buttonKnown");
-            verifyThat("#mainWord", hasText("parish"));
+            verifyThat("#mainWord", hasText("been"));
         });
 
         step("Disable filter", () -> {
             robot.clickOn("#buttonEnableFilters");
-            verifyThat("#mainWord", hasText("parish"));
+            verifyThat("#mainWord", hasText("been"));
         });
     }
 
     public void part4ReopenFirstSession() {
         step("Re-open the old session", () -> {
+            validator.setUpFileDialogue(FileDialogueType.OPEN_SESSION, sessionFile);
             robot.clickOn("#buttonOpen");
             robot.clickOn("Discard");
             verifyThat("#mainWord", hasText("of"));
@@ -154,6 +170,7 @@ public class GuiTestSteps {
 
     public void part5ErrorHandling() {
         step("Start session from empty file", () -> {
+            validator.setUpFileDialogue(FileDialogueType.NEW_SESSION, BOOK_EMPTY);
             robot.clickOn("#buttonNew");
             verifyThat("#errorDialogue", isVisible());
         });
@@ -233,6 +250,7 @@ public class GuiTestSteps {
 
     public void part9Exit() {
         step("Restart new session", () -> {
+            validator.setUpFileDialogue(FileDialogueType.NEW_SESSION, BOOK_2);
             robot.clickOn("#buttonNew");
             verifyThat("#mainWordPane", isVisible());
             verifyThat("#mainWord", hasText("the"));
@@ -248,10 +266,11 @@ public class GuiTestSteps {
             verifyThat("#mainWord", hasText("a"));
         });
         step("Exit with save", () -> {
+            validator.setUpFileDialogue(FileDialogueType.SAVE_SESSION, sessionFile);
             robot.clickOn("#menuFile");
             robot.clickOn("#menuExit");
             robot.clickOn(lookup("#unsavedChanges", "Save"));
-            validator.validateSavedSession(BOOK_2);
+            validator.validateSavedSession(sessionFile, BOOK_2);
         });
     }
 

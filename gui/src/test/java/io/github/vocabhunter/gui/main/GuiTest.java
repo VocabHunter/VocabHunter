@@ -37,6 +37,7 @@ import org.mockito.junit.MockitoJUnitRunner;
 import org.testfx.api.FxRobot;
 
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -65,26 +66,13 @@ public class GuiTest extends FxRobot implements GuiTestValidator {
     private FileDialogueFactory fileDialogueFactory;
 
     @Mock
-    private FileDialogue newSessionDialogue;
-
-    @Mock
-    private FileDialogue saveSessionDialogue;
-
-    @Mock
-    private FileDialogue openSessionDialogue;
-
-    @Mock
-    private FileDialogue exportDialogue;
+    private FileDialogue fileDialogue;
 
     @Mock
     private WebPageTool webPageTool;
 
     @Captor
     private ArgumentCaptor<String> webPageCaptor;
-
-    private Path exportFile;
-
-    private Path sessionFile;
 
     @BeforeClass
     public static void setupSpec() throws Exception {
@@ -105,18 +93,6 @@ public class GuiTest extends FxRobot implements GuiTestValidator {
         when(placementManager.getMainWindow()).thenReturn(new Placement(WINDOW_WIDTH, WINDOW_HEIGHT));
 
         manager = new TestFileManager(getClass());
-        exportFile = manager.addFile("export.txt");
-        sessionFile = manager.addFile("session.wordy");
-
-        Path document1 = getResource(BOOK_1);
-        Path document2 = getResource(BOOK_2);
-        Path document3 = getResource(BOOK_EMPTY);
-        Path prerecordedSession = getResource(SESSION_1);
-
-        setUpFileDialogue(FileDialogueType.NEW_SESSION, newSessionDialogue, document1, document2, document3, document2);
-        setUpFileDialogue(FileDialogueType.SAVE_SESSION, saveSessionDialogue, sessionFile);
-        setUpFileDialogue(FileDialogueType.OPEN_SESSION, openSessionDialogue, prerecordedSession, sessionFile);
-        setUpFileDialogue(FileDialogueType.EXPORT_SELECTION, exportDialogue, exportFile);
 
         Path settingsFile = manager.addFile(SettingsManagerImpl.SETTINGS_JSON);
         SettingsManager settingsManager = new SettingsManagerImpl(settingsFile);
@@ -141,10 +117,16 @@ public class GuiTest extends FxRobot implements GuiTestValidator {
         setupApplication(VocabHunterGuiExecutable.class);
     }
 
-    private void setUpFileDialogue(final FileDialogueType type, final FileDialogue dialogue, final Path file1, final Path... files) {
-        when(fileDialogueFactory.create(eq(type), any(Stage.class))).thenReturn(dialogue);
-        when(dialogue.isFileSelected()).thenReturn(true);
-        when(dialogue.getSelectedFile()).thenReturn(file1, files);
+    @Override
+    public void setUpFileDialogue(final FileDialogueType type, final String file) {
+        setUpFileDialogue(type, getResource(file));
+    }
+
+    @Override
+    public void setUpFileDialogue(final FileDialogueType type, final Path file) {
+        when(fileDialogueFactory.create(eq(type), any(Stage.class))).thenReturn(fileDialogue);
+        when(fileDialogue.isFileSelected()).thenReturn(true);
+        when(fileDialogue.getSelectedFile()).thenReturn(file);
     }
 
     @After
@@ -154,7 +136,7 @@ public class GuiTest extends FxRobot implements GuiTestValidator {
 
     @Test
     public void testWalkThrough() {
-        GuiTestSteps steps = new GuiTestSteps(this, this);
+        GuiTestSteps steps = new GuiTestSteps(this, this, manager);
 
         steps.part1BasicWalkThrough();
         steps.part2Progress();
@@ -168,8 +150,8 @@ public class GuiTest extends FxRobot implements GuiTestValidator {
     }
 
     @Override
-    public void validateExportFile() {
-        String text = readFile(exportFile);
+    public void validateExportFile(final Path file) {
+        String text = readFile(file);
         assertThat("Export file content", text, containsString("the"));
     }
 
@@ -188,19 +170,23 @@ public class GuiTest extends FxRobot implements GuiTestValidator {
     }
 
     @Override
-    public void validateSavedSession(final String name) {
-        EnrichedSessionState state = SessionSerialiser.read(sessionFile);
+    public void validateSavedSession(final Path file, final String name) {
+        EnrichedSessionState state = SessionSerialiser.read(file);
 
         assertEquals("Session state name", name, state.getState().getName());
     }
 
-    private Path getResource(final String file) throws Exception {
-        URL url = getClass().getResource("/" + file);
+    private Path getResource(final String file) {
+        try {
+            URL url = getClass().getResource("/" + file);
 
-        if (url == null) {
-            throw new VocabHunterException(String.format("Unable to load %s", file));
-        } else {
-            return Paths.get(url.toURI());
+            if (url == null) {
+                throw new VocabHunterException(String.format("Unable to load %s", file));
+            } else {
+                    return Paths.get(url.toURI());
+            }
+        } catch (URISyntaxException e) {
+            throw new VocabHunterException("Unable to load file " + file, e);
         }
     }
 }
