@@ -14,12 +14,14 @@ import io.github.vocabhunter.gui.model.FilterFileMode;
 import io.github.vocabhunter.gui.model.FilterFileModel;
 import io.github.vocabhunter.gui.model.FilterSessionModel;
 import io.github.vocabhunter.gui.model.FilterSessionWord;
-import io.github.vocabhunter.gui.view.ErrorClassTool;
 import io.github.vocabhunter.gui.view.FilterSessionStateTableCell;
 import io.github.vocabhunter.gui.view.FilterSessionWordTableCell;
 import javafx.beans.value.ObservableValue;
-import javafx.scene.control.*;
+import javafx.scene.control.RadioButton;
+import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellDataFeatures;
+import javafx.scene.control.TableView;
+import javafx.scene.control.ToggleGroup;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 
@@ -28,29 +30,15 @@ import java.util.List;
 import javax.inject.Inject;
 
 @SuppressFBWarnings({"NP_UNWRITTEN_PUBLIC_OR_PROTECTED_FIELD", "UWF_UNWRITTEN_PUBLIC_OR_PROTECTED_FIELD"})
-public class FilterSessionController {
+public class FilterSessionController extends AbstractFilterController<FilterSessionModel> {
     private static final Callback<CellDataFeatures<FilterSessionWord, FilterSessionWord>, ObservableValue<FilterSessionWord>> WORD_SELF_FACTORY
         = x -> x.getValue().selfProperty();
 
-    @Inject
-    private FileDialogueFactory factory;
-
-    @Inject
-    private SessionWordsTool sessionWordsTool;
-
-    public TextField fieldFile;
-
-    public Button buttonChangeFile;
+    private final SessionWordsTool sessionWordsTool;
 
     public RadioButton buttonKnown;
 
     public RadioButton buttonSeen;
-
-    public Button buttonAddFilterFile;
-
-    public Button buttonCancel;
-
-    public Label labelTotalWords;
 
     public TableView<FilterSessionWord> tableWords;
 
@@ -58,55 +46,39 @@ public class FilterSessionController {
 
     public TableColumn<FilterSessionWord, FilterSessionWord> columnWord;
 
-    private Stage stage;
-
-    private FilterFileModel parentModel;
-
-    private FilterSessionModel model;
-
-    private Runnable onSave;
-
-    public void initialise(final Stage stage, final FilterFileModel parentModel, final Runnable onSave) {
-        this.stage = stage;
-        this.parentModel = parentModel;
-        this.onSave = onSave;
-        this.model = buildFilterSessionModel(parentModel);
-
-        buildToggleGroup();
-        fieldFile.textProperty().bind(model.filenameProperty());
-
-        buttonChangeFile.setOnAction(e -> changeFile());
-        buttonAddFilterFile.setOnAction(e -> exit(true));
-        buttonCancel.setOnAction(e -> exit(false));
-
-        labelTotalWords.textProperty().bind(model.countDescriptionProperty());
-        buttonAddFilterFile.disableProperty().bind(model.errorProperty());
-
-        ErrorClassTool.updateClass(labelTotalWords, model.isError());
-        model.errorProperty().addListener((o, n, v) -> ErrorClassTool.updateClass(labelTotalWords, v));
-
-        prepareTable();
+    @Inject
+    public FilterSessionController(final FileDialogueFactory factory, final SessionWordsTool sessionWordsTool) {
+        super(factory);
+        this.sessionWordsTool = sessionWordsTool;
     }
 
-    private FilterSessionModel buildFilterSessionModel(final FilterFileModel model) {
+    @Override
+    protected FilterSessionModel buildFilterModel(final FilterFileModel model) {
         Path file = model.getFile();
         List<? extends MarkedWord> words = sessionWordsTool.readMarkedWords(file);
 
         return new FilterSessionModel(file, words);
     }
 
-    private void exit(final boolean isSaveRequested) {
+    @Override
+    protected void exit(final Stage stage, final FilterSessionModel filterModel, final Runnable onSave, final FilterFileModel parentModel, final boolean isSaveRequested) {
         if (isSaveRequested) {
-            FilterFileMode mode = model.isIncludeUnknown() ? FilterFileMode.SESSION_SEEN : FilterFileMode.SESSION_KNOWN;
+            FilterFileMode mode = filterModel.isIncludeUnknown() ? FilterFileMode.SESSION_SEEN : FilterFileMode.SESSION_KNOWN;
 
             parentModel.setMode(mode);
-            parentModel.setFile(model.getFile());
+            parentModel.setFile(filterModel.getFile());
             onSave.run();
         }
         stage.close();
     }
 
-    private void buildToggleGroup() {
+    @Override
+    protected void initialiseInternal(final FilterFileModel parentModel, final FilterSessionModel filterModel) {
+        buildToggleGroup(parentModel, filterModel);
+        prepareTable(filterModel);
+    }
+
+    private void buildToggleGroup(final FilterFileModel parentModel, final FilterSessionModel filterModel) {
         ToggleGroup toggleGroup = new ToggleGroup();
 
         buttonKnown.setToggleGroup(toggleGroup);
@@ -116,11 +88,11 @@ public class FilterSessionController {
 
         buttonKnown.setSelected(!isIncludeUnknown);
         buttonSeen.setSelected(isIncludeUnknown);
-        model.includeUnknownProperty().bind(buttonSeen.selectedProperty());
+        filterModel.includeUnknownProperty().bind(buttonSeen.selectedProperty());
     }
 
-    private void prepareTable() {
-        tableWords.setItems(model.getSeenWords());
+    private void prepareTable(final FilterSessionModel filterModel) {
+        tableWords.setItems(filterModel.getSeenWords());
         tableWords.setSelectionModel(null);
 
         columnType.setCellValueFactory(WORD_SELF_FACTORY);
@@ -128,13 +100,14 @@ public class FilterSessionController {
         columnType.setSortable(false);
 
         columnWord.setCellValueFactory(WORD_SELF_FACTORY);
-        columnWord.setCellFactory(c -> new FilterSessionWordTableCell(model.includeUnknownProperty()));
+        columnWord.setCellFactory(c -> new FilterSessionWordTableCell(filterModel.includeUnknownProperty()));
         columnWord.setSortable(false);
 
-        model.includeUnknownProperty().addListener((t, o, v) -> tableWords.refresh());
+        filterModel.includeUnknownProperty().addListener((t, o, v) -> tableWords.refresh());
     }
 
-    private void changeFile() {
+    @Override
+    protected void changeFile(final Stage stage, final FileDialogueFactory factory, final FilterSessionModel filterModel) {
         FileDialogue dialogue = factory.create(FileDialogueType.OPEN_SESSION, stage);
 
         dialogue.showChooser();
@@ -143,7 +116,7 @@ public class FilterSessionController {
             Path file = dialogue.getSelectedFile();
             List<? extends MarkedWord> words = sessionWordsTool.readMarkedWords(file);
 
-            model.replaceContent(file, words);
+            filterModel.replaceContent(file, words);
             buttonKnown.setSelected(true);
         }
     }

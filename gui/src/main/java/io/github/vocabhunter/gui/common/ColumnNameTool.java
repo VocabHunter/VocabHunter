@@ -8,7 +8,7 @@ public final class ColumnNameTool {
     private static final int ALPHABET_LENGTH = 26;
 
     private ColumnNameTool() {
-        // Prevent instantiaton - all methods are static
+        // Prevent instantiation - all methods are static
     }
 
     public static String columnName(final int index) {

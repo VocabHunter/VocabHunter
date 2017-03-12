@@ -65,11 +65,11 @@
               </rowConstraints>
                <children>
                   <Label styleClass="fieldLabel" text="Word lists to exclude:" GridPane.hgrow="ALWAYS" />
-                   <Button fx:id="buttonAddGridFile" mnemonicParsing="false" GridPane.columnIndex="1" GridPane.halignment="RIGHT" disable="true">
+                   <Button fx:id="buttonAddGridFile" mnemonicParsing="false" GridPane.columnIndex="1" GridPane.halignment="RIGHT">
                        <graphic>
                         <HBox alignment="CENTER" spacing="2.0">
                            <children>
-                                 <FontAwesomeIconView styleClass="buttonFilterFileIcon" />
+                                 <FontAwesomeIconView styleClass="buttonFilterGridIcon" />
                               <FontAwesomeIconView styleClass="buttonAddIcon" />
                            </children>
                         </HBox>
@@ -107,7 +107,7 @@
                                   <Label text="Use the buttons above to add lists of words to exclude:" GridPane.columnSpan="2" />
                                   <HBox alignment="CENTER" spacing="2.0" GridPane.rowIndex="1">
                                       <children>
-                                          <FontAwesomeIconView styleClass="buttonFilterFileIcon" />
+                                          <FontAwesomeIconView styleClass="buttonFilterGridIcon" />
                                           <FontAwesomeIconView styleClass="buttonAddIcon" />
                                       </children>
                                   </HBox>

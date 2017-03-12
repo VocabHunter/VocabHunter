@@ -5,6 +5,7 @@
 package io.github.vocabhunter.gui.main;
 
 import io.github.vocabhunter.gui.dialogues.FileDialogueType;
+import io.github.vocabhunter.gui.dialogues.FileFormatType;
 
 import java.nio.file.Path;
 
@@ -15,7 +16,7 @@ public interface GuiTestValidator {
 
     void validateExportFile(Path file);
 
-    void setUpFileDialogue(FileDialogueType type, String file);
+    void setUpFileDialogue(FileDialogueType dialogueType, final FileFormatType fileType, String file);
 
-    void setUpFileDialogue(FileDialogueType type, Path file);
+    void setUpFileDialogue(FileDialogueType dialogueType, final FileFormatType fileType, Path file);
 }

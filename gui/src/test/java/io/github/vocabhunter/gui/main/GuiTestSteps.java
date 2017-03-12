@@ -5,6 +5,7 @@
 package io.github.vocabhunter.gui.main;
 
 import io.github.vocabhunter.gui.dialogues.FileDialogueType;
+import io.github.vocabhunter.gui.dialogues.FileFormatType;
 import io.github.vocabhunter.test.utils.TestFileManager;
 import javafx.scene.Node;
 import javafx.scene.input.KeyCode;
@@ -47,7 +48,7 @@ public class GuiTestSteps {
         });
 
         step("Start new session", () -> {
-            validator.setUpFileDialogue(FileDialogueType.NEW_SESSION, BOOK_1);
+            validator.setUpFileDialogue(FileDialogueType.NEW_SESSION, FileFormatType.DOCUMENT, BOOK_1);
             robot.clickOn("#buttonNew");
             verifyThat("#mainWordPane", isVisible());
             verifyThat("#mainWord", hasText("and"));
@@ -84,13 +85,13 @@ public class GuiTestSteps {
         });
 
         step("Export the selection", () -> {
-            validator.setUpFileDialogue(FileDialogueType.EXPORT_SELECTION, exportFile);
+            validator.setUpFileDialogue(FileDialogueType.EXPORT_SELECTION, FileFormatType.TEXT, exportFile);
             robot.clickOn("#buttonExport");
             validator.validateExportFile(exportFile);
         });
 
         step("Save the session", () -> {
-            validator.setUpFileDialogue(FileDialogueType.SAVE_SESSION, sessionFile);
+            validator.setUpFileDialogue(FileDialogueType.SAVE_SESSION, FileFormatType.SESSION, sessionFile);
             robot.clickOn("#buttonSave");
             validator.validateSavedSession(sessionFile, BOOK_1);
         });
@@ -111,7 +112,7 @@ public class GuiTestSteps {
 
     public void part3StartNewSessionAndFilter() {
         step("Open a new session for a different book", () -> {
-            validator.setUpFileDialogue(FileDialogueType.NEW_SESSION, BOOK_2);
+            validator.setUpFileDialogue(FileDialogueType.NEW_SESSION, FileFormatType.DOCUMENT, BOOK_2);
             robot.clickOn("#buttonNew");
             verifyThat("#mainWord", hasText("the"));
         });
@@ -136,32 +137,68 @@ public class GuiTestSteps {
             verifyThat("#mainWord", hasText("have"));
         });
 
-        step("Add file to filter", () -> {
-            validator.setUpFileDialogue(FileDialogueType.OPEN_SESSION, SESSION_1);
+        step("Load session filter file", () -> {
+            validator.setUpFileDialogue(FileDialogueType.OPEN_SESSION, FileFormatType.SESSION, SESSION_1);
             robot.clickOn("#buttonSetupFilters");
             robot.clickOn("#buttonAddSessionFile");
             robot.clickOn("#buttonAddFilterFile");
             robot.clickOn("#buttonEdit");
+            verifyThat("#buttonAddFilterFile", isEnabled());
+            verifyThat("#labelTotalWords", hasText("1"));
+        });
+
+        step("Include unknown words in filter", () -> {
             robot.clickOn("#buttonSeen");
+            verifyThat("#buttonAddFilterFile", isEnabled());
+            verifyThat("#labelTotalWords", hasText("3"));
+        });
+
+        step("Add session to filter", () -> {
             robot.clickOn("#buttonAddFilterFile");
             robot.clickOn("#buttonOk");
             verifyThat("#mainWord", hasText("that"));
         });
 
+        step("Add empty word list to filter", () -> {
+            validator.setUpFileDialogue(FileDialogueType.OPEN_WORD_LIST, FileFormatType.DOCUMENT, EMPTY_FILE);
+            robot.clickOn("#buttonSetupFilters");
+            robot.clickOn("#buttonAddGridFile");
+            verifyThat("#buttonAddFilterFile", isDisabled());
+        });
+
+        step("Change filter file to spreadsheet", () -> {
+            validator.setUpFileDialogue(FileDialogueType.OPEN_WORD_LIST, FileFormatType.SPREADSHEET, FILTER_SPREADSHEET);
+            robot.clickOn("#buttonChangeFile");
+            verifyThat("#buttonAddFilterFile", isEnabled());
+            verifyThat("#labelTotalWords", hasText("1"));
+        });
+
+        step("Select second column of spreadsheet", () -> {
+            robot.clickOn("#checkBoxColumn1");
+            verifyThat("#buttonAddFilterFile", isEnabled());
+            verifyThat("#labelTotalWords", hasText("3"));
+        });
+
+        step("Apply spreadsheet filter", () -> {
+            robot.clickOn("#buttonAddFilterFile");
+            robot.clickOn("#buttonOk");
+            verifyThat("#mainWord", hasText("this"));
+        });
+
         step("Mark filtered word as known", () -> {
             robot.clickOn("#buttonKnown");
-            verifyThat("#mainWord", hasText("been"));
+            verifyThat("#mainWord", hasText("child"));
         });
 
         step("Disable filter", () -> {
             robot.clickOn("#buttonEnableFilters");
-            verifyThat("#mainWord", hasText("been"));
+            verifyThat("#mainWord", hasText("child"));
         });
     }
 
     public void part4ReopenFirstSession() {
         step("Re-open the old session", () -> {
-            validator.setUpFileDialogue(FileDialogueType.OPEN_SESSION, sessionFile);
+            validator.setUpFileDialogue(FileDialogueType.OPEN_SESSION, FileFormatType.SESSION, sessionFile);
             robot.clickOn("#buttonOpen");
             robot.clickOn("Discard");
             verifyThat("#mainWord", hasText("of"));
@@ -170,7 +207,7 @@ public class GuiTestSteps {
 
     public void part5ErrorHandling() {
         step("Start session from empty file", () -> {
-            validator.setUpFileDialogue(FileDialogueType.NEW_SESSION, BOOK_EMPTY);
+            validator.setUpFileDialogue(FileDialogueType.NEW_SESSION, FileFormatType.DOCUMENT, EMPTY_FILE);
             robot.clickOn("#buttonNew");
             verifyThat("#errorDialogue", isVisible());
         });
@@ -250,7 +287,7 @@ public class GuiTestSteps {
 
     public void part9Exit() {
         step("Restart new session", () -> {
-            validator.setUpFileDialogue(FileDialogueType.NEW_SESSION, BOOK_2);
+            validator.setUpFileDialogue(FileDialogueType.NEW_SESSION, FileFormatType.DOCUMENT, BOOK_2);
             robot.clickOn("#buttonNew");
             verifyThat("#mainWordPane", isVisible());
             verifyThat("#mainWord", hasText("the"));
@@ -266,7 +303,7 @@ public class GuiTestSteps {
             verifyThat("#mainWord", hasText("a"));
         });
         step("Exit with save", () -> {
-            validator.setUpFileDialogue(FileDialogueType.SAVE_SESSION, sessionFile);
+            validator.setUpFileDialogue(FileDialogueType.SAVE_SESSION, FileFormatType.SESSION, sessionFile);
             robot.clickOn("#menuFile");
             robot.clickOn("#menuExit");
             robot.clickOn(lookup("#unsavedChanges", "Save"));

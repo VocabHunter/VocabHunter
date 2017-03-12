@@ -16,7 +16,7 @@ public class FileDialogueImpl implements FileDialogue {
 
     private final SettingsManager settingsManager;
 
-    private Path selectedFile;
+    private FileChoice selected;
 
     public FileDialogueImpl(final FileDialogueType type, final Stage stage, final SettingsManager settingsManager) {
         this.stage = stage;
@@ -26,16 +26,21 @@ public class FileDialogueImpl implements FileDialogue {
 
     @Override
     public void showChooser() {
-        selectedFile = type.showChooser(stage, settingsManager);
+        selected = type.showChooser(stage, settingsManager);
     }
 
     @Override
     public boolean isFileSelected() {
-        return selectedFile != null;
+        return selected != null;
     }
 
     @Override
     public Path getSelectedFile() {
-        return selectedFile;
+        return selected.getFile();
+    }
+
+    @Override
+    public FileFormatType getFileFormatType() {
+        return selected.getType();
     }
 }

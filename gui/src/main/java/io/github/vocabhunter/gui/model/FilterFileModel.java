@@ -7,8 +7,6 @@ package io.github.vocabhunter.gui.model;
 import io.github.vocabhunter.analysis.session.FileNameTool;
 import javafx.beans.Observable;
 import javafx.beans.property.SimpleObjectProperty;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableSet;
 import javafx.util.Callback;
 
 import java.nio.file.Path;
@@ -24,11 +22,7 @@ public class FilterFileModel {
 
     private final SimpleObjectProperty<FilterFileMode> modeProperty;
 
-    private final ObservableSet<Integer> columns;
-
-    public FilterFileModel(final Path file) {
-        this(file, FilterFileMode.SESSION_KNOWN);
-    }
+    private Set<Integer> columns;
 
     public FilterFileModel(final Path file, final FilterFileMode mode) {
         this(file, mode, Collections.emptySet());
@@ -37,7 +31,7 @@ public class FilterFileModel {
     public FilterFileModel(final Path file, final FilterFileMode mode, final Set<Integer> columns) {
         this.file = new SimpleObjectProperty<>(file);
         this.modeProperty = new SimpleObjectProperty<>(mode);
-        this.columns = FXCollections.observableSet(columns);
+        this.columns = new TreeSet<>(columns);
     }
 
     public FilterFileMode getMode() {
@@ -61,11 +55,10 @@ public class FilterFileModel {
     }
 
     public Set<Integer> getColumns() {
-        return new TreeSet<>(columns);
+        return Collections.unmodifiableSet(columns);
     }
 
     public void setColumns(final Set<Integer> columns) {
-        this.columns.clear();
-        this.columns.addAll(columns);
+        this.columns = new TreeSet<>(columns);
     }
 }

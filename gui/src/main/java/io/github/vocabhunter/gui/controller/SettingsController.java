@@ -9,6 +9,7 @@ import io.github.vocabhunter.analysis.settings.BaseListedFile;
 import io.github.vocabhunter.gui.dialogues.FileDialogue;
 import io.github.vocabhunter.gui.dialogues.FileDialogueFactory;
 import io.github.vocabhunter.gui.dialogues.FileDialogueType;
+import io.github.vocabhunter.gui.dialogues.FileFormatType;
 import io.github.vocabhunter.gui.model.*;
 import io.github.vocabhunter.gui.services.FilterFileModelTranslator;
 import io.github.vocabhunter.gui.view.FilterFileCell;
@@ -38,6 +39,8 @@ public class SettingsController {
 
     public ListView<FilterFileModel> listExcludedFiles;
 
+    public Button buttonAddGridFile;
+
     public Button buttonAddSessionFile;
 
     public Button buttonOk;
@@ -49,6 +52,9 @@ public class SettingsController {
 
     @Inject
     private FileDialogueFactory factory;
+
+    @Inject
+    private FilterGridHandler filterGridHandler;
 
     @Inject
     private FilterSessionHandler filterSessionHandler;
@@ -77,12 +83,39 @@ public class SettingsController {
 
         filterFilesModel = new FilterFileListModel(filterFiles);
         listExcludedFiles.setItems(filterFilesModel.getFiles());
+        buttonAddGridFile.setOnAction(e -> processAddGridFile());
         buttonAddSessionFile.setOnAction(e -> processAddSessionFile());
         listExcludedFiles.setCellFactory(p -> new FilterFileCell(filterFilesModel::remove, this::editHandler));
     }
 
     private void editHandler(final FilterFileModel model) {
-        filterSessionHandler.show(model, () -> filterFilesModel.removeIfExists(model));
+        BaseFilterHandler<?> handler = getHandler(model);
+
+        handler.show(model, () -> filterFilesModel.removeIfExists(model));
+    }
+
+    private BaseFilterHandler<?> getHandler(final FilterFileModel model) {
+        FilterFileMode mode = model.getMode();
+
+        if (mode == FilterFileMode.SESSION_KNOWN || mode == FilterFileMode.SESSION_SEEN) {
+            return filterSessionHandler;
+        } else {
+            return filterGridHandler;
+        }
+    }
+
+    private void processAddGridFile() {
+        FileDialogue dialogue = factory.create(FileDialogueType.OPEN_WORD_LIST, stage);
+
+        dialogue.showChooser();
+
+        if (dialogue.isFileSelected()) {
+            FileFormatType format = dialogue.getFileFormatType();
+            FilterFileMode mode = FileFormatTypeTool.getMode(format);
+            FilterFileModel fileModel = new FilterFileModel(dialogue.getSelectedFile(), mode, FilterGridModel.DEFAULT_COLUMNS);
+
+            showHandler(filterGridHandler, fileModel);
+        }
     }
 
     private void processAddSessionFile() {
@@ -91,10 +124,14 @@ public class SettingsController {
         dialogue.showChooser();
 
         if (dialogue.isFileSelected()) {
-            FilterFileModel fileModel = new FilterFileModel(dialogue.getSelectedFile());
+            FilterFileModel fileModel = new FilterFileModel(dialogue.getSelectedFile(), FilterFileMode.SESSION_KNOWN);
 
-            filterSessionHandler.show(fileModel, () -> addFile(fileModel));
+            showHandler(filterSessionHandler, fileModel);
         }
+    }
+
+    private void showHandler(final BaseFilterHandler<?> handler, final FilterFileModel fileModel) {
+        handler.show(fileModel, () -> addFile(fileModel));
     }
 
     private void addFile(final FilterFileModel fileModel) {

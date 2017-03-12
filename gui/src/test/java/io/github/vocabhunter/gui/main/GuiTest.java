@@ -18,6 +18,7 @@ import io.github.vocabhunter.gui.common.Placement;
 import io.github.vocabhunter.gui.dialogues.FileDialogue;
 import io.github.vocabhunter.gui.dialogues.FileDialogueFactory;
 import io.github.vocabhunter.gui.dialogues.FileDialogueType;
+import io.github.vocabhunter.gui.dialogues.FileFormatType;
 import io.github.vocabhunter.gui.services.EnvironmentManager;
 import io.github.vocabhunter.gui.services.PlacementManager;
 import io.github.vocabhunter.gui.services.WebPageTool;
@@ -118,15 +119,16 @@ public class GuiTest extends FxRobot implements GuiTestValidator {
     }
 
     @Override
-    public void setUpFileDialogue(final FileDialogueType type, final String file) {
-        setUpFileDialogue(type, getResource(file));
+    public void setUpFileDialogue(final FileDialogueType dialogueType, final FileFormatType fileType, final String file) {
+        setUpFileDialogue(dialogueType, fileType, getResource(file));
     }
 
     @Override
-    public void setUpFileDialogue(final FileDialogueType type, final Path file) {
-        when(fileDialogueFactory.create(eq(type), any(Stage.class))).thenReturn(fileDialogue);
+    public void setUpFileDialogue(final FileDialogueType dialogueType, final FileFormatType fileType, final Path file) {
+        when(fileDialogueFactory.create(eq(dialogueType), any(Stage.class))).thenReturn(fileDialogue);
         when(fileDialogue.isFileSelected()).thenReturn(true);
         when(fileDialogue.getSelectedFile()).thenReturn(file);
+        when(fileDialogue.getFileFormatType()).thenReturn(fileType);
     }
 
     @After
@@ -185,7 +187,7 @@ public class GuiTest extends FxRobot implements GuiTestValidator {
             } else {
                     return Paths.get(url.toURI());
             }
-        } catch (URISyntaxException e) {
+        } catch (final URISyntaxException e) {
             throw new VocabHunterException("Unable to load file " + file, e);
         }
     }

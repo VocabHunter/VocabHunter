@@ -82,14 +82,14 @@
     -glyph-name: CHECK_SQUARE;
     -fx-fill: -colour-known-end;
 }
-.buttonFilterFileIcon {
+.buttonFilterGridIcon, .filterGridIcon {
     -glyph-name: TABLE;
 }
 .buttonAddIcon {
     -glyph-name: PLUS;
     -glyph-size: 10;
 }
-.buttonFilterSessionIcon, .buttonFilterFileIcon {
+.buttonFilterSessionIcon, .buttonFilterGridIcon {
     -glyph-size: 20;
 }
 .buttonKnown {
@@ -106,7 +106,7 @@
     -glyph-name: TIMES_CIRCLE;
     -fx-fill: -colour-unknown-end;
 }
-.filterKnownIcon, .filterUnknownIcon {
+.filterKnownIcon, .filterUnknownIcon, .filterGridIcon {
     -glyph-size: 20;
 }
 .filterKnownIconSmall, .filterUnknownIconSmall {

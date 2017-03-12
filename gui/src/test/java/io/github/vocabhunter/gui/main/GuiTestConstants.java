@@ -9,7 +9,9 @@ public final class GuiTestConstants {
 
     public static final String BOOK_2 = "oliver-twist.txt";
 
-    public static final String BOOK_EMPTY = "empty.txt";
+    public static final String EMPTY_FILE = "empty.txt";
+
+    public static final String FILTER_SPREADSHEET = "filter.xls";
 
     public static final String SESSION_1 = "oliver-twist.wordy";
 

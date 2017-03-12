@@ -33,7 +33,7 @@ public final class StateClassTool {
 
     public static void clearExtendedStateClasses(final Node node) {
         clearStateClasses(node);
-        node.pseudoClassStateChanged(CLASS_EXCLUDED, false);
+        clearExcludedClass(node);
     }
 
     public static void updateExtendedStateClasses(final Node node, final WordState state, final boolean isExcluded) {
@@ -42,6 +42,14 @@ public final class StateClassTool {
         } else {
             updateStateClasses(node, state);
         }
+        updatedExcludedClass(node, isExcluded);
+    }
+
+    public static void updatedExcludedClass(final Node node, final boolean isExcluded) {
         node.pseudoClassStateChanged(CLASS_EXCLUDED, isExcluded);
+    }
+
+    public static void clearExcludedClass(final Node node) {
+        updatedExcludedClass(node, false);
     }
 }

@@ -5,5 +5,5 @@
 package io.github.vocabhunter.gui.model;
 
 public enum FilterFileMode {
-    SESSION_KNOWN, SESSION_SEEN, EXCEL, DOCUMENT;
+    SESSION_KNOWN, SESSION_SEEN, EXCEL, DOCUMENT
 }
