@@ -137,10 +137,16 @@ public class GuiTestSteps {
             verifyThat("#mainWord", hasText("have"));
         });
 
-        step("Load session filter file", () -> {
-            validator.setUpFileDialogue(FileDialogueType.OPEN_SESSION, FileFormatType.SESSION, SESSION_1);
+        step("Add empty session to filter", () -> {
+            validator.setUpFileDialogue(FileDialogueType.OPEN_SESSION, FileFormatType.SESSION, SESSION_NO_MARKED_WORDS);
             robot.clickOn("#buttonSetupFilters");
             robot.clickOn("#buttonAddSessionFile");
+            verifyThat("#buttonAddFilterFile", isDisabled());
+        });
+
+        step("Change session filter to file with marked words", () -> {
+            validator.setUpFileDialogue(FileDialogueType.OPEN_SESSION, FileFormatType.SESSION, SESSION_1);
+            robot.clickOn("#buttonChangeFile");
             robot.clickOn("#buttonAddFilterFile");
             robot.clickOn("#buttonEdit");
             verifyThat("#buttonAddFilterFile", isEnabled());

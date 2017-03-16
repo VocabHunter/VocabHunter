@@ -15,6 +15,8 @@ public final class GuiTestConstants {
 
     public static final String SESSION_1 = "oliver-twist.wordy";
 
+    public static final String SESSION_NO_MARKED_WORDS = "no-marked-words.wordy";
+
     // These values should match those in main.fxml
 
     public static final int WINDOW_WIDTH = 1000;
