@@ -69,6 +69,8 @@ If you'd like to know more about how VocabHunter works and the technologies used
 * [Dependency Injection in JavaFX][DependencyInjection] (VocabHunter Blog) - How to Gluon Ignite and Google Guice are used for the  Dependency Injection in VocabHunter.
 * [User Interface Testing with TestFX][TestFXBlog] (VocabHunter Blog) - A guide to automating user interface tests using TestFX.  VocabHunter includes a complete automated GUI test suite and here you can learn how it works.
 
+[![VocabHunter](/assets/VocabHunter-Technical-Articles.png)](https://vocabhunter.github.io/blog/)
+
 [TestFXBlog]:https://vocabhunter.github.io/2016/07/27/TestFX.html
 [DependencyInjection]:https://vocabhunter.github.io/2016/11/13/JavaFX-Dependency-Injection.html
 [SearchBar]:https://vocabhunter.github.io/2017/01/15/Search-Bar.html
