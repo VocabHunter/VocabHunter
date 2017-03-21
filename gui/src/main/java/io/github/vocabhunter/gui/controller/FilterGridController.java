@@ -124,8 +124,8 @@ public class FilterGridController extends AbstractFilterController<FilterGridMod
     }
 
     private void setupColumnsAndCheckBoxes(final FilterGridModel filterModel) {
-        tableWords.getColumns().setAll(buildColumns(filterModel));
         checkBoxes = buildAndBindCheckBoxes(filterModel);
+        tableWords.getColumns().setAll(buildColumns(filterModel));
         columnSelectionBox.getChildren().setAll(checkBoxes);
     }
 
@@ -142,21 +142,22 @@ public class FilterGridController extends AbstractFilterController<FilterGridMod
 
         box.selectedProperty().bindBidirectional(property);
         box.setId("checkBoxColumn" + columnNo);
+        box.selectedProperty().addListener((a, b, c) -> tableWords.refresh());
 
         return box;
     }
 
     private List<TableColumn<GridLine, GridCell>> buildColumns(final FilterGridModel filterModel) {
         return IntStream.range(0, filterModel.getColumnCount())
-            .mapToObj(this::buildColumn)
+            .mapToObj(i -> buildColumn(filterModel, i))
             .collect(toList());
     }
 
-    private TableColumn<GridLine, GridCell> buildColumn(final int index) {
+    private TableColumn<GridLine, GridCell> buildColumn(final FilterGridModel filterModel, final int index) {
         TableColumn<GridLine, GridCell> column = new TableColumn<>(ColumnNameTool.columnName(index));
 
         column.setCellValueFactory(features -> extractValue(features, index));
-        column.setCellFactory(c -> new FilterGridWordTableCell());
+        column.setCellFactory(c -> new FilterGridWordTableCell(filterModel.getColumnSelections().get(index)));
 
         return column;
     }
