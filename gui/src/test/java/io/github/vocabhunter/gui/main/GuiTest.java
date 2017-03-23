@@ -39,12 +39,11 @@ import org.testfx.api.FxRobot;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
-import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 
-import static io.github.vocabhunter.gui.main.GuiTestConstants.*;
+import static io.github.vocabhunter.gui.main.GuiTestConstants.WINDOW_HEIGHT;
+import static io.github.vocabhunter.gui.main.GuiTestConstants.WINDOW_WIDTH;
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.Assert.assertEquals;
@@ -120,7 +119,11 @@ public class GuiTest extends FxRobot implements GuiTestValidator {
 
     @Override
     public void setUpFileDialogue(final FileDialogueType dialogueType, final FileFormatType fileType, final String file) {
-        setUpFileDialogue(dialogueType, fileType, getResource(file));
+        try {
+            setUpFileDialogue(dialogueType, fileType, manager.addCopy(file));
+        } catch (URISyntaxException | IOException e) {
+            throw new VocabHunterException("Unable to open file " + file, e);
+        }
     }
 
     @Override
@@ -176,19 +179,5 @@ public class GuiTest extends FxRobot implements GuiTestValidator {
         EnrichedSessionState state = SessionSerialiser.read(file);
 
         assertEquals("Session state name", name, state.getState().getName());
-    }
-
-    private Path getResource(final String file) {
-        try {
-            URL url = getClass().getResource("/" + file);
-
-            if (url == null) {
-                throw new VocabHunterException(String.format("Unable to load %s", file));
-            } else {
-                    return Paths.get(url.toURI());
-            }
-        } catch (final URISyntaxException e) {
-            throw new VocabHunterException("Unable to load file " + file, e);
-        }
     }
 }
