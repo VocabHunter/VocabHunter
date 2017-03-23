@@ -13,7 +13,7 @@ coverage:
         enabled: yes
         target: 80%
     patch: yes
-    changes: yes
+    changes: no
 
 parsers:
   gcov:
