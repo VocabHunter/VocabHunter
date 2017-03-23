@@ -5,7 +5,6 @@
 package io.github.vocabhunter.test.utils;
 
 import org.apache.commons.lang3.StringUtils;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
@@ -46,7 +45,6 @@ public abstract class AbstractBeanTest<T> {
         assertEquals("Equal hash code", buildPrimary().hashCode(), buildPrimary().hashCode());
     }
 
-    @Ignore
     @Test
     public void testToString() {
         assertTrue("To string", StringUtils.isNotBlank(buildPrimary().toString()));
