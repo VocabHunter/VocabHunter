@@ -8,9 +8,12 @@ coverage:
   range: "50...95"
 
   status:
-    project: yes
-    patch: no
-    changes: no
+    project:
+      default:
+        enabled: yes
+        target: 80%
+    patch: yes
+    changes: yes
 
 parsers:
   gcov:
