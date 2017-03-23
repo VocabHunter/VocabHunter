@@ -63,6 +63,14 @@
 .filterSessionStateColumn {
     -fx-alignment: CENTER;
 }
+.columnSelectionBoxScrollPane {
+    -fx-max-height: 100;
+    -fx-min-height: 20;
+    -fx-background-color: transparent;
+}
+.columnSelectionBox {
+    -fx-spacing: 7;
+}
 .buttonSaveIcon {
     -glyph-name: SAVE;
 }

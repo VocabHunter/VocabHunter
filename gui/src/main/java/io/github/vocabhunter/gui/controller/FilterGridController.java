@@ -22,6 +22,7 @@ import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.beans.value.ObservableValue;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.TableView;
@@ -29,7 +30,9 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.nio.file.Path;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.IntStream;
 import javax.inject.Inject;
 
@@ -37,13 +40,23 @@ import static java.util.stream.Collectors.toList;
 
 @SuppressFBWarnings({"NP_UNWRITTEN_PUBLIC_OR_PROTECTED_FIELD", "UWF_UNWRITTEN_PUBLIC_OR_PROTECTED_FIELD"})
 public class FilterGridController extends AbstractFilterController<FilterGridModel> {
+    private static final int MAX_COLUMNS_WITHOUT_SCROLL = 3;
+
+    private static final int PREFERRED_COLUMN_WIDTH = 200;
+
+    private static final int MINIMUM_MULTI_COLUMN_COLUMN_BOX_HEIGHT = 50;
+
     private final TextGridManager textGridManager;
 
     public TableView<GridLine> tableWords;
 
+    public ScrollPane columnSelectionBoxScrollPane;
+
     public VBox columnSelectionBox;
 
     private List<CheckBox> checkBoxes;
+
+    private final Map<GridCell, ReadOnlyObjectWrapper<GridCell>> cellCache = new HashMap<>();
 
     @Inject
     public FilterGridController(final FileDialogueFactory factory, final TextGridManager textGridManager) {
@@ -80,11 +93,16 @@ public class FilterGridController extends AbstractFilterController<FilterGridMod
 
     private ObservableValue<GridCell> extractValue(final CellDataFeatures<GridLine, GridCell> features, final int index) {
         List<GridCell> cells = features.getValue().getCells();
+        GridCell cell = getCell(cells, index);
 
+        return cellCache.computeIfAbsent(cell, ReadOnlyObjectWrapper::new);
+    }
+
+    private GridCell getCell(final List<GridCell> cells, final int index) {
         if (index < cells.size()) {
-            return new ReadOnlyObjectWrapper<>(cells.get(index));
+            return cells.get(index);
         } else {
-            return new ReadOnlyObjectWrapper<>(GridCell.EMPTY_CELL);
+            return GridCell.EMPTY_CELL;
         }
     }
 
@@ -127,6 +145,12 @@ public class FilterGridController extends AbstractFilterController<FilterGridMod
         checkBoxes = buildAndBindCheckBoxes(filterModel);
         tableWords.getColumns().setAll(buildColumns(filterModel));
         columnSelectionBox.getChildren().setAll(checkBoxes);
+        if (isScrollableColumnList(filterModel)) {
+            tableWords.setColumnResizePolicy(TableView.UNCONSTRAINED_RESIZE_POLICY);
+        }
+        if (filterModel.getColumnCount() > 1) {
+            columnSelectionBoxScrollPane.setMinHeight(MINIMUM_MULTI_COLUMN_COLUMN_BOX_HEIGHT);
+        }
     }
 
     private List<CheckBox> buildAndBindCheckBoxes(final FilterGridModel filterModel) {
@@ -156,10 +180,18 @@ public class FilterGridController extends AbstractFilterController<FilterGridMod
     private TableColumn<GridLine, GridCell> buildColumn(final FilterGridModel filterModel, final int index) {
         TableColumn<GridLine, GridCell> column = new TableColumn<>(ColumnNameTool.columnName(index));
 
+        column.setSortable(false);
         column.setCellValueFactory(features -> extractValue(features, index));
         column.setCellFactory(c -> new FilterGridWordTableCell(filterModel.getColumnSelections().get(index)));
+        if (isScrollableColumnList(filterModel)) {
+            column.setPrefWidth(PREFERRED_COLUMN_WIDTH);
+        }
 
         return column;
+    }
+
+    private boolean isScrollableColumnList(final FilterGridModel filterModel) {
+        return filterModel.getColumnCount() > MAX_COLUMNS_WITHOUT_SCROLL;
     }
 
     private BooleanProperty getColumnSelection(final FilterGridModel filterModel, final int columnNo) {

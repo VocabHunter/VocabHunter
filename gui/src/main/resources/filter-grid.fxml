@@ -46,16 +46,16 @@
                   <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                </columnResizePolicy>
                <columns>
-                  <TableColumn styleClass="filterSessionStateColumn" text="A" />
-                  <TableColumn styleClass="filterSessionWordColumn" text="B" />
+                  <TableColumn text="Column A" />
+                  <TableColumn text="Column B" />
                </columns>
             </TableView>
             <VBox styleClass="filterInclusionBox">
                <children>
                   <Label text="Select columns to include:" />
-                  <ScrollPane hbarPolicy="NEVER" style="-fx-background-color: transparent;">
+                  <ScrollPane fx:id="columnSelectionBoxScrollPane" hbarPolicy="NEVER" styleClass="columnSelectionBoxScrollPane">
                      <content>
-                        <VBox fx:id="columnSelectionBox">
+                        <VBox fx:id="columnSelectionBox" styleClass="columnSelectionBox">
                            <children>
                               <CheckBox mnemonicParsing="false" selected="true" text="Column A" />
                               <CheckBox mnemonicParsing="false" selected="true" text="Column B" />
