@@ -92,6 +92,21 @@ public class SettingsManagerTest {
     }
 
     @Test
+    public void testGetDefaultWordListPath() {
+        validateGetDefaultPath(target::getWordListPath);
+    }
+
+    @Test
+    public void testUpdateWordListPath() throws Exception {
+        validateUpdatePath(target::getWordListPath, target::setWordListPath);
+    }
+
+    @Test
+    public void testMissingWordListPath() {
+        validateMissingPath(target::getWordListPath, target::setWordListPath);
+    }
+
+    @Test
     public void testUpdateFilterMinimumLetters() {
         validateUpdateInt(target::getFilterMinimumLetters, target::setFilterMinimumLetters);
     }

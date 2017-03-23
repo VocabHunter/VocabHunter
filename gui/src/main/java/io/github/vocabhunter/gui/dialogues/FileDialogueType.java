@@ -22,7 +22,7 @@ public enum FileDialogueType {
     OPEN_SESSION("Open", FileFormatType.TYPES_SESSIONS, FileChooser::showOpenDialog, SettingsManager::getSessionsPath, SettingsManager::setSessionsPath),
     SAVE_SESSION("Save", FileFormatType.TYPES_SESSIONS, FileChooser::showSaveDialog, SettingsManager::getSessionsPath, SettingsManager::setSessionsPath),
     EXPORT_SELECTION("Export Selection", FileFormatType.TYPES_EXPORTS, FileChooser::showSaveDialog, SettingsManager::getExportPath, SettingsManager::setExportPath),
-    OPEN_WORD_LIST("Open list of words to exclude", FileFormatType.TYPES_WORD_GRIDS, FileChooser::showOpenDialog, SettingsManager::getDocumentsPath, SettingsManager::setDocumentsPath);
+    OPEN_WORD_LIST("Open list of words to exclude", FileFormatType.TYPES_WORD_GRIDS, FileChooser::showOpenDialog, SettingsManager::getWordListPath, SettingsManager::setWordListPath);
 
     private final String title;
 

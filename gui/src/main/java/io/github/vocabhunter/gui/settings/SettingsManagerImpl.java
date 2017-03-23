@@ -57,6 +57,16 @@ public class SettingsManagerImpl extends BaseSettingsManager<VocabHunterSettings
     }
 
     @Override
+    public Path getWordListPath() {
+        return getPath(VocabHunterSettings::getWordListPath);
+    }
+
+    @Override
+    public void setWordListPath(final Path path) {
+        setPath(VocabHunterSettings::setWordListPath, path);
+    }
+
+    @Override
     public int getFilterMinimumLetters() {
         return getValue(VocabHunterSettings::getFilterMinimumLetters);
     }
