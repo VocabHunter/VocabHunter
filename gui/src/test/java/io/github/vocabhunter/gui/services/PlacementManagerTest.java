@@ -25,7 +25,7 @@ import static org.mockito.Mockito.when;
 public class PlacementManagerTest {
     private static final Placement SCREEN_SIZE = new Placement(1, 2);
 
-    private static final Placement DEFAULT_WINDDOW_SIZE = new Placement(SCREEN_SIZE.getWidth() * WINDOW_SIZE_FACTOR, SCREEN_SIZE.getHeight() * WINDOW_SIZE_FACTOR);
+    private static final Placement DEFAULT_WINDOW_SIZE = new Placement(SCREEN_SIZE.getWidth() * WINDOW_SIZE_FACTOR, SCREEN_SIZE.getHeight() * WINDOW_SIZE_FACTOR);
 
     private final WindowSettings windowSettings = new WindowSettings();
 
@@ -64,7 +64,7 @@ public class PlacementManagerTest {
 
         Placement result = target.getMainWindow();
 
-        assertEquals("Invisible settings", result, DEFAULT_WINDDOW_SIZE);
+        assertEquals("Invisible settings", result, DEFAULT_WINDOW_SIZE);
     }
 
     @Test
@@ -73,6 +73,6 @@ public class PlacementManagerTest {
 
         Placement result = target.getMainWindow();
 
-        assertEquals("Unspecified settings", result, DEFAULT_WINDDOW_SIZE);
+        assertEquals("Unspecified settings", result, DEFAULT_WINDOW_SIZE);
     }
 }

@@ -280,7 +280,7 @@ public class GuiTestSteps {
             verifyThat("#mainWord", hasText("country"));
             verifyThat("#labelMatches", hasText("1 of 2 matches"));
         });
-        step("Seach with no match", () -> {
+        step("Search with no match", () -> {
             robot.doubleClickOn("#fieldSearch").write("bananas");
             verifyThat("#mainWord", hasText("back"));
             verifyThat("#labelMatches", hasText("No matches"));
