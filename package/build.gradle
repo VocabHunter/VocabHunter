@@ -24,15 +24,15 @@ ext {
         packageType = 'dmg'
         bundleMainClass = 'io.github.vocabhunter.osx.distribution.OsxPackagedVocabHunter'
         appIcon = file('icons/mac/VocabHunter.icns')
-        sessionIcon = 'icons/mac/VocabHunterSession.icns'
+        sessionIcon = file('icons/mac/VocabHunterSession.icns')
     } else if (operatingSystem.isLinux()) {
         packageType = 'deb'
         appIcon = file('icons/App1024.png')
-        sessionIcon = 'icons/application-x-vnd.VocabHunterSession.png'
+        sessionIcon = file('icons/application-x-vnd.VocabHunterSession.png')
     } else if (operatingSystem.isWindows()) {
         packageType = 'exe'
         appIcon = file('icons/windows/VocabHunter.ico')
-        sessionIcon = 'icons/windows/VocabHunterSession.ico'
+        sessionIcon = file('icons/windows/VocabHunterSession.ico')
     }
     if (publishedVersion.endsWith('-SNAPSHOT')) {
         publishedVersion = '1.0.0'
