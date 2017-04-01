@@ -43,7 +43,7 @@ dependencies {
     testCompile project(path: ':core', configuration: 'tests')
     testCompile 'org.testfx:testfx-core:4.0.6-alpha'
     testRuntime 'org.jfxtras:openjfx-monocle:1.8.0_20'
-    runtime 'org.codehaus.janino:janino:3.0.6'
+    runtime 'org.codehaus.janino:janino:3.0.7'
 }
 
 test {
