@@ -4,7 +4,6 @@
 
 package io.github.vocabhunter.test.utils;
 
-import io.github.vocabhunter.analysis.grid.GridTestTool;
 import org.apache.commons.io.FileUtils;
 
 import java.io.IOException;
@@ -24,7 +23,7 @@ public class TestFileManager {
     }
 
     public Path addCopy(final String name) throws URISyntaxException, IOException {
-        URL resource = GridTestTool.class.getResource("/" + name);
+        URL resource = TestFileManager.class.getResource("/" + name);
         Path original = Paths.get(resource.toURI());
         Path copy = addFile(name);
 
