@@ -28,7 +28,7 @@ ext {
     } else if (operatingSystem.isLinux()) {
         packageType = 'deb'
         appIcon = file('icons/App1024.png')
-        sessionIcon = file('icons/application-x-vnd.VocabHunterSession.png')
+        sessionIcon = file('icons/Doc1024.png')
     } else if (operatingSystem.isWindows()) {
         packageType = 'exe'
         appIcon = file('icons/windows/VocabHunter.ico')
