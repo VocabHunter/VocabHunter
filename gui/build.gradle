@@ -37,14 +37,13 @@ startScripts {
 
 dependencies {
     compile project(':core')
-    compile 'com.gluonhq:ignite-guice:1.0.1'
+    compile 'com.gluonhq:ignite-guice:1.0.2'
     compile 'org.controlsfx:controlsfx:8.40.12'
+    compile 'de.jensd:fontawesomefx-fontawesome:4.7.0-5'
     testCompile project(path: ':core', configuration: 'tests')
-    testCompile 'org.testfx:testfx-core:4.0.4-alpha'
-    testCompile 'org.mockito:mockito-core:2.3.0'
+    testCompile 'org.testfx:testfx-core:4.0.6-alpha'
     testRuntime 'org.jfxtras:openjfx-monocle:1.8.0_20'
-    runtime 'org.codehaus.janino:janino:3.0.6'
-    runtime 'de.jensd:fontawesomefx-fontawesome:4.7.0'
+    runtime 'org.codehaus.janino:janino:3.0.7'
 }
 
 test {

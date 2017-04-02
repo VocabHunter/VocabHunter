@@ -11,7 +11,6 @@ import io.github.vocabhunter.analysis.simple.SimpleAnalyser;
 import org.apache.commons.lang3.StringUtils;
 import org.junit.Test;
 
-import java.io.InputStream;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.file.Path;
@@ -19,10 +18,8 @@ import java.nio.file.Paths;
 import java.util.List;
 import java.util.function.Function;
 
-import static io.github.vocabhunter.analysis.core.CollectionTool.listOf;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
-import static org.junit.Assert.assertTrue;
+import static io.github.vocabhunter.analysis.core.CoreTool.listOf;
+import static org.junit.Assert.*;
 
 public class FileStreamerTest {
     private static final List<String> LINES = listOf(
@@ -49,7 +46,7 @@ public class FileStreamerTest {
     private final FileStreamer target = new FileStreamer(analyser);
 
     @Test(expected = VocabHunterException.class)
-    public void testStreamEmpty() throws Exception {
+    public void testStreamEmpty() {
         validateStream(FILE_EMPTY);
     }
 
@@ -85,50 +82,47 @@ public class FileStreamerTest {
     }
 
     @Test
-    public void testStreamText() throws Exception {
+    public void testStreamText() {
         validateStream(FILE_TEXT);
     }
 
     @Test
-    public void testStreamWord() throws Exception {
+    public void testStreamWord() {
         validateStream(FILE_WORD);
     }
 
     @Test
-    public void testStreamOpenOffice() throws Exception {
+    public void testStreamOpenOffice() {
         validateStream(FILE_OPEN_OFFICE);
     }
 
     @Test
-    public void testStreamPdf() throws Exception {
+    public void testStreamPdf() {
         validateStream(FILE_PDF);
     }
 
     @Test
-    public void testCreateNewSessionFromText() throws Exception {
+    public void testCreateNewSessionFromText() {
         validateSession(FILE_TEXT, FILE_TEXT, this::createNewSession);
     }
 
     @Test
-    public void testCreateOrOpenSessionFromText() throws Exception {
+    public void testCreateOrOpenSessionFromText() {
         validateSession(FILE_TEXT, FILE_TEXT, this::createOrOpenSession);
     }
 
     @Test
-    public void testCreateOrOpenSessionFromSession() throws Exception {
+    public void testCreateOrOpenSessionFromSession() {
         validateSession(SESSION_FILE, SESSION_NAME, this::createOrOpenSession);
     }
 
-    private void validateStream(final String file) throws Exception {
-        URL resource = getResource(file);
-        try (InputStream in = resource.openStream()) {
-            List<String> result = target.lines(in, Paths.get(file));
+    private void validateStream(final String file) {
+        List<String> result = target.lines(getFile(file));
 
-            assertEquals("Lines from file", LINES, result);
-        }
+        assertEquals("Lines from file", LINES, result);
     }
 
-    private void validateSession(final String fileName, final String sessionName, final Function<String, EnrichedSessionState> targetMethod) throws Exception {
+    private void validateSession(final String fileName, final String sessionName, final Function<String, EnrichedSessionState> targetMethod) {
         EnrichedSessionState session = targetMethod.apply(fileName);
 
         assertEquals("Session name", sessionName, session.getState().getName());
@@ -147,7 +141,7 @@ public class FileStreamerTest {
             URL resource = getResource(fileName);
 
             return Paths.get(resource.toURI());
-        } catch (URISyntaxException e) {
+        } catch (final URISyntaxException e) {
             throw new VocabHunterException("Filename error", e);
         }
     }

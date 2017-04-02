@@ -4,7 +4,7 @@
 
 package io.github.vocabhunter.gui.view;
 
-import io.github.vocabhunter.gui.model.FilterFileMode;
+import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import io.github.vocabhunter.gui.model.FilterFileModel;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
@@ -17,25 +17,44 @@ import java.util.function.Consumer;
 public class FilterFileCell extends ListCell<FilterFileModel> {
     private static final int SPACING = 5;
 
-    private final Button buttonRemoveList = new Button("Remove List");
-
-    private final Label label = new Label();
+    private final Label labelName = new Label();
 
     private final Pane spacer = new Pane();
 
-    private final ChoiceBox<FilterFileMode> choiceBox = new ChoiceBox<>();
+    private final Label firstIcon = new Label();
 
-    private final HBox hbox = new HBox(SPACING, label, spacer, choiceBox, buttonRemoveList);
+    private final Label secondIcon = new Label();
+
+    private final HBox iconBox = new HBox(SPACING, firstIcon, secondIcon);
+
+    private final Label labelType = new Label();
+
+    private final FontAwesomeIconView editIcon = new FontAwesomeIconView();
+
+    private final Button buttonEdit = new Button(null, editIcon);
+
+    private final FontAwesomeIconView removeListIcon = new FontAwesomeIconView();
+
+    private final Button buttonRemoveList = new Button(null, removeListIcon);
+
+    private final HBox hbox = new HBox(SPACING, labelName, spacer, labelType, iconBox, buttonEdit, buttonRemoveList);
 
     private FilterFileModel lastItem;
 
-    public FilterFileCell(final Consumer<FilterFileModel> removalHandler) {
-        choiceBox.getItems().setAll(FilterFileMode.values());
-
+    public FilterFileCell(final Consumer<FilterFileModel> removalHandler, final Consumer<FilterFileModel> editHandler) {
         HBox.setHgrow(spacer, Priority.ALWAYS);
         hbox.setAlignment(Pos.CENTER_LEFT);
+        iconBox.setAlignment(Pos.CENTER_LEFT);
+        iconBox.getStyleClass().add("iconBox");
+
+        buttonEdit.setOnAction(e -> editHandler.accept(lastItem));
+        buttonEdit.setId("buttonEdit");
+        buttonEdit.setTooltip(new Tooltip("View/change the filter file"));
+        editIcon.setStyleClass("buttonEditIcon");
+
         buttonRemoveList.setOnAction(e -> removalHandler.accept(lastItem));
-        choiceBox.setOnAction(e -> lastItem.setMode(choiceBox.getValue()));
+        buttonRemoveList.setTooltip(new Tooltip("Remove the filter file"));
+        removeListIcon.setStyleClass("buttonDeleteIcon");
     }
 
     @Override
@@ -48,9 +67,12 @@ public class FilterFileCell extends ListCell<FilterFileModel> {
             lastItem = null;
         } else {
             lastItem = item;
-            label.setText(item.getName());
-            label.setTooltip(new Tooltip(item.getFile().toString()));
-            choiceBox.getSelectionModel().select(item.getMode());
+            labelName.setText(item.getName());
+            labelName.setTooltip(new Tooltip(item.getFile().toString()));
+            FilterFileModeView modeView = FilterFileModeView.getView(item.getMode());
+
+            labelType.setText(modeView.toString());
+            modeView.updateIcons(firstIcon, secondIcon);
             setGraphic(hbox);
         }
     }

@@ -10,10 +10,7 @@ import io.github.vocabhunter.analysis.core.VocabHunterException;
 import io.github.vocabhunter.analysis.filter.WordFilter;
 import io.github.vocabhunter.analysis.marked.MarkTool;
 import io.github.vocabhunter.analysis.marked.WordState;
-import io.github.vocabhunter.gui.model.FilterSettings;
-import io.github.vocabhunter.gui.model.PositionModel;
-import io.github.vocabhunter.gui.model.SessionModel;
-import io.github.vocabhunter.gui.model.WordModel;
+import io.github.vocabhunter.gui.model.*;
 import io.github.vocabhunter.gui.view.UseListCell;
 import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
@@ -26,13 +23,17 @@ import org.controlsfx.control.textfield.CustomTextField;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.inject.Inject;
+
 import static io.github.vocabhunter.gui.common.EventHandlerTool.combine;
 import static io.github.vocabhunter.gui.dialogues.AlertTool.filterErrorAlert;
-import static io.github.vocabhunter.gui.model.FilterSettingsTool.filter;
 
 @SuppressFBWarnings({"NP_UNWRITTEN_PUBLIC_OR_PROTECTED_FIELD", "UWF_UNWRITTEN_PUBLIC_OR_PROTECTED_FIELD"})
 public class SessionController {
     private static final Logger LOG = LoggerFactory.getLogger(SessionController.class);
+
+    @Inject
+    private FilterSettingsTool filterSettingsTool;
 
     public Label mainWord;
 
@@ -162,7 +163,7 @@ public class SessionController {
         boolean isFilterSuccess;
 
         try {
-            WordFilter filter = filter(filterSettings, isFilterEnabled);
+            WordFilter filter = filterSettingsTool.filter(filterSettings, isFilterEnabled);
             MarkTool<WordModel> markTool = new MarkTool<>(filter, sessionModel.getAllWords());
 
             isFilterSuccess = markTool.isValidFilter();

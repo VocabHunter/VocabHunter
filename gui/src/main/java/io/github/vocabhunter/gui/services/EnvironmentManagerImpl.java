@@ -8,6 +8,7 @@ import io.github.vocabhunter.gui.common.Placement;
 import javafx.collections.ObservableList;
 import javafx.geometry.Rectangle2D;
 import javafx.stage.Screen;
+import org.apache.commons.lang3.SystemUtils;
 
 import javax.inject.Singleton;
 
@@ -49,5 +50,10 @@ public class EnvironmentManagerImpl implements EnvironmentManager {
     @Override
     public boolean useSystemMenuBar() {
         return true;
+    }
+
+    @Override
+    public boolean isExitOptionShown() {
+        return !SystemUtils.IS_OS_MAC_OSX;
     }
 }

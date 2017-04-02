@@ -4,6 +4,7 @@
 
 package io.github.vocabhunter.analysis.filter;
 
+import io.github.vocabhunter.analysis.core.CoreTool;
 import io.github.vocabhunter.analysis.model.AnalysisWord;
 import io.github.vocabhunter.analysis.model.WordUse;
 import org.junit.Test;
@@ -11,7 +12,7 @@ import org.junit.Test;
 import java.util.List;
 import java.util.stream.Stream;
 
-import static io.github.vocabhunter.analysis.core.CollectionTool.listOf;
+import static io.github.vocabhunter.analysis.core.CoreTool.listOf;
 import static java.util.Collections.emptyList;
 import static java.util.stream.Collectors.toList;
 import static org.junit.Assert.assertEquals;
@@ -32,7 +33,7 @@ public class ExcludedWordsFilterTest {
     private static final List<AnalysisWord> ANALYSIS_WORDS =
         Stream.of(WORDS_1, WORDS_2, WORDS_3)
             .flatMap(List::stream)
-            .map(String::toLowerCase)
+            .map(CoreTool::toLowerCase)
             .map(ExcludedWordsFilterTest::word)
             .collect(toList());
 
@@ -73,7 +74,7 @@ public class ExcludedWordsFilterTest {
     private void validate(final WordFilter filter, final List<List<String>> lists) {
         List<String> expected = lists.stream()
             .flatMap(List::stream)
-            .map(String::toLowerCase)
+            .map(CoreTool::toLowerCase)
             .collect(toList());
         List<String> actual = ANALYSIS_WORDS.stream()
             .filter(filter::isShown)

@@ -22,6 +22,8 @@ public class VocabHunterSettings {
 
     private Path exportPath;
 
+    private Path wordListPath;
+
     private int filterMinimumLetters = DEFAULT_MINIMUM_LETTERS;
 
     private int filterMinimumOccurrences = DEFAULT_MINIMUM_OCCURRENCES;
@@ -52,6 +54,14 @@ public class VocabHunterSettings {
 
     public void setExportPath(final Path exportPath) {
         this.exportPath = exportPath;
+    }
+
+    public Path getWordListPath() {
+        return wordListPath;
+    }
+
+    public void setWordListPath(final Path wordListPath) {
+        this.wordListPath = wordListPath;
     }
 
     public int getFilterMinimumLetters() {

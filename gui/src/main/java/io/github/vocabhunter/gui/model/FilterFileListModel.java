@@ -7,27 +7,26 @@ package io.github.vocabhunter.gui.model;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
-import java.nio.file.Path;
 import java.util.List;
 
 public class FilterFileListModel {
     private final ObservableList<FilterFileModel> files;
 
     public FilterFileListModel(final List<FilterFileModel> files) {
-        this.files = FXCollections.observableArrayList(files);
+        this.files = FXCollections.observableArrayList(FilterFileModel.PROPERTY_EXTRACTOR);
+        this.files.addAll(files);
     }
 
     public ObservableList<FilterFileModel> getFiles() {
         return files;
     }
 
-    public FilterFileModel addFile(final Path file) {
-        FilterFileModel fileModel = new FilterFileModel(file);
+    public void removeIfExists(final FilterFileModel fileModel) {
+        files.removeIf(f -> f != fileModel && f.getFile().equals(fileModel.getFile()));
+    }
 
-        files.removeIf(f -> f.getFile().equals(file));
+    public void addFile(final FilterFileModel fileModel) {
         files.add(fileModel);
-
-        return fileModel;
     }
 
     public void remove(final FilterFileModel file) {

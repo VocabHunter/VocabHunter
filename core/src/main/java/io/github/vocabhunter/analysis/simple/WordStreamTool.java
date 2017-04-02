@@ -4,13 +4,13 @@
 
 package io.github.vocabhunter.analysis.simple;
 
+import io.github.vocabhunter.analysis.core.CoreTool;
 import io.github.vocabhunter.analysis.model.AnalysisWord;
 
 import java.util.Comparator;
 import java.util.regex.Pattern;
 import java.util.stream.Stream;
 
-import static io.github.vocabhunter.analysis.core.CoreConstants.LOCALE;
 import static java.util.Comparator.comparing;
 
 public final class WordStreamTool {
@@ -59,15 +59,11 @@ public final class WordStreamTool {
         } else if (isSecond) {
             return s2;
         } else {
-            return normalise(s1);
+            return CoreTool.toLowerCase(s1);
         }
     }
 
     public static String classifier(final AnalysisWord use) {
-        return normalise(use.getWordIdentifier());
-    }
-
-    private static String normalise(final String word) {
-        return word.toLowerCase(LOCALE);
+        return CoreTool.toLowerCase(use.getWordIdentifier());
     }
 }

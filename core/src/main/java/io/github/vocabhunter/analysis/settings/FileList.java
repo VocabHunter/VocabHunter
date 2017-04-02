@@ -14,7 +14,7 @@ import java.util.List;
 public final class FileList {
     private int formatVersion = FileListVersion.LATEST_VERSION;
 
-    private List<ListedFile> filterFiles = Collections.emptyList();
+    private List<BaseListedFile> filterFiles = Collections.emptyList();
 
     public int getFormatVersion() {
         return formatVersion;
@@ -24,11 +24,11 @@ public final class FileList {
         this.formatVersion = formatVersion;
     }
 
-    public List<ListedFile> getFilterFiles() {
+    public List<BaseListedFile> getFilterFiles() {
         return Collections.unmodifiableList(filterFiles);
     }
 
-    public void setFilterFiles(final List<ListedFile> filterFiles) {
+    public void setFilterFiles(final List<BaseListedFile> filterFiles) {
         this.filterFiles = new ArrayList<>(filterFiles);
     }
 }

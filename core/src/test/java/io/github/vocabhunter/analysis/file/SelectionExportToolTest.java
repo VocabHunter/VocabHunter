@@ -16,7 +16,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
 
-import static io.github.vocabhunter.analysis.core.CollectionTool.listOf;
+import static io.github.vocabhunter.analysis.core.CoreTool.listOf;
 import static org.junit.Assert.assertEquals;
 
 public class SelectionExportToolTest {

@@ -15,12 +15,14 @@ import java.util.List;
 import java.util.function.BiConsumer;
 import java.util.function.BiFunction;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 
-public enum  FileDialogueType {
-    NEW_SESSION("Select File To Analyse", FileFilters.INPUT_DOCUMENTS, FileChooser::showOpenDialog, SettingsManager::getDocumentsPath, SettingsManager::setDocumentsPath),
-    OPEN_SESSION("Open", FileFilters.SESSIONS_OR_ANY, FileChooser::showOpenDialog, SettingsManager::getSessionsPath, SettingsManager::setSessionsPath),
-    SAVE_SESSION("Save", FileFilters.SESSIONS, FileChooser::showSaveDialog, SettingsManager::getSessionsPath, SettingsManager::setSessionsPath),
-    EXPORT_SELECTION("Export Selection", FileFilters.EXPORTS, FileChooser::showSaveDialog, SettingsManager::getExportPath, SettingsManager::setExportPath);
+public enum FileDialogueType {
+    NEW_SESSION("Select File To Analyse", FileFormatType.TYPES_INPUT_DOCUMENTS, FileChooser::showOpenDialog, SettingsManager::getDocumentsPath, SettingsManager::setDocumentsPath),
+    OPEN_SESSION("Open", FileFormatType.TYPES_SESSIONS, FileChooser::showOpenDialog, SettingsManager::getSessionsPath, SettingsManager::setSessionsPath),
+    SAVE_SESSION("Save", FileFormatType.TYPES_SESSIONS, FileChooser::showSaveDialog, SettingsManager::getSessionsPath, SettingsManager::setSessionsPath),
+    EXPORT_SELECTION("Export Selection", FileFormatType.TYPES_EXPORTS, FileChooser::showSaveDialog, SettingsManager::getExportPath, SettingsManager::setExportPath),
+    OPEN_WORD_LIST("Open list of words to exclude", FileFormatType.TYPES_WORD_GRIDS, FileChooser::showOpenDialog, SettingsManager::getWordListPath, SettingsManager::setWordListPath);
 
     private final String title;
 
@@ -32,16 +34,18 @@ public enum  FileDialogueType {
 
     private final BiConsumer<SettingsManager, Path> pathSetter;
 
-    FileDialogueType(final String title, final List<ExtensionFilter> filters, final BiFunction<FileChooser, Window, File> openFunction,
+    FileDialogueType(final String title, final List<FileFormatType> formats, final BiFunction<FileChooser, Window, File> openFunction,
                      final Function<SettingsManager, Path> pathGetter, final BiConsumer<SettingsManager, Path> pathSetter) {
         this.title = title;
-        this.filters = filters;
+        this.filters = formats.stream()
+            .map(FileFormatType::getFilter)
+            .collect(Collectors.toList());
         this.openFunction = openFunction;
         this.pathGetter = pathGetter;
         this.pathSetter = pathSetter;
     }
 
-    public Path showChooser(final Window window, final SettingsManager settingsManager) {
+    public FileChoice showChooser(final Window window, final SettingsManager settingsManager) {
         FileChooser chooser = new FileChooser();
 
         chooser.setTitle(title);
@@ -55,10 +59,12 @@ public enum  FileDialogueType {
             return null;
         } else {
             Path file = result.toPath();
+            ExtensionFilter selected = chooser.getSelectedExtensionFilter();
+            FileFormatType type = FileFormatType.getByFilter(selected);
 
             pathSetter.accept(settingsManager, file.getParent());
 
-            return file;
+            return new FileChoice(file, type);
         }
    }
 }

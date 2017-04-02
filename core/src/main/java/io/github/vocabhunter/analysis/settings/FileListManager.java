@@ -7,7 +7,7 @@ package io.github.vocabhunter.analysis.settings;
 import java.util.List;
 
 public interface FileListManager {
-    List<ListedFile> getFilteredSessionFiles();
+    List<BaseListedFile> getFilterFiles();
 
-    void setFilteredSessionFiles(List<ListedFile> files);
+    void setFilterFiles(List<BaseListedFile> files);
 }

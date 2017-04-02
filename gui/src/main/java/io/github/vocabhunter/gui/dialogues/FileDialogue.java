@@ -12,4 +12,6 @@ public interface FileDialogue {
     boolean isFileSelected();
 
     Path getSelectedFile();
+
+    FileFormatType getFileFormatType();
 }

@@ -14,7 +14,7 @@ import javax.inject.Singleton;
 
 @Singleton
 public class PlacementManagerImpl implements PlacementManager {
-    private static final double WINDOW_SIZE_FACTOR = 0.85;
+    public static final double WINDOW_SIZE_FACTOR = 0.85;
 
     private final EnvironmentManager environmentManager;
 

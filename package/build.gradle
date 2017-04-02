@@ -10,7 +10,7 @@ buildscript {
     }
 
     dependencies {
-        classpath 'de.dynamicfiles.projects.gradle.plugins:javafx-gradle-plugin:8.7.0'
+        classpath 'de.dynamicfiles.projects.gradle.plugins:javafx-gradle-plugin:8.8.2'
     }
 }
 
@@ -24,18 +24,18 @@ ext {
         packageType = 'dmg'
         bundleMainClass = 'io.github.vocabhunter.osx.distribution.OsxPackagedVocabHunter'
         appIcon = file('icons/mac/VocabHunter.icns')
-        sessionIcon = 'icons/mac/VocabHunterSession.icns'
-        if (publishedVersion.endsWith('-SNAPSHOT')) {
-            publishedVersion = '1.0.0'
-        }
+        sessionIcon = file('icons/mac/VocabHunterSession.icns')
     } else if (operatingSystem.isLinux()) {
         packageType = 'deb'
         appIcon = file('icons/App1024.png')
-        sessionIcon = 'icons/application-x-vnd.VocabHunterSession.png'
+        sessionIcon = file('icons/Doc1024.png')
     } else if (operatingSystem.isWindows()) {
         packageType = 'exe'
         appIcon = file('icons/windows/VocabHunter.ico')
-        sessionIcon = 'icons/windows/VocabHunterSession.ico'
+        sessionIcon = file('icons/windows/VocabHunterSession.ico')
+    }
+    if (publishedVersion.endsWith('-SNAPSHOT')) {
+        publishedVersion = '1.0.0'
     }
 }
 
@@ -102,18 +102,20 @@ jfx {
     ]
 }
 
-task checkBundle << {
-    String bundle = "VocabHunter-${publishedVersion}.${packageType}"
-    FileTree tree = fileTree('build/jfx/native') {
-        include {
-            it.file.name.equalsIgnoreCase(bundle)
+task checkBundle {
+    doLast {
+        String bundle = "VocabHunter-${publishedVersion}.${packageType}"
+        FileTree tree = fileTree('build/jfx/native') {
+            include {
+                it.file.name.equalsIgnoreCase(bundle)
+            }
         }
-    }
-    if (tree.isEmpty()) {
-        throw new GradleException("Unable to create bundle file '$bundle'")
-    } else {
-        tree.each {File f ->
-            println "Created bundle '$f'"
+        if (tree.isEmpty()) {
+            throw new GradleException("Unable to create bundle file '$bundle'")
+        } else {
+            tree.each {File f ->
+                println "Created bundle '$f'"
+            }
         }
     }
 }

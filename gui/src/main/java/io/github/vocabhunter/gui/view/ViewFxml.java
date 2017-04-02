@@ -10,7 +10,13 @@ import javafx.fxml.FXMLLoader;
 import java.io.IOException;
 
 public enum ViewFxml {
-    MAIN("main.fxml"), SESSION("session.fxml"), PROGRESS("progress.fxml"), ABOUT("about.fxml"), SETTINGS("settings.fxml");
+    MAIN("main.fxml"),
+    SESSION("session.fxml"),
+    PROGRESS("progress.fxml"),
+    ABOUT("about.fxml"),
+    SETTINGS("settings.fxml"),
+    FILTER_SESSION("filter-session.fxml"),
+    FILTER_GRID("filter-grid.fxml");
 
     private final String name;
 

@@ -21,14 +21,14 @@ public class FileListManagerImpl extends BaseSettingsManager<FileList> implement
     }
 
     @Override
-    public List<ListedFile> getFilteredSessionFiles() {
+    public List<BaseListedFile> getFilterFiles() {
         FileList bean = readSettings();
 
         return bean.getFilterFiles();
     }
 
     @Override
-    public void setFilteredSessionFiles(final List<ListedFile> files) {
+    public void setFilterFiles(final List<BaseListedFile> files) {
         FileList bean = readSettings();
 
         bean.setFilterFiles(files);

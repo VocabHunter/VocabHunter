@@ -2,30 +2,22 @@
  * Open Source Software published under the Apache Licence, Version 2.0.
  */
 
-package io.github.vocabhunter.gui.model;
+package io.github.vocabhunter.analysis.settings;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import java.nio.file.Path;
 
-public final class FilterFile {
-    private final Path file;
-
-    private final FilterFileMode mode;
-
-    public FilterFile(final Path file, final FilterFileMode mode) {
-        this.file = file;
-        this.mode = mode;
-    }
-
-    public Path getFile() {
-        return file;
-    }
-
-    public FilterFileMode getMode() {
-        return mode;
+public final class DocumentListedFile extends BaseListedFile {
+    @JsonCreator
+    public DocumentListedFile(
+        @JsonProperty("file")
+        final Path file) {
+        super(file);
     }
 
     @Override
@@ -38,27 +30,22 @@ public final class FilterFile {
             return false;
         }
 
-        FilterFile that = (FilterFile) o;
-
         return new EqualsBuilder()
-            .append(file, that.file)
-            .append(mode, that.mode)
+            .appendSuper(super.equals(o))
             .isEquals();
     }
 
     @Override
     public int hashCode() {
         return new HashCodeBuilder()
-            .append(file)
-            .append(mode)
+            .appendSuper(super.hashCode())
             .toHashCode();
     }
 
     @Override
     public String toString() {
         return new ToStringBuilder(this)
-            .append("file", file)
-            .append("mode", mode)
+            .append("file", getFile())
             .toString();
     }
 }

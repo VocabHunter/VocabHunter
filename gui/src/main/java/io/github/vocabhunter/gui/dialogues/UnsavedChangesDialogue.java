@@ -15,6 +15,8 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class UnsavedChangesDialogue {
+    private static final String ALERT_ID = "unsavedChanges";
+
     private final Path file;
 
     private final Map<ButtonType, UnsavedResponse> map = unsavedResponseMap();
@@ -32,6 +34,7 @@ public class UnsavedChangesDialogue {
         alert.setTitle("Unsaved Changes");
         alert.setHeaderText(message);
         alert.getButtonTypes().setAll(map.keySet());
+        alert.getDialogPane().setId(ALERT_ID);
 
         result = alert.showAndWait()
             .map(map::get)

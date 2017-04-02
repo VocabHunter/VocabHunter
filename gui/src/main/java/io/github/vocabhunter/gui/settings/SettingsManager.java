@@ -20,6 +20,10 @@ public interface SettingsManager {
 
     void setExportPath(Path path);
 
+    Path getWordListPath();
+
+    void setWordListPath(Path path);
+
     int getFilterMinimumLetters();
 
     void setFilterMinimumLetters(int count);

@@ -4,7 +4,7 @@
 
 package io.github.vocabhunter.analysis.session;
 
-import io.github.vocabhunter.analysis.core.CollectionTool;
+import io.github.vocabhunter.analysis.core.CoreTool;
 import io.github.vocabhunter.analysis.marked.WordState;
 import org.junit.Test;
 
@@ -36,21 +36,21 @@ public class EquivalenceTest {
 
     @Test
     public void testLinesOrder() {
-        SessionState state2 = buildSession(CollectionTool.listOf(LINE_3, LINE_1, LINE_2));
+        SessionState state2 = buildSession(CoreTool.listOf(LINE_3, LINE_1, LINE_2));
 
         validateEquivalent(state2);
     }
 
     @Test
     public void testDuplicateLines() {
-        SessionState state2 = buildSession(CollectionTool.listOf(LINE_1, LINE_2, LINE_3, LINE_1));
+        SessionState state2 = buildSession(CoreTool.listOf(LINE_1, LINE_2, LINE_3, LINE_1));
 
         validateEquivalent(state2);
     }
 
     @Test
     public void testExtraLine() {
-        SessionState state2 = buildSession(CollectionTool.listOf(LINE_1, LINE_2, LINE_3, "Extra"));
+        SessionState state2 = buildSession(CoreTool.listOf(LINE_1, LINE_2, LINE_3, "Extra"));
 
         validateNotEquivalent(state2);
     }

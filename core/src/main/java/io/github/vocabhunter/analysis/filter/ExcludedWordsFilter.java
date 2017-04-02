@@ -4,6 +4,7 @@
 
 package io.github.vocabhunter.analysis.filter;
 
+import io.github.vocabhunter.analysis.core.CoreTool;
 import io.github.vocabhunter.analysis.model.AnalysisWord;
 
 import java.util.Collection;
@@ -16,13 +17,13 @@ public class ExcludedWordsFilter implements WordFilter {
     public ExcludedWordsFilter(final Collection<Collection<String>> words) {
         exclusions = words.stream()
             .flatMap(Collection::stream)
-            .map(String::toLowerCase)
+            .map(CoreTool::toLowerCase)
             .collect(Collectors.toSet());
     }
 
     @Override
     public boolean isShown(final AnalysisWord word) {
-        String identifier = word.getWordIdentifier().toLowerCase();
+        String identifier = CoreTool.toLowerCase(word.getWordIdentifier());
 
         return !exclusions.contains(identifier);
     }

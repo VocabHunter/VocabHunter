@@ -70,7 +70,7 @@ public class VocabHunterGui {
     }
 
     private void initialise(final Stage stage) {
-        mainController.initialise();
+        mainController.initialise(stage);
         guiFileHandler.initialise(stage);
         exitRequestHandler.initialise(stage);
         titleHandler.initialise();

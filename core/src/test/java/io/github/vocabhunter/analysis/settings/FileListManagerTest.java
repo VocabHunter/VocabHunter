@@ -4,13 +4,14 @@
 
 package io.github.vocabhunter.analysis.settings;
 
-import io.github.vocabhunter.analysis.core.CollectionTool;
+import io.github.vocabhunter.analysis.core.CoreTool;
 import io.github.vocabhunter.test.utils.TestFileManager;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.nio.file.Path;
+import java.util.Arrays;
 import java.util.List;
 
 import static io.github.vocabhunter.analysis.settings.FileListManagerImpl.SETTINGS_JSON;
@@ -20,9 +21,11 @@ import static org.junit.Assert.assertTrue;
 public class FileListManagerTest {
     private TestFileManager files;
 
-    private ListedFile file1;
+    private SessionListedFile file1;
 
-    private ListedFile file2;
+    private DocumentListedFile file2;
+
+    private ExcelListedFile file3;
 
     private FileListManager target;
 
@@ -33,10 +36,13 @@ public class FileListManagerTest {
         target = new FileListManagerImpl(settingsFile);
 
         Path path1 = files.addFile("file1");
-        file1 = new ListedFile(path1, ListedFileType.SESSION, true);
+        file1 = new SessionListedFile(path1, true);
 
         Path path2 = files.addFile("file2");
-        file2 = new ListedFile(path2, ListedFileType.SESSION, false);
+        file2 = new DocumentListedFile(path2);
+
+        Path path3 = files.addFile("file3");
+        file3 = new ExcelListedFile(path3, Arrays.asList(1, 2, 3));
     }
 
     @After
@@ -46,18 +52,18 @@ public class FileListManagerTest {
 
     @Test
     public void testEmpty() {
-        List<ListedFile> actual = target.getFilteredSessionFiles();
+        List<BaseListedFile> actual = target.getFilterFiles();
 
         assertTrue("Empty file list", actual.isEmpty());
     }
 
     @Test
     public void testAdd() {
-        List<ListedFile> files = CollectionTool.listOf(file1, file2);
+        List<BaseListedFile> files = CoreTool.listOf(file1, file2, file3);
 
-        target.setFilteredSessionFiles(files);
+        target.setFilterFiles(files);
 
-        List<ListedFile> actual = target.getFilteredSessionFiles();
+        List<BaseListedFile> actual = target.getFilterFiles();
 
         assertEquals("Files", files, actual);
     }

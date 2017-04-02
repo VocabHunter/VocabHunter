@@ -12,4 +12,6 @@ public interface EnvironmentManager {
     boolean isVisible(Placement placement);
 
     boolean useSystemMenuBar();
+
+    boolean isExitOptionShown();
 }

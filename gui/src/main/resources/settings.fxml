@@ -4,19 +4,30 @@
   ~ Open Source Software published under the Apache Licence, Version 2.0.
   -->
 
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ButtonBar?>
 <?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.Tooltip?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane styleClass="settings" stylesheets="@main.css" xmlns="http://javafx.com/javafx/null" xmlns:fx="http://javafx.com/fxml/1" fx:controller="io.github.vocabhunter.gui.controller.SettingsController">
+<BorderPane styleClass="settings" stylesheets="@main.css" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="io.github.vocabhunter.gui.controller.SettingsController">
+    <bottom>
+        <ButtonBar styleClass="buttonBar" BorderPane.alignment="CENTER">
+            <buttons>
+                <Button fx:id="buttonOk" mnemonicParsing="false" text="Enable Filters" />
+                <Button fx:id="buttonCancel" mnemonicParsing="false" text="Cancel" />
+            </buttons>
+        </ButtonBar>
+    </bottom>
    <top>
       <Label styleClass="description" text="Choose the words you want to show" BorderPane.alignment="CENTER" />
    </top>
@@ -46,6 +57,7 @@
               <columnConstraints>
                 <ColumnConstraints />
                 <ColumnConstraints />
+                <ColumnConstraints />
               </columnConstraints>
               <rowConstraints>
                 <RowConstraints />
@@ -53,10 +65,62 @@
               </rowConstraints>
                <children>
                   <Label styleClass="fieldLabel" text="Word lists to exclude:" GridPane.hgrow="ALWAYS" />
-                  <Button fx:id="buttonAddList" mnemonicParsing="false" text="Add Excluded Word List" GridPane.columnIndex="1" GridPane.halignment="RIGHT" />
-                  <ListView fx:id="listExcludedFiles" prefHeight="150.0" prefWidth="600.0" GridPane.columnSpan="2" GridPane.rowIndex="1" GridPane.vgrow="ALWAYS">
+                   <Button fx:id="buttonAddGridFile" mnemonicParsing="false" GridPane.columnIndex="1" GridPane.halignment="RIGHT">
+                       <graphic>
+                        <HBox alignment="CENTER" spacing="2.0">
+                           <children>
+                                 <FontAwesomeIconView styleClass="buttonFilterGridIcon" />
+                              <FontAwesomeIconView styleClass="buttonAddIcon" />
+                           </children>
+                        </HBox>
+                       </graphic>
+                       <tooltip>
+                           <Tooltip text="Add a text document or spreadsheet with words to exclude" />
+                       </tooltip>
+                   </Button>
+                   <Button fx:id="buttonAddSessionFile" mnemonicParsing="false" GridPane.columnIndex="2" GridPane.halignment="RIGHT">
+                     <graphic>
+                        <HBox alignment="CENTER" spacing="2.0">
+                           <children>
+                              <FontAwesomeIconView styleClass="buttonFilterSessionIcon" />
+                              <FontAwesomeIconView styleClass="buttonAddIcon" />
+                           </children>
+                        </HBox>
+                     </graphic>
+                       <tooltip>
+                           <Tooltip text="Add a VocabHunter session file with words to exclude" />
+                       </tooltip>
+                   </Button>
+                  <ListView fx:id="listExcludedFiles" prefHeight="150.0" prefWidth="600.0" GridPane.columnSpan="3" GridPane.rowIndex="1" GridPane.vgrow="ALWAYS">
                       <placeholder>
-                          <Label text="No lists of excluded words" />
+                          <GridPane alignment="CENTER" hgap="5" vgap="10">
+                              <columnConstraints>
+                                  <ColumnConstraints />
+                                  <ColumnConstraints />
+                              </columnConstraints>
+                              <rowConstraints>
+                                  <RowConstraints />
+                                  <RowConstraints />
+                                  <RowConstraints />
+                              </rowConstraints>
+                              <children>
+                                  <Label text="Use the buttons above to add lists of words to exclude:" GridPane.columnSpan="2" />
+                                  <HBox alignment="CENTER" spacing="2.0" GridPane.rowIndex="1">
+                                      <children>
+                                          <FontAwesomeIconView styleClass="buttonFilterGridIcon" />
+                                          <FontAwesomeIconView styleClass="buttonAddIcon" />
+                                      </children>
+                                  </HBox>
+                                  <Label text="Add a text document or spreadsheet with words to exclude" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+                                  <HBox alignment="CENTER" spacing="2.0" GridPane.rowIndex="2">
+                                      <children>
+                                          <FontAwesomeIconView styleClass="buttonFilterSessionIcon" />
+                                          <FontAwesomeIconView styleClass="buttonAddIcon" />
+                                      </children>
+                                  </HBox>
+                                  <Label text="Add a VocabHunter session file with words to exclude" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+                              </children>
+                          </GridPane>
                       </placeholder>
                   </ListView>
                </children>
@@ -64,12 +128,4 @@
          </children>
       </VBox>
    </center>
-   <bottom>
-       <ButtonBar styleClass="buttonBar" BorderPane.alignment="CENTER">
-           <buttons>
-               <Button fx:id="buttonOk" mnemonicParsing="false" text="Enable Filters" />
-               <Button fx:id="buttonCancel" mnemonicParsing="false" text="Cancel" />
-           </buttons>
-       </ButtonBar>
-   </bottom>
 </BorderPane>

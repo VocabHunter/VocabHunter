@@ -12,6 +12,7 @@ import io.github.vocabhunter.analysis.filter.WordFilter;
 import io.github.vocabhunter.analysis.model.AnalysisResult;
 import io.github.vocabhunter.analysis.model.WordUse;
 import io.github.vocabhunter.analysis.session.SessionWordsTool;
+import io.github.vocabhunter.analysis.session.SessionWordsToolImpl;
 import io.github.vocabhunter.analysis.simple.SimpleAnalyser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -82,6 +83,7 @@ public final class VocabHunterConsoleExecutable {
     }
 
     private static WordFilter buildFilter(final VocabHunterConsoleArguments bean) {
+        SessionWordsTool sessionWordsTool = new SessionWordsToolImpl();
         FilterBuilder builder = new FilterBuilder()
             .minimumLetters(bean.getMinLetters())
             .minimumOccurrences(bean.getMinOccurrences());
@@ -89,8 +91,8 @@ public final class VocabHunterConsoleExecutable {
         if (bean.isIgnoreInitialCapitals()) {
             builder.excludeInitialCapital();
         }
-        addFilteredWords(builder, bean.getFilterKnown(), SessionWordsTool::knownWords);
-        addFilteredWords(builder, bean.getFilterSeen(), SessionWordsTool::seenWords);
+        addFilteredWords(builder, bean.getFilterKnown(), sessionWordsTool::knownWords);
+        addFilteredWords(builder, bean.getFilterSeen(), sessionWordsTool::seenWords);
 
         return builder.build();
     }

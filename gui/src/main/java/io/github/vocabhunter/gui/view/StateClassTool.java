@@ -15,19 +15,41 @@ public final class StateClassTool {
 
     private static final PseudoClass CLASS_UNKNOWN = PseudoClass.getPseudoClass("unknown");
 
+    private static final PseudoClass CLASS_EXCLUDED = PseudoClass.getPseudoClass("excluded");
+
     private StateClassTool() {
         // Prevent instantiation - all methods are private
     }
 
     public static void clearStateClasses(final Node node) {
-        node.pseudoClassStateChanged(CLASS_UNSEEN, false);
-        node.pseudoClassStateChanged(CLASS_KNOWN, false);
-        node.pseudoClassStateChanged(CLASS_UNKNOWN, false);
+        updateStateClasses(node, null);
     }
 
     public static void updateStateClasses(final Node node, final WordState state) {
-        node.pseudoClassStateChanged(CLASS_UNSEEN, state.equals(WordState.UNSEEN));
-        node.pseudoClassStateChanged(CLASS_KNOWN, state.equals(WordState.KNOWN));
-        node.pseudoClassStateChanged(CLASS_UNKNOWN, state.equals(WordState.UNKNOWN));
+        node.pseudoClassStateChanged(CLASS_UNSEEN, state == WordState.UNSEEN);
+        node.pseudoClassStateChanged(CLASS_KNOWN, state == WordState.KNOWN);
+        node.pseudoClassStateChanged(CLASS_UNKNOWN, state == WordState.UNKNOWN);
+    }
+
+    public static void clearExtendedStateClasses(final Node node) {
+        clearStateClasses(node);
+        clearExcludedClass(node);
+    }
+
+    public static void updateExtendedStateClasses(final Node node, final WordState state, final boolean isExcluded) {
+        if (isExcluded) {
+            clearStateClasses(node);
+        } else {
+            updateStateClasses(node, state);
+        }
+        updatedExcludedClass(node, isExcluded);
+    }
+
+    public static void updatedExcludedClass(final Node node, final boolean isExcluded) {
+        node.pseudoClassStateChanged(CLASS_EXCLUDED, isExcluded);
+    }
+
+    public static void clearExcludedClass(final Node node) {
+        updatedExcludedClass(node, false);
     }
 }

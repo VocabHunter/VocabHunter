@@ -44,8 +44,14 @@
         <exclude name="TooManyFields"/>
     </rule>
 
+    <rule ref="rulesets/java/junit.xml">
+        <exclude name="JUnitTestContainsTooManyAsserts"/>
+    </rule>
+
     <exclude-pattern>.*/VocabHunter.java</exclude-pattern>
     <exclude-pattern>.*/TestGuiApplication.java</exclude-pattern>
     <exclude-pattern>.*/*PackagedVocabHunter.java</exclude-pattern>
+
+    <exclude-pattern>.*/*AbstractBeanTest.java</exclude-pattern>
 
 </ruleset>

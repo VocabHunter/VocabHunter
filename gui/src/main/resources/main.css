@@ -32,18 +32,44 @@
     -fx-font-weight: bold;
     -fx-border-color: black;
 }
-.wordList .list-cell {
+.wordList .list-cell, .wordList .table-cell {
     -fx-border-color: white;
     -fx-border-width: 1 0 1 0;
 }
-.wordList .list-cell:unseen {
+.wordList .list-cell:unseen, .wordList .table-cell:unseen {
     -fx-background-color: -colour-unseen;
 }
-.wordList .list-cell:known {
+.wordList .list-cell:known, .wordList .table-cell:known {
     -fx-background-color: -gradient-known;
 }
-.wordList .list-cell:unknown {
+.wordList .list-cell:unknown, .wordList .table-cell:unknown {
     -fx-background-color: -gradient-unknown;
+}
+.wordList .table-cell:excluded {
+    -fx-background-color: lightgrey;
+}
+.wordList .table-cell:excluded .text {
+    -fx-strikethrough: true;
+    -fx-fill: red;
+}
+.wordList .error {
+    -fx-text-fill: red;
+    -fx-font-size: 18;
+}
+.wordCount:fail {
+    -fx-text-fill: red;
+    -fx-font-weight: bold;
+}
+.filterSessionStateColumn {
+    -fx-alignment: CENTER;
+}
+.columnSelectionBoxScrollPane {
+    -fx-max-height: 100;
+    -fx-min-height: 20;
+    -fx-background-color: transparent;
+}
+.columnSelectionBox {
+    -fx-spacing: 7;
 }
 .buttonSaveIcon {
     -glyph-name: SAVE;
@@ -63,19 +89,39 @@
 .buttonSaveIcon, .buttonOpenIcon, .buttonNewIcon, .buttonExportIcon, .buttonSetupFiltersIcon {
     -glyph-size: 24;
 }
+.buttonFilterSessionIcon {
+    -glyph-name: CHECK_SQUARE;
+    -fx-fill: -colour-known-end;
+}
+.buttonFilterGridIcon, .filterGridIcon {
+    -glyph-name: TABLE;
+}
+.buttonAddIcon {
+    -glyph-name: PLUS;
+    -glyph-size: 10;
+}
+.buttonFilterSessionIcon, .buttonFilterGridIcon {
+    -glyph-size: 20;
+}
 .buttonKnown {
     -fx-base: -colour-known;
 }
-.buttonKnownIcon {
+.buttonKnownIcon, .filterKnownIcon, .filterKnownIconSmall {
     -glyph-name: CHECK_CIRCLE;
     -fx-fill: -colour-known-end;
 }
 .buttonUnknown {
     -fx-base: -colour-unknown;
 }
-.buttonUnknownIcon {
+.buttonUnknownIcon, .filterUnknownIcon, .filterUnknownIconSmall {
     -glyph-name: TIMES_CIRCLE;
     -fx-fill: -colour-unknown-end;
+}
+.filterKnownIcon, .filterUnknownIcon, .filterGridIcon {
+    -glyph-size: 20;
+}
+.filterKnownIconSmall, .filterUnknownIconSmall {
+    -glyph-size: 15;
 }
 .buttonKnownIcon, .buttonUnknownIcon {
     -glyph-size: 30;
@@ -100,6 +146,15 @@
 }
 .buttonSearchDownIcon {
     -glyph-name: CHEVRON_DOWN;
+}
+.buttonEditIcon {
+    -glyph-name: PENCIL;
+}
+.buttonDeleteIcon {
+    -glyph-name: TRASH;
+}
+.buttonEditIcon, .buttonDeleteIcon {
+    -glyph-size: 17;
 }
 .searchBoxLabel {
     -fx-padding: 0 2 0 7;
@@ -127,17 +182,17 @@
 .title.right {
     -fx-fill: -gradient-unknown;
 }
-.settings {
+.settings, .filter {
     -fx-padding: 20 20 20 20;
 }
-.settings .description {
+.settings .description, .filter .description {
     -fx-font-size: 18;
     -fx-padding: 0 0 10 0;
 }
 .settings .fieldLabel {
     -fx-padding: 10 5 10 5;
 }
-.settings .buttonBar {
+.settings .buttonBar, .filter .buttonBar {
     -fx-padding: 20 0 0 0;
 }
 .settings .settingsGroup {
@@ -145,6 +200,28 @@
     -fx-border-width: 1;
     -fx-padding: 10 10 10 10;
     -fx-border-insets: 5 0 5 0;
+    -fx-hgap: 5;
+    -fx-vgap: 5;
+}
+.filter .mainContent {
+    -fx-spacing: 7;
+}
+.filter .filterInclusionBox {
+    -fx-spacing: 7;
+    -fx-border-color: lightgrey;
+    -fx-border-width: 1;
+    -fx-padding: 10;
+    -fx-border-insets: 5 0 5 0;
+}
+.iconBox {
+    -fx-min-width: 60;
+}
+.iconBoxSmall {
+    -fx-min-width: 30;
+    -fx-spacing: 2;
+}
+.iconBox, .iconBoxSmall {
+    -fx-alignment: center;
 }
 .about BorderPane {
     -fx-padding: 10 20 10 10;

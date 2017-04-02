@@ -12,19 +12,9 @@ import io.github.vocabhunter.analysis.session.FileNameTool;
 import io.github.vocabhunter.analysis.session.SessionSerialiser;
 import io.github.vocabhunter.analysis.session.SessionState;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.tika.exception.TikaException;
-import org.apache.tika.metadata.Metadata;
-import org.apache.tika.parser.AutoDetectParser;
-import org.apache.tika.parser.ParseContext;
-import org.apache.tika.sax.BodyContentHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.xml.sax.ContentHandler;
-import org.xml.sax.SAXException;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.nio.file.Files;
 import java.nio.file.Path;
 import java.text.BreakIterator;
 import java.time.Duration;
@@ -47,24 +37,13 @@ public class FileStreamer {
         this.analyser = analyser;
     }
 
-    public List<String> lines(final InputStream in, final Path file) {
-        try {
-            ContentHandler textHandler = new BodyContentHandler(-1);
-            Metadata metadata = new Metadata();
-            AutoDetectParser parser = new AutoDetectParser();
-            ParseContext context = new ParseContext();
+    public List<String> lines(final Path file) {
+        String fullText = TikaTool.read(file);
 
-            parser.parse(in, textHandler, metadata, context);
-
-            String fullText = textHandler.toString();
-
-            if (StringUtils.isBlank(fullText)) {
-                throw new VocabHunterException(String.format("No text in file '%s'", file));
-            } else {
-                return splitToList(fullText);
-            }
-        } catch (IOException | SAXException | TikaException e) {
-            throw readError(file, e);
+        if (StringUtils.isBlank(fullText)) {
+            throw new VocabHunterException(String.format("No text in file '%s'", file));
+        } else {
+            return splitToList(fullText);
         }
     }
 
@@ -90,22 +69,16 @@ public class FileStreamer {
 
     public AnalysisResult analyse(final Path file) {
         Instant start = Instant.now();
+        List<String> stream = lines(file);
+        String filename = FileNameTool.filename(file);
+        AnalysisResult result = analyser.analyse(stream, filename);
+        int count = result.getOrderedUses().size();
+        Instant end = Instant.now();
+        Duration duration = Duration.between(start, end);
 
-        try (InputStream in = Files.newInputStream(file)) {
-            List<String> stream = lines(in, file);
-            String filename = FileNameTool.filename(file);
-            AnalysisResult result = analyser.analyse(stream, filename);
-            int count = result.getOrderedUses().size();
-            Instant end = Instant.now();
-            Duration duration = Duration.between(start, end);
+        LOG.info("Analysed text and found {} words in {}ms ({})", count, duration.toMillis(), filename);
 
-            LOG.info("Analysed text and found {} words in {}ms ({})", count, duration.toMillis(), filename);
-
-            return result;
-
-        } catch (final IOException e) {
-            throw readError(file, e);
-        }
+        return result;
     }
 
     public EnrichedSessionState createNewSession(final Path file) {
@@ -121,9 +94,5 @@ public class FileStreamer {
             LOG.debug("{} is not a session file", file, e);
             return createNewSession(file);
         }
-    }
-
-    private VocabHunterException readError(final Path file, final Exception e) {
-        return new VocabHunterException(String.format("Unable to read file '%s'", file), e);
     }
 }

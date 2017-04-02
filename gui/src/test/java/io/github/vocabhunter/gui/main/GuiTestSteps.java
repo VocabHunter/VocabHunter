@@ -4,12 +4,20 @@
 
 package io.github.vocabhunter.gui.main;
 
+import io.github.vocabhunter.gui.dialogues.FileDialogueType;
+import io.github.vocabhunter.gui.dialogues.FileFormatType;
+import io.github.vocabhunter.test.utils.TestFileManager;
+import javafx.scene.Node;
+import javafx.scene.input.KeyCode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testfx.api.FxRobot;
+import org.testfx.service.query.NodeQuery;
+
+import java.nio.file.Path;
 
 import static io.github.vocabhunter.gui.common.GuiConstants.*;
-import static io.github.vocabhunter.gui.main.GuiTestConstants.BOOK_1;
+import static io.github.vocabhunter.gui.main.GuiTestConstants.*;
 import static org.testfx.api.FxAssert.verifyThat;
 import static org.testfx.matcher.base.NodeMatchers.*;
 
@@ -20,11 +28,18 @@ public class GuiTestSteps {
 
     private final GuiTestValidator validator;
 
+    private final Path exportFile;
+
+    private final Path sessionFile;
+
     private int stepNo;
 
-    public GuiTestSteps(final FxRobot robot, final GuiTestValidator validator) {
+    public GuiTestSteps(final FxRobot robot, final GuiTestValidator validator, final TestFileManager manager) {
         this.robot = robot;
         this.validator = validator;
+
+        exportFile = manager.addFile("export.txt");
+        sessionFile = manager.addFile("session.wordy");
     }
 
     public void part1BasicWalkThrough() {
@@ -33,6 +48,7 @@ public class GuiTestSteps {
         });
 
         step("Start new session", () -> {
+            validator.setUpFileDialogue(FileDialogueType.NEW_SESSION, FileFormatType.DOCUMENT, BOOK_1);
             robot.clickOn("#buttonNew");
             verifyThat("#mainWordPane", isVisible());
             verifyThat("#mainWord", hasText("and"));
@@ -48,6 +64,16 @@ public class GuiTestSteps {
             verifyThat("#mainWord", hasText("to"));
         });
 
+        step("Mark word as known with keyboard", () -> {
+            robot.type(KeyCode.K);
+            verifyThat("#mainWord", hasText("me"));
+        });
+
+        step("Mark word as unknown with keyboard", () -> {
+            robot.type(KeyCode.X);
+            verifyThat("#mainWord", hasText("of"));
+        });
+
         step("Show selection", () -> {
             robot.clickOn("#buttonEditOff");
             verifyThat("#buttonKnown", isInvisible());
@@ -59,31 +85,34 @@ public class GuiTestSteps {
         });
 
         step("Export the selection", () -> {
+            validator.setUpFileDialogue(FileDialogueType.EXPORT_SELECTION, FileFormatType.TEXT, exportFile);
             robot.clickOn("#buttonExport");
-            validator.validateExportFile();
+            validator.validateExportFile(exportFile);
         });
 
         step("Save the session", () -> {
+            validator.setUpFileDialogue(FileDialogueType.SAVE_SESSION, FileFormatType.SESSION, sessionFile);
             robot.clickOn("#buttonSave");
-            validator.validateSavedSession(BOOK_1);
+            validator.validateSavedSession(sessionFile, BOOK_1);
         });
     }
 
     public void part2Progress() {
         step("Check progress", () -> {
             robot.clickOn("#tabProgress");
-            verifyThat("#labelValueDone", hasText("2 Words"));
+            verifyThat("#labelValueDone", hasText("4 Words"));
         });
 
         step("Return to analysis", () -> {
             robot.clickOn("#tabAnalysis");
-            verifyThat("#mainWord", hasText("the"));
+            verifyThat("#mainWord", hasText("me"));
         });
 
     }
 
     public void part3StartNewSessionAndFilter() {
         step("Open a new session for a different book", () -> {
+            validator.setUpFileDialogue(FileDialogueType.NEW_SESSION, FileFormatType.DOCUMENT, BOOK_2);
             robot.clickOn("#buttonNew");
             verifyThat("#mainWord", hasText("the"));
         });
@@ -101,34 +130,90 @@ public class GuiTestSteps {
 
         step("Define filter", () -> {
             robot.clickOn("#buttonSetupFilters");
-            robot.doubleClickOn("#fieldMinimumLetters").write("6");
-            robot.doubleClickOn("#fieldMinimumOccurrences").write("4");
+            robot.doubleClickOn("#fieldMinimumLetters").write("4");
+            robot.doubleClickOn("#fieldMinimumOccurrences").write("3");
             robot.clickOn("#fieldInitialCapital");
             robot.clickOn("#buttonOk");
-            verifyThat("#mainWord", hasText("surgeon"));
+            verifyThat("#mainWord", hasText("have"));
+        });
+
+        step("Add empty session to filter", () -> {
+            validator.setUpFileDialogue(FileDialogueType.OPEN_SESSION, FileFormatType.SESSION, SESSION_NO_MARKED_WORDS);
+            robot.clickOn("#buttonSetupFilters");
+            robot.clickOn("#buttonAddSessionFile");
+            verifyThat("#buttonAddFilterFile", isDisabled());
+        });
+
+        step("Change session filter to file with marked words", () -> {
+            validator.setUpFileDialogue(FileDialogueType.OPEN_SESSION, FileFormatType.SESSION, SESSION_1);
+            robot.clickOn("#buttonChangeFile");
+            robot.clickOn("#buttonAddFilterFile");
+            robot.clickOn("#buttonEdit");
+            verifyThat("#buttonAddFilterFile", isEnabled());
+            verifyThat("#labelTotalWords", hasText("1"));
+        });
+
+        step("Include unknown words in filter", () -> {
+            robot.clickOn("#buttonSeen");
+            verifyThat("#buttonAddFilterFile", isEnabled());
+            verifyThat("#labelTotalWords", hasText("3"));
+        });
+
+        step("Add session to filter", () -> {
+            robot.clickOn("#buttonAddFilterFile");
+            robot.clickOn("#buttonOk");
+            verifyThat("#mainWord", hasText("that"));
+        });
+
+        step("Add empty word list to filter", () -> {
+            validator.setUpFileDialogue(FileDialogueType.OPEN_WORD_LIST, FileFormatType.DOCUMENT, EMPTY_FILE);
+            robot.clickOn("#buttonSetupFilters");
+            robot.clickOn("#buttonAddGridFile");
+            verifyThat("#buttonAddFilterFile", isDisabled());
+        });
+
+        step("Change filter file to spreadsheet", () -> {
+            validator.setUpFileDialogue(FileDialogueType.OPEN_WORD_LIST, FileFormatType.SPREADSHEET, FILTER_SPREADSHEET);
+            robot.clickOn("#buttonChangeFile");
+            verifyThat("#buttonAddFilterFile", isEnabled());
+            verifyThat("#labelTotalWords", hasText("1"));
+        });
+
+        step("Select second column of spreadsheet", () -> {
+            robot.clickOn("#checkBoxColumn1");
+            verifyThat("#buttonAddFilterFile", isEnabled());
+            verifyThat("#labelTotalWords", hasText("3"));
+        });
+
+        step("Apply spreadsheet filter", () -> {
+            robot.clickOn("#buttonAddFilterFile");
+            robot.clickOn("#buttonOk");
+            verifyThat("#mainWord", hasText("this"));
         });
 
         step("Mark filtered word as known", () -> {
             robot.clickOn("#buttonKnown");
-            verifyThat("#mainWord", hasText("workhouse"));
+            verifyThat("#mainWord", hasText("child"));
         });
 
         step("Disable filter", () -> {
             robot.clickOn("#buttonEnableFilters");
-            verifyThat("#mainWord", hasText("workhouse"));
+            verifyThat("#mainWord", hasText("child"));
         });
     }
 
     public void part4ReopenFirstSession() {
         step("Re-open the old session", () -> {
+            validator.setUpFileDialogue(FileDialogueType.OPEN_SESSION, FileFormatType.SESSION, sessionFile);
             robot.clickOn("#buttonOpen");
             robot.clickOn("Discard");
-            verifyThat("#mainWord", hasText("a"));
+            verifyThat("#mainWord", hasText("of"));
         });
     }
 
     public void part5ErrorHandling() {
         step("Start session from empty file", () -> {
+            validator.setUpFileDialogue(FileDialogueType.NEW_SESSION, FileFormatType.DOCUMENT, EMPTY_FILE);
             robot.clickOn("#buttonNew");
             verifyThat("#errorDialogue", isVisible());
         });
@@ -195,7 +280,7 @@ public class GuiTestSteps {
             verifyThat("#mainWord", hasText("country"));
             verifyThat("#labelMatches", hasText("1 of 2 matches"));
         });
-        step("Seach with no match", () -> {
+        step("Search with no match", () -> {
             robot.doubleClickOn("#fieldSearch").write("bananas");
             verifyThat("#mainWord", hasText("back"));
             verifyThat("#labelMatches", hasText("No matches"));
@@ -206,10 +291,46 @@ public class GuiTestSteps {
         });
     }
 
+    public void part9Exit() {
+        step("Restart new session", () -> {
+            validator.setUpFileDialogue(FileDialogueType.NEW_SESSION, FileFormatType.DOCUMENT, BOOK_2);
+            robot.clickOn("#buttonNew");
+            verifyThat("#mainWordPane", isVisible());
+            verifyThat("#mainWord", hasText("the"));
+        });
+        step("Make change to session", () -> {
+            robot.clickOn("#buttonKnown");
+            verifyThat("#mainWord", hasText("a"));
+        });
+        step("Cancel exit", () -> {
+            robot.clickOn("#menuFile");
+            robot.clickOn("#menuExit");
+            robot.clickOn(lookup("#unsavedChanges", "Cancel"));
+            verifyThat("#mainWord", hasText("a"));
+        });
+        step("Exit with save", () -> {
+            validator.setUpFileDialogue(FileDialogueType.SAVE_SESSION, FileFormatType.SESSION, sessionFile);
+            robot.clickOn("#menuFile");
+            robot.clickOn("#menuExit");
+            robot.clickOn(lookup("#unsavedChanges", "Save"));
+            validator.validateSavedSession(sessionFile, BOOK_2);
+        });
+    }
+
     private void step(final String step, final Runnable runnable) {
         ++stepNo;
         LOG.info("STEP {}: Begin - {}", stepNo, step);
         runnable.run();
         LOG.info("STEP {}:   End - {}", stepNo, step);
+    }
+
+    private Node lookup(final String first, final String... queries) {
+        NodeQuery nodeQuery = robot.lookup(first);
+
+        for (String query : queries) {
+            nodeQuery = nodeQuery.lookup(query);
+        }
+
+        return nodeQuery.query();
     }
 }

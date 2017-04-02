@@ -10,7 +10,7 @@ import org.junit.Test;
 
 import java.util.List;
 
-import static io.github.vocabhunter.analysis.core.CollectionTool.listOf;
+import static io.github.vocabhunter.analysis.core.CoreTool.listOf;
 import static io.github.vocabhunter.gui.search.SearchTool.getMatchIndex;
 import static io.github.vocabhunter.gui.search.SearchTool.getPreviousMatchIndex;
 import static org.junit.Assert.assertEquals;

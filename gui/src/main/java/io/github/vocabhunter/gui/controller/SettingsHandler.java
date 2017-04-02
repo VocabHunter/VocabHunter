@@ -5,10 +5,9 @@
 package io.github.vocabhunter.gui.controller;
 
 import io.github.vocabhunter.gui.view.ViewFxml;
+import io.github.vocabhunter.gui.view.WindowTool;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import javax.inject.Inject;
@@ -25,13 +24,6 @@ public class SettingsHandler {
         SettingsController controller = loader.getController();
 
         controller.initialise(stage);
-        setupStage(stage, root);
-    }
-
-    private void setupStage(final Stage stage, final Parent root) {
-        stage.initModality(Modality.APPLICATION_MODAL);
-        stage.setTitle("Word Filter Settings");
-        stage.setScene(new Scene(root));
-        stage.show();
+        WindowTool.setupModal(stage, root, "Word Filter Settings");
     }
 }
