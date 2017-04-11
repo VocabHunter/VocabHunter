@@ -27,7 +27,7 @@ cache:
 install: true
 
 script:
-  - ./gradlew clean build jacoco jfxNative checkBundle -info
+  - ./gradlew clean build jacocoTestReport jfxNative checkBundle -info
 
 after_success:
   - bash <(curl -s https://codecov.io/bash)
