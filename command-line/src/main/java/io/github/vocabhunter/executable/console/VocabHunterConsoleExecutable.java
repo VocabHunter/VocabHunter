@@ -40,8 +40,11 @@ public final class VocabHunterConsoleExecutable {
         try {
             Instant start = Instant.now();
             VocabHunterConsoleArguments bean = new VocabHunterConsoleArguments();
-            JCommander jCommander = new JCommander(bean, args);
+            JCommander jCommander = JCommander.newBuilder()
+                .addObject(bean)
+                .build();
 
+            jCommander.parse(args);
             if (bean.isHelpRequested()) {
                 StringBuilder buffer = new StringBuilder(HELP_BUFFER_SIZE);
 
