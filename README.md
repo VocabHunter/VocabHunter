@@ -68,12 +68,14 @@ If you'd like to know more about how VocabHunter works and the technologies used
 * [How JavaFX was used to build a desktop application][KingTechBlog2] (King Tech Blog) - A detailed look at several important features of JavaFX using VocabHunter as an example.
 * [Dependency Injection in JavaFX][DependencyInjection] (VocabHunter Blog) - How to Gluon Ignite and Google Guice are used for the  Dependency Injection in VocabHunter.
 * [User Interface Testing with TestFX][TestFXBlog] (VocabHunter Blog) - A guide to automating user interface tests using TestFX.  VocabHunter includes a complete automated GUI test suite and here you can learn how it works.
+* [Read (Almost) Any Document in Java] (VocabHunter Blog) - VocabHunter uses Apache Tika to read documents in a wide variety of formats ranging from Microsoft Word through to PDF.  This article explains how it is done.
 
 [![VocabHunter](/assets/VocabHunter-Technical-Articles.png)](https://vocabhunter.github.io/blog/)
 
 [TestFXBlog]:https://vocabhunter.github.io/2016/07/27/TestFX.html
 [DependencyInjection]:https://vocabhunter.github.io/2016/11/13/JavaFX-Dependency-Injection.html
 [SearchBar]:https://vocabhunter.github.io/2017/01/15/Search-Bar.html
+[Read (Almost) Any Document in Java]:https://vocabhunter.github.io/2017/04/30/Read-Any-Document-Format.html
 
 [KingTechBlog1]:https://techblog.king.com/vocabhunter-a-tool-for-learners-of-foreign-languages/
 [KingTechBlog2]:https://techblog.king.com/javafx-used-build-desktop-application/
