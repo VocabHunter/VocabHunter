@@ -37,7 +37,7 @@ public class FilterHandler {
         FilterSettings settings = new FilterSettings(minimumLetters, minimumOccurrences, allowInitialCapitals, filterFiles);
 
         model.setFilterSettings(settings);
-        model.filterSettingsProperty().addListener(((o, old, v) -> updateFilterSettings(v)));
+        model.filterSettingsProperty().addListener((o, old, v) -> updateFilterSettings(v));
     }
 
     private void updateFilterSettings(final FilterSettings settings) {
