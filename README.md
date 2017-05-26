@@ -17,18 +17,22 @@ To get all the latest news about VocabHunter including announcements of new rele
 
 You will need Java 8 to build and run VocabHunter.  You can download it from the [Oracle Website](http://www.oracle.com/technetwork/java/javase/downloads/index.html).  Everything else, including Gradle, will be downloaded by the build process.
 
-# How To Build VocabHunter
-
-You can build the entire system with the following command:
-~~~
-$ ./gradlew clean build
-~~~
-
 # How To Run VocabHunter
 
 Go to the [download](https://vocabhunter.github.io/download/) page of the website to get the latest release of VocabHunter.  Alternatively, you can run the development version from the command line as follows:
 ~~~
 $ ./gradlew :gui:run
+~~~
+
+# How to Use VocabHunter
+
+Do you want to use VocabHunter to help you to learn a foreign language?  You'll find everything you need to know to get you started in the guide [How to Use VocabHunter](https://vocabhunter.github.io/help/).
+
+# How To Build VocabHunter
+
+You can build the entire system with the following command:
+~~~
+$ ./gradlew clean build
 ~~~
 
 # How To Build An Installable Bundle
