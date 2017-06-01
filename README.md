@@ -41,7 +41,7 @@ VocabHunter is distributed as an installable bundle, with everything the user ne
 
 You can launch the following command to create the bundle:
 ~~~
-$ ./gradlew clean build jfxNative checkBundle
+$ ./gradlew clean build jfxNative
 ~~~
 
 When the build is complete, you will find the bundle file in the directory `package/build/jfx/native`.
