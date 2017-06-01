@@ -39,6 +39,7 @@ subprojects {
     apply plugin: 'com.github.ben-manes.versions'
 
     sourceCompatibility = 1.8
+    targetCompatibility = 1.8
 
     repositories {
         jcenter()
