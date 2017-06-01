@@ -119,3 +119,5 @@ task checkBundle {
         }
     }
 }
+
+jfxNative.finalizedBy checkBundle
