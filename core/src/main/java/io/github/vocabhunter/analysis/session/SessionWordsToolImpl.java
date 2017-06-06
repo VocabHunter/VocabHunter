@@ -19,6 +19,7 @@ import java.util.function.Supplier;
 
 import javax.inject.Singleton;
 
+import static io.github.vocabhunter.analysis.session.FileNameTool.filename;
 import static java.util.stream.Collectors.toList;
 
 @Singleton
@@ -65,7 +66,7 @@ public class SessionWordsToolImpl implements SessionWordsTool {
         try {
             return SessionSerialiser.readMarkedWords(file);
         } catch (final Exception e) {
-            throw new VocabHunterException(String.format("Unable to read filter file '%s'", file), e);
+            throw new VocabHunterException(String.format("Unable to read filter file '%s'", filename(file)), e);
         }
     }
 
@@ -74,7 +75,7 @@ public class SessionWordsToolImpl implements SessionWordsTool {
         T words = s.get();
         Instant end = Instant.now();
         Duration duration = Duration.between(start, end);
-        String filename = FileNameTool.filename(file);
+        String filename = filename(file);
 
         LOG.info("Read filter file and found {} words marked as {} in {}ms ({})", words.size(), type, duration.toMillis(), filename);
 
