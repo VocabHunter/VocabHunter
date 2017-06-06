@@ -12,6 +12,7 @@ import io.github.vocabhunter.analysis.settings.ExcelListedFile;
 import io.github.vocabhunter.analysis.settings.SessionListedFile;
 
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Function;
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -73,7 +74,7 @@ public class FilterFileWordsExtractorImpl implements FilterFileWordsExtractor {
     }
 
     private Map<Class<?>, Function<BaseListedFile, List<String>>> buildExtractorMap() {
-        Map<Class<?>, Function<BaseListedFile, List<String>>> map = new HashMap<>();
+        Map<Class<?>, Function<BaseListedFile, List<String>>> map = new ConcurrentHashMap<>();
 
         map.put(SessionListedFile.class, this::extractSessionListedFile);
         map.put(ExcelListedFile.class, this::extractExcelListedFile);

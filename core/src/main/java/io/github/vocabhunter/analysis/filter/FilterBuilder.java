@@ -7,15 +7,25 @@ package io.github.vocabhunter.analysis.filter;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.concurrent.Executor;
+import java.util.function.Supplier;
 
 public class FilterBuilder {
+    private Executor executor;
+
     private WordFilter minimumLettersFilter;
 
     private WordFilter minimumOccurrencesFilter;
 
     private WordFilter excludeInitialCapitalFilter;
 
-    private final List<Collection<String>> excludedWords = new ArrayList<>();
+    private final List<Supplier<Collection<String>>> excludedWordsSuppliers = new ArrayList<>();
+
+    public FilterBuilder executor(final Executor executor) {
+        this.executor = executor;
+
+        return this;
+    }
 
     public FilterBuilder minimumLetters(final int count) {
         minimumLettersFilter = new MinimumLettersFilter(count);
@@ -36,7 +46,11 @@ public class FilterBuilder {
     }
 
     public FilterBuilder addExcludedWords(final Collection<String> words) {
-        excludedWords.add(words);
+        return addExcludedWordsSupplier(() -> words);
+    }
+
+    public FilterBuilder addExcludedWordsSupplier(final Supplier<Collection<String>> wordsSupplier) {
+        excludedWordsSuppliers.add(wordsSupplier);
 
         return this;
     }
@@ -47,11 +61,20 @@ public class FilterBuilder {
         addIfUsed(filters, minimumLettersFilter);
         addIfUsed(filters, minimumOccurrencesFilter);
         addIfUsed(filters, excludeInitialCapitalFilter);
-        if (!excludedWords.isEmpty()) {
-            filters.add(new ExcludedWordsFilter(excludedWords));
+
+        if (!excludedWordsSuppliers.isEmpty()) {
+            filters.add(new ExcludedWordsFilter(getExecutor(), excludedWordsSuppliers));
         }
 
         return new AggregateFilter(filters);
+    }
+
+    private Executor getExecutor() {
+        if (executor == null) {
+            return Runnable::run;
+        } else {
+            return executor;
+        }
     }
 
     private void addIfUsed(final List<WordFilter> filters, final WordFilter filter) {

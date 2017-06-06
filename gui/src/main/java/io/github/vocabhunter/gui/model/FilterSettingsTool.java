@@ -4,21 +4,32 @@
 
 package io.github.vocabhunter.gui.model;
 
+import io.github.vocabhunter.analysis.core.ThreadPoolTool;
 import io.github.vocabhunter.analysis.filter.FilterBuilder;
 import io.github.vocabhunter.analysis.filter.WordFilter;
 import io.github.vocabhunter.analysis.grid.FilterFileWordsExtractor;
 import io.github.vocabhunter.analysis.settings.BaseListedFile;
 
-import java.util.List;
+import java.util.concurrent.Executor;
 import javax.inject.Inject;
 
 public class FilterSettingsTool {
+    private static final int FILTER_READER_THREAD_COUNT = 4;
+
+    private final FilterFileWordsExtractor extractor;
+
+    private final Executor executor;
+
     @Inject
-    private FilterFileWordsExtractor extractor;
+    public FilterSettingsTool(final FilterFileWordsExtractor extractor, final ThreadPoolTool threadPoolTool) {
+        this.extractor = extractor;
+        this.executor = threadPoolTool.daemonExecutor("Filter File Reader", FILTER_READER_THREAD_COUNT);
+    }
 
     public WordFilter filter(final FilterSettings settings, final boolean isFilterEnabled) {
         FilterBuilder builder = new FilterBuilder();
 
+        builder.executor(executor);
         if (isFilterEnabled) {
             builder = builder.minimumLetters(settings.getMinimumLetters())
                 .minimumOccurrences(settings.getMinimumOccurrences());
@@ -35,8 +46,6 @@ public class FilterSettingsTool {
     }
 
     private FilterBuilder addFilter(final FilterBuilder builder, final BaseListedFile file) {
-        List<String> words = extractor.extract(file);
-
-        return builder.addExcludedWords(words);
+        return builder.addExcludedWordsSupplier(() -> extractor.extract(file));
     }
 }

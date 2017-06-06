@@ -16,6 +16,8 @@ import static org.junit.Assert.assertNotNull;
 public class ThreadPoolToolTest {
     private static final int EXPECTED_RESULT = 123;
 
+    private static final int THREAD_COUNT = 4;
+
     private final ThreadPoolTool target = new ThreadPoolToolImpl();
 
     private ExecutorService service;
@@ -27,9 +29,26 @@ public class ThreadPoolToolTest {
     }
 
     @Test
-    public void testDaemonThreadRun() throws Exception {
+    public void testMultipleDaemonExecutor() {
+        service = target.daemonExecutor("test", THREAD_COUNT);
+        assertNotNull("Executor service", service);
+    }
+
+    @Test
+    public void testSingleDaemonThreadRun() throws Exception {
         service = target.singleDaemonExecutor("test");
 
+        validateExecution();
+    }
+
+    @Test
+    public void testMultipleDaemonThreadRun() throws Exception {
+        service = target.daemonExecutor("test", THREAD_COUNT);
+
+        validateExecution();
+    }
+
+    private void validateExecution() throws Exception {
         Future<Integer> future = service.submit(() -> EXPECTED_RESULT);
         int result = future.get();
 
