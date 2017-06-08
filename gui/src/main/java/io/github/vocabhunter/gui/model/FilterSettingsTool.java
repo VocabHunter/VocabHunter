@@ -12,7 +12,9 @@ import io.github.vocabhunter.analysis.settings.BaseListedFile;
 
 import java.util.concurrent.Executor;
 import javax.inject.Inject;
+import javax.inject.Singleton;
 
+@Singleton
 public class FilterSettingsTool {
     private static final int FILTER_READER_THREAD_COUNT = 4;
 
