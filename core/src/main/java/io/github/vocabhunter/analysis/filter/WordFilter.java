@@ -6,6 +6,7 @@ package io.github.vocabhunter.analysis.filter;
 
 import io.github.vocabhunter.analysis.model.AnalysisWord;
 
+@FunctionalInterface
 public interface WordFilter {
     boolean isShown(AnalysisWord word);
 }

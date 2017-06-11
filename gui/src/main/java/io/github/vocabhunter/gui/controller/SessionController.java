@@ -11,6 +11,7 @@ import io.github.vocabhunter.analysis.filter.WordFilter;
 import io.github.vocabhunter.analysis.marked.MarkTool;
 import io.github.vocabhunter.analysis.marked.WordState;
 import io.github.vocabhunter.gui.model.*;
+import io.github.vocabhunter.gui.services.FilterService;
 import io.github.vocabhunter.gui.view.UseListCell;
 import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
@@ -33,7 +34,7 @@ public class SessionController {
     private static final Logger LOG = LoggerFactory.getLogger(SessionController.class);
 
     @Inject
-    private FilterSettingsTool filterSettingsTool;
+    private FilterService filterService;
 
     public Label mainWord;
 
@@ -157,13 +158,11 @@ public class SessionController {
 
     private void updateWordList() {
         boolean isEditable = sessionModel.isEditable();
-        FilterSettings filterSettings = sessionModel.getFilterSettings();
-        boolean isFilterEnabled = sessionModel.isEnableFilters();
         VocabHunterException exception;
         boolean isFilterSuccess;
 
         try {
-            WordFilter filter = filterSettingsTool.filter(filterSettings, isFilterEnabled);
+            WordFilter filter = filterService.getFilter(sessionModel.isEnableFilters());
             MarkTool<WordModel> markTool = new MarkTool<>(filter, sessionModel.getAllWords());
 
             isFilterSuccess = markTool.isValidFilter();

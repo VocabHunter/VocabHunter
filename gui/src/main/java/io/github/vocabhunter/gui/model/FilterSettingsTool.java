@@ -28,20 +28,18 @@ public class FilterSettingsTool {
         this.executor = threadPoolTool.daemonExecutor("Filter File Reader", FILTER_READER_THREAD_COUNT);
     }
 
-    public WordFilter filter(final FilterSettings settings, final boolean isFilterEnabled) {
+    public WordFilter filter(final FilterSettings settings) {
         FilterBuilder builder = new FilterBuilder();
 
         builder.executor(executor);
-        if (isFilterEnabled) {
-            builder = builder.minimumLetters(settings.getMinimumLetters())
-                .minimumOccurrences(settings.getMinimumOccurrences());
+        builder = builder.minimumLetters(settings.getMinimumLetters())
+            .minimumOccurrences(settings.getMinimumOccurrences());
 
-            if (!settings.isAllowInitialCapitals()) {
-                builder = builder.excludeInitialCapital();
-            }
-            for (BaseListedFile file : settings.getFilterFiles()) {
-                builder = addFilter(builder, file);
-            }
+        if (!settings.isAllowInitialCapitals()) {
+            builder = builder.excludeInitialCapital();
+        }
+        for (BaseListedFile file : settings.getFilterFiles()) {
+            builder = addFilter(builder, file);
         }
 
         return builder.build();

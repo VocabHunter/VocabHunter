@@ -4,6 +4,7 @@
 
 package io.github.vocabhunter.gui.model;
 
+import io.github.vocabhunter.analysis.filter.WordFilter;
 import io.github.vocabhunter.analysis.session.SessionState;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleObjectProperty;
@@ -38,6 +39,8 @@ public class MainModel {
     private final SimpleObjectProperty<FilterSettings> filterSettings = new SimpleObjectProperty<>();
 
     private final SimpleBooleanProperty enableFilters = new SimpleBooleanProperty(true);
+
+    private WordFilter filter;
 
     public void replaceSessionModel(final SessionState sessionState, final SessionModel sessionModel, final Path sessionFile) {
         unbindOldSession();
@@ -115,6 +118,14 @@ public class MainModel {
 
     public FilterSettings getFilterSettings() {
         return filterSettings.get();
+    }
+
+    public void setFilter(final WordFilter filter) {
+        this.filter = filter;
+    }
+
+    public WordFilter getFilter() {
+        return filter;
     }
 
     public SimpleBooleanProperty enableFiltersProperty() {

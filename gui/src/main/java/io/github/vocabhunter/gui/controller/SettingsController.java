@@ -12,6 +12,7 @@ import io.github.vocabhunter.gui.dialogues.FileDialogueType;
 import io.github.vocabhunter.gui.dialogues.FileFormatType;
 import io.github.vocabhunter.gui.model.*;
 import io.github.vocabhunter.gui.services.FilterFileModelTranslator;
+import io.github.vocabhunter.gui.services.FilterService;
 import io.github.vocabhunter.gui.view.FilterFileCell;
 import javafx.beans.property.ReadOnlyBooleanProperty;
 import javafx.beans.property.StringProperty;
@@ -61,6 +62,9 @@ public class SettingsController {
 
     @Inject
     private FilterFileModelTranslator translator;
+
+    @Inject
+    private FilterService filterService;
 
     private Stage stage;
 
@@ -152,7 +156,7 @@ public class SettingsController {
 
             FilterSettings settings = new FilterSettings(minimumLetters, minimumOccurrences, allowInitialCapitals, filterFiles);
 
-            model.setFilterSettings(settings);
+            filterService.setFilterSettings(settings);
             model.setEnableFilters(true);
         }
         stage.close();
