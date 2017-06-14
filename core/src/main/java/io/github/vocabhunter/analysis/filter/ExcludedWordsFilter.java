@@ -7,7 +7,11 @@ package io.github.vocabhunter.analysis.filter;
 import io.github.vocabhunter.analysis.core.CoreTool;
 import io.github.vocabhunter.analysis.core.VocabHunterException;
 import io.github.vocabhunter.analysis.model.AnalysisWord;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
+import java.time.Duration;
+import java.time.Instant;
 import java.util.Collection;
 import java.util.List;
 import java.util.Set;
@@ -21,6 +25,8 @@ import static java.util.stream.Collectors.toList;
 import static java.util.stream.Collectors.toSet;
 
 public class ExcludedWordsFilter implements WordFilter {
+    private static final Logger LOG = LoggerFactory.getLogger(ExcludedWordsFilter.class);
+
     private final List<CompletableFuture<Collection<String>>> futures;
 
     private final AtomicReference<Set<String>> computedExclusions = new AtomicReference<>();
@@ -53,11 +59,18 @@ public class ExcludedWordsFilter implements WordFilter {
     }
 
     private Set<String> buildExclusionSet() {
-        return futures.stream()
+        Instant start = Instant.now();
+        Set<String> result = futures.stream()
             .map(this::waitForResults)
             .flatMap(Collection::stream)
             .map(CoreTool::toLowerCase)
             .collect(toSet());
+        Instant end = Instant.now();
+        Duration duration = Duration.between(start, end);
+
+        LOG.info("Foreground filter list completed in {}ms", duration.toMillis());
+
+        return result;
     }
 
     private Collection<String> waitForResults(final CompletableFuture<Collection<String>> future) {
