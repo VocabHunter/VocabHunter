@@ -14,6 +14,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Path;
 
+import static io.github.vocabhunter.analysis.session.FileNameTool.filename;
+
 public final class TikaTool {
     private TikaTool() {
         // Prevent instantiation - all methods are static
@@ -27,7 +29,7 @@ public final class TikaTool {
 
             return tika.parseToString(in, metadata, -1);
         } catch (IOException | TikaException e) {
-            throw new VocabHunterException(String.format("Unable to read file '%s'", file), e);
+            throw new VocabHunterException(String.format("Unable to read file '%s'", filename(file)), e);
         }
     }
 }

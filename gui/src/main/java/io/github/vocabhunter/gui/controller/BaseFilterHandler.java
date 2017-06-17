@@ -14,7 +14,7 @@ import javafx.stage.Stage;
 
 import javax.inject.Provider;
 
-public class BaseFilterHandler<T extends AbstractFilterController> {
+public class BaseFilterHandler<T extends AbstractFilterController<?>> {
     private final Provider<FXMLLoader> loaderProvider;
 
     private final ViewFxml viewFxml;

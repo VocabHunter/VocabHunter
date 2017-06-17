@@ -17,18 +17,22 @@ To get all the latest news about VocabHunter including announcements of new rele
 
 You will need Java 8 to build and run VocabHunter.  You can download it from the [Oracle Website](http://www.oracle.com/technetwork/java/javase/downloads/index.html).  Everything else, including Gradle, will be downloaded by the build process.
 
-# How To Build VocabHunter
-
-You can build the entire system with the following command:
-~~~
-$ ./gradlew clean build
-~~~
-
 # How To Run VocabHunter
 
 Go to the [download](https://vocabhunter.github.io/download/) page of the website to get the latest release of VocabHunter.  Alternatively, you can run the development version from the command line as follows:
 ~~~
 $ ./gradlew :gui:run
+~~~
+
+# How to Use VocabHunter
+
+Do you want to use VocabHunter to help you to learn a foreign language?  You'll find everything you need to know to get you started in the guide [How to Use VocabHunter](https://vocabhunter.github.io/help/).
+
+# How To Build VocabHunter
+
+You can build the entire system with the following command:
+~~~
+$ ./gradlew clean build
 ~~~
 
 # How To Build An Installable Bundle
@@ -37,7 +41,7 @@ VocabHunter is distributed as an installable bundle, with everything the user ne
 
 You can launch the following command to create the bundle:
 ~~~
-$ ./gradlew clean build jfxNative checkBundle
+$ ./gradlew clean build jfxNative
 ~~~
 
 When the build is complete, you will find the bundle file in the directory `package/build/jfx/native`.
@@ -68,12 +72,14 @@ If you'd like to know more about how VocabHunter works and the technologies used
 * [How JavaFX was used to build a desktop application][KingTechBlog2] (King Tech Blog) - A detailed look at several important features of JavaFX using VocabHunter as an example.
 * [Dependency Injection in JavaFX][DependencyInjection] (VocabHunter Blog) - How to Gluon Ignite and Google Guice are used for the  Dependency Injection in VocabHunter.
 * [User Interface Testing with TestFX][TestFXBlog] (VocabHunter Blog) - A guide to automating user interface tests using TestFX.  VocabHunter includes a complete automated GUI test suite and here you can learn how it works.
+* [Read (Almost) Any Document in Java] (VocabHunter Blog) - VocabHunter uses Apache Tika to read documents in a wide variety of formats ranging from Microsoft Word through to PDF.  This article explains how it is done.
 
 [![VocabHunter](/assets/VocabHunter-Technical-Articles.png)](https://vocabhunter.github.io/blog/)
 
 [TestFXBlog]:https://vocabhunter.github.io/2016/07/27/TestFX.html
 [DependencyInjection]:https://vocabhunter.github.io/2016/11/13/JavaFX-Dependency-Injection.html
 [SearchBar]:https://vocabhunter.github.io/2017/01/15/Search-Bar.html
+[Read (Almost) Any Document in Java]:https://vocabhunter.github.io/2017/04/30/Read-Any-Document-Format.html
 
 [KingTechBlog1]:https://techblog.king.com/vocabhunter-a-tool-for-learners-of-foreign-languages/
 [KingTechBlog2]:https://techblog.king.com/javafx-used-build-desktop-application/

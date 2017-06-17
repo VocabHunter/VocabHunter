@@ -4,39 +4,48 @@
 
 package io.github.vocabhunter.gui.model;
 
+import io.github.vocabhunter.analysis.core.ThreadPoolTool;
 import io.github.vocabhunter.analysis.filter.FilterBuilder;
 import io.github.vocabhunter.analysis.filter.WordFilter;
 import io.github.vocabhunter.analysis.grid.FilterFileWordsExtractor;
 import io.github.vocabhunter.analysis.settings.BaseListedFile;
 
-import java.util.List;
+import java.util.concurrent.Executor;
 import javax.inject.Inject;
+import javax.inject.Singleton;
 
+@Singleton
 public class FilterSettingsTool {
-    @Inject
-    private FilterFileWordsExtractor extractor;
+    private static final int FILTER_READER_THREAD_COUNT = 4;
 
-    public WordFilter filter(final FilterSettings settings, final boolean isFilterEnabled) {
+    private final FilterFileWordsExtractor extractor;
+
+    private final Executor executor;
+
+    @Inject
+    public FilterSettingsTool(final FilterFileWordsExtractor extractor, final ThreadPoolTool threadPoolTool) {
+        this.extractor = extractor;
+        this.executor = threadPoolTool.daemonExecutor("Filter File Reader", FILTER_READER_THREAD_COUNT);
+    }
+
+    public WordFilter filter(final FilterSettings settings) {
         FilterBuilder builder = new FilterBuilder();
 
-        if (isFilterEnabled) {
-            builder = builder.minimumLetters(settings.getMinimumLetters())
-                .minimumOccurrences(settings.getMinimumOccurrences());
+        builder.executor(executor);
+        builder = builder.minimumLetters(settings.getMinimumLetters())
+            .minimumOccurrences(settings.getMinimumOccurrences());
 
-            if (!settings.isAllowInitialCapitals()) {
-                builder = builder.excludeInitialCapital();
-            }
-            for (BaseListedFile file : settings.getFilterFiles()) {
-                builder = addFilter(builder, file);
-            }
+        if (!settings.isAllowInitialCapitals()) {
+            builder = builder.excludeInitialCapital();
+        }
+        for (BaseListedFile file : settings.getFilterFiles()) {
+            builder = addFilter(builder, file);
         }
 
         return builder.build();
     }
 
     private FilterBuilder addFilter(final FilterBuilder builder, final BaseListedFile file) {
-        List<String> words = extractor.extract(file);
-
-        return builder.addExcludedWords(words);
+        return builder.addExcludedWordsSupplier(() -> extractor.extract(file));
     }
 }

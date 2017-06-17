@@ -8,7 +8,7 @@ allprojects {
 
 task wrapper(type: Wrapper) {
     description 'Setup the Gradle wrapper'
-    gradleVersion = '3.3'
+    gradleVersion = '3.5'
     distributionUrl = "https://services.gradle.org/distributions/gradle-${gradleVersion}-all.zip"
 }
 
@@ -21,8 +21,8 @@ buildscript {
     }
 
     dependencies {
-        classpath 'com.github.ben-manes:gradle-versions-plugin:0.14.0'
-        classpath 'net.researchgate:gradle-release:2.5.0'
+        classpath 'com.github.ben-manes:gradle-versions-plugin:0.15.0'
+        classpath 'net.researchgate:gradle-release:2.6.0'
     }
 }
 
@@ -39,6 +39,7 @@ subprojects {
     apply plugin: 'com.github.ben-manes.versions'
 
     sourceCompatibility = 1.8
+    targetCompatibility = 1.8
 
     repositories {
         jcenter()
@@ -46,17 +47,17 @@ subprojects {
 
     dependencies {
         testCompile 'junit:junit:4.12'
-        testCompile 'org.mockito:mockito-core:2.7.20'
+        testCompile 'org.mockito:mockito-core:2.8.47'
         runtime 'ch.qos.logback:logback-classic:1.2.3'
     }
 
     pmd {
-        toolVersion = '5.5.4'
+        toolVersion = '5.7.0'
         ruleSetFiles = files("$rootProject.projectDir/config/pmd/ruleset.xml")
     }
 
     checkstyle {
-        toolVersion = '7.6'
+        toolVersion = '7.8.1'
         configFile = file("$rootProject.projectDir/config/checkstyle/checkstyle.xml")
     }
 

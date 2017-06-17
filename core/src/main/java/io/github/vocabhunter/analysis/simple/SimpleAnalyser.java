@@ -11,13 +11,13 @@ import io.github.vocabhunter.analysis.model.WordUse;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
-
 import javax.inject.Singleton;
 
-import static java.util.stream.Collectors.*;
+import static java.util.function.Function.identity;
+import static java.util.stream.Collectors.toList;
+import static java.util.stream.Collectors.toMap;
 
 @Singleton
 public class SimpleAnalyser implements Analyser {
@@ -26,10 +26,10 @@ public class SimpleAnalyser implements Analyser {
         Map<String, WordUse> map = IntStream.range(0, lines.size())
             .boxed()
             .flatMap(n -> uses(lines, n))
-                .collect(
-                        groupingBy(
-                                WordStreamTool::classifier,
-                                collectingAndThen(reducing(this::combine), Optional::get)));
+            .collect(toMap(
+                WordStreamTool::classifier,
+                identity(),
+                this::combine));
         List<WordUse> uses = map.values().stream()
                 .sorted(WordStreamTool.WORD_COMPARATOR)
                 .collect(toList());
@@ -41,10 +41,10 @@ public class SimpleAnalyser implements Analyser {
         String line = lines.get(lineNo);
         Map<String, WordUse> map = WordStreamTool.words(line)
             .map(w -> new WordUse(w, lineNo))
-            .collect(
-                groupingBy(
-                    WordStreamTool::classifier,
-                    collectingAndThen(reducing(this::combineSingleLine), Optional::get)));
+            .collect(toMap(
+                WordStreamTool::classifier,
+                identity(),
+                this::combineSingleLine));
 
         return map.values().stream();
     }

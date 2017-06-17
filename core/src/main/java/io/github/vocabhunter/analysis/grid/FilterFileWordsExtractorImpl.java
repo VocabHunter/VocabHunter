@@ -10,16 +10,27 @@ import io.github.vocabhunter.analysis.settings.BaseListedFile;
 import io.github.vocabhunter.analysis.settings.DocumentListedFile;
 import io.github.vocabhunter.analysis.settings.ExcelListedFile;
 import io.github.vocabhunter.analysis.settings.SessionListedFile;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-import java.util.*;
+import java.time.Duration;
+import java.time.Instant;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Function;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
+import static io.github.vocabhunter.analysis.session.FileNameTool.filename;
 import static java.util.Collections.unmodifiableMap;
 
 @Singleton
 public class FilterFileWordsExtractorImpl implements FilterFileWordsExtractor {
+    private static final Logger LOG = LoggerFactory.getLogger(FilterFileWordsExtractorImpl.class);
+
     private static final Set<Integer> FIRST_COLUMN = Collections.singleton(0);
 
     private final Map<Class<?>, Function<BaseListedFile, List<String>>> extractors = buildExtractorMap();
@@ -44,7 +55,14 @@ public class FilterFileWordsExtractorImpl implements FilterFileWordsExtractor {
         if (extractor == null) {
             throw new VocabHunterException("Unknown file type " + file);
         } else {
-            return extractor.apply(file);
+            Instant start = Instant.now();
+            List<String> result = extractor.apply(file);
+            Instant end = Instant.now();
+            Duration duration = Duration.between(start, end);
+
+            LOG.info("Read filter file and found {} words in {}ms ({})", result.size(), duration.toMillis(), filename(file.getFile()));
+
+            return result;
         }
     }
 
@@ -73,7 +91,7 @@ public class FilterFileWordsExtractorImpl implements FilterFileWordsExtractor {
     }
 
     private Map<Class<?>, Function<BaseListedFile, List<String>>> buildExtractorMap() {
-        Map<Class<?>, Function<BaseListedFile, List<String>>> map = new HashMap<>();
+        Map<Class<?>, Function<BaseListedFile, List<String>>> map = new ConcurrentHashMap<>();
 
         map.put(SessionListedFile.class, this::extractSessionListedFile);
         map.put(ExcelListedFile.class, this::extractExcelListedFile);

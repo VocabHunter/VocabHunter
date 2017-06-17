@@ -8,5 +8,7 @@ import java.util.concurrent.ExecutorService;
 
 
 public interface ThreadPoolTool {
-    ExecutorService singleDaemonExecutor(final String name);
+    ExecutorService singleDaemonExecutor(String name);
+
+    ExecutorService daemonExecutor(String name, int threadCount);
 }
