@@ -15,11 +15,32 @@
 
     <rule ref="rulesets/java/braces.xml"/>
 
+    <rule ref="rulesets/java/clone.xml"/>
+
+    <rule ref="rulesets/java/codesize.xml">
+        <exclude name="TooManyMethods"/>
+        <exclude name="TooManyFields"/>
+    </rule>
+
+    <rule ref="rulesets/java/controversial.xml/UnnecessaryConstructor"/>
+    <rule ref="rulesets/java/controversial.xml/AssignmentInOperand"/>
+    <rule ref="rulesets/java/controversial.xml/DontImportSun"/>
+    <rule ref="rulesets/java/controversial.xml/SuspiciousOctalEscape"/>
+    <rule ref="rulesets/java/controversial.xml/UnnecessaryParentheses"/>
+    <rule ref="rulesets/java/controversial.xml/AvoidUsingNativeCode"/>
+    <rule ref="rulesets/java/controversial.xml/AvoidAccessibilityAlteration"/>
+    <rule ref="rulesets/java/controversial.xml/OneDeclarationPerLine"/>
+
+    <rule ref="rulesets/java/coupling.xml">
+        <exclude name="CouplingBetweenObjects"/>
+        <exclude name="ExcessiveImports"/>
+        <exclude name="LoosePackageCoupling"/>
+        <exclude name="LawOfDemeter"/>
+    </rule>
+
     <rule ref="rulesets/java/design.xml">
         <exclude name="AccessorMethodGeneration"/>
     </rule>
-
-    <rule ref="rulesets/java/clone.xml"/>
 
     <rule ref="rulesets/java/empty.xml"/>
 
@@ -29,26 +50,37 @@
         <exclude name="TooManyStaticImports"/>
     </rule>
 
+    <rule ref="rulesets/java/junit.xml">
+        <exclude name="JUnitTestContainsTooManyAsserts"/>
+    </rule>
+
     <rule ref="rulesets/java/logging-java.xml"/>
+
+    <rule ref="rulesets/java/naming.xml">
+        <exclude name="ShortVariable"/>
+        <exclude name="LongVariable"/>
+        <exclude name="AvoidFieldNameMatchingMethodName"/>
+    </rule>
 
     <rule ref="rulesets/java/migrating.xml"/>
 
-    <rule ref="rulesets/java/sunsecure.xml"/>
+    <rule ref="rulesets/java/optimizations.xml">
+        <exclude name="LocalVariableCouldBeFinal"/>
+        <exclude name="RedundantFieldInitializer"/>
+        <exclude name="AvoidInstantiatingObjectsInLoops"/>
+    </rule>
 
-    <rule ref="rulesets/java/unusedcode.xml"/>
+    <rule ref="rulesets/java/sunsecure.xml"/>
 
     <rule ref="rulesets/java/strings.xml">
         <exclude name="AvoidDuplicateLiterals"/>
     </rule>
 
-    <rule ref="rulesets/java/codesize.xml">
-        <exclude name="TooManyMethods"/>
-        <exclude name="TooManyFields"/>
+    <rule ref="rulesets/java/typeresolution.xml">
+        <exclude name="SignatureDeclareThrowsException"/>
     </rule>
 
-    <rule ref="rulesets/java/junit.xml">
-        <exclude name="JUnitTestContainsTooManyAsserts"/>
-    </rule>
+    <rule ref="rulesets/java/unusedcode.xml"/>
 
     <rule ref="rulesets/java/unnecessary.xml"/>
 

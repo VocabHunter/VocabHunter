@@ -36,7 +36,7 @@ public enum FileFormatType {
 
     public static final List<FileFormatType> TYPES_WORD_GRIDS = listOf(DOCUMENT, SPREADSHEET);
 
-    private static final Map<ExtensionFilter, FileFormatType> types = Stream.of(FileFormatType.values())
+    private static final Map<ExtensionFilter, FileFormatType> TYPES = Stream.of(FileFormatType.values())
         .collect(toMap(FileFormatType::getFilter, identity()));
 
     private final ExtensionFilter filter;
@@ -54,7 +54,7 @@ public enum FileFormatType {
     }
 
     public static FileFormatType getByFilter(final ExtensionFilter filter) {
-        FileFormatType result = types.get(filter);
+        FileFormatType result = TYPES.get(filter);
 
         if (result == null) {
             throw new VocabHunterException("Unknown type " + filter.getDescription());
