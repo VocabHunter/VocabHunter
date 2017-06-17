@@ -22,14 +22,17 @@
         <exclude name="TooManyFields"/>
     </rule>
 
-    <rule ref="rulesets/java/controversial.xml/UnnecessaryConstructor"/>
-    <rule ref="rulesets/java/controversial.xml/AssignmentInOperand"/>
-    <rule ref="rulesets/java/controversial.xml/DontImportSun"/>
-    <rule ref="rulesets/java/controversial.xml/SuspiciousOctalEscape"/>
-    <rule ref="rulesets/java/controversial.xml/UnnecessaryParentheses"/>
-    <rule ref="rulesets/java/controversial.xml/AvoidUsingNativeCode"/>
-    <rule ref="rulesets/java/controversial.xml/AvoidAccessibilityAlteration"/>
-    <rule ref="rulesets/java/controversial.xml/OneDeclarationPerLine"/>
+    <rule ref="rulesets/java/controversial.xml">
+        <exclude name="NullAssignment"/>
+        <exclude name="OnlyOneReturn"/>
+        <exclude name="AtLeastOneConstructor"/>
+        <exclude name="DataflowAnomalyAnalysis"/>
+        <exclude name="UseConcurrentHashMap"/>
+        <exclude name="AvoidLiteralsInIfCondition"/>
+        <exclude name="CallSuperInConstructor"/>
+        <exclude name="AvoidPrefixingMethodParameters"/>
+        <exclude name="DefaultPackage"/>
+    </rule>
 
     <rule ref="rulesets/java/coupling.xml">
         <exclude name="CouplingBetweenObjects"/>
