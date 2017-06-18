@@ -85,7 +85,7 @@ subprojects {
     jacocoTestReport {
         reports {
             xml.enabled true
-            xml.destination "${buildDir}/reports/jacoco/report.xml"
+            xml.destination file("${buildDir}/reports/jacoco/report.xml")
         }
     }
 
