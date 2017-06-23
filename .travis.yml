@@ -27,7 +27,7 @@ cache:
 install: true
 
 script:
-  - ./gradlew clean build jacocoTestReport jfxNative sonarqube -info
+  - ./gradlew clean build jacocoTestReport jfxNative -info
 
 after_success:
   - bash <(curl -s https://codecov.io/bash)
