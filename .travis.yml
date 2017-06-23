@@ -27,7 +27,7 @@ cache:
 install: true
 
 script:
-  - ./gradlew clean build jacocoTestReport jfxNative -info
+  - ./gradlew clean build jacocoTestReport jfxNative sonarqube -info
 
 after_success:
   - bash <(curl -s https://codecov.io/bash)
@@ -43,3 +43,9 @@ deploy:
   on:
     tags: true
     repo: VocabHunter/VocabHunter
+
+addons:
+  sonarcloud:
+    organization: vocabhunter
+    token:
+        secure: "tzjZpESSyrtvh6OV9C30QbIUCmyG7E04qnJ5rjB1rVlnzfds8y7IXBpyqL17lCCXWirwj+0wGopWQNzcF3wmKTqu4c77jOuh3ANxOr4fSTgoEi5GxHJ2FWlJndirK3REORP1nGl/l50izbe10QcM5bT5UAfImOot7ZEgG9799++0Z0SW9DiFfhrD0ojjTNHOldCKDAilxUE2O4lGoUdBn3CkZIyA8es4YjiVk9AcKIQcZQhLqZ9nGyN+K/p/ICp7IRG9TMTKrAj7e5LQ/7qgaaKPgR+dGVGzadu2+bpPFgJNRabjd1vyd36vXRgCLA0DHb+KCUHeO59e8uXTPQLvCoBJ6t4OPzYkzAnTv5nWWcbtSSl+IqsL27ojK08+Eg4Ds8/CRWY6uDFB6BtSgkRj52jU7j8MldjLvk/BVOmvKZPWonrogXQggQSmR94u6oT48xLeXn9Pf1/MrrvwHEZ2kEeNDekHmLAEBht0Wq9kLgYxSxA5cFfzv2nePLT71rISTMA9O8T/qdFurhm0balSg9EDqtZJFazO+c/lDnpo7kSgb/AOPPqxY+exoSOdeEWu34w/AckxmgzpgHf9Cjby3DFZ76q7pJQKNDiejhhk6v9NybgTr+qjCFFugk3KgV15u+gNX56hEfC58kNF9iTBAt6zfoGo5S1BxfypTSrkmK4="
