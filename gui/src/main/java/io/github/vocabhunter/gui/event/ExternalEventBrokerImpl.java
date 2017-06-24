@@ -30,6 +30,7 @@ public final class ExternalEventBrokerImpl implements ExternalEventListener, Ext
         try {
             openFileEvents.put(event);
         } catch (final InterruptedException e) {
+            Thread.currentThread().interrupt();
             throw new VocabHunterException("Unable to register event", e);
         }
     }
@@ -49,6 +50,7 @@ public final class ExternalEventBrokerImpl implements ExternalEventListener, Ext
 
                 Platform.runLater(() -> listener.fireOpenFileEvent(event));
             } catch (final InterruptedException e) {
+                Thread.currentThread().interrupt();
                 isRunning = false;
             }
         }

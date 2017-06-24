@@ -53,6 +53,7 @@ public class GuiTaskHandlerImpl implements GuiTaskHandler {
             Thread.sleep(WAIT_MILLIS);
         } catch (final InterruptedException e) {
             LOG.debug("Thread woken unexpectedly", e);
+            Thread.currentThread().interrupt();
         }
         executeOnGuiThread(task);
     }
