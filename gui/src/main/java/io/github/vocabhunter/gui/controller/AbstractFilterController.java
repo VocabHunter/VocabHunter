@@ -8,6 +8,7 @@ import io.github.vocabhunter.gui.dialogues.FileDialogueFactory;
 import io.github.vocabhunter.gui.model.AbstractFilterModel;
 import io.github.vocabhunter.gui.model.FilterFileModel;
 import io.github.vocabhunter.gui.view.ErrorClassTool;
+import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -16,15 +17,20 @@ import javafx.stage.Stage;
 public abstract class AbstractFilterController<T extends AbstractFilterModel> {
     private final FileDialogueFactory factory;
 
-    public TextField fieldFile;
+    @FXML
+    private TextField fieldFile;
 
-    public Button buttonChangeFile;
+    @FXML
+    private Button buttonChangeFile;
 
-    public Button buttonAddFilterFile;
+    @FXML
+    private Button buttonAddFilterFile;
 
-    public Button buttonCancel;
+    @FXML
+    private Button buttonCancel;
 
-    public Label labelTotalWords;
+    @FXML
+    private Label labelTotalWords;
 
     protected AbstractFilterController(final FileDialogueFactory factory) {
         this.factory = factory;
