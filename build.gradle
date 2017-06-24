@@ -23,11 +23,13 @@ buildscript {
     dependencies {
         classpath 'com.github.ben-manes:gradle-versions-plugin:0.15.0'
         classpath 'net.researchgate:gradle-release:2.6.0'
+        classpath 'org.sonarsource.scanner.gradle:sonarqube-gradle-plugin:2.5'
     }
 }
 
 apply plugin: 'base'
 apply plugin: 'net.researchgate.release'
+apply plugin: 'org.sonarqube'
 
 subprojects {
 
