@@ -6,7 +6,6 @@ package io.github.vocabhunter.analysis.session;
 
 import io.github.vocabhunter.analysis.core.FileTool;
 import io.github.vocabhunter.analysis.core.VocabHunterException;
-import io.github.vocabhunter.analysis.marked.MarkedWord;
 import io.github.vocabhunter.analysis.simple.WordStreamTool;
 
 import java.nio.file.Path;
@@ -24,7 +23,7 @@ public final class SessionSerialiser {
         FileTool.writeAsJson(file, state, "Unable to save file '%s'");
     }
 
-    public static List<? extends MarkedWord> readMarkedWords(final Path file) {
+    public static List<SessionWord> readMarkedWords(final Path file) {
         return readForMarkedWords(file).getOrderedUses();
     }
 

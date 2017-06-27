@@ -54,7 +54,7 @@ public class SessionWordsToolImpl implements SessionWordsTool {
     }
 
     @Override
-    public List<? extends MarkedWord> readMarkedWords(final Path file) {
+    public List<SessionWord> readMarkedWords(final Path file) {
         try {
             return SessionSerialiser.readMarkedWords(file);
         } catch (final Exception e) {
