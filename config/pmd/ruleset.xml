@@ -55,6 +55,7 @@
 
     <rule ref="rulesets/java/junit.xml">
         <exclude name="JUnitTestContainsTooManyAsserts"/>
+        <exclude name="JUnitAssertionsShouldIncludeMessage"/>
     </rule>
 
     <rule ref="rulesets/java/logging-java.xml"/>
