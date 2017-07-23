@@ -4,7 +4,7 @@
 
 package io.github.vocabhunter.analysis.model;
 
-import io.github.vocabhunter.analysis.simple.WordStreamTool;
+import io.github.vocabhunter.analysis.core.PreferredFormTool;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
@@ -23,7 +23,7 @@ public final class WordUse implements AnalysisWord {
     public WordUse(final WordUse w1, final WordUse w2, final boolean isSingleLine) {
         lineNos = lineNos(w1, w2, isSingleLine);
         this.useCount = w1.getUseCount() + w2.getUseCount();
-        this.wordIdentifier = WordStreamTool.preferredForm(w1.getWordIdentifier(), w2.getWordIdentifier());
+        this.wordIdentifier = PreferredFormTool.preferredForm(w1.getWordIdentifier(), w2.getWordIdentifier());
     }
 
     public WordUse(final String wordIdentifier, final int lineNo) {

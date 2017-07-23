@@ -2,14 +2,14 @@
  * Open Source Software published under the Apache Licence, Version 2.0.
  */
 
-package io.github.vocabhunter.analysis.simple;
+package io.github.vocabhunter.analysis.core;
 
 import org.junit.Test;
 
-import static io.github.vocabhunter.analysis.simple.WordStreamTool.preferredForm;
+import static io.github.vocabhunter.analysis.core.PreferredFormTool.preferredForm;
 import static junit.framework.TestCase.assertEquals;
 
-public class WordStreamToolPreferredFormTest {
+public class PreferredFormToolTest {
     @Test
     public void testIdenticalUpper() {
         validate("Word", "Word", "Word");

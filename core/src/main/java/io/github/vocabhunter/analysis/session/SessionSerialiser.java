@@ -5,6 +5,7 @@
 package io.github.vocabhunter.analysis.session;
 
 import io.github.vocabhunter.analysis.core.FileTool;
+import io.github.vocabhunter.analysis.core.PreferredFormTool;
 import io.github.vocabhunter.analysis.core.VocabHunterException;
 import io.github.vocabhunter.analysis.simple.WordStreamTool;
 
@@ -133,7 +134,7 @@ public final class SessionSerialiser {
         return uses.stream()
             .flatMap(WordStreamTool::words)
             .filter(w -> w.equalsIgnoreCase(oldIdentifier))
-            .reduce(WordStreamTool::preferredForm)
+            .reduce(PreferredFormTool::preferredForm)
             .orElse(oldIdentifier);
     }
 }
