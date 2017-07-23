@@ -5,9 +5,9 @@
 package io.github.vocabhunter.analysis.file;
 
 import io.github.vocabhunter.analysis.model.Analyser;
-import io.github.vocabhunter.analysis.model.AnalysisWord;
 import io.github.vocabhunter.analysis.session.EnrichedSessionState;
 import io.github.vocabhunter.analysis.session.SessionState;
+import io.github.vocabhunter.analysis.session.SessionWord;
 import io.github.vocabhunter.analysis.simple.SimpleAnalyser;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -23,7 +23,7 @@ import static org.junit.Assert.assertEquals;
 public class AnalysisSystemTest {
     private static final String INPUT_DOCUMENT = "bleak-house.txt";
 
-    private static List<? extends AnalysisWord> words;
+    private static List<SessionWord> words;
 
     @BeforeClass
     public static void setUpClass() throws Exception {
@@ -39,24 +39,36 @@ public class AnalysisSystemTest {
 
     @Test
     public void testWordThe() throws Exception {
-        validate("the", 14922);
+        validate("the", 14922, 8325);
     }
 
     @Test
     public void testWordLondon() throws Exception {
-        validate("London", 83);
+        validate("London", 83, 83);
     }
 
-    private void validate(final String identifier, final int count) {
-        List<AnalysisWord> found = words.stream()
+    private void validate(final String identifier, final int useCount, final int lineCount) {
+        List<SessionWord> found = words.stream()
             .filter(w -> w.getWordIdentifier().equalsIgnoreCase(identifier))
             .collect(Collectors.toList());
 
         assertEquals("List size", 1, found.size());
 
-        AnalysisWord word = found.get(0);
+        SessionWord word = found.get(0);
 
         assertEquals("Word", identifier, word.getWordIdentifier());
-        assertEquals("Count", count, word.getUseCount());
+        assertEquals("Use count", useCount, word.getUseCount());
+        validateLines(word.getLineNos(), lineCount);
+    }
+
+    private void validateLines(final List<Integer> lines, final int lineCount) {
+        assertEquals("Line number count", lineCount, lines.size());
+
+        List<Integer> orderedDistinct = lines.stream()
+            .sorted()
+            .distinct()
+            .collect(Collectors.toList());
+
+        assertEquals("Distinct ordered lines", orderedDistinct, lines);
     }
 }
