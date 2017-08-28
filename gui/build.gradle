@@ -41,7 +41,7 @@ dependencies {
     compile 'org.controlsfx:controlsfx:8.40.12'
     compile 'de.jensd:fontawesomefx-fontawesome:4.7.0-5'
     testCompile project(path: ':core', configuration: 'tests')
-    testCompile 'org.testfx:testfx-core:4.0.6-alpha'
+    testCompile 'org.testfx:testfx-core:4.0.7-alpha'
     testRuntime 'org.jfxtras:openjfx-monocle:1.8.0_20'
     runtime 'org.codehaus.janino:janino:3.0.7'
 }
