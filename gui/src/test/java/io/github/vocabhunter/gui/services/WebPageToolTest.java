@@ -47,7 +47,7 @@ public class WebPageToolTest {
     @Test
     public void testShowWebPage() {
         target.showWebPage(WEB_PAGE);
-        verify(executorService).submit(captor.capture());
+        verify(executorService).execute(captor.capture());
         captor.getValue().run();
         verify(pageOpener).accept(WEB_PAGE);
     }

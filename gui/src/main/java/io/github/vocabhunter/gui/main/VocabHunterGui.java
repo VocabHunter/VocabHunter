@@ -6,6 +6,7 @@ package io.github.vocabhunter.gui.main;
 
 import io.github.vocabhunter.gui.common.Placement;
 import io.github.vocabhunter.gui.controller.*;
+import io.github.vocabhunter.gui.model.FilterSettingsTool;
 import io.github.vocabhunter.gui.model.MainModel;
 import io.github.vocabhunter.gui.services.PlacementManager;
 import io.github.vocabhunter.gui.view.ViewFxml;
@@ -14,12 +15,16 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
 @Singleton
 public class VocabHunterGui {
+    private static final Logger LOG = LoggerFactory.getLogger(VocabHunterGui.class);
+
     @Inject
     private FXMLLoader mainLoader;
 
@@ -47,6 +52,9 @@ public class VocabHunterGui {
     @Inject
     private SessionStateHandler sessionStateHandler;
 
+    @Inject
+    private FilterSettingsTool filterSettingsTool;
+
     public void start(final Stage stage) {
         Parent root = ViewFxml.MAIN.loadNode(mainLoader);
 
@@ -67,6 +75,10 @@ public class VocabHunterGui {
             stage.setY(placement.getY());
         }
         stage.show();
+        LOG.info("User interface started");
+
+        // We delay starting the async filtering to allow the GUI to start quickly
+        filterSettingsTool.beginAsyncFiltering();
     }
 
     private void initialise(final Stage stage) {

@@ -8,7 +8,7 @@ import javafx.application.Platform;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executor;
 import java.util.function.Consumer;
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -19,7 +19,7 @@ public class GuiTaskHandlerImpl implements GuiTaskHandler {
 
     private static final int WAIT_MILLIS = 100;
 
-    private final ExecutorService executorService;
+    private final Executor executor;
 
     private final Consumer<Runnable> guiThreadRunner;
 
@@ -29,13 +29,13 @@ public class GuiTaskHandlerImpl implements GuiTaskHandler {
     }
 
     public GuiTaskHandlerImpl(final ThreadPoolTool threadPoolTool, final Consumer<Runnable> guiThreadRunner) {
-        this.executorService = threadPoolTool.singleDaemonExecutor("GUI Background Task");
+        this.executor = threadPoolTool.singleDaemonExecutor("GUI Background Task");
         this.guiThreadRunner = guiThreadRunner;
     }
 
     @Override
     public void executeInBackground(final Runnable task) {
-        executorService.execute(task);
+        executor.execute(task);
     }
 
     @Override
@@ -45,7 +45,7 @@ public class GuiTaskHandlerImpl implements GuiTaskHandler {
 
     @Override
     public void pauseThenExecuteOnGuiThread(final Runnable task) {
-        executorService.execute(() -> waitAndRun(task));
+        executor.execute(() -> waitAndRun(task));
     }
 
     private void waitAndRun(final Runnable task) {

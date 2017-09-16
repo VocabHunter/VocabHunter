@@ -4,11 +4,12 @@
 
 package io.github.vocabhunter.analysis.core;
 
-import java.util.concurrent.ExecutorService;
-
+import java.util.concurrent.Executor;
 
 public interface ThreadPoolTool {
-    ExecutorService singleDaemonExecutor(String name);
+    Executor singleDaemonExecutor(String name);
 
-    ExecutorService daemonExecutor(String name, int threadCount);
+    DelayedExecutor delayedExecutor(String name, int threadCount);
+
+    void forceShutdown();
 }
