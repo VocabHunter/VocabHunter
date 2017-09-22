@@ -26,15 +26,14 @@ import io.github.vocabhunter.gui.settings.SettingsManager;
 import io.github.vocabhunter.gui.settings.SettingsManagerImpl;
 import io.github.vocabhunter.test.utils.TestFileManager;
 import javafx.stage.Stage;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.MockitoAnnotations;
 import org.testfx.api.FxRobot;
 
 import java.io.IOException;
@@ -46,12 +45,11 @@ import static io.github.vocabhunter.gui.main.GuiTestConstants.WINDOW_HEIGHT;
 import static io.github.vocabhunter.gui.main.GuiTestConstants.WINDOW_WIDTH;
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 import static org.testfx.api.FxToolkit.registerPrimaryStage;
 import static org.testfx.api.FxToolkit.setupApplication;
 
-@RunWith(MockitoJUnitRunner.class)
 public class GuiTest extends FxRobot implements GuiTestValidator {
 
     private TestFileManager manager;
@@ -74,7 +72,12 @@ public class GuiTest extends FxRobot implements GuiTestValidator {
     @Captor
     private ArgumentCaptor<String> webPageCaptor;
 
-    @BeforeClass
+    @BeforeEach
+    public void initMocks() {
+        MockitoAnnotations.initMocks(this);
+    }
+
+    @BeforeAll
     public static void setupSpec() throws Exception {
         if (Boolean.getBoolean("headless")) {
             System.setProperty("testfx.robot", "glass");
@@ -86,7 +89,7 @@ public class GuiTest extends FxRobot implements GuiTestValidator {
         registerPrimaryStage();
     }
 
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         when(environmentManager.useSystemMenuBar()).thenReturn(false);
         when(environmentManager.isExitOptionShown()).thenReturn(true);
@@ -134,7 +137,7 @@ public class GuiTest extends FxRobot implements GuiTestValidator {
         when(fileDialogue.getFileFormatType()).thenReturn(fileType);
     }
 
-    @After
+    @AfterEach
     public void tearDown() throws Exception {
         manager.cleanup();
     }
@@ -163,7 +166,7 @@ public class GuiTest extends FxRobot implements GuiTestValidator {
     @Override
     public void validateWebPage(final String page) {
         verify(webPageTool, atLeastOnce()).showWebPage(webPageCaptor.capture());
-        assertEquals("Website", page, webPageCaptor.getValue());
+        assertEquals(page, webPageCaptor.getValue(), "Website");
     }
 
     private String readFile(final Path file) {
@@ -178,6 +181,6 @@ public class GuiTest extends FxRobot implements GuiTestValidator {
     public void validateSavedSession(final Path file, final String name) {
         EnrichedSessionState state = SessionSerialiser.read(file);
 
-        assertEquals("Session state name", name, state.getState().getName());
+        assertEquals(name, state.getState().getName(), "Session state name");
     }
 }

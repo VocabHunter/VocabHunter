@@ -5,9 +5,9 @@
 package io.github.vocabhunter.gui.settings;
 
 import io.github.vocabhunter.test.utils.TestFileManager;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -18,7 +18,9 @@ import java.util.function.Supplier;
 
 import static io.github.vocabhunter.gui.settings.SettingsManagerImpl.SETTINGS_JSON;
 import static io.github.vocabhunter.gui.settings.VocabHunterSettings.*;
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class SettingsManagerTest {
     private static final int UPDATE_INT_VALUE = 12345;
@@ -33,7 +35,7 @@ public class SettingsManagerTest {
 
     private SettingsManager target;
 
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         files = new TestFileManager(getClass());
         Path settingsFile = files.addFile(SETTINGS_JSON);
@@ -41,7 +43,7 @@ public class SettingsManagerTest {
         target = new SettingsManagerImpl(settingsFile);
     }
 
-    @After
+    @AfterEach
     public void tearDown() throws Exception {
         files.cleanup();
     }
@@ -129,15 +131,15 @@ public class SettingsManagerTest {
     @Test
     public void testUpdateAllowInitialCapitals() {
         target.setAllowInitialCapitals(false);
-        assertFalse("Disallow initial capital", target.isAllowInitialCapitals());
+        assertFalse(target.isAllowInitialCapitals(), "Disallow initial capital");
 
         target.setAllowInitialCapitals(true);
-        assertTrue("Allow initial capital", target.isAllowInitialCapitals());
+        assertTrue(target.isAllowInitialCapitals(), "Allow initial capital");
     }
 
     @Test
     public void testMissingAllowInitialCapitals() {
-        assertEquals("Missing initial capital", DEFAULT_ALLOW_INITIAL_CAPITALS, target.isAllowInitialCapitals());
+        assertEquals(DEFAULT_ALLOW_INITIAL_CAPITALS, target.isAllowInitialCapitals(), "Missing initial capital");
     }
 
     @Test
@@ -153,7 +155,7 @@ public class SettingsManagerTest {
     private void validateGetDefaultPath(final Supplier<Path> getter) {
         Path path = getter.get();
 
-        assertEquals("Default path", home, path);
+        assertEquals(home, path, "Default path");
     }
 
     private void validateUpdatePath(final Supplier<Path> getter, final Consumer<Path> setter) throws Exception {
@@ -178,26 +180,26 @@ public class SettingsManagerTest {
         setter.accept(value);
         T path = getter.get();
 
-        assertEquals("Saved value", expected, path);
+        assertEquals(expected, path, "Saved value");
     }
 
     private void validateMissingInt(final Supplier<Integer> getter, final int expected) {
         int actual = getter.get();
 
-        assertEquals("Default int", expected, actual);
+        assertEquals(expected, actual, "Default int");
     }
 
     private void validateUpdateInt(final Supplier<Integer> getter, final Consumer<Integer> setter) {
         setter.accept(UPDATE_INT_VALUE);
         int actual = getter.get();
 
-        assertEquals("Updated int", UPDATE_INT_VALUE, actual);
+        assertEquals(UPDATE_INT_VALUE, actual, "Updated int");
     }
 
     private void validateEmpty(final Supplier<Optional<?>> getter) {
         Optional<?> o = getter.get();
 
-        assertFalse("Empty", o.isPresent());
+        assertFalse(o.isPresent(), "Empty");
     }
 
     private WindowSettings buildWindowSettings() {

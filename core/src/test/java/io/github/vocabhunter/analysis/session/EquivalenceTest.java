@@ -6,15 +6,15 @@ package io.github.vocabhunter.analysis.session;
 
 import io.github.vocabhunter.analysis.core.CoreTool;
 import io.github.vocabhunter.analysis.marked.WordState;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 import static io.github.vocabhunter.analysis.session.TestSessionStateTool.*;
-import static junit.framework.TestCase.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class EquivalenceTest {
     public final SessionState state1 = buildSession();

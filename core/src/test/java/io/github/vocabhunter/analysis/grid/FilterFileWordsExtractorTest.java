@@ -10,11 +10,11 @@ import io.github.vocabhunter.analysis.settings.BaseListedFile;
 import io.github.vocabhunter.analysis.settings.DocumentListedFile;
 import io.github.vocabhunter.analysis.settings.ExcelListedFile;
 import io.github.vocabhunter.analysis.settings.SessionListedFile;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.MockitoAnnotations;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -26,10 +26,10 @@ import static io.github.vocabhunter.analysis.core.CoreTool.listOf;
 import static io.github.vocabhunter.analysis.grid.GridTestTool.acceptedCell;
 import static java.util.Collections.emptyList;
 import static java.util.Collections.singleton;
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.when;
 
-@RunWith(MockitoJUnitRunner.class)
 public class FilterFileWordsExtractorTest {
     private static final Path FILE = Paths.get("test");
 
@@ -64,6 +64,11 @@ public class FilterFileWordsExtractorTest {
     @InjectMocks
     private FilterFileWordsExtractorImpl target;
 
+    @BeforeEach
+    public void initMocks() {
+        MockitoAnnotations.initMocks(this);
+    }
+
     @Test
     public void testSessionKnown() {
         when(sessionWordsTool.knownWords(FILE)).thenReturn(WORDS);
@@ -94,9 +99,9 @@ public class FilterFileWordsExtractorTest {
         validate(FILE_DOCUMENT);
     }
 
-    @Test(expected = VocabHunterException.class)
+    @Test
     public void testUnknownType() {
-        target.extract(unsupportedFile);
+        assertThrows(VocabHunterException.class, () -> target.extract(unsupportedFile));
     }
 
     private void validate(final BaseListedFile listedFile) {

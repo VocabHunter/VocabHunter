@@ -24,6 +24,7 @@ buildscript {
         classpath 'com.github.ben-manes:gradle-versions-plugin:0.15.0'
         classpath 'net.researchgate:gradle-release:2.6.0'
         classpath 'org.sonarsource.scanner.gradle:sonarqube-gradle-plugin:2.5'
+        classpath 'org.junit.platform:junit-platform-gradle-plugin:1.0.0'
     }
 }
 
@@ -39,6 +40,7 @@ subprojects {
     apply plugin: 'findbugs'
     apply plugin: 'jacoco'
     apply plugin: 'com.github.ben-manes.versions'
+    apply plugin: 'org.junit.platform.gradle.plugin'
 
     sourceCompatibility = 1.8
     targetCompatibility = 1.8
@@ -48,7 +50,8 @@ subprojects {
     }
 
     dependencies {
-        testCompile 'junit:junit:4.12'
+        testCompile 'org.junit.jupiter:junit-jupiter-api:5.0.0'
+        testRuntime 'org.junit.jupiter:junit-jupiter-engine:5.0.0'
         testCompile 'org.mockito:mockito-core:2.10.0'
         runtime 'ch.qos.logback:logback-classic:1.2.3'
     }
@@ -82,12 +85,21 @@ subprojects {
 
     jacoco {
         toolVersion = '0.7.9'
+        applyTo junitPlatformTest
     }
 
-    jacocoTestReport {
-        reports {
-            xml.enabled true
-            xml.destination file("${buildDir}/reports/jacoco/report.xml")
+    if (it.name in ['core', 'gui']) {
+        jacocoTestReport {
+            reports {
+                xml.enabled true
+                xml.destination file("${buildDir}/reports/jacoco/report.xml")
+            }
+        }
+    }
+
+    junitPlatformTest {
+        jacoco {
+            destinationFile = file("$buildDir/jacoco/test.exec")
         }
     }
 

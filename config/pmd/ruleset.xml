@@ -66,7 +66,10 @@
         <exclude name="AvoidFieldNameMatchingMethodName"/>
     </rule>
 
-    <rule ref="rulesets/java/migrating.xml"/>
+    <rule ref="rulesets/java/migrating.xml">
+        <exclude name="JUnit4TestShouldUseBeforeAnnotation"/>
+        <exclude name="JUnit4TestShouldUseAfterAnnotation"/>
+    </rule>
 
     <rule ref="rulesets/java/optimizations.xml">
         <exclude name="LocalVariableCouldBeFinal"/>

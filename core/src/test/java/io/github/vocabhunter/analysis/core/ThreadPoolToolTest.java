@@ -4,15 +4,15 @@
 
 package io.github.vocabhunter.analysis.core;
 
-import org.junit.After;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Test;
 
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Future;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 public class ThreadPoolToolTest {
     private static final int EXPECTED_RESULT = 123;
@@ -25,14 +25,14 @@ public class ThreadPoolToolTest {
     public void testSingleDaemonExecutor() {
         Executor service = target.singleDaemonExecutor("test");
 
-        assertNotNull("Executor service", service);
+        assertNotNull(service, "Executor service");
     }
 
     @Test
     public void testMultipleDaemonExecutor() {
         Executor service = target.delayedExecutor("test", THREAD_COUNT);
 
-        assertNotNull("Executor service", service);
+        assertNotNull(service, "Executor service");
     }
 
     @Test
@@ -55,10 +55,10 @@ public class ThreadPoolToolTest {
         Future<Integer> future = CompletableFuture.supplyAsync(() -> EXPECTED_RESULT, service);
         int result = future.get();
 
-        assertEquals("Result", EXPECTED_RESULT, result);
+        assertEquals(EXPECTED_RESULT, result, "Result");
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         target.forceShutdown();
     }

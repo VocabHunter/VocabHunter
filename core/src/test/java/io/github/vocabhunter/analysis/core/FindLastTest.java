@@ -4,12 +4,12 @@
 
 package io.github.vocabhunter.analysis.core;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
 import java.util.OptionalInt;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class FindLastTest {
     private enum Word {

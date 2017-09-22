@@ -9,8 +9,8 @@ import io.github.vocabhunter.analysis.session.EnrichedSessionState;
 import io.github.vocabhunter.analysis.session.SessionState;
 import io.github.vocabhunter.analysis.session.SessionWord;
 import io.github.vocabhunter.analysis.simple.SimpleAnalyser;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 
 import java.net.URL;
 import java.nio.file.Path;
@@ -18,14 +18,14 @@ import java.nio.file.Paths;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class AnalysisSystemTest {
     private static final String INPUT_DOCUMENT = "bleak-house.txt";
 
     private static List<SessionWord> words;
 
-    @BeforeClass
+    @BeforeAll
     public static void setUpClass() throws Exception {
         Analyser analyser = new SimpleAnalyser();
         FileStreamer target = new FileStreamer(analyser);
@@ -52,23 +52,23 @@ public class AnalysisSystemTest {
             .filter(w -> w.getWordIdentifier().equalsIgnoreCase(identifier))
             .collect(Collectors.toList());
 
-        assertEquals("List size", 1, found.size());
+        assertEquals(1, found.size(), "List size");
 
         SessionWord word = found.get(0);
 
-        assertEquals("Word", identifier, word.getWordIdentifier());
-        assertEquals("Use count", useCount, word.getUseCount());
+        assertEquals(identifier, word.getWordIdentifier(), "Word");
+        assertEquals(useCount, word.getUseCount(), "Use count");
         validateLines(word.getLineNos(), lineCount);
     }
 
     private void validateLines(final List<Integer> lines, final int lineCount) {
-        assertEquals("Line number count", lineCount, lines.size());
+        assertEquals(lineCount, lines.size(), "Line number count");
 
         List<Integer> orderedDistinct = lines.stream()
             .sorted()
             .distinct()
             .collect(Collectors.toList());
 
-        assertEquals("Distinct ordered lines", orderedDistinct, lines);
+        assertEquals(orderedDistinct, lines, "Distinct ordered lines");
     }
 }

@@ -8,29 +8,29 @@ import io.github.vocabhunter.analysis.marked.WordState;
 import io.github.vocabhunter.analysis.session.SessionState;
 import io.github.vocabhunter.analysis.session.SessionWord;
 import io.github.vocabhunter.test.utils.TestFileManager;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
 
 import static io.github.vocabhunter.analysis.core.CoreTool.listOf;
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class SelectionExportToolTest {
     private TestFileManager files;
 
     private Path file;
 
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         files = new TestFileManager(getClass());
         file = files.addFile("export.txt");
     }
 
-    @After
+    @AfterEach
     public void tearDown() throws Exception {
         files.cleanup();
     }
@@ -57,7 +57,7 @@ public class SelectionExportToolTest {
         SelectionExportTool.exportSelection(state, file);
 
         List<String> actual = Files.readAllLines(file);
-        assertEquals("File content", listOf(expected), actual);
+        assertEquals(listOf(expected), actual, "File content");
     }
 
     private SessionState state(final SessionWord... words) {

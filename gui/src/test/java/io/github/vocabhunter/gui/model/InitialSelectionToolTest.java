@@ -6,24 +6,25 @@ package io.github.vocabhunter.gui.model;
 
 import io.github.vocabhunter.analysis.core.VocabHunterException;
 import io.github.vocabhunter.analysis.marked.WordState;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 import static io.github.vocabhunter.analysis.marked.WordState.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class InitialSelectionToolTest {
-    @Test(expected = VocabHunterException.class)
+    @Test
     public void testNull() {
-        InitialSelectionTool.nextWord(null);
+        assertThrows(VocabHunterException.class, () -> InitialSelectionTool.nextWord(null));
     }
 
-    @Test(expected = VocabHunterException.class)
+    @Test
     public void testEmpty() {
-        InitialSelectionTool.nextWord(words());
+        assertThrows(VocabHunterException.class, () -> InitialSelectionTool.nextWord(words()));
     }
 
     @Test
@@ -60,7 +61,7 @@ public class InitialSelectionToolTest {
         List<WordModel> words = words(states);
         WordModel result = InitialSelectionTool.nextWord(words);
 
-        Assert.assertEquals("Selected word index", expectedIndex, result.getSequenceNo());
+        assertEquals(expectedIndex, result.getSequenceNo(), "Selected word index");
     }
 
     private List<WordModel> words(final WordState... states) {

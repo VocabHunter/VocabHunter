@@ -6,9 +6,9 @@ package io.github.vocabhunter.gui.model;
 
 import io.github.vocabhunter.analysis.marked.WordState;
 import javafx.beans.binding.NumberBinding;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class ProgressModelTest {
     private final ProgressModel target = new ProgressModel();
@@ -59,13 +59,13 @@ public class ProgressModelTest {
     @Test
     public void testMarked() {
         target.updateProgress(1, 3, 5, 7);
-        assertEquals("Marked", 4, target.markedProperty().intValue());
+        assertEquals(4, target.markedProperty().intValue(), "Marked");
     }
 
     @Test
     public void testTotal() {
         target.updateProgress(1, 3, 5, 7);
-        assertEquals("Total", 16, target.totalProperty().intValue());
+        assertEquals(16, target.totalProperty().intValue(), "Total");
     }
 
     private void initialiseValues() {
@@ -73,10 +73,10 @@ public class ProgressModelTest {
     }
 
     private void validateBasic(final int known, final int unknown, final int unseenUnfiltered, final int unseenFiltered) {
-        assertEquals("Known", known, target.knownProperty().intValue());
-        assertEquals("Unknown", unknown, target.unknownProperty().intValue());
-        assertEquals("Unseen Unfiltered", unseenUnfiltered, target.unseenUnfilteredProperty().intValue());
-        assertEquals("Unseen Filtered", unseenFiltered, target.unseenFilteredProperty().intValue());
+        assertEquals(known, target.knownProperty().intValue(), "Known");
+        assertEquals(unknown, target.unknownProperty().intValue(), "Unknown");
+        assertEquals(unseenUnfiltered, target.unseenUnfilteredProperty().intValue(), "Unseen Unfiltered");
+        assertEquals(unseenFiltered, target.unseenFilteredProperty().intValue(), "Unseen Filtered");
     }
 
     private void validatePercent(final int known, final int unknown, final int unseenUnfiltered, final int unseenFiltered, final int marked, final int remaining) {
@@ -90,6 +90,6 @@ public class ProgressModelTest {
     }
 
     private void validatePercentage(final String name, final int expected, final NumberBinding property) {
-        assertEquals(name, expected, Math.round(property.doubleValue()));
+        assertEquals(expected, Math.round(property.doubleValue()), name);
     }
 }

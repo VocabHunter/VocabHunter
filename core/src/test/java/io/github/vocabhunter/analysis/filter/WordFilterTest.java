@@ -6,14 +6,14 @@ package io.github.vocabhunter.analysis.filter;
 
 import io.github.vocabhunter.analysis.model.AnalysisWord;
 import io.github.vocabhunter.analysis.model.WordUse;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.util.Collections;
 import java.util.List;
 
 import static io.github.vocabhunter.analysis.core.CoreTool.listOf;
 import static java.util.stream.Collectors.toList;
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class WordFilterTest {
     private static final List<AnalysisWord> WORDS = listOf(
@@ -71,7 +71,7 @@ public class WordFilterTest {
             .map(AnalysisWord::getWordIdentifier)
             .collect(toList());
 
-        assertEquals("Filtered words", listOf(expected), actual);
+        assertEquals(listOf(expected), actual, "Filtered words");
     }
 
     private static AnalysisWord word(final String word, final int uses) {

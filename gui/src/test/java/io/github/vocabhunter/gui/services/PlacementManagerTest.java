@@ -7,21 +7,19 @@ package io.github.vocabhunter.gui.services;
 import io.github.vocabhunter.gui.common.Placement;
 import io.github.vocabhunter.gui.settings.SettingsManager;
 import io.github.vocabhunter.gui.settings.WindowSettings;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.MockitoAnnotations;
 
 import java.util.Optional;
 
 import static io.github.vocabhunter.gui.services.PlacementManagerImpl.WINDOW_SIZE_FACTOR;
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
-@RunWith(MockitoJUnitRunner.class)
 public class PlacementManagerTest {
     private static final Placement SCREEN_SIZE = new Placement(1, 2);
 
@@ -38,7 +36,12 @@ public class PlacementManagerTest {
     @InjectMocks
     private PlacementManagerImpl target;
 
-    @Before
+    @BeforeEach
+    public void initMocks() {
+        MockitoAnnotations.initMocks(this);
+    }
+
+    @BeforeEach
     public void setUp() {
         windowSettings.setWidth(1);
         windowSettings.setHeight(2);
@@ -54,7 +57,7 @@ public class PlacementManagerTest {
 
         Placement result = target.getMainWindow();
 
-        assertEquals("Visible settings", result, new Placement(1, 2, 3, 4));
+        assertEquals(result, new Placement(1, 2, 3, 4), "Visible settings");
     }
 
     @Test
@@ -64,7 +67,7 @@ public class PlacementManagerTest {
 
         Placement result = target.getMainWindow();
 
-        assertEquals("Invisible settings", result, DEFAULT_WINDOW_SIZE);
+        assertEquals(result, DEFAULT_WINDOW_SIZE, "Invisible settings");
     }
 
     @Test
@@ -73,6 +76,6 @@ public class PlacementManagerTest {
 
         Placement result = target.getMainWindow();
 
-        assertEquals("Unspecified settings", result, DEFAULT_WINDOW_SIZE);
+        assertEquals(result, DEFAULT_WINDOW_SIZE, "Unspecified settings");
     }
 }

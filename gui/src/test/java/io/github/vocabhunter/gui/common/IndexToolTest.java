@@ -5,10 +5,11 @@
 package io.github.vocabhunter.gui.common;
 
 import io.github.vocabhunter.analysis.core.VocabHunterException;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import static io.github.vocabhunter.analysis.core.CoreTool.listOf;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class IndexToolTest {
     private static final int SIZE = 10;
@@ -33,9 +34,9 @@ public class IndexToolTest {
 
     private static final int AFTER_LAST = LAST + 1;
 
-    @Test(expected = VocabHunterException.class)
+    @Test
     public void testNoMatch() throws Exception {
-        findClosest();
+        assertThrows(VocabHunterException.class, () -> findClosest());
     }
 
     @Test
@@ -73,20 +74,20 @@ public class IndexToolTest {
         validate(LAST, LAST);
     }
 
-    @Test(expected = VocabHunterException.class)
+    @Test
     public void testBeforeFirst() throws Exception {
-        findClosest(BEFORE_FIRST);
+        assertThrows(VocabHunterException.class, () -> findClosest(BEFORE_FIRST));
     }
 
-    @Test(expected = VocabHunterException.class)
+    @Test
     public void testAfterLast() throws Exception {
-        findClosest(AFTER_LAST);
+        assertThrows(VocabHunterException.class, () -> findClosest(AFTER_LAST));
     }
 
     private void validate(final int expected, final Integer... accepted) {
         int result = findClosest(accepted);
 
-        Assert.assertEquals(expected, result);
+        assertEquals(expected, result);
     }
 
     private int findClosest(final Integer... accepted) {

@@ -6,7 +6,7 @@ package io.github.vocabhunter.analysis.marked;
 
 import io.github.vocabhunter.analysis.filter.WordFilter;
 import io.github.vocabhunter.analysis.model.AnalysisWord;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.util.HashSet;
 import java.util.List;
@@ -15,7 +15,7 @@ import java.util.Set;
 import static io.github.vocabhunter.analysis.core.CoreTool.listOf;
 import static io.github.vocabhunter.analysis.marked.WordState.*;
 import static java.util.Collections.emptyList;
-import static junit.framework.TestCase.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class MarkToolTest {
     private final List<MarkedWord> allWords = listOf(

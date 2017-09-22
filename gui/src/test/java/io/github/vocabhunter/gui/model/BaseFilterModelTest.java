@@ -7,7 +7,7 @@ package io.github.vocabhunter.gui.model;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class BaseFilterModelTest {
     protected static final String FILENAME_1 = "file1";
@@ -19,9 +19,9 @@ public class BaseFilterModelTest {
     protected static final Path FILE_2 = Paths.get("directory", FILENAME_2);
 
     protected void validateCommon(final AbstractFilterModel target, final Path file, final String filename, final String countDescription, final boolean isError) {
-        assertEquals("File", file, target.getFile());
-        assertEquals("Filename", filename, target.getFilename());
-        assertEquals("Error state", isError, target.isError());
-        assertEquals("Count description", countDescription, target.getCountDescription());
+        assertEquals(file, target.getFile(), "File");
+        assertEquals(filename, target.getFilename(), "Filename");
+        assertEquals(isError, target.isError(), "Error state");
+        assertEquals(countDescription, target.getCountDescription(), "Count description");
     }
 }

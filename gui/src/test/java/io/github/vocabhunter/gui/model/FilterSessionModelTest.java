@@ -7,14 +7,14 @@ package io.github.vocabhunter.gui.model;
 import io.github.vocabhunter.analysis.marked.MarkedWord;
 import io.github.vocabhunter.analysis.marked.TestMarkedWord;
 import io.github.vocabhunter.analysis.marked.WordState;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.nio.file.Path;
 import java.util.List;
 import java.util.stream.IntStream;
 
 import static java.util.stream.Collectors.toList;
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class FilterSessionModelTest extends BaseFilterModelTest {
     @Test
@@ -103,10 +103,10 @@ public class FilterSessionModelTest extends BaseFilterModelTest {
     private void validate(final FilterSessionModel target, final Path file, final String filename, final boolean isIncludeUnknown,
                           final String countDescription, final boolean isError, final int knownCount, final int seenCount) {
         validateCommon(target, file, filename, countDescription, isError);
-        assertEquals("Known count", knownCount, target.getKnownCount());
-        assertEquals("Seen count", seenCount, target.getSeenCount());
-        assertEquals("Include unknown", isIncludeUnknown, target.isIncludeUnknown());
-        assertEquals("Words", filterSessionWords(knownCount, seenCount - knownCount), target.getSeenWords());
+        assertEquals(knownCount, target.getKnownCount(), "Known count");
+        assertEquals(seenCount, target.getSeenCount(), "Seen count");
+        assertEquals(isIncludeUnknown, target.isIncludeUnknown(), "Include unknown");
+        assertEquals(filterSessionWords(knownCount, seenCount - knownCount), target.getSeenWords(), "Words");
     }
 
     private FilterSessionModel build(final int knownCount, final int unknownCount) {

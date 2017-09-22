@@ -4,9 +4,9 @@
 
 package io.github.vocabhunter.gui.common;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class ColumnNameToolTest {
     @Test
@@ -52,6 +52,6 @@ public class ColumnNameToolTest {
     private void validate(final int index, final String name) {
         String actual = ColumnNameTool.columnName(index);
 
-        assertEquals("Column " + name, actual);
+        assertEquals(actual, "Column " + name);
     }
 }

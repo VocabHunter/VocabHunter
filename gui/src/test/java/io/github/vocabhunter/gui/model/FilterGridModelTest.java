@@ -7,7 +7,7 @@ package io.github.vocabhunter.gui.model;
 import io.github.vocabhunter.analysis.grid.GridTestTool;
 import io.github.vocabhunter.analysis.grid.TextGrid;
 import javafx.beans.property.BooleanProperty;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.nio.file.Path;
 import java.util.List;
@@ -16,7 +16,7 @@ import java.util.TreeSet;
 import java.util.stream.IntStream;
 
 import static io.github.vocabhunter.analysis.core.CoreTool.listOf;
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class FilterGridModelTest extends BaseFilterModelTest {
     private static final TextGrid EMPTY_GRID = GridTestTool.emptyGrid();
@@ -103,10 +103,10 @@ public class FilterGridModelTest extends BaseFilterModelTest {
         final TextGrid grid, final FilterFileMode mode, final Set<Integer> columns) {
         int columnCount = grid.getColumns().size();
 
-        assertEquals("Column count", columnCount, target.getColumnCount());
-        assertEquals("Lines", grid.getLines(), target.getLines());
-        assertEquals("Mode", mode, target.getMode());
-        assertEquals("Columns", columns, target.getColumns());
+        assertEquals(columnCount, target.getColumnCount(), "Column count");
+        assertEquals(grid.getLines(), target.getLines(), "Lines");
+        assertEquals(mode, target.getMode(), "Mode");
+        assertEquals(columns, target.getColumns(), "Columns");
         validateCommon(target, file, filename, countDescription, isError);
         validateColumnSelections(target, columns, columnCount);
     }

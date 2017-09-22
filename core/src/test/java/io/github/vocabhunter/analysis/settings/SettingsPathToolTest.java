@@ -4,8 +4,8 @@
 
 package io.github.vocabhunter.analysis.settings;
 
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -20,6 +20,6 @@ public class SettingsPathToolTest {
 
         LOG.info("Settings file path {}", path);
 
-        Assert.assertNotNull("Settings file path", path);
+        Assertions.assertNotNull(path, "Settings file path");
     }
 }

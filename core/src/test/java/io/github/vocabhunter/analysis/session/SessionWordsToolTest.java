@@ -8,7 +8,7 @@ import io.github.vocabhunter.analysis.filter.FilterBuilder;
 import io.github.vocabhunter.analysis.filter.WordFilter;
 import io.github.vocabhunter.analysis.marked.MarkTool;
 import io.github.vocabhunter.analysis.marked.MarkedWord;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -17,7 +17,7 @@ import java.util.function.Function;
 
 import static io.github.vocabhunter.analysis.core.CoreTool.listOf;
 import static java.util.stream.Collectors.toList;
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class SessionWordsToolTest {
     private static final String SESSION_FILE = "unmarked.wordy";
@@ -49,7 +49,7 @@ public class SessionWordsToolTest {
             .map(MarkedWord::getWordIdentifier)
             .collect(toList());
 
-        assertEquals("Filtered words", expected, actual);
+        assertEquals(expected, actual, "Filtered words");
     }
 
     private WordFilter buildFilter(final Function<Path, List<String>> filterMethod) throws Exception {

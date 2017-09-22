@@ -4,10 +4,10 @@
 
 package io.github.vocabhunter.analysis.core;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import static io.github.vocabhunter.analysis.core.PreferredFormTool.preferredForm;
-import static junit.framework.TestCase.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class PreferredFormToolTest {
     @Test
@@ -53,6 +53,6 @@ public class PreferredFormToolTest {
     private void validate(final String w1, final String w2, final String expected) {
         String actual = preferredForm(w1, w2);
 
-        assertEquals("Preferred", expected, actual);
+        assertEquals(expected, actual, "Preferred");
     }
 }

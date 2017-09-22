@@ -4,7 +4,7 @@
 
 package io.github.vocabhunter.analysis.grid;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.util.List;
 import java.util.Set;
@@ -13,7 +13,7 @@ import java.util.TreeSet;
 import static io.github.vocabhunter.analysis.core.CoreTool.listOf;
 import static io.github.vocabhunter.analysis.grid.GridTestTool.acceptedCell;
 import static io.github.vocabhunter.analysis.grid.GridTestTool.rejectedCell;
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class GridWordsExtractorTest {
     private static final String WORD_1 = "WORD1";

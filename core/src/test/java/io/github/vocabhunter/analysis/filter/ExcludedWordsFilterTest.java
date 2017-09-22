@@ -8,8 +8,8 @@ import io.github.vocabhunter.analysis.core.CoreTool;
 import io.github.vocabhunter.analysis.core.VocabHunterException;
 import io.github.vocabhunter.analysis.model.AnalysisWord;
 import io.github.vocabhunter.analysis.model.WordUse;
-import org.junit.After;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Test;
 
 import java.util.List;
 import java.util.concurrent.ExecutorService;
@@ -19,8 +19,8 @@ import java.util.stream.Stream;
 import static io.github.vocabhunter.analysis.core.CoreTool.listOf;
 import static java.util.Collections.emptyList;
 import static java.util.stream.Collectors.toList;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.fail;
 
 public class ExcludedWordsFilterTest {
     private static final String ERROR_MESSAGE = "ERROR_MESSAGE";
@@ -46,7 +46,7 @@ public class ExcludedWordsFilterTest {
 
     private final ExecutorService executorService = Executors.newSingleThreadExecutor();
 
-    @After
+    @AfterEach
     public void tearDown() {
         executorService.shutdown();
     }
@@ -124,7 +124,7 @@ public class ExcludedWordsFilterTest {
             .map(AnalysisWord::getWordIdentifier)
             .collect(toList());
 
-        assertEquals("Filtered words", expected, actual);
+        assertEquals(expected, actual, "Filtered words");
     }
 
     private static AnalysisWord word(final String word) {

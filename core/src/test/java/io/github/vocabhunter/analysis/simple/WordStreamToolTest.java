@@ -4,13 +4,13 @@
 
 package io.github.vocabhunter.analysis.simple;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 import static io.github.vocabhunter.analysis.core.CoreTool.listOf;
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class WordStreamToolTest {
     @Test
@@ -107,6 +107,6 @@ public class WordStreamToolTest {
         List<String> actual = WordStreamTool.words(line)
             .collect(Collectors.toList());
 
-        assertEquals("Words", listOf(expected), actual);
+        assertEquals(listOf(expected), actual, "Words");
     }
 }

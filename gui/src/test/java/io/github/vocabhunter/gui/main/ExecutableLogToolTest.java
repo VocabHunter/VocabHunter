@@ -9,13 +9,13 @@ import ch.qos.logback.classic.Logger;
 import ch.qos.logback.classic.LoggerContext;
 import io.github.vocabhunter.analysis.core.VocabHunterException;
 import org.apache.commons.lang.StringUtils;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.slf4j.LoggerFactory;
 
 import static java.util.stream.Collectors.joining;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class ExecutableLogToolTest {
     private static final Logger TARGET_LOG = (Logger) LoggerFactory.getLogger(ExecutableLogTool.class);
@@ -24,7 +24,7 @@ public class ExecutableLogToolTest {
 
     private final AppenderForTesting appender = new AppenderForTesting();
 
-    @Before
+    @BeforeEach
     public void setUp() {
         TARGET_LOG.addAppender(appender);
         TARGET_LOG.setLevel(Level.INFO);
@@ -33,7 +33,7 @@ public class ExecutableLogToolTest {
         appender.start();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         appender.stop();
         TARGET_LOG.detachAppender(appender);

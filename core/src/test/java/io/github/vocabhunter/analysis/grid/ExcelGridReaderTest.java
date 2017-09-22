@@ -5,14 +5,14 @@
 package io.github.vocabhunter.analysis.grid;
 
 import io.github.vocabhunter.test.utils.TestFileManager;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import java.nio.file.Path;
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class ExcelGridReaderTest {
     private static final List<GridLine> EXPECTED = GridTestTool.normalisedGridLines();
@@ -21,12 +21,12 @@ public class ExcelGridReaderTest {
 
     private final GridReader target = new ExcelGridReaderImpl();
 
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         files = new TestFileManager(ExcelGridReaderTest.class);
     }
 
-    @After
+    @AfterEach
     public void tearDown() throws Exception {
         files.cleanup();
     }
@@ -46,6 +46,6 @@ public class ExcelGridReaderTest {
 
         List<GridLine> result = target.readGrid(file, "B1"::equals);
 
-        assertEquals("Validate " + name, EXPECTED, result);
+        assertEquals(EXPECTED, result, "Validate " + name);
     }
 }

@@ -46,10 +46,15 @@ dependencies {
     runtime 'org.codehaus.janino:janino:3.0.7'
 }
 
-test {
+junitPlatform {
     if (project.hasProperty("skipGuiTests")) {
-        exclude 'io/github/vocabhunter/gui/main/GuiTest*'
+        filters {
+            excludeClassNamePattern 'io.github.vocabhunter.gui.main.GuiTest'
+        }
     }
+}
+
+junitPlatformTest {
     if (!project.hasProperty("noHeadless")) {
         jvmArgs "-Dheadless=true"
     }

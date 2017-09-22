@@ -6,12 +6,12 @@ package io.github.vocabhunter.gui.search;
 
 import io.github.vocabhunter.analysis.core.CoreTool;
 import io.github.vocabhunter.gui.common.TestSequencedWord;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.util.Collections;
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class SearcherTest {
     private static final TestSequencedWord WORD_AA = new TestSequencedWord("AA", 10);
