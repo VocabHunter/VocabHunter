@@ -18,6 +18,7 @@ import java.nio.file.Paths;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class AnalysisSystemTest {
@@ -52,23 +53,31 @@ public class AnalysisSystemTest {
             .filter(w -> w.getWordIdentifier().equalsIgnoreCase(identifier))
             .collect(Collectors.toList());
 
-        assertEquals(1, found.size(), "List size");
+        assertAll(
+            () -> assertEquals(1, found.size(), "List size"),
+            () -> {
+                SessionWord word = found.get(0);
 
-        SessionWord word = found.get(0);
-
-        assertEquals(identifier, word.getWordIdentifier(), "Word");
-        assertEquals(useCount, word.getUseCount(), "Use count");
-        validateLines(word.getLineNos(), lineCount);
+                assertAll(
+                    () -> assertEquals(identifier, word.getWordIdentifier(), "Word"),
+                    () -> assertEquals(useCount, word.getUseCount(), "Use count"),
+                    () -> validateLines(word.getLineNos(), lineCount)
+                );
+            }
+        );
     }
 
     private void validateLines(final List<Integer> lines, final int lineCount) {
-        assertEquals(lineCount, lines.size(), "Line number count");
+        assertAll(
+            () -> assertEquals(lineCount, lines.size(), "Line number count"),
+            () -> {
+                List<Integer> orderedDistinct = lines.stream()
+                    .sorted()
+                    .distinct()
+                    .collect(Collectors.toList());
 
-        List<Integer> orderedDistinct = lines.stream()
-            .sorted()
-            .distinct()
-            .collect(Collectors.toList());
-
-        assertEquals(orderedDistinct, lines, "Distinct ordered lines");
+                assertEquals(orderedDistinct, lines, "Distinct ordered lines");
+            }
+        );
     }
 }

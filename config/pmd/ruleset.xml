@@ -69,6 +69,7 @@
     <rule ref="rulesets/java/migrating.xml">
         <exclude name="JUnit4TestShouldUseBeforeAnnotation"/>
         <exclude name="JUnit4TestShouldUseAfterAnnotation"/>
+        <exclude name="JUnit4TestShouldUseTestAnnotation"/>
     </rule>
 
     <rule ref="rulesets/java/optimizations.xml">

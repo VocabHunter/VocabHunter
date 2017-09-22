@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.stream.IntStream;
 
 import static java.util.stream.Collectors.toList;
+import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class FilterSessionModelTest extends BaseFilterModelTest {
@@ -102,11 +103,13 @@ public class FilterSessionModelTest extends BaseFilterModelTest {
 
     private void validate(final FilterSessionModel target, final Path file, final String filename, final boolean isIncludeUnknown,
                           final String countDescription, final boolean isError, final int knownCount, final int seenCount) {
-        validateCommon(target, file, filename, countDescription, isError);
-        assertEquals(knownCount, target.getKnownCount(), "Known count");
-        assertEquals(seenCount, target.getSeenCount(), "Seen count");
-        assertEquals(isIncludeUnknown, target.isIncludeUnknown(), "Include unknown");
-        assertEquals(filterSessionWords(knownCount, seenCount - knownCount), target.getSeenWords(), "Words");
+        assertAll(
+            () -> validateCommon(target, file, filename, countDescription, isError),
+            () -> assertEquals(knownCount, target.getKnownCount(), "Known count"),
+            () -> assertEquals(seenCount, target.getSeenCount(), "Seen count"),
+            () -> assertEquals(isIncludeUnknown, target.isIncludeUnknown(), "Include unknown"),
+            () -> assertEquals(filterSessionWords(knownCount, seenCount - knownCount), target.getSeenWords(), "Words")
+        );
     }
 
     private FilterSessionModel build(final int knownCount, final int unknownCount) {
