@@ -77,10 +77,11 @@ If you'd like to know more about how VocabHunter works and the technologies used
 
 [![VocabHunter](/assets/VocabHunter-Technical-Articles.png)](https://vocabhunter.github.io/blog/)
 
-[Dependency Injection in JavaFX]:/2016/11/13/JavaFX-Dependency-Injection.html
-[User Interface Testing with TestFX]:/2016/07/27/TestFX.html
-[Building a JavaFX Search Bar]:/2017/01/15/Search-Bar.html
-[Read (Almost) Any Document in Java]:/2017/04/30/Read-Any-Document-Format.html
+[Dependency Injection in JavaFX]:https://vocabhunter.github.io/2016/11/13/JavaFX-Dependency-Injection.html
+[User Interface Testing with TestFX]:https://vocabhunter.github.io/2016/07/27/TestFX.html
+[Building a JavaFX Search Bar]:https://vocabhunter.github.io/2017/01/15/Search-Bar.html
+[Read (Almost) Any Document in Java]:https://vocabhunter.github.io/2017/04/30/Read-Any-Document-Format.html
+[Migrating to JUnit 5]:https://vocabhunter.github.io/2017/10/17/migrating-to-junit-5.html
 
 [VocabHunter – A tool for learners of foreign languages]:https://techblog.king.com/vocabhunter-a-tool-for-learners-of-foreign-languages/
 [How JavaFX was used to build a desktop application]:https://techblog.king.com/javafx-used-build-desktop-application/
