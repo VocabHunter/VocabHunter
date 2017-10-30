@@ -35,7 +35,7 @@ public class DelayedExecutorImpl implements DelayedExecutor {
         try {
             latch.await();
             command.run();
-        } catch (InterruptedException e) {
+        } catch (final InterruptedException e) {
             LOG.debug("Thread woken unexpectedly", e);
             Thread.currentThread().interrupt();
         }

@@ -55,10 +55,10 @@ public class GuiTest extends FxRobot implements GuiTestValidator {
     private TestFileManager manager;
 
     @Mock
-    EnvironmentManager environmentManager;
+    private EnvironmentManager environmentManager;
 
     @Mock
-    PlacementManager placementManager;
+    private PlacementManager placementManager;
 
     @Mock
     private FileDialogueFactory fileDialogueFactory;

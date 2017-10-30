@@ -36,7 +36,7 @@ public class IndexToolTest {
 
     @Test
     public void testNoMatch() throws Exception {
-        assertThrows(VocabHunterException.class, () -> findClosest());
+        assertThrows(VocabHunterException.class, this::findClosest);
     }
 
     @Test

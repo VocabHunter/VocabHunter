@@ -105,7 +105,7 @@ public class ExcludedWordsFilterTest {
         try {
             filter.isShown(word("test"));
             fail("No exception thrown");
-        } catch (VocabHunterException e) {
+        } catch (final VocabHunterException e) {
             assertEquals(ERROR_MESSAGE, e.getMessage());
         }
     }
