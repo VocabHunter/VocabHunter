@@ -2,6 +2,13 @@
  * Open Source Software published under the Apache Licence, Version 2.0.
  */
 
+import org.gradle.internal.os.OperatingSystem
+
+ext {
+    operatingSystem = OperatingSystem.current()
+    isIncludeMacExtensions = operatingSystem.isMacOsX()
+}
+
 allprojects {
     group 'io.github.vocabhunter'
 }

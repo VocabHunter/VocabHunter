@@ -2,8 +2,6 @@
  * Open Source Software published under the Apache Licence, Version 2.0.
  */
 
-import org.gradle.internal.os.OperatingSystem
-
 buildscript {
     repositories {
         jcenter()
@@ -19,10 +17,11 @@ apply plugin: 'javafx-gradle-plugin'
 ext {
     publishedVersion = project.version
     bundleMainClass = 'io.github.vocabhunter.gui.distribution.PackagedVocabHunter'
-    operatingSystem = OperatingSystem.current()
     if (operatingSystem.isMacOsX()) {
         packageType = 'dmg'
-        bundleMainClass = 'io.github.vocabhunter.osx.distribution.OsxPackagedVocabHunter'
+        if (isIncludeMacExtensions) {
+            bundleMainClass = 'io.github.vocabhunter.osx.distribution.OsxPackagedVocabHunter'
+        }
         appIcon = file('icons/mac/VocabHunter.icns')
         sessionIcon = file('icons/mac/VocabHunterSession.icns')
     } else if (operatingSystem.isLinux()) {
@@ -41,12 +40,12 @@ ext {
 
 dependencies {
     compile project(':gui')
-    if (OperatingSystem.current().isMacOsX()) {
+    if (isIncludeMacExtensions) {
         compile project(':osx')
     }
 }
 
-if (operatingSystem.isMacOsX()) {
+if (isIncludeMacExtensions) {
     sourceSets {
         main {
             java {
