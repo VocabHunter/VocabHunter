@@ -23,16 +23,12 @@ public final class GridCell {
         return content;
     }
 
-    public boolean isRejected() {
-        return isRejected;
-    }
-
     public boolean isEmpty() {
         return content.isEmpty();
     }
 
     public boolean isIncluded() {
-        return !(isRejected() || isEmpty());
+        return !(isRejected || isEmpty());
     }
 
     @Override

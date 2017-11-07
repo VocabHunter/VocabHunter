@@ -6,12 +6,12 @@ package io.github.vocabhunter.gui.search;
 
 import io.github.vocabhunter.gui.common.SequencedWord;
 import io.github.vocabhunter.gui.common.TestSequencedWord;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.util.function.Predicate;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class MatchMakerTest {
     private static final String ACCENTED_MATCH = "\u00F3r";
@@ -24,62 +24,62 @@ public class MatchMakerTest {
     public void testEmptyMatcher() {
         Predicate<SequencedWord> target = SearchTool.matchMaker("");
 
-        assertTrue("Empty matcher", target.test(WORD));
+        assertTrue(target.test(WORD), "Empty matcher");
     }
 
     @Test
     public void testEmptyWord() {
         Predicate<SequencedWord> target = SearchTool.matchMaker("and");
 
-        assertFalse("Empty word", target.test(EMPTY));
+        assertFalse(target.test(EMPTY), "Empty word");
     }
 
     @Test
     public void testBothEmpty() {
         Predicate<SequencedWord> target = SearchTool.matchMaker("");
 
-        assertTrue("Both empty", target.test(EMPTY));
+        assertTrue(target.test(EMPTY), "Both empty");
     }
 
     @Test
     public void testNoMatch() {
         Predicate<SequencedWord> target = SearchTool.matchMaker("x");
 
-        assertFalse("No match", target.test(WORD));
+        assertFalse(target.test(WORD), "No match");
     }
 
     @Test
     public void testContainedMatch() {
         Predicate<SequencedWord> target = SearchTool.matchMaker("or");
 
-        assertTrue("Contained match", target.test(WORD));
+        assertTrue(target.test(WORD), "Contained match");
     }
 
     @Test
     public void testExactMatch() {
         Predicate<SequencedWord> target = SearchTool.matchMaker("Word");
 
-        assertTrue("Exact match", target.test(WORD));
+        assertTrue(target.test(WORD), "Exact match");
     }
 
     @Test
     public void testAccentedMatch() {
         Predicate<SequencedWord> target = SearchTool.matchMaker(ACCENTED_MATCH);
 
-        assertTrue("Accented match", target.test(WORD));
+        assertTrue(target.test(WORD), "Accented match");
     }
 
     @Test
     public void testIgnoreCaseMatch() {
         Predicate<SequencedWord> target = SearchTool.matchMaker("WORD");
 
-        assertTrue("Exact match", target.test(WORD));
+        assertTrue(target.test(WORD), "Exact match");
     }
 
     @Test
     public void testRemoveSpaceMatch() {
         Predicate<SequencedWord> target = SearchTool.matchMaker(" or ");
 
-        assertTrue("Remove space", target.test(WORD));
+        assertTrue(target.test(WORD), "Remove space");
     }
 }

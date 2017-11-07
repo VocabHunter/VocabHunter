@@ -7,9 +7,9 @@ package io.github.vocabhunter.analysis.session;
 import io.github.vocabhunter.analysis.core.VocabHunterException;
 import io.github.vocabhunter.analysis.marked.WordState;
 import io.github.vocabhunter.test.utils.TestFileManager;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -17,8 +17,9 @@ import java.nio.file.Paths;
 import java.util.Collections;
 
 import static io.github.vocabhunter.analysis.core.CoreTool.listOf;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class SessionSerialiserTest {
     private TestFileManager files;
@@ -29,46 +30,48 @@ public class SessionSerialiserTest {
 
     private final SessionState state2 = state("State 2");
 
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         files = new TestFileManager(getClass());
         file = files.addFile("file.json");
     }
 
-    @After
+    @AfterEach
     public void tearDown() throws Exception {
         files.cleanup();
     }
 
-    @Test(expected = VocabHunterException.class)
+    @Test
     public void testNonexistentFile() {
-        SessionSerialiser.read(Paths.get("does-not-exist.json"));
+        assertThrows(VocabHunterException.class, () -> SessionSerialiser.read(Paths.get("does-not-exist.json")));
     }
 
-    @Test(expected = VocabHunterException.class)
+    @Test
     public void testEmptyFile() throws Exception {
         Files.createFile(file);
-        SessionSerialiser.read(file);
+
+        assertThrows(VocabHunterException.class, () -> SessionSerialiser.read(file));
     }
 
-    @Test(expected = VocabHunterException.class)
+    @Test
     public void testInvalidFile() throws Exception {
         Files.write(file, Collections.singletonList("unreadable"));
-        SessionSerialiser.read(file);
+
+        assertThrows(VocabHunterException.class, () -> SessionSerialiser.read(file));
     }
 
     @Test
     public void testSameState() throws Exception {
         SessionState read = writeAndReadBackState1();
 
-        assertEquals("Same state", state1, read);
+        assertEquals(state1, read, "Same state");
     }
 
     @Test
     public void testDifferentState() throws Exception {
         SessionState read = writeAndReadBackState1();
 
-        assertNotEquals("Different state", state2, read);
+        assertNotEquals(state2, read, "Different state");
     }
 
     private SessionState writeAndReadBackState1() {

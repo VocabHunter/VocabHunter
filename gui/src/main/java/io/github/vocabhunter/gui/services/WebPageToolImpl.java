@@ -10,7 +10,7 @@ import org.slf4j.LoggerFactory;
 
 import java.awt.*;
 import java.net.URI;
-import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executor;
 import java.util.function.Consumer;
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -19,7 +19,7 @@ import javax.inject.Singleton;
 public class WebPageToolImpl implements WebPageTool {
     private static final Logger LOG = LoggerFactory.getLogger(WebPageToolImpl.class);
 
-    private final ExecutorService executorService;
+    private final Executor executor;
 
     private final Consumer<String> pageOpener;
 
@@ -29,13 +29,13 @@ public class WebPageToolImpl implements WebPageTool {
     }
 
     public WebPageToolImpl(final ThreadPoolTool threadPoolTool, final Consumer<String> pageOpener) {
-        this.executorService = threadPoolTool.singleDaemonExecutor("Web Page Opener");
+        this.executor = threadPoolTool.singleDaemonExecutor("Web Page Opener");
         this.pageOpener = pageOpener;
     }
 
     @Override
     public void showWebPage(final String page) {
-        executorService.submit(() -> pageOpener.accept(page));
+        executor.execute(() -> pageOpener.accept(page));
     }
 
     private static void openPage(final String page) {

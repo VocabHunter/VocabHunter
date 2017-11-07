@@ -12,7 +12,7 @@ import java.text.DecimalFormat;
 import java.util.stream.Stream;
 
 public final class ExecutableLogTool {
-    private static final double BYTES_TO_MEGS = 1024 * 1024;
+    private static final double BYTES_TO_MEGS = 1024d * 1024d;
 
     private static final Logger LOG = LoggerFactory.getLogger(ExecutableLogTool.class);
 

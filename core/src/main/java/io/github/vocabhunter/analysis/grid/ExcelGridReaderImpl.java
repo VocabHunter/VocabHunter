@@ -34,7 +34,7 @@ public class ExcelGridReaderImpl implements ExcelGridReader {
         }
     }
 
-    public GridLine row(final Row row, final Predicate<String> filter) {
+    private GridLine row(final Row row, final Predicate<String> filter) {
         List<GridCell> cells = IntStream.range(0, row.getLastCellNum())
             .mapToObj(i -> row.getCell(i, MissingCellPolicy.RETURN_BLANK_AS_NULL))
             .map(c -> cell(c, filter))

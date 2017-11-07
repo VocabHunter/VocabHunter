@@ -38,18 +38,23 @@ startScripts {
 dependencies {
     compile project(':core')
     compile 'com.gluonhq:ignite-guice:1.0.2'
-    compile 'org.controlsfx:controlsfx:8.40.12'
+    compile 'org.controlsfx:controlsfx:8.40.14'
     compile 'de.jensd:fontawesomefx-fontawesome:4.7.0-5'
     testCompile project(path: ':core', configuration: 'tests')
-    testCompile 'org.testfx:testfx-core:4.0.6-alpha'
+    testCompile 'org.testfx:testfx-core:4.0.8-alpha'
     testRuntime 'org.jfxtras:openjfx-monocle:1.8.0_20'
     runtime 'org.codehaus.janino:janino:3.0.7'
 }
 
-test {
+junitPlatform {
     if (project.hasProperty("skipGuiTests")) {
-        exclude 'io/github/vocabhunter/gui/main/GuiTest*'
+        filters {
+            excludeClassNamePattern 'io.github.vocabhunter.gui.main.GuiTest'
+        }
     }
+}
+
+junitPlatformTest {
     if (!project.hasProperty("noHeadless")) {
         jvmArgs "-Dheadless=true"
     }

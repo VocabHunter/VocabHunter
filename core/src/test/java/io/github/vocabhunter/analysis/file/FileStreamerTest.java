@@ -9,7 +9,7 @@ import io.github.vocabhunter.analysis.model.Analyser;
 import io.github.vocabhunter.analysis.session.EnrichedSessionState;
 import io.github.vocabhunter.analysis.simple.SimpleAnalyser;
 import org.apache.commons.lang3.StringUtils;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.net.URISyntaxException;
 import java.net.URL;
@@ -19,7 +19,7 @@ import java.util.List;
 import java.util.function.Function;
 
 import static io.github.vocabhunter.analysis.core.CoreTool.listOf;
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class FileStreamerTest {
     private static final List<String> LINES = listOf(
@@ -45,9 +45,9 @@ public class FileStreamerTest {
 
     private final FileStreamer target = new FileStreamer(analyser);
 
-    @Test(expected = VocabHunterException.class)
+    @Test
     public void testStreamEmpty() {
-        validateStream(FILE_EMPTY);
+        assertThrows(VocabHunterException.class, () -> validateStream(FILE_EMPTY));
     }
 
     @Test
@@ -55,7 +55,7 @@ public class FileStreamerTest {
         EnrichedSessionState state1 = createNewSession(FILE_TEXT);
         EnrichedSessionState state2 = createNewSession(FILE_TEXT);
 
-        assertEquals("Equal session", state1, state2);
+        assertEquals(state1, state2, "Equal session");
     }
 
     @Test
@@ -63,7 +63,7 @@ public class FileStreamerTest {
         EnrichedSessionState state1 = createNewSession(FILE_TEXT);
         EnrichedSessionState state2 = createNewSession(FILE_WORD);
 
-        assertNotEquals("Different session", state1, state2);
+        assertNotEquals(state1, state2, "Different session");
     }
 
     @Test
@@ -71,14 +71,14 @@ public class FileStreamerTest {
         EnrichedSessionState state1 = createNewSession(FILE_TEXT);
         EnrichedSessionState state2 = createNewSession(FILE_TEXT);
 
-        assertEquals("Equal hash code session", state1.hashCode(), state2.hashCode());
+        assertEquals(state1.hashCode(), state2.hashCode(), "Equal hash code session");
     }
 
     @Test
     public void testSessionToString() {
         EnrichedSessionState state = createNewSession(FILE_TEXT);
 
-        assertTrue("Session toString", StringUtils.isNotBlank(state.toString()));
+        assertTrue(StringUtils.isNotBlank(state.toString()), "Session toString");
     }
 
     @Test
@@ -119,13 +119,13 @@ public class FileStreamerTest {
     private void validateStream(final String file) {
         List<String> result = target.lines(getFile(file));
 
-        assertEquals("Lines from file", LINES, result);
+        assertEquals(LINES, result, "Lines from file");
     }
 
     private void validateSession(final String fileName, final String sessionName, final Function<String, EnrichedSessionState> targetMethod) {
         EnrichedSessionState session = targetMethod.apply(fileName);
 
-        assertEquals("Session name", sessionName, session.getState().getName());
+        assertEquals(sessionName, session.getState().getName(), "Session name");
     }
 
     private EnrichedSessionState createNewSession(final String file) {

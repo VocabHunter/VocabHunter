@@ -5,13 +5,12 @@
 package io.github.vocabhunter.gui.services;
 
 import io.github.vocabhunter.analysis.core.ThreadPoolTool;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.MockitoAnnotations;
 
 import java.util.concurrent.ExecutorService;
 import java.util.function.Consumer;
@@ -20,7 +19,6 @@ import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-@RunWith(MockitoJUnitRunner.class)
 public class WebPageToolTest {
     private static final String WEB_PAGE = "WEB_PAGE";
 
@@ -38,7 +36,12 @@ public class WebPageToolTest {
 
     private WebPageTool target;
 
-    @Before
+    @BeforeEach
+    public void initMocks() {
+        MockitoAnnotations.initMocks(this);
+    }
+
+    @BeforeEach
     public void setUp() {
         when(threadPoolTool.singleDaemonExecutor(anyString())).thenReturn(executorService);
         target = new WebPageToolImpl(threadPoolTool, pageOpener);
@@ -47,7 +50,7 @@ public class WebPageToolTest {
     @Test
     public void testShowWebPage() {
         target.showWebPage(WEB_PAGE);
-        verify(executorService).submit(captor.capture());
+        verify(executorService).execute(captor.capture());
         captor.getValue().run();
         verify(pageOpener).accept(WEB_PAGE);
     }

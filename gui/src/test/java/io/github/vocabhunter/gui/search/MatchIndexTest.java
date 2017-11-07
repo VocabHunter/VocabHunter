@@ -6,14 +6,14 @@ package io.github.vocabhunter.gui.search;
 
 import io.github.vocabhunter.gui.common.SequencedWord;
 import io.github.vocabhunter.gui.common.TestSequencedWord;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
 import static io.github.vocabhunter.analysis.core.CoreTool.listOf;
 import static io.github.vocabhunter.gui.search.SearchTool.getMatchIndex;
 import static io.github.vocabhunter.gui.search.SearchTool.getPreviousMatchIndex;
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class MatchIndexTest {
     private final SequencedWord one = new TestSequencedWord("one", 1);
@@ -65,7 +65,7 @@ public class MatchIndexTest {
     }
 
     private void validate(final List<SequencedWord> matchList, final SequencedWord word, final int expectedPreviousIndex, final int expectedIndex) {
-        assertEquals("Match index", expectedIndex, getMatchIndex(matchList, word));
-        assertEquals("Previous match index", expectedPreviousIndex, getPreviousMatchIndex(matchList, word));
+        assertEquals(expectedIndex, getMatchIndex(matchList, word), "Match index");
+        assertEquals(expectedPreviousIndex, getPreviousMatchIndex(matchList, word), "Previous match index");
     }
 }

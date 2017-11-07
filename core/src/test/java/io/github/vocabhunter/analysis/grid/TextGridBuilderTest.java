@@ -4,11 +4,11 @@
 
 package io.github.vocabhunter.analysis.grid;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import static io.github.vocabhunter.analysis.grid.GridTestTool.*;
 import static java.util.Collections.emptyList;
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class TextGridBuilderTest {
 

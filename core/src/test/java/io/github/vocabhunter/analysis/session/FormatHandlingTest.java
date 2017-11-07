@@ -6,7 +6,9 @@ package io.github.vocabhunter.analysis.session;
 
 import io.github.vocabhunter.analysis.core.VocabHunterException;
 import io.github.vocabhunter.analysis.marked.MarkedWord;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -16,8 +18,7 @@ import java.util.function.Function;
 
 import static io.github.vocabhunter.analysis.session.TestSessionStateTool.buildSession;
 import static java.util.stream.Collectors.toList;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class FormatHandlingTest {
     private static final String FORMAT_UNSUPPORTED_VERSION = "format-unsupported-version.wordy";
@@ -32,70 +33,64 @@ public class FormatHandlingTest {
 
     private static final SessionState EXPECTED_STATE = buildSession();
 
-    @Test(expected = VocabHunterException.class)
+    @Test
     public void testUnsupportedVersion() throws Exception {
-        readState(FORMAT_UNSUPPORTED_VERSION);
+        assertThrows(VocabHunterException.class, () -> readState(FORMAT_UNSUPPORTED_VERSION));
     }
 
-    @Test
-    public void testVersion1() throws Exception {
-        validate(FORMAT_1);
-    }
-
-    @Test
-    public void testVersion2() throws Exception {
-        validate(FORMAT_2);
-    }
-
-    @Test
-    public void testVersion3() throws Exception {
-        validate(FORMAT_3);
-    }
-
-    @Test
-    public void testVersion4() throws Exception {
-        validate(FORMAT_4);
-    }
-
-    private void validate(final String filename) throws Exception {
+    @ParameterizedTest
+    @ValueSource(strings = {FORMAT_1, FORMAT_2, FORMAT_3, FORMAT_4})
+    public void testSupportedVersion(final String filename) throws Exception {
         Path file = getResourceFile(filename);
         EnrichedSessionState expected = new EnrichedSessionState(EXPECTED_STATE, file);
 
-        validateMarkedWords(file, expected);
-        validateState(file, expected);
+        assertAll(
+            () -> validateMarkedWords(file, expected),
+            () -> validateState(file, expected)
+        );
     }
 
     private void validateState(final Path file, final EnrichedSessionState expected) {
         EnrichedSessionState actual = readState(file);
 
-        Optional<Path> expectedFile = expected.getFile();
-        Optional<Path> actualFile = actual.getFile();
-        assertEquals("Session file reference", expectedFile, actualFile);
+        assertAll(
+            () -> {
+                Optional<Path> expectedFile = expected.getFile();
+                Optional<Path> actualFile = actual.getFile();
+                assertEquals(expectedFile, actualFile, "Session file reference");
+            },
+            () -> {
+                SessionState expectedState = expected.getState();
+                SessionState actualState = actual.getState();
 
-        SessionState expectedState = expected.getState();
-        SessionState actualState = actual.getState();
-
-        int expectedFormatVersion = expectedState.getFormatVersion();
-        int actualFormatVersion = actualState.getFormatVersion();
-        assertEquals("Format version", expectedFormatVersion, actualFormatVersion);
-
-        String expectedName = expectedState.getName();
-        String actualName = actualState.getName();
-        assertEquals("Session name", expectedName, actualName);
-
-        assertTrue("Equivalent", expectedState.isEquivalent(actualState));
-
-        // This catch-all case should already be covered
-        assertEquals("Session file", expected, actual);
+                assertAll(
+                    () -> {
+                        int expectedFormatVersion = expectedState.getFormatVersion();
+                        int actualFormatVersion = actualState.getFormatVersion();
+                        assertEquals(expectedFormatVersion, actualFormatVersion, "Format version");
+                    },
+                    () -> {
+                        String expectedName = expectedState.getName();
+                        String actualName = actualState.getName();
+                        assertEquals(expectedName, actualName, "Session name");
+                    },
+                    () -> assertTrue(expectedState.isEquivalent(actualState), "Equivalent")
+                );
+            },
+            // This catch-all case should already be covered
+            () -> assertEquals(expected, actual, "Session file")
+        );
     }
 
     private void validateMarkedWords(final Path file, final EnrichedSessionState expected) {
         List<SessionWord> expectedWords = expected.getState().getOrderedUses();
         List<? extends MarkedWord> actualWords = SessionSerialiser.readMarkedWords(file);
 
-        validateMarkedWords(expectedWords, actualWords, MarkedWord::getWordIdentifier);
-        validateMarkedWords(expectedWords, actualWords, MarkedWord::getState);
-        validateMarkedWords(expectedWords, actualWords, MarkedWord::getUseCount);
+        assertAll(
+            () -> validateMarkedWords(expectedWords, actualWords, MarkedWord::getWordIdentifier),
+            () -> validateMarkedWords(expectedWords, actualWords, MarkedWord::getState),
+            () -> validateMarkedWords(expectedWords, actualWords, MarkedWord::getUseCount)
+        );
     }
 
     private void validateMarkedWords(final List<? extends MarkedWord> expected, final List<? extends MarkedWord> actual, final Function<MarkedWord, Object> f) {
@@ -106,7 +101,7 @@ public class FormatHandlingTest {
             .map(f)
             .collect(toList());
 
-        assertEquals("Values", expectedValues, actualValues);
+        assertEquals(expectedValues, actualValues, "Values");
     }
 
     private EnrichedSessionState readState(final String file) throws Exception {

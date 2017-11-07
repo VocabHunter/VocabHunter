@@ -6,17 +6,17 @@ package io.github.vocabhunter.analysis.settings;
 
 import io.github.vocabhunter.analysis.core.CoreTool;
 import io.github.vocabhunter.test.utils.TestFileManager;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import java.nio.file.Path;
 import java.util.Arrays;
 import java.util.List;
 
 import static io.github.vocabhunter.analysis.settings.FileListManagerImpl.SETTINGS_JSON;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class FileListManagerTest {
     private TestFileManager files;
@@ -29,7 +29,7 @@ public class FileListManagerTest {
 
     private FileListManager target;
 
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         files = new TestFileManager(getClass());
         Path settingsFile = files.addFile(SETTINGS_JSON);
@@ -45,7 +45,7 @@ public class FileListManagerTest {
         file3 = new ExcelListedFile(path3, Arrays.asList(1, 2, 3));
     }
 
-    @After
+    @AfterEach
     public void tearDown() throws Exception {
         files.cleanup();
     }
@@ -54,7 +54,7 @@ public class FileListManagerTest {
     public void testEmpty() {
         List<BaseListedFile> actual = target.getFilterFiles();
 
-        assertTrue("Empty file list", actual.isEmpty());
+        assertTrue(actual.isEmpty(), "Empty file list");
     }
 
     @Test
@@ -65,6 +65,6 @@ public class FileListManagerTest {
 
         List<BaseListedFile> actual = target.getFilterFiles();
 
-        assertEquals("Files", files, actual);
+        assertEquals(files, actual, "Files");
     }
 }

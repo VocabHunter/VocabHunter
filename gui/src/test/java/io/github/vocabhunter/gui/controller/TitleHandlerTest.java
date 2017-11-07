@@ -5,13 +5,13 @@
 package io.github.vocabhunter.gui.controller;
 
 import io.github.vocabhunter.gui.model.MainModel;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class TitleHandlerTest {
     private static final Path SESSION_FILE = Paths.get("root", "saved.file");
@@ -22,7 +22,7 @@ public class TitleHandlerTest {
 
     private final TitleHandler target = new TitleHandler(model);
 
-    @Before
+    @BeforeEach
     public void setUp() {
         target.initialise();
     }
@@ -82,6 +82,6 @@ public class TitleHandlerTest {
     private void validate(final String expected) {
         String actual = model.titleProperty().get();
 
-        assertEquals("Title", expected, actual);
+        assertEquals(expected, actual, "Title");
     }
 }

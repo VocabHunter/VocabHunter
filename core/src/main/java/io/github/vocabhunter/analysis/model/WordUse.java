@@ -4,6 +4,7 @@
 
 package io.github.vocabhunter.analysis.model;
 
+import io.github.vocabhunter.analysis.core.PreferredFormTool;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
@@ -19,14 +20,38 @@ public final class WordUse implements AnalysisWord {
 
     private final List<Integer> lineNos;
 
+    public WordUse(final WordUse w1, final WordUse w2, final boolean isSingleLine) {
+        lineNos = lineNos(w1, w2, isSingleLine);
+        this.useCount = w1.getUseCount() + w2.getUseCount();
+        this.wordIdentifier = PreferredFormTool.preferredForm(w1.getWordIdentifier(), w2.getWordIdentifier());
+    }
+
     public WordUse(final String wordIdentifier, final int lineNo) {
-        this(wordIdentifier, 1, Collections.singletonList(lineNo));
+        this.wordIdentifier = wordIdentifier;
+        this.useCount = 1;
+        this.lineNos = Collections.singletonList(lineNo);
     }
 
     public WordUse(final String wordIdentifier, final int useCount, final List<Integer> lineNos) {
         this.wordIdentifier = wordIdentifier;
         this.useCount = useCount;
         this.lineNos = new ArrayList<>(lineNos);
+    }
+
+    private List<Integer> lineNos(final WordUse w1, final WordUse w2, final boolean isSingleLine) {
+        List<Integer> lineNos1 = w1.getLineNos();
+
+        if (isSingleLine) {
+            return lineNos1;
+        } else {
+            List<Integer> lineNos2 = w2.getLineNos();
+            List<Integer> result = new ArrayList<>(lineNos1.size() + lineNos2.size());
+
+            result.addAll(lineNos1);
+            result.addAll(lineNos2);
+
+            return result;
+        }
     }
 
     @Override

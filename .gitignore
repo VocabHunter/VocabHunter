@@ -12,3 +12,6 @@ out
 .classpath
 
 *.log
+
+# JEnv Java Version
+.java-version

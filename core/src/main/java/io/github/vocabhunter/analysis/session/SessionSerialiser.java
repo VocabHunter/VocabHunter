@@ -5,12 +5,14 @@
 package io.github.vocabhunter.analysis.session;
 
 import io.github.vocabhunter.analysis.core.FileTool;
+import io.github.vocabhunter.analysis.core.PreferredFormTool;
 import io.github.vocabhunter.analysis.core.VocabHunterException;
 import io.github.vocabhunter.analysis.marked.MarkedWord;
 import io.github.vocabhunter.analysis.simple.WordStreamTool;
 
 import java.nio.file.Path;
 import java.util.List;
+import java.util.function.Predicate;
 
 import static io.github.vocabhunter.analysis.session.SessionFormatVersion.*;
 import static java.util.stream.Collectors.toList;
@@ -24,8 +26,15 @@ public final class SessionSerialiser {
         FileTool.writeAsJson(file, state, "Unable to save file '%s'");
     }
 
-    public static List<? extends MarkedWord> readMarkedWords(final Path file) {
-        return readForMarkedWords(file).getOrderedUses();
+    public static List<String> readWords(final Path file, final Predicate<MarkedWord> filter) {
+        return readSessionState(file).getOrderedUses().stream()
+            .filter(filter)
+            .map(MarkedWord::getWordIdentifier)
+            .collect(toList());
+    }
+
+    public static List<SessionWord> readMarkedWords(final Path file) {
+        return readInternal(file).getOrderedUses();
     }
 
     public static EnrichedSessionState read(final Path file) {
@@ -33,27 +42,27 @@ public final class SessionSerialiser {
     }
 
     private static SessionState readInternal(final Path file) {
-        return upgradeVersionStrict(readForMarkedWords(file));
-    }
+        SessionState state = readSessionState(file);
+        int originalVersion = state.getFormatVersion();
 
-    private static SessionState readForMarkedWords(final Path file) {
-        SessionState state = FileTool.readFromJson(SessionState.class, file, "Unable to load file '%s'");
-        int formatVersion = state.getFormatVersion();
-
-        if (formatVersion < 1 || formatVersion > LATEST_VERSION) {
-            throw new VocabHunterException("This file was created with a newer version of VocabHunter.  Please upgrade and try again.");
-        } else {
-            return upgradeForMarkedWords(state);
+        if (originalVersion == FORMAT_1 || originalVersion == FORMAT_2) {
+            state = upgradeVersion1And2(state);
         }
+        if (state.getFormatVersion() == FORMAT_3) {
+            state = upgradeVersion3(state);
+        }
+
+        return state;
     }
 
-    private static SessionState upgradeForMarkedWords(final SessionState original) {
-        int version = original.getFormatVersion();
+    private static SessionState readSessionState(final Path file) {
+        SessionState state = FileTool.readFromJson(SessionState.class, file, "Unable to load file '%s'");
+        int version = state.getFormatVersion();
 
-        if (version == FORMAT_1 || version == FORMAT_2) {
-            return upgradeVersion1And2(original);
+        if (version < 1 || version > LATEST_VERSION) {
+            throw new VocabHunterException("This file was created with a newer originalVersion of VocabHunter.  Please upgrade and try again.");
         } else {
-            return original;
+            return state;
         }
     }
 
@@ -82,16 +91,6 @@ public final class SessionSerialiser {
         word.setState(original.getState());
 
         return word;
-    }
-
-    private static SessionState upgradeVersionStrict(final SessionState original) {
-        int version = original.getFormatVersion();
-
-        if (version == FORMAT_3) {
-            return upgradeVersion3(original);
-        } else {
-            return original;
-        }
     }
 
     private static SessionState upgradeVersion3(final SessionState original) {
@@ -134,7 +133,7 @@ public final class SessionSerialiser {
         return uses.stream()
             .flatMap(WordStreamTool::words)
             .filter(w -> w.equalsIgnoreCase(oldIdentifier))
-            .reduce(WordStreamTool::preferredForm)
+            .reduce(PreferredFormTool::preferredForm)
             .orElse(oldIdentifier);
     }
 }

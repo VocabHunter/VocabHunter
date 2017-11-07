@@ -7,15 +7,15 @@ package io.github.vocabhunter.analysis.simple;
 import io.github.vocabhunter.analysis.model.Analyser;
 import io.github.vocabhunter.analysis.model.AnalysisResult;
 import io.github.vocabhunter.analysis.model.WordUse;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static io.github.vocabhunter.analysis.core.CoreTool.listOf;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class SimpleAnalyserTest {
     private enum LineReference {
@@ -79,7 +79,7 @@ public class SimpleAnalyserTest {
     public void testEmpty() {
         AnalysisResult result = analyse();
 
-        assertTrue("Uses", result.getOrderedUses().isEmpty());
+        assertTrue(result.getOrderedUses().isEmpty(), "Uses");
     }
 
     @Test
@@ -167,6 +167,6 @@ public class SimpleAnalyserTest {
     private void validate(final AnalysisResult result, final WordUse... expected) {
         List<WordUse> expectedList = listOf(expected);
 
-        assertEquals("Uses", expectedList, result.getOrderedUses());
+        assertEquals(expectedList, result.getOrderedUses(), "Uses");
     }
 }

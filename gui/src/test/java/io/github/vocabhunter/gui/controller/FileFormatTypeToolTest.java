@@ -7,9 +7,10 @@ package io.github.vocabhunter.gui.controller;
 import io.github.vocabhunter.analysis.core.VocabHunterException;
 import io.github.vocabhunter.gui.dialogues.FileFormatType;
 import io.github.vocabhunter.gui.model.FilterFileMode;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class FileFormatTypeToolTest {
     @Test
@@ -27,9 +28,9 @@ public class FileFormatTypeToolTest {
         validate(FileFormatType.SESSION, FilterFileMode.SESSION_KNOWN);
     }
 
-    @Test(expected = VocabHunterException.class)
+    @Test
     public void testAll() {
-        FileFormatTypeTool.getMode(FileFormatType.ALL);
+        assertThrows(VocabHunterException.class, () -> FileFormatTypeTool.getMode(FileFormatType.ALL));
     }
 
     private void validate(final FileFormatType type, final FilterFileMode mode) {

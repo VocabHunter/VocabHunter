@@ -28,13 +28,13 @@ public enum FileFormatType {
     SESSION("VocabHunter Session Files", "*" + FileNameTool.SESSION_SUFFIX),
     SPREADSHEET("Spreadsheets", EXTENSIONS_SPREADSHEET);
 
-    public static final List<FileFormatType> TYPES_INPUT_DOCUMENTS = listOf(DOCUMENT, ANY_TEXT, PDF, OFFICE, EBOOK, ALL);
+    static final List<FileFormatType> TYPES_INPUT_DOCUMENTS = listOf(DOCUMENT, ANY_TEXT, PDF, OFFICE, EBOOK, ALL);
 
-    public static final List<FileFormatType> TYPES_SESSIONS = listOf(SESSION);
+    static final List<FileFormatType> TYPES_SESSIONS = listOf(SESSION);
 
-    public static final List<FileFormatType> TYPES_EXPORTS = listOf(TEXT);
+    static final List<FileFormatType> TYPES_EXPORTS = listOf(TEXT);
 
-    public static final List<FileFormatType> TYPES_WORD_GRIDS = listOf(DOCUMENT, SPREADSHEET);
+    static final List<FileFormatType> TYPES_WORD_GRIDS = listOf(DOCUMENT, SPREADSHEET);
 
     private static final Map<ExtensionFilter, FileFormatType> TYPES = Stream.of(FileFormatType.values())
         .collect(toMap(FileFormatType::getFilter, identity()));

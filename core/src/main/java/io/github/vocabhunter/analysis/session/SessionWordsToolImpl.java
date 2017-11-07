@@ -10,37 +10,21 @@ import io.github.vocabhunter.analysis.marked.WordState;
 
 import java.nio.file.Path;
 import java.util.List;
-import java.util.function.Predicate;
+import java.util.function.Function;
 import javax.inject.Singleton;
 
 import static io.github.vocabhunter.analysis.session.FileNameTool.filename;
-import static java.util.stream.Collectors.toList;
 
 @Singleton
 public class SessionWordsToolImpl implements SessionWordsTool {
     @Override
     public List<String> knownWords(final Path file) {
-        return knownWords(readMarkedWords(file));
-    }
-
-    private static List<String> knownWords(final List<? extends MarkedWord> words) {
-        return words(words, SessionWordsToolImpl::isKnown);
+        return guardRead(f -> SessionSerialiser.readWords(f, SessionWordsToolImpl::isKnown), file);
     }
 
     @Override
     public List<String> seenWords(final Path file) {
-        return seenWords(readMarkedWords(file));
-    }
-
-    private static List<String> seenWords(final List<? extends MarkedWord> words) {
-        return words(words, SessionWordsToolImpl::isSeen);
-    }
-
-    private static List<String> words(final List<? extends MarkedWord> words, final Predicate<MarkedWord> wordFilter) {
-        return words.stream()
-            .filter(wordFilter)
-            .map(MarkedWord::getWordIdentifier)
-            .collect(toList());
+        return guardRead(f -> SessionSerialiser.readWords(f, SessionWordsToolImpl::isSeen), file);
     }
 
     private static boolean isKnown(final MarkedWord w) {
@@ -54,10 +38,14 @@ public class SessionWordsToolImpl implements SessionWordsTool {
     }
 
     @Override
-    public List<? extends MarkedWord> readMarkedWords(final Path file) {
+    public List<SessionWord> readMarkedWords(final Path file) {
+        return guardRead(SessionSerialiser::readMarkedWords, file);
+    }
+
+    private <T> List<T> guardRead(final Function<Path, List<T>> reader, final Path file) {
         try {
-            return SessionSerialiser.readMarkedWords(file);
-        } catch (final Exception e) {
+            return reader.apply(file);
+        } catch (final RuntimeException e) {
             throw new VocabHunterException(String.format("Unable to read filter file '%s'", filename(file)), e);
         }
     }

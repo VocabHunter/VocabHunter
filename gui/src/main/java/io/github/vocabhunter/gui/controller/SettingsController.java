@@ -4,7 +4,6 @@
 
 package io.github.vocabhunter.gui.controller;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import io.github.vocabhunter.analysis.settings.BaseListedFile;
 import io.github.vocabhunter.gui.dialogues.FileDialogue;
 import io.github.vocabhunter.gui.dialogues.FileDialogueFactory;
@@ -16,6 +15,7 @@ import io.github.vocabhunter.gui.services.FilterService;
 import io.github.vocabhunter.gui.view.FilterFileCell;
 import javafx.beans.property.ReadOnlyBooleanProperty;
 import javafx.beans.property.StringProperty;
+import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ListView;
@@ -30,23 +30,30 @@ import javax.inject.Inject;
 
 import static io.github.vocabhunter.gui.common.FieldValueTool.*;
 
-@SuppressFBWarnings({"NP_UNWRITTEN_PUBLIC_OR_PROTECTED_FIELD", "UWF_UNWRITTEN_PUBLIC_OR_PROTECTED_FIELD"})
 public class SettingsController {
-    public TextField fieldMinimumLetters;
+    @FXML
+    private TextField fieldMinimumLetters;
 
-    public TextField fieldMinimumOccurrences;
+    @FXML
+    private TextField fieldMinimumOccurrences;
 
-    public CheckBox fieldInitialCapital;
+    @FXML
+    private CheckBox fieldInitialCapital;
 
-    public ListView<FilterFileModel> listExcludedFiles;
+    @FXML
+    private ListView<FilterFileModel> listExcludedFiles;
 
-    public Button buttonAddGridFile;
+    @FXML
+    private Button buttonAddGridFile;
 
-    public Button buttonAddSessionFile;
+    @FXML
+    private Button buttonAddSessionFile;
 
-    public Button buttonOk;
+    @FXML
+    private Button buttonOk;
 
-    public Button buttonCancel;
+    @FXML
+    private Button buttonCancel;
 
     @Inject
     private MainModel model;

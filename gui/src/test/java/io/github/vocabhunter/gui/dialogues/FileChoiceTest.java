@@ -5,12 +5,12 @@
 package io.github.vocabhunter.gui.dialogues;
 
 import io.github.vocabhunter.test.utils.AbstractBeanTest;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class FileChoiceTest extends AbstractBeanTest<FileChoice> {
     private static final Path FILE = Paths.get("test");

@@ -4,47 +4,60 @@
 
 package io.github.vocabhunter.gui.controller;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import io.github.vocabhunter.gui.model.ProgressModel;
 import javafx.beans.binding.Bindings;
 import javafx.beans.binding.StringBinding;
 import javafx.beans.value.ObservableNumberValue;
 import javafx.collections.FXCollections;
+import javafx.fxml.FXML;
 import javafx.scene.chart.PieChart;
 import javafx.scene.chart.PieChart.Data;
 import javafx.scene.control.Label;
 
 import java.text.MessageFormat;
 
-@SuppressFBWarnings({"NP_UNWRITTEN_PUBLIC_OR_PROTECTED_FIELD", "UWF_UNWRITTEN_PUBLIC_OR_PROTECTED_FIELD"})
 public class ProgressController {
-    public PieChart chartProgress;
+    @FXML
+    private PieChart chartProgress;
 
-    public Label labelValueDone;
+    @FXML
+    private Label labelValueDone;
 
-    public Label labelValueRemaining;
+    @FXML
+    private Label labelValueRemaining;
 
-    public PieChart chartResults;
+    @FXML
+    private PieChart chartResults;
 
-    public Label labelValueKnown;
+    @FXML
+    private Label labelValueKnown;
 
-    public Label labelValueUnknown;
+    @FXML
+    private Label labelValueUnknown;
 
-    public Label labelValueUnseenUnfiltered;
+    @FXML
+    private Label labelValueUnseenUnfiltered;
 
-    public Label labelValueFiltered;
+    @FXML
+    private Label labelValueFiltered;
 
-    public Label labelPercentDone;
+    @FXML
+    private Label labelPercentDone;
 
-    public Label labelPercentRemaining;
+    @FXML
+    private Label labelPercentRemaining;
 
-    public Label labelPercentKnown;
+    @FXML
+    private Label labelPercentKnown;
 
-    public Label labelPercentUnknown;
+    @FXML
+    private Label labelPercentUnknown;
 
-    public Label labelPercentUnseenUnfiltered;
+    @FXML
+    private Label labelPercentUnseenUnfiltered;
 
-    public Label labelPercentFiltered;
+    @FXML
+    private Label labelPercentFiltered;
 
     public void initialise(final ProgressModel model) {
         buildChartResults(model);

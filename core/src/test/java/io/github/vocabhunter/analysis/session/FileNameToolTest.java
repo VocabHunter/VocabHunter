@@ -5,12 +5,12 @@
 package io.github.vocabhunter.analysis.session;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @SuppressFBWarnings("DMI_HARDCODED_ABSOLUTE_FILENAME")
 public class FileNameToolTest {
@@ -45,6 +45,6 @@ public class FileNameToolTest {
         Path expectedPath = Paths.get(expected);
 
         Path actual = FileNameTool.ensureSessionFileHasSuffix(originalPath);
-        assertEquals("Path match", expectedPath, actual);
+        assertEquals(expectedPath, actual, "Path match");
     }
 }

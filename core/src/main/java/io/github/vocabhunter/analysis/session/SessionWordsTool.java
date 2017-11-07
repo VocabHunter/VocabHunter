@@ -4,8 +4,6 @@
 
 package io.github.vocabhunter.analysis.session;
 
-import io.github.vocabhunter.analysis.marked.MarkedWord;
-
 import java.nio.file.Path;
 import java.util.List;
 
@@ -14,5 +12,5 @@ public interface SessionWordsTool {
 
     List<String> seenWords(Path file);
 
-    List<? extends MarkedWord> readMarkedWords(Path file);
+    List<SessionWord> readMarkedWords(Path file);
 }

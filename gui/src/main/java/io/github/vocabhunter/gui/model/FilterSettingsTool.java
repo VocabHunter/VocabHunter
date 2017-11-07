@@ -4,13 +4,13 @@
 
 package io.github.vocabhunter.gui.model;
 
+import io.github.vocabhunter.analysis.core.DelayedExecutor;
 import io.github.vocabhunter.analysis.core.ThreadPoolTool;
 import io.github.vocabhunter.analysis.filter.FilterBuilder;
 import io.github.vocabhunter.analysis.filter.WordFilter;
 import io.github.vocabhunter.analysis.grid.FilterFileWordsExtractor;
 import io.github.vocabhunter.analysis.settings.BaseListedFile;
 
-import java.util.concurrent.Executor;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
@@ -20,12 +20,12 @@ public class FilterSettingsTool {
 
     private final FilterFileWordsExtractor extractor;
 
-    private final Executor executor;
+    private final DelayedExecutor executor;
 
     @Inject
     public FilterSettingsTool(final FilterFileWordsExtractor extractor, final ThreadPoolTool threadPoolTool) {
         this.extractor = extractor;
-        this.executor = threadPoolTool.daemonExecutor("Filter File Reader", FILTER_READER_THREAD_COUNT);
+        this.executor = threadPoolTool.delayedExecutor("Filter File Reader", FILTER_READER_THREAD_COUNT);
     }
 
     public WordFilter filter(final FilterSettings settings) {
@@ -47,5 +47,9 @@ public class FilterSettingsTool {
 
     private FilterBuilder addFilter(final FilterBuilder builder, final BaseListedFile file) {
         return builder.addExcludedWordsSupplier(() -> extractor.extract(file));
+    }
+
+    public void beginAsyncFiltering() {
+        executor.beginExecution();
     }
 }

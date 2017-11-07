@@ -4,13 +4,13 @@
 
 package io.github.vocabhunter.analysis.grid;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.nio.file.Path;
 import java.util.Collections;
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class DocumentGridReaderTest {
     private static final List<GridLine> EXPECTED = GridTestTool.documentLines();
@@ -32,6 +32,6 @@ public class DocumentGridReaderTest {
 
         List<GridLine> result = target.readGrid(file, "Rejected1"::equals);
 
-        assertEquals("Validate " + name, expected, result);
+        assertEquals(expected, result, "Validate " + name);
     }
 }

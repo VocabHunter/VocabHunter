@@ -5,12 +5,12 @@
 package io.github.vocabhunter.analysis.file;
 
 import io.github.vocabhunter.analysis.model.Analyser;
-import io.github.vocabhunter.analysis.model.AnalysisWord;
 import io.github.vocabhunter.analysis.session.EnrichedSessionState;
 import io.github.vocabhunter.analysis.session.SessionState;
+import io.github.vocabhunter.analysis.session.SessionWord;
 import io.github.vocabhunter.analysis.simple.SimpleAnalyser;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 
 import java.net.URL;
 import java.nio.file.Path;
@@ -18,14 +18,15 @@ import java.nio.file.Paths;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class AnalysisSystemTest {
     private static final String INPUT_DOCUMENT = "bleak-house.txt";
 
-    private static List<? extends AnalysisWord> words;
+    private static List<SessionWord> words;
 
-    @BeforeClass
+    @BeforeAll
     public static void setUpClass() throws Exception {
         Analyser analyser = new SimpleAnalyser();
         FileStreamer target = new FileStreamer(analyser);
@@ -39,24 +40,44 @@ public class AnalysisSystemTest {
 
     @Test
     public void testWordThe() throws Exception {
-        validate("the", 14922);
+        validate("the", 14922, 8325);
     }
 
     @Test
     public void testWordLondon() throws Exception {
-        validate("London", 83);
+        validate("London", 83, 83);
     }
 
-    private void validate(final String identifier, final int count) {
-        List<AnalysisWord> found = words.stream()
+    private void validate(final String identifier, final int useCount, final int lineCount) {
+        List<SessionWord> found = words.stream()
             .filter(w -> w.getWordIdentifier().equalsIgnoreCase(identifier))
             .collect(Collectors.toList());
 
-        assertEquals("List size", 1, found.size());
+        assertAll(
+            () -> assertEquals(1, found.size(), "List size"),
+            () -> {
+                SessionWord word = found.get(0);
 
-        AnalysisWord word = found.get(0);
+                assertAll(
+                    () -> assertEquals(identifier, word.getWordIdentifier(), "Word"),
+                    () -> assertEquals(useCount, word.getUseCount(), "Use count"),
+                    () -> validateLines(word.getLineNos(), lineCount)
+                );
+            }
+        );
+    }
 
-        assertEquals("Word", identifier, word.getWordIdentifier());
-        assertEquals("Count", count, word.getUseCount());
+    private void validateLines(final List<Integer> lines, final int lineCount) {
+        assertAll(
+            () -> assertEquals(lineCount, lines.size(), "Line number count"),
+            () -> {
+                List<Integer> orderedDistinct = lines.stream()
+                    .sorted()
+                    .distinct()
+                    .collect(Collectors.toList());
+
+                assertEquals(orderedDistinct, lines, "Distinct ordered lines");
+            }
+        );
     }
 }

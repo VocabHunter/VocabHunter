@@ -9,7 +9,7 @@ import io.github.vocabhunter.analysis.core.VocabHunterException;
 import javafx.application.Platform;
 
 import java.util.concurrent.BlockingQueue;
-import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executor;
 import java.util.concurrent.LinkedBlockingQueue;
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -30,15 +30,16 @@ public final class ExternalEventBrokerImpl implements ExternalEventListener, Ext
         try {
             openFileEvents.put(event);
         } catch (final InterruptedException e) {
+            Thread.currentThread().interrupt();
             throw new VocabHunterException("Unable to register event", e);
         }
     }
 
     @Override
     public void setListener(final ExternalEventListener listener) {
-        ExecutorService executorService = threadPoolTool.singleDaemonExecutor("External Event Broker");
+        Executor executor = threadPoolTool.singleDaemonExecutor("External Event Broker");
 
-        executorService.submit(() -> refireEvents(listener));
+        executor.execute(() -> refireEvents(listener));
     }
 
     private void refireEvents(final ExternalEventListener listener) {
@@ -49,6 +50,7 @@ public final class ExternalEventBrokerImpl implements ExternalEventListener, Ext
 
                 Platform.runLater(() -> listener.fireOpenFileEvent(event));
             } catch (final InterruptedException e) {
+                Thread.currentThread().interrupt();
                 isRunning = false;
             }
         }

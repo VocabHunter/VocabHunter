@@ -11,7 +11,7 @@ import io.github.vocabhunter.analysis.settings.ExcelListedFile;
 import io.github.vocabhunter.analysis.settings.SessionListedFile;
 import io.github.vocabhunter.gui.model.FilterFileMode;
 import io.github.vocabhunter.gui.model.FilterFileModel;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -20,7 +20,7 @@ import java.util.Set;
 import java.util.TreeSet;
 
 import static java.util.Collections.emptySet;
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class FilterFileModelTranslatorTest {
     private static final Path FILE = Paths.get("test");

@@ -4,14 +4,15 @@
 
 package io.github.vocabhunter.analysis.core;
 
-import org.junit.After;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Test;
 
-import java.util.concurrent.ExecutorService;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.Executor;
 import java.util.concurrent.Future;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 public class ThreadPoolToolTest {
     private static final int EXPECTED_RESULT = 123;
@@ -20,43 +21,45 @@ public class ThreadPoolToolTest {
 
     private final ThreadPoolTool target = new ThreadPoolToolImpl();
 
-    private ExecutorService service;
-
     @Test
     public void testSingleDaemonExecutor() {
-        service = target.singleDaemonExecutor("test");
-        assertNotNull("Executor service", service);
+        Executor service = target.singleDaemonExecutor("test");
+
+        assertNotNull(service, "Executor service");
     }
 
     @Test
     public void testMultipleDaemonExecutor() {
-        service = target.daemonExecutor("test", THREAD_COUNT);
-        assertNotNull("Executor service", service);
+        Executor service = target.delayedExecutor("test", THREAD_COUNT);
+
+        assertNotNull(service, "Executor service");
     }
 
     @Test
     public void testSingleDaemonThreadRun() throws Exception {
-        service = target.singleDaemonExecutor("test");
+        Executor service = target.singleDaemonExecutor("test");
 
-        validateExecution();
+        validateExecution(service);
     }
 
     @Test
     public void testMultipleDaemonThreadRun() throws Exception {
-        service = target.daemonExecutor("test", THREAD_COUNT);
+        DelayedExecutor service = target.delayedExecutor("test", THREAD_COUNT);
 
-        validateExecution();
+        service.beginExecution();
+
+        validateExecution(service);
     }
 
-    private void validateExecution() throws Exception {
-        Future<Integer> future = service.submit(() -> EXPECTED_RESULT);
+    private void validateExecution(final Executor service) throws Exception {
+        Future<Integer> future = CompletableFuture.supplyAsync(() -> EXPECTED_RESULT, service);
         int result = future.get();
 
-        assertEquals("Result", EXPECTED_RESULT, result);
+        assertEquals(EXPECTED_RESULT, result, "Result");
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
-        service.shutdownNow();
+        target.forceShutdown();
     }
 }

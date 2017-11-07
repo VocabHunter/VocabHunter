@@ -2,9 +2,7 @@
  * Open Source Software published under the Apache Licence, Version 2.0.
  */
 
-import org.gradle.internal.os.OperatingSystem
-
-if (OperatingSystem.current().isMacOsX()) {
+if (isIncludeMacExtensions) {
     sourceSets {
         main {
             java {

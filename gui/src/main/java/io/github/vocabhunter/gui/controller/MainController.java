@@ -4,7 +4,6 @@
 
 package io.github.vocabhunter.gui.controller;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import io.github.vocabhunter.gui.common.GuiConstants;
 import io.github.vocabhunter.gui.event.ExternalEventBroker;
 import io.github.vocabhunter.gui.model.MainModel;
@@ -14,6 +13,7 @@ import io.github.vocabhunter.gui.services.WebPageTool;
 import io.github.vocabhunter.gui.status.StatusManager;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
@@ -27,61 +27,87 @@ import javax.inject.Singleton;
 import static javafx.beans.binding.Bindings.not;
 
 @Singleton
-@SuppressFBWarnings({"NP_UNWRITTEN_PUBLIC_OR_PROTECTED_FIELD", "UWF_UNWRITTEN_PUBLIC_OR_PROTECTED_FIELD"})
 public class MainController {
-    public MenuItem menuNew;
+    @FXML
+    private MenuItem menuNew;
 
-    public MenuItem menuOpen;
+    @FXML
+    private MenuItem menuOpen;
 
-    public MenuItem menuSave;
+    @FXML
+    private MenuItem menuSave;
 
-    public MenuItem menuSaveAs;
+    @FXML
+    private MenuItem menuSaveAs;
 
-    public RadioMenuItem menuEditOn;
+    @FXML
+    private RadioMenuItem menuEditOn;
 
-    public RadioMenuItem menuEditOff;
+    @FXML
+    private RadioMenuItem menuEditOff;
 
-    public MenuItem menuExport;
+    @FXML
+    private MenuItem menuExport;
 
-    public MenuItem menuSetupFilters;
+    @FXML
+    private MenuItem menuSetupFilters;
 
-    public CheckMenuItem menuEnableFilters;
+    @FXML
+    private CheckMenuItem menuEnableFilters;
 
-    public MenuItem menuWebsite;
+    @FXML
+    private MenuItem menuWebsite;
 
-    public MenuItem menuHowTo;
+    @FXML
+    private MenuItem menuHowTo;
 
-    public MenuItem menuIssue;
+    @FXML
+    private MenuItem menuIssue;
 
-    public MenuItem menuAbout;
+    @FXML
+    private MenuItem menuAbout;
 
-    public Button buttonNew;
+    @FXML
+    private Button buttonNew;
 
-    public Button buttonOpen;
+    @FXML
+    private Button buttonOpen;
 
-    public Button buttonSave;
+    @FXML
+    private Button buttonSave;
 
-    public Button buttonExport;
+    @FXML
+    private Button buttonExport;
 
-    public Button buttonSetupFilters;
+    @FXML
+    private Button buttonSetupFilters;
 
-    public CheckBox buttonEnableFilters;
+    @FXML
+    private CheckBox buttonEnableFilters;
 
-    public RadioButton buttonEditOn;
+    @FXML
+    private RadioButton buttonEditOn;
 
-    public RadioButton buttonEditOff;
+    @FXML
+    private RadioButton buttonEditOff;
 
-    public BorderPane mainBorderPane;
+    @FXML
+    private BorderPane mainBorderPane;
 
-    public MenuBar menuBar;
+    @FXML
+    private MenuBar menuBar;
 
-    public StatusBar statusBar;
+    @FXML
+    private StatusBar statusBar;
 
-    public Pane maskerPane;
+    @FXML
+    private Pane maskerPane;
 
-    public MenuItem menuFind;
+    @FXML
+    private MenuItem menuFind;
 
-    public MenuItem menuExit;
+    @FXML
+    private MenuItem menuExit;
 
     @Inject
     private AboutHandler aboutHandler;

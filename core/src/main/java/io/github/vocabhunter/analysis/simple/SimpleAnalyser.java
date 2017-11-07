@@ -4,11 +4,11 @@
 
 package io.github.vocabhunter.analysis.simple;
 
+import io.github.vocabhunter.analysis.core.CoreTool;
 import io.github.vocabhunter.analysis.model.Analyser;
 import io.github.vocabhunter.analysis.model.AnalysisResult;
 import io.github.vocabhunter.analysis.model.WordUse;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.IntStream;
@@ -29,7 +29,7 @@ public class SimpleAnalyser implements Analyser {
             .collect(toMap(
                 WordStreamTool::classifier,
                 identity(),
-                this::combine));
+                (w1, w2) -> new WordUse(w1, w2, false)));
         List<WordUse> uses = map.values().stream()
                 .sorted(WordStreamTool.WORD_COMPARATOR)
                 .collect(toList());
@@ -40,32 +40,11 @@ public class SimpleAnalyser implements Analyser {
     private Stream<WordUse> uses(final List<String> lines, final int lineNo) {
         String line = lines.get(lineNo);
         Map<String, WordUse> map = WordStreamTool.words(line)
-            .map(w -> new WordUse(w, lineNo))
             .collect(toMap(
-                WordStreamTool::classifier,
-                identity(),
-                this::combineSingleLine));
+                CoreTool::toLowerCase,
+                w -> new WordUse(w, lineNo),
+                (w1, w2) -> new WordUse(w1, w2, true)));
 
         return map.values().stream();
-    }
-
-
-    private WordUse combineSingleLine(final WordUse w1, final WordUse w2) {
-        return combine(w1, w2, w1.getLineNos());
-    }
-
-    private WordUse combine(final WordUse w1, final WordUse w2) {
-        List<Integer> lineNos = new ArrayList<>(w1.getLineNos());
-
-        lineNos.addAll(w2.getLineNos());
-
-        return combine(w1, w2, lineNos);
-    }
-
-    private WordUse combine(final WordUse w1, final WordUse w2, final List<Integer> lineNos) {
-        String identifier = WordStreamTool.preferredForm(w1.getWordIdentifier(), w2.getWordIdentifier());
-        int useCount = w1.getUseCount() + w2.getUseCount();
-
-        return new WordUse(identifier, useCount, lineNos);
     }
 }

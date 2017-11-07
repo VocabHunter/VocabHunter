@@ -67,19 +67,21 @@ Unfortunately the headless tests don't currently work on the OpenJDK when runnin
 
 If you'd like to know more about how VocabHunter works and the technologies used to build it, take a look at the following articles that explore various aspects of the implementation:
 
-* [VocabHunter – A tool for learners of foreign languages][KingTechBlog1] (King Tech Blog) - An introduction to some of the technologies being used in VocabHunter.
-* [Building a JavaFX Search Bar][SearchBar] (VocabHunter Blog) - How the user interface for the VocabHunter search bar works with details of the use of ControlsFX and FontAwesomeFX in giving the bar a distinctive style.
-* [How JavaFX was used to build a desktop application][KingTechBlog2] (King Tech Blog) - A detailed look at several important features of JavaFX using VocabHunter as an example.
-* [Dependency Injection in JavaFX][DependencyInjection] (VocabHunter Blog) - How to Gluon Ignite and Google Guice are used for the  Dependency Injection in VocabHunter.
-* [User Interface Testing with TestFX][TestFXBlog] (VocabHunter Blog) - A guide to automating user interface tests using TestFX.  VocabHunter includes a complete automated GUI test suite and here you can learn how it works.
 * [Read (Almost) Any Document in Java] (VocabHunter Blog) - VocabHunter uses Apache Tika to read documents in a wide variety of formats ranging from Microsoft Word through to PDF.  This article explains how it is done.
+* [How JavaFX was used to build a desktop application] (King Tech Blog) - A detailed look at several important features of JavaFX using VocabHunter as an example.
+* [Migrating to JUnit 5] (VocabHunter Blog) - How the VocabHunter project was updated to use JUnit 5 for testing.  This article explains the changes that were made, the problems that were encountered and how they were solved.
+* [Dependency Injection in JavaFX] (VocabHunter Blog) - How to Gluon Ignite and Google Guice are used for the  Dependency Injection in VocabHunter.
+* [User Interface Testing with TestFX] (VocabHunter Blog) - A guide to automating user interface tests using TestFX.  VocabHunter includes a complete automated GUI test suite and here you can learn how it works.
+* [Building a JavaFX Search Bar] (VocabHunter Blog) - How the user interface for the VocabHunter search bar works with details of the use of ControlsFX and FontAwesomeFX in giving the bar a distinctive style.
+* [VocabHunter – A tool for learners of foreign languages] (King Tech Blog) - An introduction to some of the technologies being used in VocabHunter.
 
 [![VocabHunter](/assets/VocabHunter-Technical-Articles.png)](https://vocabhunter.github.io/blog/)
 
-[TestFXBlog]:https://vocabhunter.github.io/2016/07/27/TestFX.html
-[DependencyInjection]:https://vocabhunter.github.io/2016/11/13/JavaFX-Dependency-Injection.html
-[SearchBar]:https://vocabhunter.github.io/2017/01/15/Search-Bar.html
+[Dependency Injection in JavaFX]:https://vocabhunter.github.io/2016/11/13/JavaFX-Dependency-Injection.html
+[User Interface Testing with TestFX]:https://vocabhunter.github.io/2016/07/27/TestFX.html
+[Building a JavaFX Search Bar]:https://vocabhunter.github.io/2017/01/15/Search-Bar.html
 [Read (Almost) Any Document in Java]:https://vocabhunter.github.io/2017/04/30/Read-Any-Document-Format.html
+[Migrating to JUnit 5]:https://vocabhunter.github.io/2017/10/17/migrating-to-junit-5.html
 
-[KingTechBlog1]:https://techblog.king.com/vocabhunter-a-tool-for-learners-of-foreign-languages/
-[KingTechBlog2]:https://techblog.king.com/javafx-used-build-desktop-application/
+[VocabHunter – A tool for learners of foreign languages]:https://techblog.king.com/vocabhunter-a-tool-for-learners-of-foreign-languages/
+[How JavaFX was used to build a desktop application]:https://techblog.king.com/javafx-used-build-desktop-application/

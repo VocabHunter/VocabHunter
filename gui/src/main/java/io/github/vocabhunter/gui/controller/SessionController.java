@@ -4,18 +4,20 @@
 
 package io.github.vocabhunter.gui.controller;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import io.github.vocabhunter.analysis.core.GuiTaskHandler;
 import io.github.vocabhunter.analysis.core.VocabHunterException;
 import io.github.vocabhunter.analysis.filter.WordFilter;
 import io.github.vocabhunter.analysis.marked.MarkTool;
 import io.github.vocabhunter.analysis.marked.WordState;
-import io.github.vocabhunter.gui.model.*;
+import io.github.vocabhunter.gui.model.PositionModel;
+import io.github.vocabhunter.gui.model.SessionModel;
+import io.github.vocabhunter.gui.model.WordModel;
 import io.github.vocabhunter.gui.services.FilterService;
 import io.github.vocabhunter.gui.view.UseListCell;
 import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
 import javafx.beans.binding.ObjectBinding;
+import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
@@ -29,44 +31,59 @@ import javax.inject.Inject;
 import static io.github.vocabhunter.gui.common.EventHandlerTool.combine;
 import static io.github.vocabhunter.gui.dialogues.AlertTool.filterErrorAlert;
 
-@SuppressFBWarnings({"NP_UNWRITTEN_PUBLIC_OR_PROTECTED_FIELD", "UWF_UNWRITTEN_PUBLIC_OR_PROTECTED_FIELD"})
 public class SessionController {
     private static final Logger LOG = LoggerFactory.getLogger(SessionController.class);
 
     @Inject
     private FilterService filterService;
 
-    public Label mainWord;
+    @FXML
+    private Label mainWord;
 
-    public Label useCountLabel;
+    @FXML
+    private Label useCountLabel;
 
-    public ListView<WordModel> wordListView;
+    @FXML
+    private ListView<WordModel> wordListView;
 
-    public BorderPane mainWordPane;
+    @FXML
+    private BorderPane mainWordPane;
 
-    public Button buttonUnseen;
+    @FXML
+    private Button buttonUnseen;
 
-    public Button buttonKnown;
+    @FXML
+    private Button buttonKnown;
 
-    public Button buttonUnknown;
+    @FXML
+    private Button buttonUnknown;
 
-    public ListView<String> useListView;
+    @FXML
+    private ListView<String> useListView;
 
-    public SplitPane splitUseList;
+    @FXML
+    private SplitPane splitUseList;
 
-    public SplitPane splitWordList;
+    @FXML
+    private SplitPane splitWordList;
 
-    public ToolBar barSearch;
+    @FXML
+    private ToolBar barSearch;
 
-    public CustomTextField fieldSearch;
+    @FXML
+    private CustomTextField fieldSearch;
 
-    public Label labelMatches;
+    @FXML
+    private Label labelMatches;
 
-    public Button buttonCloseSearch;
+    @FXML
+    private Button buttonCloseSearch;
 
-    public Button buttonSearchUp;
+    @FXML
+    private Button buttonSearchUp;
 
-    public Button buttonSearchDown;
+    @FXML
+    private Button buttonSearchDown;
 
     private SessionModel sessionModel;
 

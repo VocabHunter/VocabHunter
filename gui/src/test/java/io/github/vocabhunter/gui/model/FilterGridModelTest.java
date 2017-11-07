@@ -7,7 +7,7 @@ package io.github.vocabhunter.gui.model;
 import io.github.vocabhunter.analysis.grid.GridTestTool;
 import io.github.vocabhunter.analysis.grid.TextGrid;
 import javafx.beans.property.BooleanProperty;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.nio.file.Path;
 import java.util.List;
@@ -16,7 +16,8 @@ import java.util.TreeSet;
 import java.util.stream.IntStream;
 
 import static io.github.vocabhunter.analysis.core.CoreTool.listOf;
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class FilterGridModelTest extends BaseFilterModelTest {
     private static final TextGrid EMPTY_GRID = GridTestTool.emptyGrid();
@@ -101,22 +102,31 @@ public class FilterGridModelTest extends BaseFilterModelTest {
         final FilterGridModel target, final Path file, final String filename,
         final String countDescription, final boolean isError,
         final TextGrid grid, final FilterFileMode mode, final Set<Integer> columns) {
-        int columnCount = grid.getColumns().size();
 
-        assertEquals("Column count", columnCount, target.getColumnCount());
-        assertEquals("Lines", grid.getLines(), target.getLines());
-        assertEquals("Mode", mode, target.getMode());
-        assertEquals("Columns", columns, target.getColumns());
-        validateCommon(target, file, filename, countDescription, isError);
-        validateColumnSelections(target, columns, columnCount);
+        assertAll(
+            () -> {
+                int columnCount = grid.getColumns().size();
+
+                assertAll(
+                    () -> assertEquals(columnCount, target.getColumnCount(), "Column count"),
+                    () -> validateColumnSelections(target, columns, columnCount)
+                );
+            },
+            () -> assertEquals(grid.getLines(), target.getLines(), "Lines"),
+            () -> assertEquals(mode, target.getMode(), "Mode"),
+            () -> assertEquals(columns, target.getColumns(), "Columns"),
+            () -> validateCommon(target, file, filename, countDescription, isError)
+        );
     }
 
     private void validateColumnSelections(final FilterGridModel target, final Set<Integer> columns, final int columnCount) {
         List<BooleanProperty> columnSelections = target.getColumnSelections();
 
-        assertEquals(columnCount, columnSelections.size());
-        IntStream.range(0, columnCount)
-            .forEach(i -> assertEquals(columns.contains(i), columnSelections.get(i).get()));
+        assertAll(
+            () -> assertEquals(columnCount, columnSelections.size()),
+            () -> IntStream.range(0, columnCount)
+                       .forEach(i -> assertEquals(columns.contains(i), columnSelections.get(i).get()))
+        );
     }
 
     private FilterGridModel build(final TextGrid grid, final Integer... columns) {

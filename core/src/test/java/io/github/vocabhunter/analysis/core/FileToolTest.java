@@ -5,9 +5,9 @@
 package io.github.vocabhunter.analysis.core;
 
 import io.github.vocabhunter.test.utils.TestFileManager;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -15,8 +15,9 @@ import java.nio.file.Paths;
 import java.util.Collections;
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class FileToolTest {
     private static final String ERROR_TEMPLATE = "Error %s";
@@ -30,7 +31,7 @@ public class FileToolTest {
 
     private Path subDirectory;
 
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         manager = new TestFileManager(getClass());
         base = manager.getDirectory();
@@ -41,7 +42,7 @@ public class FileToolTest {
         Files.createDirectories(subDirectory);
     }
 
-    @After
+    @AfterEach
     public void tearDown() throws Exception {
         manager.cleanup();
     }
@@ -53,11 +54,11 @@ public class FileToolTest {
         assertTrue(Files.isDirectory(base));
     }
 
-    @Test(expected = VocabHunterException.class)
+    @Test
     public void testEnsureDirectoryExistsWithError() {
         Path impossible = existingFile.resolve("file");
 
-        FileTool.ensureDirectoryExists(impossible, ERROR_TEMPLATE);
+        assertThrows(VocabHunterException.class, () -> FileTool.ensureDirectoryExists(impossible, ERROR_TEMPLATE));
     }
 
     @Test
@@ -76,9 +77,9 @@ public class FileToolTest {
         assertEquals(expected, result);
     }
 
-    @Test(expected = VocabHunterException.class)
+    @Test
     public void testWriteMinimalJsonFailure() throws Exception {
-        FileTool.writeMinimalJson(subDirectory, ERROR_TEMPLATE);
+        assertThrows(VocabHunterException.class, () -> FileTool.writeMinimalJson(subDirectory, ERROR_TEMPLATE));
     }
 
     @Test
@@ -91,13 +92,13 @@ public class FileToolTest {
         assertEquals(bean, result);
     }
 
-    @Test(expected = VocabHunterException.class)
+    @Test
     public void testWriteAsJsonWithError() {
-        FileTool.writeAsJson(subDirectory, new FileToolTestBean(), ERROR_TEMPLATE);
+        assertThrows(VocabHunterException.class, () -> FileTool.writeAsJson(subDirectory, new FileToolTestBean(), ERROR_TEMPLATE));
     }
 
-    @Test(expected = VocabHunterException.class)
+    @Test
     public void testReadFromJsonWithError() {
-        FileTool.readFromJson(FileToolTestBean.class, subDirectory, ERROR_TEMPLATE);
+        assertThrows(VocabHunterException.class, () -> FileTool.readFromJson(FileToolTestBean.class, subDirectory, ERROR_TEMPLATE));
     }
 }

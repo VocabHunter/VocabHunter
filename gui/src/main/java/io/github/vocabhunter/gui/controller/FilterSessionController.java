@@ -4,7 +4,6 @@
 
 package io.github.vocabhunter.gui.controller;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import io.github.vocabhunter.analysis.marked.MarkedWord;
 import io.github.vocabhunter.analysis.session.SessionWordsTool;
 import io.github.vocabhunter.gui.dialogues.FileDialogue;
@@ -17,6 +16,7 @@ import io.github.vocabhunter.gui.model.FilterSessionWord;
 import io.github.vocabhunter.gui.view.FilterSessionStateTableCell;
 import io.github.vocabhunter.gui.view.FilterSessionWordTableCell;
 import javafx.beans.value.ObservableValue;
+import javafx.fxml.FXML;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellDataFeatures;
@@ -29,22 +29,26 @@ import java.nio.file.Path;
 import java.util.List;
 import javax.inject.Inject;
 
-@SuppressFBWarnings({"NP_UNWRITTEN_PUBLIC_OR_PROTECTED_FIELD", "UWF_UNWRITTEN_PUBLIC_OR_PROTECTED_FIELD"})
 public class FilterSessionController extends AbstractFilterController<FilterSessionModel> {
     private static final Callback<CellDataFeatures<FilterSessionWord, FilterSessionWord>, ObservableValue<FilterSessionWord>> WORD_SELF_FACTORY
         = x -> x.getValue().selfProperty();
 
     private final SessionWordsTool sessionWordsTool;
 
-    public RadioButton buttonKnown;
+    @FXML
+    private RadioButton buttonKnown;
 
-    public RadioButton buttonSeen;
+    @FXML
+    private RadioButton buttonSeen;
 
-    public TableView<FilterSessionWord> tableWords;
+    @FXML
+    private TableView<FilterSessionWord> tableWords;
 
-    public TableColumn<FilterSessionWord, FilterSessionWord> columnType;
+    @FXML
+    private TableColumn<FilterSessionWord, FilterSessionWord> columnType;
 
-    public TableColumn<FilterSessionWord, FilterSessionWord> columnWord;
+    @FXML
+    private TableColumn<FilterSessionWord, FilterSessionWord> columnWord;
 
     @Inject
     public FilterSessionController(final FileDialogueFactory factory, final SessionWordsTool sessionWordsTool) {
