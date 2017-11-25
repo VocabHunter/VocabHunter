@@ -21,7 +21,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.Pane;
 import org.controlsfx.control.textfield.CustomTextField;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -47,7 +47,7 @@ public class SessionController {
     private ListView<WordModel> wordListView;
 
     @FXML
-    private BorderPane mainWordPane;
+    private Pane mainWordPane;
 
     @FXML
     private Button buttonUnseen;
