@@ -230,14 +230,14 @@
 .settings, .filter {
     -fx-padding: 20 20 20 20;
 }
-.settings .description, .filter .description {
+.settings .description, .filter .description, .noteEditor .description {
     -fx-font-size: 18;
     -fx-padding: 0 0 10 0;
 }
 .settings .fieldLabel {
     -fx-padding: 10 5 10 5;
 }
-.settings .buttonBar, .filter .buttonBar {
+.settings .buttonBar, .filter .buttonBar, .noteEditor .buttonBar {
     -fx-padding: 20 0 0 0;
 }
 .settings .settingsGroup {
@@ -277,6 +277,13 @@
 .about Label, .about Hyperlink {
     -fx-font-size: 20;
     -fx-padding: 7 0 7 0;
+}
+.noteEditor {
+    -fx-padding: 10;
+}
+.noteEditor TextArea {
+    -fx-pref-width: 500;
+    -fx-pref-height: 300;
 }
 .websiteIcon {
     -glyph-name: HOME;

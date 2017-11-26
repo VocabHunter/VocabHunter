@@ -29,12 +29,15 @@ public class WordModel implements MarkedWord, SequencedWord {
 
     private final SimpleObjectProperty<WordState> state;
 
-    public WordModel(final int sequenceNo, final String word, final List<String> uses, final int useCount, final WordState state) {
+    private final SimpleStringProperty note;
+
+    public WordModel(final int sequenceNo, final String word, final List<String> uses, final int useCount, final WordState state, final String note) {
         this.uses = uses;
         this.useCount = useCount;
         this.identifier = new SimpleStringProperty(word);
         this.sequenceNo = sequenceNo;
         this.state = new SimpleObjectProperty<>(state);
+        this.note = new SimpleStringProperty(note);
     }
 
     @Override
@@ -67,5 +70,17 @@ public class WordModel implements MarkedWord, SequencedWord {
     @Override
     public int getUseCount() {
         return useCount;
+    }
+
+    public SimpleStringProperty noteProperty() {
+        return note;
+    }
+
+    public String getNote() {
+        return note.get();
+    }
+
+    public void setNote(final String note) {
+        this.note.set(note);
     }
 }

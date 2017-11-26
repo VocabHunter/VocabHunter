@@ -56,11 +56,28 @@ public class SessionModelTool {
         List<String> uses = word.getLineNos().stream()
             .map(lines::get)
             .collect(toList());
-        WordModel model = new WordModel(n, word.getWordIdentifier(), uses, word.getUseCount(), word.getState());
+        WordModel model = new WordModel(n, word.getWordIdentifier(), uses, word.getUseCount(), word.getState(), toGuiNote(word.getNote()));
 
         model.stateProperty().addListener((o, old, s) -> word.setState(s));
+        model.noteProperty().addListener((o, old, s) -> word.setNote(fromGuiNote(s)));
         model.stateProperty().addListener((o, old, s) -> progressModel.updateWord(old, s));
 
         return model;
+    }
+
+    private String toGuiNote(final String note) {
+        if (note == null) {
+            return "";
+        } else {
+            return note;
+        }
+    }
+
+    private String fromGuiNote(final String note) {
+        if ("".equals(note)) {
+            return null;
+        } else {
+            return note;
+        }
     }
 }

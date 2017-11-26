@@ -74,6 +74,21 @@ public class GuiTestSteps {
             verifyThat("#mainWord", hasText("of"));
         });
 
+        step("Write note and cancel", () -> {
+            robot.clickOn("#buttonNote");
+            robot.clickOn("#textAreaNoteText").write("test1");
+            robot.clickOn("#buttonCancel");
+            verifyThat("#textAreaNotePreview", isInvisible());
+        });
+
+        step("Write note and add to word", () -> {
+            robot.clickOn("#buttonNote");
+            robot.clickOn("#textAreaNoteText").write("test2");
+            robot.clickOn("#buttonOk");
+            verifyThat("#textAreaNotePreview", isVisible());
+            verifyThat("#textAreaNotePreview", hasText("test2"));
+        });
+
         step("Show selection", () -> {
             robot.clickOn("#buttonEditOff");
             verifyThat("#buttonKnown", isInvisible());

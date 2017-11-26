@@ -34,9 +34,6 @@ import static io.github.vocabhunter.gui.dialogues.AlertTool.filterErrorAlert;
 public class SessionController {
     private static final Logger LOG = LoggerFactory.getLogger(SessionController.class);
 
-    @Inject
-    private FilterService filterService;
-
     @FXML
     private Label mainWord;
 
@@ -57,6 +54,9 @@ public class SessionController {
 
     @FXML
     private Button buttonUnknown;
+
+    @FXML
+    private Button buttonNote;
 
     @FXML
     private ListView<String> useListView;
@@ -85,6 +85,18 @@ public class SessionController {
     @FXML
     private Button buttonSearchDown;
 
+    @FXML
+    private TextArea textAreaNotePreview;
+
+    @Inject
+    private FilterService filterService;
+
+    @Inject
+    private WordStateHandler wordStateHandler;
+
+    @Inject
+    private WordNoteHandler wordNoteHandler;
+
     private SessionModel sessionModel;
 
     private ObjectBinding<WordState> wordStateProperty;
@@ -92,8 +104,6 @@ public class SessionController {
     private WordListHandler wordListHandler;
 
     private MainWordHandler mainWordHandler;
-
-    private WordStateHandler wordStateHandler;
 
     private SearchHandler searchHandler;
 
@@ -109,7 +119,9 @@ public class SessionController {
         wordListView.getSelectionModel().selectedItemProperty().addListener((o, old, word) -> updateCurrentWordProperty(word));
 
         prepareWordListHandler();
-        prepareWordStateHandler();
+        wordStateHandler.initialise(buttonUnseen, buttonKnown, buttonUnknown, sessionModel, wordStateProperty, wordListHandler::selectNextWord);
+        wordNoteHandler.initialise(buttonNote, textAreaNotePreview, sessionModel);
+
         prepareMainWord();
         prepareSearchBar(guiTaskHandler);
         preparePositionModel();
@@ -127,12 +139,6 @@ public class SessionController {
     private void prepareWordListHandler() {
         wordListHandler = new WordListHandler(wordListView, sessionModel);
         wordListHandler.prepare();
-    }
-
-    private void prepareWordStateHandler() {
-        wordStateHandler = new WordStateHandler(buttonUnseen, buttonKnown, buttonUnknown, sessionModel, wordStateProperty, wordListHandler::selectNextWord);
-
-        wordStateHandler.prepareEditButtons();
     }
 
     private void processKeyPress(final KeyEvent event) {

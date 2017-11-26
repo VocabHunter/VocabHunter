@@ -81,7 +81,7 @@
                                               </children>
                                           </HBox>
                                       </children>
-                                      <TextArea editable="false" styleClass="textAreaWordNote" text="Line 1&#10;Line 2&#10;Line 3&#10;Line 4" VBox.vgrow="ALWAYS" visible="false" />
+                                      <TextArea fx:id="textAreaNotePreview" editable="false" styleClass="textAreaWordNote" text="Line 1&#10;Line 2&#10;Line 3&#10;Line 4" VBox.vgrow="ALWAYS" />
                                   </VBox>
                               </center>
                               <left>
@@ -95,7 +95,7 @@
                                   </Button>
                               </left>
                               <right>
-                                  <Button mnemonicParsing="false" styleClass="buttonNote" BorderPane.alignment="BOTTOM_LEFT" visible="false">
+                                  <Button fx:id="buttonNote" mnemonicParsing="false" styleClass="buttonNote" BorderPane.alignment="BOTTOM_LEFT">
                                       <tooltip>
                                           <Tooltip text="Add a note to this word" />
                                       </tooltip>
