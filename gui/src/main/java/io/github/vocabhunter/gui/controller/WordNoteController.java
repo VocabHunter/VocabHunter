@@ -4,7 +4,7 @@
 
 package io.github.vocabhunter.gui.controller;
 
-import io.github.vocabhunter.gui.model.WordModel;
+import io.github.vocabhunter.gui.model.SessionModel;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -31,26 +31,27 @@ public class WordNoteController {
 
     private Stage stage;
 
-    private WordModel currentWord;
+    private SessionModel sessionModel;
 
-    public void initialise(final Stage stage, final WordModel currentWord) {
+    public void initialise(final Stage stage, final SessionModel sessionModel) {
         this.stage = stage;
-        this.currentWord = currentWord;
+        this.sessionModel = sessionModel;
 
         labelTitle.setText(titleText());
-        textAreaNoteText.setText(currentWord.getNote());
+        textAreaNoteText.setText(sessionModel.getCurrentWord().getNote());
 
         buttonOk.setOnAction(e -> exit(true));
         buttonCancel.setOnAction(e -> exit(false));
     }
 
     private String titleText() {
-        return String.format(TITLE_TEMPLATE, currentWord.getWordIdentifier());
+        return String.format(TITLE_TEMPLATE, sessionModel.getCurrentWord().getWordIdentifier());
     }
 
     private void exit(final boolean isSaveRequested) {
         if (isSaveRequested) {
-            currentWord.setNote(textAreaNoteText.getText());
+            sessionModel.getCurrentWord().setNote(textAreaNoteText.getText());
+            sessionModel.setChangesSaved(false);
         }
         stage.close();
     }

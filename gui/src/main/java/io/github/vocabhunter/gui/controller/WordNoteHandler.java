@@ -52,7 +52,7 @@ public class WordNoteHandler {
         Parent root = ViewFxml.WORD_NOTE.loadNode(loader);
         WordNoteController controller = loader.getController();
 
-        controller.initialise(stage, sessionModel.getCurrentWord());
+        controller.initialise(stage, sessionModel);
         WindowTool.setupModal(stage, root, "Word Note");
     }
 }
