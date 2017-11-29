@@ -4,7 +4,9 @@
 
 package io.github.vocabhunter.gui.controller;
 
+import io.github.vocabhunter.gui.common.WordNoteTool;
 import io.github.vocabhunter.gui.model.SessionModel;
+import io.github.vocabhunter.gui.model.WordModel;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -50,8 +52,13 @@ public class WordNoteController {
 
     private void exit(final boolean isSaveRequested) {
         if (isSaveRequested) {
-            sessionModel.getCurrentWord().setNote(textAreaNoteText.getText());
-            sessionModel.setChangesSaved(false);
+            WordModel currentWord = sessionModel.getCurrentWord();
+            WordNoteTool tool = new WordNoteTool(currentWord.getNote(), textAreaNoteText.getText());
+
+            if (tool.isModified()) {
+                currentWord.setNote(tool.getCleaned());
+                sessionModel.setChangesSaved(false);
+            }
         }
         stage.close();
     }
