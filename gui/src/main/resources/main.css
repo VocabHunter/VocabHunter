@@ -38,12 +38,14 @@
     -fx-background-color: -colour-unknown;
 }
 .padTopWord {
-    -fx-pref-height: 100;
+    -fx-pref-height: 60;
+    -fx-max-height: 60;
 }
 .textAreaWordNote {
-    -fx-padding: 10;
-    -fx-background-insets: 10;
-    -fx-pref-height: 100;
+    -fx-padding: 10 0 5 0;
+    -fx-background-insets: 10 0 5 0;
+    -fx-min-height: 43;
+    -fx-pref-height: 60;
     -fx-background-color: -colour-unseen-dark1; /* This corresponds to the pseudo-class "unseen" */
 }
 .mainWordPane:known .textAreaWordNote {
