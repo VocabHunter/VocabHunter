@@ -24,6 +24,10 @@ import static org.testfx.matcher.base.NodeMatchers.*;
 public class GuiTestSteps {
     private static final Logger LOG = LoggerFactory.getLogger(GuiTestSteps.class);
 
+    private static final String WORD_NOTE_1 = "Typed and then discarded";
+
+    private static final String WORD_NOTE_2 = "A comment made about this word.";
+
     private final FxRobot robot;
 
     private final GuiTestValidator validator;
@@ -76,17 +80,17 @@ public class GuiTestSteps {
 
         step("Write note and cancel", () -> {
             robot.clickOn("#buttonNote");
-            robot.clickOn("#textAreaNoteText").write("test1");
+            robot.clickOn("#textAreaNoteText").write(WORD_NOTE_1);
             robot.clickOn("#buttonCancel");
             verifyThat("#textAreaNotePreview", isInvisible());
         });
 
         step("Write note and add to word", () -> {
             robot.clickOn("#buttonNote");
-            robot.clickOn("#textAreaNoteText").write("test2");
+            robot.clickOn("#textAreaNoteText").write(WORD_NOTE_2);
             robot.clickOn("#buttonOk");
             verifyThat("#textAreaNotePreview", isVisible());
-            verifyThat("#textAreaNotePreview", hasText("test2"));
+            verifyThat("#textAreaNotePreview", hasText(WORD_NOTE_2));
         });
 
         step("Show selection", () -> {
