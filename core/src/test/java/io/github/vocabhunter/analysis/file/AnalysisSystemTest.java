@@ -39,12 +39,12 @@ public class AnalysisSystemTest {
     }
 
     @Test
-    public void testWordThe() throws Exception {
+    public void testWordThe() {
         validate("the", 14922, 8325);
     }
 
     @Test
-    public void testWordLondon() throws Exception {
+    public void testWordLondon() {
         validate("London", 83, 83);
     }
 

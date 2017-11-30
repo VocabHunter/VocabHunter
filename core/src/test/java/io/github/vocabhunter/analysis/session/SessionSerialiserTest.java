@@ -61,14 +61,14 @@ public class SessionSerialiserTest {
     }
 
     @Test
-    public void testSameState() throws Exception {
+    public void testSameState() {
         SessionState read = writeAndReadBackState1();
 
         assertEquals(state1, read, "Same state");
     }
 
     @Test
-    public void testDifferentState() throws Exception {
+    public void testDifferentState() {
         SessionState read = writeAndReadBackState1();
 
         assertNotEquals(state2, read, "Different state");

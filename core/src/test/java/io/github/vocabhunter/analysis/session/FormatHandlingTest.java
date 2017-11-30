@@ -34,7 +34,7 @@ public class FormatHandlingTest {
     private static final SessionState EXPECTED_STATE = buildSession();
 
     @Test
-    public void testUnsupportedVersion() throws Exception {
+    public void testUnsupportedVersion() {
         assertThrows(VocabHunterException.class, () -> readState(FORMAT_UNSUPPORTED_VERSION));
     }
 

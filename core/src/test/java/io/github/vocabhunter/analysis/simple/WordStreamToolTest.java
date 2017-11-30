@@ -14,92 +14,92 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class WordStreamToolTest {
     @Test
-    public void testEmpty() throws Exception {
+    public void testEmpty() {
         validate("");
     }
 
     @Test
-    public void testOneQuote() throws Exception {
+    public void testOneQuote() {
         validate("'");
     }
 
     @Test
-    public void testOneDot() throws Exception {
+    public void testOneDot() {
         validate(".");
     }
 
     @Test
-    public void testOneLetter() throws Exception {
+    public void testOneLetter() {
         validate("a", "a");
     }
 
     @Test
-    public void testSimple() throws Exception {
+    public void testSimple() {
         validate("This is a test.", "This", "is", "a", "test");
     }
 
     @Test
-    public void testExtraSpace() throws Exception {
+    public void testExtraSpace() {
         validate(" This  is  a  test. ", "This", "is", "a", "test");
     }
 
     @Test
-    public void testOuterDoubleQuote() throws Exception {
+    public void testOuterDoubleQuote() {
         validate("\"This is a test.\"", "This", "is", "a", "test");
     }
 
     @Test
-    public void testOuterSingleQuote() throws Exception {
+    public void testOuterSingleQuote() {
         validate("'This is a test.'", "This", "is", "a", "test");
     }
 
     @Test
-    public void testInnerDoubleQuote() throws Exception {
+    public void testInnerDoubleQuote() {
         validate("This \"is a\" test.", "This", "is", "a", "test");
     }
 
     @Test
-    public void testInnerSingleQuote() throws Exception {
+    public void testInnerSingleQuote() {
         validate("This 'is a' test.", "This", "is", "a", "test");
     }
 
     @Test
-    public void testCommaSpaceQuote() throws Exception {
+    public void testCommaSpaceQuote() {
         validate("This, 'is a' test.", "This", "is", "a", "test");
     }
 
     @Test
-    public void testDoubleDash() throws Exception {
+    public void testDoubleDash() {
         validate("This--is a--test.", "This", "is", "a", "test");
     }
 
     @Test
-    public void testDont() throws Exception {
+    public void testDont() {
         validate("Don't", "Don't");
     }
 
     @Test
-    public void testDontAtStart() throws Exception {
+    public void testDontAtStart() {
         validate("Don't wait", "Don't", "wait");
     }
 
     @Test
-    public void testDontAtEnd() throws Exception {
+    public void testDontAtEnd() {
         validate("Wait don't", "Wait", "don't");
     }
 
     @Test
-    public void testDontInMiddle() throws Exception {
+    public void testDontInMiddle() {
         validate("I don't wait", "I", "don't", "wait");
     }
 
     @Test
-    public void testSingleQuoteDont() throws Exception {
+    public void testSingleQuoteDont() {
         validate("I 'don't' wait", "I", "don't", "wait");
     }
 
     @Test
-    public void testDoubleQuoteDont() throws Exception {
+    public void testDoubleQuoteDont() {
         validate("I \"don't\" wait", "I", "don't", "wait");
     }
 
