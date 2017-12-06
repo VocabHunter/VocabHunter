@@ -18,9 +18,12 @@ import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
 import javafx.beans.binding.ObjectBinding;
 import javafx.fxml.FXML;
-import javafx.scene.control.*;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
+import javafx.scene.control.SplitPane;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.ToolBar;
 import javafx.scene.layout.Pane;
 import org.controlsfx.control.textfield.CustomTextField;
 import org.slf4j.Logger;
@@ -133,18 +136,12 @@ public class SessionController {
         sessionModel.filterSettingsProperty().addListener((p, o, v) -> updateWordListIfFilterEnabled());
         sessionModel.enableFiltersProperty().addListener((p, o, v) -> updateWordList());
 
-        sessionActions = new SessionActions(combine(this::processKeyPress, wordStateHandler::processKeyPress, wordNoteHandler::processKeyPress), searchHandler::openSearch);
+        sessionActions = new SessionActions(combine(searchHandler::processKeyPress, wordStateHandler::processKeyPress, wordNoteHandler::processKeyPress), searchHandler::openSearch);
     }
 
     private void prepareWordListHandler() {
         wordListHandler = new WordListHandler(wordListView, sessionModel);
         wordListHandler.prepare();
-    }
-
-    private void processKeyPress(final KeyEvent event) {
-        if (KeyCode.ESCAPE.equals(event.getCode())) {
-            searchHandler.closeSearch();
-        }
     }
 
     private void prepareMainWord() {

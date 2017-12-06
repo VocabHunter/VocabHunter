@@ -48,6 +48,7 @@ public class WordStateHandler {
         KeyCode key = event.getCode();
 
         if (keyHandlers.containsKey(key)) {
+            event.consume();
             keyHandlers.get(key).run();
         }
     }
