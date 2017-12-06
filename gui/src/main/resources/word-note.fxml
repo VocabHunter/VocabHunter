@@ -11,6 +11,9 @@
 <?import javafx.scene.layout.BorderPane?>
 
 <BorderPane styleClass="noteEditor" stylesheets="@main.css" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="io.github.vocabhunter.gui.controller.WordNoteController">
+   <center>
+       <TextArea fx:id="textAreaNoteText" />
+   </center>
     <bottom>
         <ButtonBar styleClass="buttonBar" BorderPane.alignment="CENTER">
             <buttons>
@@ -22,7 +25,4 @@
    <top>
       <Label fx:id="labelTitle" styleClass="description" text="Note for word: mañana" BorderPane.alignment="CENTER" />
    </top>
-   <center>
-       <TextArea fx:id="textAreaNoteText" />
-   </center>
 </BorderPane>
