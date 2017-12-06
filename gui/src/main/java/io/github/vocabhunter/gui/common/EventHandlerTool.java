@@ -12,12 +12,13 @@ public final class EventHandlerTool {
         // Prevent instantiation - all methods are static
     }
 
-    public static <T extends Event> EventHandler<T> combine(final EventHandler<T> h1, final EventHandler<T> h2) {
-        return e -> handle(h1, h2, e);
+    public static <T extends Event> EventHandler<T> combine(final EventHandler<T> h1, final EventHandler<T> h2, final EventHandler<T> h3) {
+        return e -> handle(e, h1, h2, h3);
     }
 
-    private static <T extends Event> void handle(final EventHandler<T> h1, final EventHandler<T> h2, final T e) {
+    private static <T extends Event> void handle(final T e, final EventHandler<T> h1, final EventHandler<T> h2, final EventHandler<T> h3) {
         h1.handle(e);
         h2.handle(e);
+        h3.handle(e);
     }
 }

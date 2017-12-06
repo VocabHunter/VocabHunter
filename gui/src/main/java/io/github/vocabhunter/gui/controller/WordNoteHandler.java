@@ -14,6 +14,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 
 import javax.inject.Inject;
@@ -54,5 +56,12 @@ public class WordNoteHandler {
 
         controller.initialise(stage, sessionModel);
         WindowTool.setupModal(stage, root, "Word Note");
+    }
+
+    public void processKeyPress(final KeyEvent event) {
+        if (KeyCode.N.equals(event.getCode())) {
+            event.consume();
+            show();
+        }
     }
 }

@@ -93,6 +93,12 @@ public class GuiTestSteps {
             verifyThat("#textAreaNotePreview", hasText(WORD_NOTE_2));
         });
 
+        step("Open note with keyboard", () -> {
+            robot.type(KeyCode.N);
+            verifyThat("#textAreaNoteText", isVisible());
+            robot.clickOn("#buttonOk");
+        });
+
         step("Show selection", () -> {
             robot.clickOn("#buttonEditOff");
             verifyThat("#buttonKnown", isInvisible());

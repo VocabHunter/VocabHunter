@@ -97,7 +97,7 @@
                               <right>
                                   <Button fx:id="buttonNote" mnemonicParsing="false" styleClass="buttonNote" BorderPane.alignment="BOTTOM_LEFT">
                                       <tooltip>
-                                          <Tooltip text="Add a note to this word" />
+                                          <Tooltip text="Add a note to this word (press n)" />
                                       </tooltip>
                                       <graphic>
                                           <FontAwesomeIconView styleClass="buttonNoteIcon" />
