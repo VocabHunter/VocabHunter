@@ -25,7 +25,12 @@ public final class SessionFormatVersion {
      */
     public static final int FORMAT_4 = 4;
 
-    public static final int LATEST_VERSION = FORMAT_4;
+    /**
+     * Words can now have notes added to them.
+     */
+    public static final int FORMAT_5 = 5;
+
+    public static final int LATEST_VERSION = FORMAT_5;
 
     private SessionFormatVersion() {
         // Prevent instantiation - only constants are defined.

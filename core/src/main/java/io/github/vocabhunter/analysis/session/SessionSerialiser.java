@@ -51,6 +51,9 @@ public final class SessionSerialiser {
         if (state.getFormatVersion() == FORMAT_3) {
             state = upgradeVersion3(state);
         }
+        if (state.getFormatVersion() == FORMAT_4) {
+            state = upgradeVersion4(state);
+        }
 
         return state;
     }
@@ -60,7 +63,7 @@ public final class SessionSerialiser {
         int version = state.getFormatVersion();
 
         if (version < 1 || version > LATEST_VERSION) {
-            throw new VocabHunterException("This file was created with a newer originalVersion of VocabHunter.  Please upgrade and try again.");
+            throw new VocabHunterException("This file was created with a newer version of VocabHunter.  Please upgrade and try again.");
         } else {
             return state;
         }
@@ -135,5 +138,11 @@ public final class SessionSerialiser {
             .filter(w -> w.equalsIgnoreCase(oldIdentifier))
             .reduce(PreferredFormTool::preferredForm)
             .orElse(oldIdentifier);
+    }
+
+    private static SessionState upgradeVersion4(final SessionState original) {
+        original.setFormatVersion(FORMAT_5);
+
+        return original;
     }
 }
