@@ -52,7 +52,7 @@ public final class SessionSerialiser {
             state = upgradeVersion3(state);
         }
         if (state.getFormatVersion() == FORMAT_4) {
-            state = upgradeVersion4(state);
+            upgradeVersion4(state);
         }
 
         return state;
@@ -140,9 +140,7 @@ public final class SessionSerialiser {
             .orElse(oldIdentifier);
     }
 
-    private static SessionState upgradeVersion4(final SessionState original) {
+    private static void upgradeVersion4(final SessionState original) {
         original.setFormatVersion(FORMAT_5);
-
-        return original;
     }
 }
