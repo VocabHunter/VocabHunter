@@ -284,8 +284,8 @@
     -fx-padding: 10;
 }
 .noteEditor TextArea {
-    -fx-pref-width: 500;
-    -fx-pref-height: 300;
+    -fx-pref-width: 1000;
+    -fx-pref-height: 400;
 }
 .websiteIcon {
     -glyph-name: HOME;
