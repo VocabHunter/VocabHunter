@@ -122,9 +122,16 @@ public class SearchHandler {
         guiTaskHandler.pauseThenExecuteOnGuiThread(fieldSearch::requestFocus);
     }
 
-    public void closeSearch() {
+    private void closeSearch() {
         fieldSearch.setText("");
         searchModel.resetValues();
         model.setSearchOpen(false);
+    }
+
+    public void processKeyPress(final KeyEvent event) {
+        if (KeyCode.ESCAPE.equals(event.getCode())) {
+            event.consume();
+            closeSearch();
+        }
     }
 }

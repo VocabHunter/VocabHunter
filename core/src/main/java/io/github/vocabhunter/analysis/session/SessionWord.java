@@ -30,6 +30,8 @@ public class SessionWord implements MarkedWord {
 
     private WordState state = WordState.UNSEEN;
 
+    private String note;
+
     public SessionWord() {
         // No argument constructor to allow use as standard Java Bean
     }
@@ -87,6 +89,14 @@ public class SessionWord implements MarkedWord {
         this.state = state;
     }
 
+    public String getNote() {
+        return note;
+    }
+
+    public void setNote(final String note) {
+        this.note = note;
+    }
+
     @Override
     public boolean equals(final Object o) {
         if (this == o) {
@@ -110,6 +120,7 @@ public class SessionWord implements MarkedWord {
             .append(uses, that.uses)
             .append(thisExtractor.apply(this), thatExtractor.apply(that))
             .append(state, that.state)
+            .append(note, that.note)
             .isEquals();
     }
 
@@ -121,6 +132,7 @@ public class SessionWord implements MarkedWord {
             .append(lineNos)
             .append(useCount)
             .append(state)
+            .append(note)
             .toHashCode();
     }
 
@@ -132,6 +144,7 @@ public class SessionWord implements MarkedWord {
             .append("lineNos", lineNos)
             .append("useCount", useCount)
             .append("state", state)
+            .append("note", note)
             .toString();
     }
 }

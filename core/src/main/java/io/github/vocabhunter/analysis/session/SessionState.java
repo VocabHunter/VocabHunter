@@ -4,16 +4,23 @@
 
 package io.github.vocabhunter.analysis.session;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import io.github.vocabhunter.analysis.model.AnalysisResult;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Set;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class SessionState {
     private int formatVersion = SessionFormatVersion.LATEST_VERSION;
 

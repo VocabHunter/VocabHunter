@@ -4,6 +4,7 @@
 
 package io.github.vocabhunter.analysis.session;
 
+import io.github.vocabhunter.analysis.core.CoreConstants;
 import io.github.vocabhunter.analysis.core.VocabHunterException;
 
 import java.nio.file.Path;
@@ -41,6 +42,10 @@ public final class FileNameTool {
         }
 
         return file;
+    }
+
+    public static boolean isSessionFile(final Path file) {
+        return filename(file).toLowerCase(CoreConstants.LOCALE).endsWith(SESSION_SUFFIX);
     }
 
     public static String filename(final Path file) {

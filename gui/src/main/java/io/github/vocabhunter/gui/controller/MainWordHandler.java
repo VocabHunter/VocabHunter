@@ -11,7 +11,7 @@ import io.github.vocabhunter.gui.view.StateClassTool;
 import javafx.beans.binding.ObjectBinding;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.scene.control.Label;
-import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.Pane;
 
 import static javafx.beans.binding.Bindings.selectString;
 
@@ -20,13 +20,13 @@ public class MainWordHandler {
 
     private final Label useCountLabel;
 
-    private final BorderPane mainWordPane;
+    private final Pane mainWordPane;
 
     private final SessionModel sessionModel;
 
     private final ObjectBinding<WordState> wordStateProperty;
 
-    public MainWordHandler(final Label mainWord, final Label useCountLabel, final BorderPane mainWordPane, final SessionModel sessionModel, final ObjectBinding<WordState> wordStateProperty) {
+    public MainWordHandler(final Label mainWord, final Label useCountLabel, final Pane mainWordPane, final SessionModel sessionModel, final ObjectBinding<WordState> wordStateProperty) {
         this.mainWord = mainWord;
         this.useCountLabel = useCountLabel;
         this.mainWordPane = mainWordPane;

@@ -31,15 +31,19 @@ public class FormatHandlingTest {
 
     private static final String FORMAT_4 = "format4.wordy";
 
+    private static final String FORMAT_5 = "format5.wordy";
+
+    private static final String FORMAT_UNEXPECTED_FIELD = "unexpected-field.wordy";
+
     private static final SessionState EXPECTED_STATE = buildSession();
 
     @Test
-    public void testUnsupportedVersion() throws Exception {
+    public void testUnsupportedVersion() {
         assertThrows(VocabHunterException.class, () -> readState(FORMAT_UNSUPPORTED_VERSION));
     }
 
     @ParameterizedTest
-    @ValueSource(strings = {FORMAT_1, FORMAT_2, FORMAT_3, FORMAT_4})
+    @ValueSource(strings = {FORMAT_1, FORMAT_2, FORMAT_3, FORMAT_4, FORMAT_5, FORMAT_UNEXPECTED_FIELD})
     public void testSupportedVersion(final String filename) throws Exception {
         Path file = getResourceFile(filename);
         EnrichedSessionState expected = new EnrichedSessionState(EXPECTED_STATE, file);

@@ -88,10 +88,9 @@ public class FileStreamer {
     }
 
     public EnrichedSessionState createOrOpenSession(final Path file) {
-        try {
+        if (FileNameTool.isSessionFile(file)) {
             return SessionSerialiser.read(file);
-        } catch (final VocabHunterException e) {
-            LOG.debug("{} is not a session file", file, e);
+        } else {
             return createNewSession(file);
         }
     }

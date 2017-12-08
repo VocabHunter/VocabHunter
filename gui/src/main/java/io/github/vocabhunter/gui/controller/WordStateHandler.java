@@ -23,29 +23,15 @@ import static javafx.beans.binding.Bindings.notEqual;
 public class WordStateHandler {
     private final Map<KeyCode, Runnable> keyHandlers = buildKeyHandlerMap();
 
-    private final Button buttonUnseen;
+    private SessionModel sessionModel;
 
-    private final Button buttonKnown;
+    private Runnable nextWordSelector;
 
-    private final Button buttonUnknown;
-
-    private final SessionModel sessionModel;
-
-    private final ObjectBinding<WordState> wordStateProperty;
-
-    private final Runnable nextWordSelector;
-
-    public WordStateHandler(final Button buttonUnseen, final Button buttonKnown, final Button buttonUnknown, final SessionModel sessionModel,
+    public void initialise(final Button buttonUnseen, final Button buttonKnown, final Button buttonUnknown, final SessionModel sessionModel,
                             final ObjectBinding<WordState> wordStateProperty, final Runnable nextWordSelector) {
-        this.buttonUnseen = buttonUnseen;
-        this.buttonKnown = buttonKnown;
-        this.buttonUnknown = buttonUnknown;
         this.sessionModel = sessionModel;
-        this.wordStateProperty = wordStateProperty;
         this.nextWordSelector = nextWordSelector;
-    }
 
-    public void prepareEditButtons() {
         SimpleBooleanProperty editableProperty = sessionModel.editableProperty();
         BooleanBinding resettableProperty = editableProperty.and(notEqual(WordState.UNSEEN, wordStateProperty));
 
@@ -62,6 +48,7 @@ public class WordStateHandler {
         KeyCode key = event.getCode();
 
         if (keyHandlers.containsKey(key)) {
+            event.consume();
             keyHandlers.get(key).run();
         }
     }

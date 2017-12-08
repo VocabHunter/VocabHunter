@@ -78,7 +78,7 @@ public class FileToolTest {
     }
 
     @Test
-    public void testWriteMinimalJsonFailure() throws Exception {
+    public void testWriteMinimalJsonFailure() {
         assertThrows(VocabHunterException.class, () -> FileTool.writeMinimalJson(subDirectory, ERROR_TEMPLATE));
     }
 

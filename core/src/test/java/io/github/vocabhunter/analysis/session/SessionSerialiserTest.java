@@ -61,14 +61,14 @@ public class SessionSerialiserTest {
     }
 
     @Test
-    public void testSameState() throws Exception {
+    public void testSameState() {
         SessionState read = writeAndReadBackState1();
 
         assertEquals(state1, read, "Same state");
     }
 
     @Test
-    public void testDifferentState() throws Exception {
+    public void testDifferentState() {
         SessionState read = writeAndReadBackState1();
 
         assertNotEquals(state2, read, "Different state");
@@ -82,8 +82,8 @@ public class SessionSerialiserTest {
 
     private SessionState state(final String name) {
         SessionState bean = new SessionState();
-        SessionWord word1 = word("Word1", WordState.UNSEEN, 0, 1);
-        SessionWord word2 = word("Word2", WordState.UNSEEN, 2, 3);
+        SessionWord word1 = word("Word1", WordState.UNSEEN, "My Note", 0, 1);
+        SessionWord word2 = word("Word2", WordState.UNSEEN, null, 2, 3);
 
         bean.setName(name);
         bean.setOrderedUses(listOf(word1, word2));
@@ -92,11 +92,12 @@ public class SessionSerialiserTest {
         return bean;
     }
 
-    private SessionWord word(final String word, final WordState state, final Integer... lineNos) {
+    private SessionWord word(final String word, final WordState state, final String note, final Integer... lineNos) {
         SessionWord bean = new SessionWord();
 
         bean.setWordIdentifier(word);
         bean.setState(state);
+        bean.setNote(note);
         bean.setLineNos(listOf(lineNos));
 
         return bean;

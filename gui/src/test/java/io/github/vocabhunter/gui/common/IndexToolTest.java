@@ -35,52 +35,52 @@ public class IndexToolTest {
     private static final int AFTER_LAST = LAST + 1;
 
     @Test
-    public void testNoMatch() throws Exception {
+    public void testNoMatch() {
         assertThrows(VocabHunterException.class, this::findClosest);
     }
 
     @Test
-    public void testSimpleMatch() throws Exception {
+    public void testSimpleMatch() {
         validate(REQUESTED, REQUESTED);
     }
 
     @Test
-    public void testOneBelow() throws Exception {
+    public void testOneBelow() {
         validate(ONE_BELOW, ONE_BELOW, ONE_ABOVE);
     }
 
     @Test
-    public void testOneAbove() throws Exception {
+    public void testOneAbove() {
         validate(ONE_ABOVE, TWO_BELOW, ONE_ABOVE);
     }
 
     @Test
-    public void testTwoBelow() throws Exception {
+    public void testTwoBelow() {
         validate(TWO_BELOW, TWO_BELOW, TWO_ABOVE);
     }
 
     @Test
-    public void testTwoAbove() throws Exception {
+    public void testTwoAbove() {
         validate(TWO_ABOVE, THREE_BELOW, TWO_ABOVE);
     }
 
     @Test
-    public void testFirst() throws Exception {
+    public void testFirst() {
         validate(FIRST, FIRST);
     }
 
     @Test
-    public void testLast() throws Exception {
+    public void testLast() {
         validate(LAST, LAST);
     }
 
     @Test
-    public void testBeforeFirst() throws Exception {
+    public void testBeforeFirst() {
         assertThrows(VocabHunterException.class, () -> findClosest(BEFORE_FIRST));
     }
 
     @Test
-    public void testAfterLast() throws Exception {
+    public void testAfterLast() {
         assertThrows(VocabHunterException.class, () -> findClosest(AFTER_LAST));
     }
 

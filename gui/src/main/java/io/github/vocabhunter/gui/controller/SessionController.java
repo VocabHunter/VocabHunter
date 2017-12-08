@@ -18,10 +18,13 @@ import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
 import javafx.beans.binding.ObjectBinding;
 import javafx.fxml.FXML;
-import javafx.scene.control.*;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
-import javafx.scene.layout.BorderPane;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
+import javafx.scene.control.SplitPane;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.ToolBar;
+import javafx.scene.layout.Pane;
 import org.controlsfx.control.textfield.CustomTextField;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -34,9 +37,6 @@ import static io.github.vocabhunter.gui.dialogues.AlertTool.filterErrorAlert;
 public class SessionController {
     private static final Logger LOG = LoggerFactory.getLogger(SessionController.class);
 
-    @Inject
-    private FilterService filterService;
-
     @FXML
     private Label mainWord;
 
@@ -47,7 +47,7 @@ public class SessionController {
     private ListView<WordModel> wordListView;
 
     @FXML
-    private BorderPane mainWordPane;
+    private Pane mainWordPane;
 
     @FXML
     private Button buttonUnseen;
@@ -57,6 +57,9 @@ public class SessionController {
 
     @FXML
     private Button buttonUnknown;
+
+    @FXML
+    private Button buttonNote;
 
     @FXML
     private ListView<String> useListView;
@@ -85,6 +88,18 @@ public class SessionController {
     @FXML
     private Button buttonSearchDown;
 
+    @FXML
+    private TextArea textAreaNotePreview;
+
+    @Inject
+    private FilterService filterService;
+
+    @Inject
+    private WordStateHandler wordStateHandler;
+
+    @Inject
+    private WordNoteHandler wordNoteHandler;
+
     private SessionModel sessionModel;
 
     private ObjectBinding<WordState> wordStateProperty;
@@ -92,8 +107,6 @@ public class SessionController {
     private WordListHandler wordListHandler;
 
     private MainWordHandler mainWordHandler;
-
-    private WordStateHandler wordStateHandler;
 
     private SearchHandler searchHandler;
 
@@ -109,7 +122,9 @@ public class SessionController {
         wordListView.getSelectionModel().selectedItemProperty().addListener((o, old, word) -> updateCurrentWordProperty(word));
 
         prepareWordListHandler();
-        prepareWordStateHandler();
+        wordStateHandler.initialise(buttonUnseen, buttonKnown, buttonUnknown, sessionModel, wordStateProperty, wordListHandler::selectNextWord);
+        wordNoteHandler.initialise(buttonNote, textAreaNotePreview, sessionModel);
+
         prepareMainWord();
         prepareSearchBar(guiTaskHandler);
         preparePositionModel();
@@ -121,24 +136,12 @@ public class SessionController {
         sessionModel.filterSettingsProperty().addListener((p, o, v) -> updateWordListIfFilterEnabled());
         sessionModel.enableFiltersProperty().addListener((p, o, v) -> updateWordList());
 
-        sessionActions = new SessionActions(combine(wordStateHandler::processKeyPress, this::processKeyPress), searchHandler::openSearch);
+        sessionActions = new SessionActions(combine(searchHandler::processKeyPress, wordStateHandler::processKeyPress, wordNoteHandler::processKeyPress), searchHandler::openSearch);
     }
 
     private void prepareWordListHandler() {
         wordListHandler = new WordListHandler(wordListView, sessionModel);
         wordListHandler.prepare();
-    }
-
-    private void prepareWordStateHandler() {
-        wordStateHandler = new WordStateHandler(buttonUnseen, buttonKnown, buttonUnknown, sessionModel, wordStateProperty, wordListHandler::selectNextWord);
-
-        wordStateHandler.prepareEditButtons();
-    }
-
-    private void processKeyPress(final KeyEvent event) {
-        if (KeyCode.ESCAPE.equals(event.getCode())) {
-            searchHandler.closeSearch();
-        }
     }
 
     private void prepareMainWord() {

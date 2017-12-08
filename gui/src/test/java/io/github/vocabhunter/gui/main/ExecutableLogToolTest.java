@@ -40,22 +40,22 @@ public class ExecutableLogToolTest {
     }
 
     @Test
-    public void testLogSystemDetails() throws Exception {
+    public void testLogSystemDetails() {
         validate(ExecutableLogTool::logSystemDetails);
     }
 
     @Test
-    public void testLogShutdown() throws Exception {
+    public void testLogShutdown() {
         validate(ExecutableLogTool::logShutdown);
     }
 
     @Test
-    public void testLogStartup() throws Exception {
+    public void testLogStartup() {
         validate(ExecutableLogTool::logStartup);
     }
 
     @Test
-    public void testLogError() throws Exception {
+    public void testLogError() {
         validate(() -> ExecutableLogTool.logError(new VocabHunterException("Test")));
     }
 
