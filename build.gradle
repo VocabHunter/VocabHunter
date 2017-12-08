@@ -32,6 +32,7 @@ buildscript {
         classpath 'net.researchgate:gradle-release:2.6.0'
         classpath 'org.sonarsource.scanner.gradle:sonarqube-gradle-plugin:2.6'
         classpath 'org.junit.platform:junit-platform-gradle-plugin:1.0.1'
+        classpath 'gradle.plugin.com.github.spotbugs:gradlePlugin:1.6.0'
     }
 }
 
@@ -44,7 +45,7 @@ subprojects {
     apply plugin: 'java'
     apply plugin: 'pmd'
     apply plugin: 'checkstyle'
-    apply plugin: 'findbugs'
+    apply plugin: 'com.github.spotbugs'
     apply plugin: 'jacoco'
     apply plugin: 'com.github.ben-manes.versions'
     apply plugin: 'org.junit.platform.gradle.plugin'
@@ -81,13 +82,13 @@ subprojects {
         task.logging.setLevel(LogLevel.LIFECYCLE)
     }
 
-    findbugs {
-        toolVersion = '3.0.1'
+    spotbugs {
+        toolVersion = '3.1.1'
         effort = 'max'
         reportLevel = 'medium'
     }
 
-    tasks.withType(FindBugs) {
+    tasks.withType(com.github.spotbugs.SpotBugsTask) {
         reports {
             xml.enabled = false
             html.enabled = true
