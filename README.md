@@ -64,6 +64,10 @@ $ sudo apt-get install openjfx
 
 Unfortunately the headless tests don't currently work on the OpenJDK when running the Gradle command line build (see [related issue #13](../../issues/13)).   To work around this either run the build without the headless option by adding `-PnoHeadless` or skip the GUI tests using `-PskipGuiTests`.
 
+# Java 9
+
+VocabHunter is built for Java 8.  However work has started to adapt the software for Java 9.  You can find more details of this in the [associated milestone](https://github.com/VocabHunter/VocabHunter/milestone/1) and the experimental [JDK9 branch](https://github.com/VocabHunter/VocabHunter/tree/jdk9).
+
 # Technical Articles
 
 If you'd like to know more about how VocabHunter works and the technologies used to build it, take a look at the following articles that explore various aspects of the implementation:
