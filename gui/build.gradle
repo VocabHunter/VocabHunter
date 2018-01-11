@@ -56,6 +56,6 @@ junitPlatform {
 
 junitPlatformTest {
     if (!project.hasProperty("noHeadless")) {
-        jvmArgs "-Dheadless=true"
+        jvmArgs "-Dheadless=true -Dprism.text=t2k"
     }
 }
