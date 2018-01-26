@@ -8,10 +8,11 @@ import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+
+import static java.util.stream.Collectors.toList;
 
 public final class WordUse implements AnalysisWord {
     private final String wordIdentifier;
@@ -23,7 +24,10 @@ public final class WordUse implements AnalysisWord {
     public WordUse(final String wordIdentifier, final int useCount, final Collection<Integer> lineNos) {
         this.wordIdentifier = wordIdentifier;
         this.useCount = useCount;
-        this.lineNos = new ArrayList<>(lineNos);
+        this.lineNos = lineNos.stream()
+            .sorted()
+            .distinct()
+            .collect(toList());
     }
 
     @Override

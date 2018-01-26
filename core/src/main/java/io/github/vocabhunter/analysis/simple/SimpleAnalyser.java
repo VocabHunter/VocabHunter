@@ -11,8 +11,6 @@ import io.github.vocabhunter.analysis.model.WordUse;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
-import java.util.TreeSet;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 import javax.inject.Singleton;
@@ -31,8 +29,8 @@ public class SimpleAnalyser implements Analyser {
             .collect(toMap(AnalysisRecord::getNormalised, AnalysisRecord::getIdentifier, PreferredFormTool::preferredForm));
         Map<String, Long> counts = records.stream()
             .collect(groupingBy(AnalysisRecord::getNormalised, counting()));
-        Map<String, Set<Integer>> indices = records.stream()
-            .collect(groupingBy(AnalysisRecord::getNormalised, mapping(AnalysisRecord::getLine, toCollection(TreeSet::new))));
+        Map<String, List<Integer>> indices = records.stream()
+            .collect(groupingBy(AnalysisRecord::getNormalised, mapping(AnalysisRecord::getLine, toList())));
         List<WordUse> uses = identifiers.entrySet().stream()
             .map(e -> new WordUse(e.getValue(), counts.get(e.getKey()).intValue(), indices.get(e.getKey())))
             .sorted(WordStreamTool.WORD_COMPARATOR)
