@@ -23,6 +23,7 @@ public class SimpleAnalyser implements Analyser {
     @Override
     public AnalysisResult analyse(final List<String> lines, final String name) {
         Map<String, WordUse> map = IntStream.range(0, lines.size())
+            .parallel()
             .mapToObj(i -> lineRecords(lines, i))
             .flatMap(identity())
             .collect(groupingBy(AnalysisRecord::getNormalised, new AnalysisCollector()));
