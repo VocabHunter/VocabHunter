@@ -12,15 +12,18 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.ObservableSet;
 
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.TreeSet;
-import java.util.stream.Collectors;
 
 import static java.util.Collections.unmodifiableList;
+import static java.util.stream.Collectors.toList;
 
 public final class SessionModel {
     private static final Comparator<WordModel> WORD_COMPARATOR = Comparator.comparing(WordModel::getSequenceNo);
+
+    private final List<String> lines;
 
     private final List<WordModel> allWords;
 
@@ -55,8 +58,9 @@ public final class SessionModel {
     private final DoubleProperty splitWordPosition;
 
     public SessionModel(
-        final String documentName, final List<WordModel> words, final FilterSettings filterSettings, final ProgressModel progress,
-        final PositionModel position, final WindowSettings windowSettings) {
+        final String documentName, final List<String> lines, final List<WordModel> words, final FilterSettings filterSettings,
+        final ProgressModel progress, final PositionModel position, final WindowSettings windowSettings) {
+        this.lines = new ArrayList<>(lines);
         this.documentName = new SimpleStringProperty(documentName);
         this.filterSettings = new SimpleObjectProperty<>(filterSettings);
         this.progress = progress;
@@ -64,7 +68,7 @@ public final class SessionModel {
         allWords = words;
         selectedWords.addAll(words.stream()
                 .filter(w -> w.getState().equals(WordState.UNKNOWN))
-                .collect(Collectors.toList()));
+                .collect(toList()));
 
         updateWordList(true, new MarkTool<>(words));
         currentWord = new SimpleObjectProperty<>(InitialSelectionTool.nextWord(allWords));
@@ -82,7 +86,9 @@ public final class SessionModel {
     }
 
     public void processWordUpdate(final WordModel word) {
-        List<String> uses = word.getUses();
+        List<String> uses = word.getLineNos().stream()
+            .map(lines::get)
+            .collect(toList());
 
         useList.clear();
         useList.addAll(uses);
