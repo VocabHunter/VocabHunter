@@ -14,8 +14,6 @@ import java.util.List;
 public class MutableWordUse {
     private String wordIdentifier;
 
-    private int useCount;
-
     private final List<Integer> lineNos = new ArrayList<>();
 
     public void accumulate(final AnalysisRecord record) {
@@ -24,7 +22,6 @@ public class MutableWordUse {
         } else {
             wordIdentifier = PreferredFormTool.preferredForm(wordIdentifier, record.getIdentifier());
         }
-        useCount++;
         lineNos.add(record.getLine());
     }
 
@@ -34,7 +31,6 @@ public class MutableWordUse {
         } else if (that.wordIdentifier != null) {
             wordIdentifier = PreferredFormTool.preferredForm(wordIdentifier, that.wordIdentifier);
         }
-        useCount += that.useCount;
         lineNos.addAll(that.lineNos);
 
         return this;
@@ -44,7 +40,7 @@ public class MutableWordUse {
         if (wordIdentifier == null) {
             throw new VocabHunterException("Invalid collector operation");
         } else {
-            return new WordUse(wordIdentifier, useCount, lineNos);
+            return new WordUse(wordIdentifier, lineNos.size(), lineNos);
         }
     }
 }
