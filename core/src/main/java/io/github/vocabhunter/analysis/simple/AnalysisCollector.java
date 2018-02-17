@@ -7,6 +7,7 @@ package io.github.vocabhunter.analysis.simple;
 import io.github.vocabhunter.analysis.model.WordUse;
 
 import java.util.Collections;
+import java.util.EnumSet;
 import java.util.Set;
 import java.util.function.BiConsumer;
 import java.util.function.BinaryOperator;
@@ -37,6 +38,6 @@ public class AnalysisCollector implements Collector<AnalysisRecord, MutableWordU
 
     @Override
     public Set<Characteristics> characteristics() {
-        return Collections.singleton(Characteristics.UNORDERED);
+        return Collections.unmodifiableSet(EnumSet.of(Characteristics.UNORDERED));
     }
 }
