@@ -15,7 +15,7 @@ allprojects {
 
 task wrapper(type: Wrapper) {
     description 'Setup the Gradle wrapper'
-    gradleVersion = '4.4'
+    gradleVersion = '4.5.1'
     distributionUrl = "https://services.gradle.org/distributions/gradle-${gradleVersion}-all.zip"
 }
 
@@ -30,8 +30,8 @@ buildscript {
     dependencies {
         classpath 'com.github.ben-manes:gradle-versions-plugin:0.17.0'
         classpath 'net.researchgate:gradle-release:2.6.0'
-        classpath 'org.sonarsource.scanner.gradle:sonarqube-gradle-plugin:2.6.1'
-        classpath 'org.junit.platform:junit-platform-gradle-plugin:1.0.1'
+        classpath 'org.sonarsource.scanner.gradle:sonarqube-gradle-plugin:2.6.2'
+        classpath 'org.junit.platform:junit-platform-gradle-plugin:1.0.3'
         classpath 'gradle.plugin.com.github.spotbugs:gradlePlugin:1.6.0'
     }
 }
@@ -58,23 +58,21 @@ subprojects {
     }
 
     dependencies {
-        testCompile 'org.junit.jupiter:junit-jupiter-api:5.0.2'
-        testCompile 'org.junit.jupiter:junit-jupiter-params:5.0.2'
-        testRuntime 'org.junit.jupiter:junit-jupiter-engine:5.0.2'
-        testCompile 'org.mockito:mockito-core:2.13.0'
+        testCompile 'org.junit.jupiter:junit-jupiter-api:5.0.3'
+        testCompile 'org.junit.jupiter:junit-jupiter-params:5.0.3'
+        testRuntime 'org.junit.jupiter:junit-jupiter-engine:5.0.3'
+        testCompile 'org.mockito:mockito-core:2.15.0'
         runtime 'ch.qos.logback:logback-classic:1.2.3'
-
-        // This was added for JUnit 5.0.2 - remove it if it's not required for a later release of JUnit
-        testCompile 'org.apiguardian:apiguardian-api:1.0.0'
     }
 
     pmd {
-        toolVersion = '5.8.1'
+        toolVersion = '6.0.1'
         ruleSetFiles = files("$rootProject.projectDir/config/pmd/ruleset.xml")
+        ruleSets = []
     }
 
     checkstyle {
-        toolVersion = '8.5'
+        toolVersion = '8.8'
         configFile = file("$rootProject.projectDir/config/checkstyle/checkstyle.xml")
     }
 
@@ -96,7 +94,7 @@ subprojects {
     }
 
     jacoco {
-        toolVersion = '0.7.9'
+        toolVersion = '0.8.0'
         applyTo junitPlatformTest
     }
 

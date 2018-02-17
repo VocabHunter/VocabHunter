@@ -29,7 +29,7 @@ public final class WordStreamTool {
             .filter(w -> !w.isEmpty());
     }
 
-    public static String classifier(final AnalysisWord use) {
+    private static String classifier(final AnalysisWord use) {
         return CoreTool.toLowerCase(use.getWordIdentifier());
     }
 }

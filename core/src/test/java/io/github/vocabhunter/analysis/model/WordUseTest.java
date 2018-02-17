@@ -6,14 +6,16 @@ package io.github.vocabhunter.analysis.model;
 
 import io.github.vocabhunter.test.utils.AbstractBeanTest;
 
+import static java.util.Collections.emptyList;
+
 public class WordUseTest extends AbstractBeanTest<WordUse> {
     @Override
     protected WordUse buildPrimary() {
-        return new WordUse("Word_1", 0);
+        return new WordUse("Word_1", 0, emptyList());
     }
 
     @Override
     protected WordUse buildSecondary() {
-        return new WordUse("Word_2", 0);
+        return new WordUse("Word_2", 0, emptyList());
     }
 }

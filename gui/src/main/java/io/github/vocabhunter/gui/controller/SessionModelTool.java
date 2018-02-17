@@ -15,7 +15,7 @@ import javafx.beans.property.SimpleObjectProperty;
 import java.util.List;
 import java.util.stream.IntStream;
 
-import static java.util.stream.Collectors.toList;
+import static io.github.vocabhunter.gui.common.GuiNoteTool.fromGuiNote;
 
 public class SessionModelTool {
     private final SessionState state;
@@ -39,45 +39,26 @@ public class SessionModelTool {
 
         positionModel.analysisModeProperty().bind(Bindings.createBooleanBinding(() -> tabProperty.get().equals(SessionTab.ANALYSIS), tabProperty));
 
-        return new SessionModel(state.getName(), words(state, progressModel), filterSettings, progressModel, positionModel, windowSettings);
+        return new SessionModel(state.getName(), state.getLines(), words(state, progressModel), filterSettings, progressModel, positionModel, windowSettings);
     }
 
     private List<WordModel> words(final SessionState raw, final ProgressModel progressModel) {
-        List<String> lines = raw.getLines();
         List<SessionWord> orderedUses = raw.getOrderedUses();
         int useCount = orderedUses.size();
+        List<WordModel> wordModels = WordModelTool.wordModels(raw);
 
-        return IntStream.range(0, useCount)
-                .mapToObj(n -> wordModel(lines, n, orderedUses.get(n), progressModel))
-                .collect(toList());
+        IntStream.range(0, useCount)
+            .forEach(i -> addListeners(orderedUses, wordModels, i, progressModel));
+
+        return wordModels;
     }
 
-    private WordModel wordModel(final List<String> lines, final int n, final SessionWord word, final ProgressModel progressModel) {
-        List<String> uses = word.getLineNos().stream()
-            .map(lines::get)
-            .collect(toList());
-        WordModel model = new WordModel(n, word.getWordIdentifier(), uses, word.getUseCount(), word.getState(), toGuiNote(word.getNote()));
+    private void addListeners(final List<SessionWord> orderedUses, final List<WordModel> wordModels, final int index, final ProgressModel progressModel) {
+        SessionWord sessionWord = orderedUses.get(index);
+        WordModel wordModel = wordModels.get(index);
 
-        model.stateProperty().addListener((o, old, s) -> word.setState(s));
-        model.noteProperty().addListener((o, old, s) -> word.setNote(fromGuiNote(s)));
-        model.stateProperty().addListener((o, old, s) -> progressModel.updateWord(old, s));
-
-        return model;
-    }
-
-    private String toGuiNote(final String note) {
-        if (note == null) {
-            return "";
-        } else {
-            return note;
-        }
-    }
-
-    private String fromGuiNote(final String note) {
-        if ("".equals(note)) {
-            return null;
-        } else {
-            return note;
-        }
+        wordModel.stateProperty().addListener((o, old, s) -> sessionWord.setState(s));
+        wordModel.noteProperty().addListener((o, old, s) -> sessionWord.setNote(fromGuiNote(s)));
+        wordModel.stateProperty().addListener((o, old, s) -> progressModel.updateWord(old, s));
     }
 }

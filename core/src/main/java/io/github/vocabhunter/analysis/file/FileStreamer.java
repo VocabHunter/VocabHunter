@@ -21,6 +21,7 @@ import java.time.Duration;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Pattern;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
@@ -29,6 +30,8 @@ import static io.github.vocabhunter.analysis.core.CoreConstants.LOCALE;
 @Singleton
 public class FileStreamer {
     private static final Logger LOG = LoggerFactory.getLogger(FileStreamer.class);
+
+    private static final Pattern SPACE_PATTERN = Pattern.compile("\\s+");
 
     private final Analyser analyser;
 
@@ -58,7 +61,7 @@ public class FileStreamer {
             String line = text.substring(start, end);
 
             if (StringUtils.isNoneBlank(line)) {
-                list.add(line.replaceAll("\\s+", " ").trim());
+                list.add(SPACE_PATTERN.matcher(line).replaceAll(" ").trim());
             }
             start = end;
             end = iterator.next();
