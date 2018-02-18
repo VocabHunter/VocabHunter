@@ -42,7 +42,7 @@ dependencies {
     compile 'de.jensd:fontawesomefx-fontawesome:4.7.0-5'
     testCompile project(path: ':core', configuration: 'tests')
     testCompile 'org.testfx:testfx-core:4.0.11-alpha'
-    testRuntime 'org.jfxtras:openjfx-monocle:1.8.0_20'
+    testCompile 'org.testfx:openjfx-monocle:8u76-b04'
     runtime 'org.codehaus.janino:janino:3.0.8'
 }
 
