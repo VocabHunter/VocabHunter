@@ -16,6 +16,9 @@ import java.util.function.Supplier;
 import java.util.stream.Collector;
 
 public class AnalysisCollector implements Collector<AnalysisRecord, MutableWordUse, WordUse> {
+    private static final Set<Characteristics> CHARACTERISTICS
+        = Collections.unmodifiableSet(EnumSet.of(Characteristics.UNORDERED));
+
     @Override
     public Supplier<MutableWordUse> supplier() {
         return MutableWordUse::new;
@@ -38,6 +41,6 @@ public class AnalysisCollector implements Collector<AnalysisRecord, MutableWordU
 
     @Override
     public Set<Characteristics> characteristics() {
-        return Collections.unmodifiableSet(EnumSet.of(Characteristics.UNORDERED));
+        return CHARACTERISTICS;
     }
 }
