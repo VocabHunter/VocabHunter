@@ -20,6 +20,7 @@ import static io.github.vocabhunter.gui.common.GuiConstants.*;
 import static io.github.vocabhunter.gui.main.GuiTestConstants.*;
 import static org.testfx.api.FxAssert.verifyThat;
 import static org.testfx.matcher.base.NodeMatchers.*;
+import static org.testfx.util.NodeQueryUtils.hasText;
 
 public class GuiTestSteps {
     private static final Logger LOG = LoggerFactory.getLogger(GuiTestSteps.class);
