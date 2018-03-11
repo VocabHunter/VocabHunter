@@ -49,7 +49,7 @@ dependencies {
         testRuntime 'org.testfx:openjfx-monocle:jdk-9+181'
     } else {
         testCompile 'org.testfx:testfx-core:4.0.12-alpha'
-        testCompile 'org.testfx:openjfx-monocle:8u76-b04'
+        testRuntime 'org.testfx:openjfx-monocle:8u76-b04'
     }
     runtime 'org.codehaus.janino:janino:3.0.8'
 }
