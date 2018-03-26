@@ -18,7 +18,7 @@ To get all the latest news about VocabHunter including announcements of new rele
 
 You will need Java 8 to build and run VocabHunter.  You can download it from the [Oracle Website](http://www.oracle.com/technetwork/java/javase/downloads/index.html).  Everything else, including Gradle, will be downloaded by the build process.
 
-VocabHunter is built for Java 8.  For more information on the ongoing work to adapt to Java 9, see the [Java 9](#java-9) section below.
+VocabHunter is built for Java 8.  For more information on the ongoing work to adapt to newer versions of Java, see the [Java 9 and Java 10](#java-9-and-java-10) section below.
 
 # How To Run VocabHunter
 
@@ -64,9 +64,9 @@ $ sudo apt-get install openjdk-8-jdk
 $ sudo apt-get install openjfx
 ~~~
 
-# Java 9
+# Java 9 and Java 10
 
-VocabHunter is built for Java 8.  However work has started to adapt the software for Java 9.  You can find more details of this in the [associated milestone](https://github.com/VocabHunter/VocabHunter/milestone/1) and the experimental [JDK9 branch](https://github.com/VocabHunter/VocabHunter/tree/jdk9).
+VocabHunter is built for Java 8.  However work has started to adapt the software for Java 9 and Java 10.  You can find more details of this in the [associated milestone](https://github.com/VocabHunter/VocabHunter/milestone/1) and the experimental [JDK9 branch](https://github.com/VocabHunter/VocabHunter/tree/jdk9).
 
 # Technical Articles
 
