@@ -42,13 +42,13 @@ dependencies {
     compile 'de.jensd:fontawesomefx-fontawesome:4.7.0-5'
     testCompile project(path: ':core', configuration: 'tests')
     if (JavaVersion.current() == JavaVersion.VERSION_1_9) {
-        testCompile('org.testfx:testfx-core:4.0.12-alpha') {
+        testCompile('org.testfx:testfx-core:4.0.13-alpha') {
             exclude group: 'org.testfx', module: 'testfx-internal-java8'
         }
-        testRuntime 'org.testfx:testfx-internal-java9:4.0.12-alpha'
+        testRuntime 'org.testfx:testfx-internal-java9:4.0.13-alpha'
         testRuntime 'org.testfx:openjfx-monocle:jdk-9+181'
     } else {
-        testCompile 'org.testfx:testfx-core:4.0.12-alpha'
+        testCompile 'org.testfx:testfx-core:4.0.13-alpha'
         testRuntime 'org.testfx:openjfx-monocle:8u76-b04'
     }
     runtime 'org.codehaus.janino:janino:3.0.8'
