@@ -10,11 +10,11 @@ import io.github.vocabhunter.analysis.settings.BaseListedFile;
 import io.github.vocabhunter.analysis.settings.DocumentListedFile;
 import io.github.vocabhunter.analysis.settings.ExcelListedFile;
 import io.github.vocabhunter.analysis.settings.SessionListedFile;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -30,6 +30,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.when;
 
+@ExtendWith(MockitoExtension.class)
 public class FilterFileWordsExtractorTest {
     private static final Path FILE = Paths.get("test");
 
@@ -63,11 +64,6 @@ public class FilterFileWordsExtractorTest {
 
     @InjectMocks
     private FilterFileWordsExtractorImpl target;
-
-    @BeforeEach
-    public void initMocks() {
-        MockitoAnnotations.initMocks(this);
-    }
 
     @Test
     public void testSessionKnown() {

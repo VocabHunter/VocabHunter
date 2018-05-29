@@ -6,9 +6,10 @@ package io.github.vocabhunter.analysis.grid;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -19,6 +20,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.mockito.Mockito.when;
 
+@ExtendWith(MockitoExtension.class)
 public class TextGridManagerTest {
     private static final Path FILE = Paths.get("test");
 
@@ -38,11 +40,6 @@ public class TextGridManagerTest {
 
     @InjectMocks
     private TextGridManagerImpl target;
-
-    @BeforeEach
-    public void initMocks() {
-        MockitoAnnotations.initMocks(this);
-    }
 
     @BeforeEach
     public void setUp() {

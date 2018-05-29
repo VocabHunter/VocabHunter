@@ -30,10 +30,13 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.junit.jupiter.MockitoSettings;
+import org.mockito.quality.Strictness;
 import org.testfx.api.FxRobot;
 
 import java.io.IOException;
@@ -50,6 +53,8 @@ import static org.mockito.Mockito.*;
 import static org.testfx.api.FxToolkit.registerPrimaryStage;
 import static org.testfx.api.FxToolkit.setupApplication;
 
+@ExtendWith(MockitoExtension.class)
+@MockitoSettings(strictness = Strictness.LENIENT)
 public class GuiTest extends FxRobot implements GuiTestValidator {
 
     private TestFileManager manager;
@@ -71,11 +76,6 @@ public class GuiTest extends FxRobot implements GuiTestValidator {
 
     @Captor
     private ArgumentCaptor<String> webPageCaptor;
-
-    @BeforeEach
-    public void initMocks() {
-        MockitoAnnotations.initMocks(this);
-    }
 
     @BeforeAll
     public static void setupSpec() throws Exception {
