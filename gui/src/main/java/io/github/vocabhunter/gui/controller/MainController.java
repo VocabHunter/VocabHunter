@@ -225,7 +225,7 @@ public class MainController {
         settingsHandler.show();
     }
 
-    public void processAbout() {
+    private void processAbout() {
         if (statusManager.beginAbout()) {
             try {
                 aboutHandler.show();
