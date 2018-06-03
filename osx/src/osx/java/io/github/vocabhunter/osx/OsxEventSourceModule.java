@@ -11,11 +11,15 @@ import io.github.vocabhunter.gui.event.CommandLineEventSource;
 import io.github.vocabhunter.gui.event.ExternalEventBroker;
 import io.github.vocabhunter.gui.event.ExternalEventBrokerImpl;
 
+import java.util.List;
+
+import static io.github.vocabhunter.analysis.core.CoreTool.listOf;
+
 public class OsxEventSourceModule extends AbstractModule {
-    private final String[] args;
+    private final List<String> args;
 
     public OsxEventSourceModule(final String... args) {
-        this.args = args;
+        this.args = listOf(args);
     }
 
     @Override

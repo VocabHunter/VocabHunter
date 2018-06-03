@@ -5,9 +5,7 @@
 package io.github.vocabhunter.gui.event;
 
 import java.nio.file.Paths;
-import java.util.Arrays;
 import java.util.List;
-
 import javax.inject.Singleton;
 
 import static java.util.stream.Collectors.toList;
@@ -16,8 +14,8 @@ import static java.util.stream.Collectors.toList;
 public class CommandLineEventSource implements SingleExternalEventSource {
     private final List<ExternalOpenFileEvent> events;
 
-    public CommandLineEventSource(final String... args) {
-        events = Arrays.stream(args)
+    public CommandLineEventSource(final List<String> args) {
+        events = args.stream()
                 .map(Paths::get)
                 .map(ExternalOpenFileEvent::new)
                 .limit(1)
