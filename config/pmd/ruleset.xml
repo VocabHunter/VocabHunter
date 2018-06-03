@@ -33,6 +33,8 @@
         <exclude name="DefaultPackage"/>
         <exclude name="CallSuperInConstructor"/>
         <exclude name="TooManyStaticImports"/>
+        <exclude name="ClassNamingConventions"/>
+        <exclude name="PrematureDeclaration"/>
     </rule>
 
     <rule ref="category/java/design.xml">
