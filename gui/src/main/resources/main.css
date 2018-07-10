@@ -17,7 +17,6 @@
    -colour-done: royalblue;
    -colour-remaining: lightcoral;
    -colour-unseen-unfiltered: powderblue;
-   -colour-about-link: #0095C9;
    -colour-search-fail: lightcoral;
 }
 
@@ -294,7 +293,7 @@
     -glyph-name: TWITTER;
 }
 .websiteIcon, .twitterIcon {
-    -fx-fill: -colour-about-link;
+    -fx-fill: -fx-accent;
     -glyph-size: 30;
 }
 .noSession .new {
