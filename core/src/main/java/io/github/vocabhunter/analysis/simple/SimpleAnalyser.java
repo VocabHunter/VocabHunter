@@ -14,7 +14,6 @@ import java.util.stream.IntStream;
 import java.util.stream.Stream;
 import javax.inject.Singleton;
 
-import static java.util.function.Function.identity;
 import static java.util.stream.Collectors.groupingBy;
 import static java.util.stream.Collectors.toList;
 
@@ -24,8 +23,8 @@ public class SimpleAnalyser implements Analyser {
     public AnalysisResult analyse(final List<String> lines, final String name) {
         Map<String, WordUse> map = IntStream.range(0, lines.size())
             .parallel()
-            .mapToObj(i -> lineRecords(lines, i))
-            .flatMap(identity())
+            .boxed()
+            .flatMap(i -> lineRecords(lines, i))
             .collect(groupingBy(AnalysisRecord::getNormalised, new AnalysisCollector()));
         List<WordUse> uses = map.values().stream()
             .sorted(WordStreamTool.WORD_COMPARATOR)
@@ -34,7 +33,7 @@ public class SimpleAnalyser implements Analyser {
         return new AnalysisResult(name, uses, lines);
     }
 
-    private Stream<AnalysisRecord> lineRecords(final List<String> lines, final int index) {
+    private Stream<AnalysisRecord> lineRecords(final List<String> lines, final Integer index) {
         String line = lines.get(index);
 
         return WordStreamTool.words(line)

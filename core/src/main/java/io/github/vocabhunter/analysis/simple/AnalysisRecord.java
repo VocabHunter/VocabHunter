@@ -14,9 +14,9 @@ public final class AnalysisRecord {
 
     private final String normalised;
 
-    private final int line;
+    private final Integer line;
 
-    public AnalysisRecord(final String identifier, final int line) {
+    public AnalysisRecord(final String identifier, final Integer line) {
         this.identifier = identifier;
         this.normalised = CoreTool.toLowerCase(identifier);
         this.line = line;
@@ -30,7 +30,7 @@ public final class AnalysisRecord {
         return normalised;
     }
 
-    public int getLine() {
+    public Integer getLine() {
         return line;
     }
 
