@@ -58,10 +58,10 @@ public class FileStreamer {
         int end = iterator.next();
 
         while (end != BreakIterator.DONE) {
-            String line = text.substring(start, end);
+            String line = text.substring(start, end).trim();
 
-            if (StringUtils.isNoneBlank(line)) {
-                list.add(SPACE_PATTERN.matcher(line).replaceAll(" ").trim());
+            if (!line.isEmpty()) {
+                list.add(SPACE_PATTERN.matcher(line).replaceAll(" "));
             }
             start = end;
             end = iterator.next();
