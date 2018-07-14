@@ -31,7 +31,7 @@ import static io.github.vocabhunter.analysis.core.CoreConstants.LOCALE;
 public class FileStreamer {
     private static final Logger LOG = LoggerFactory.getLogger(FileStreamer.class);
 
-    private static final Pattern SPACE_PATTERN = Pattern.compile("\\s+");
+    private static final Pattern SPACE_PATTERN = Pattern.compile("[\\t\\n\\x0B\\f\\r]\\s*|\\s\\s+");
 
     private final Analyser analyser;
 
