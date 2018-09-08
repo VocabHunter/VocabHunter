@@ -4,7 +4,7 @@
 
 package io.github.vocabhunter.gui.status;
 
-import io.github.vocabhunter.analysis.core.GuiTaskHandler;
+import io.github.vocabhunter.gui.common.GuiTaskHandler;
 import javafx.concurrent.Task;
 
 import java.util.function.Consumer;

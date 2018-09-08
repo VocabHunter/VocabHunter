@@ -4,10 +4,10 @@
 
 package io.github.vocabhunter.gui.controller;
 
-import io.github.vocabhunter.analysis.core.GuiTaskHandler;
 import io.github.vocabhunter.analysis.core.VocabHunterException;
 import io.github.vocabhunter.analysis.session.SessionState;
 import io.github.vocabhunter.gui.common.ControllerAndView;
+import io.github.vocabhunter.gui.common.GuiTaskHandler;
 import io.github.vocabhunter.gui.model.MainModel;
 import io.github.vocabhunter.gui.model.SessionModel;
 import io.github.vocabhunter.gui.settings.SettingsManager;

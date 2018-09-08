@@ -5,10 +5,10 @@
 package io.github.vocabhunter.gui.main;
 
 import com.google.inject.AbstractModule;
-import io.github.vocabhunter.analysis.core.GuiTaskHandler;
-import io.github.vocabhunter.analysis.core.GuiTaskHandlerImpl;
 import io.github.vocabhunter.analysis.settings.FileListManager;
 import io.github.vocabhunter.analysis.settings.FileListManagerImpl;
+import io.github.vocabhunter.gui.common.GuiTaskHandler;
+import io.github.vocabhunter.gui.common.GuiTaskHandlerImpl;
 import io.github.vocabhunter.gui.dialogues.FileDialogueFactory;
 import io.github.vocabhunter.gui.services.*;
 import io.github.vocabhunter.gui.settings.SettingsManager;

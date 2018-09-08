@@ -2,8 +2,9 @@
  * Open Source Software published under the Apache Licence, Version 2.0.
  */
 
-package io.github.vocabhunter.analysis.core;
+package io.github.vocabhunter.gui.common;
 
+import io.github.vocabhunter.analysis.core.ThreadPoolTool;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

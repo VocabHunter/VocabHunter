@@ -4,7 +4,7 @@
 
 package io.github.vocabhunter.gui.controller;
 
-import io.github.vocabhunter.analysis.core.GuiTaskHandler;
+import io.github.vocabhunter.gui.common.GuiTaskHandler;
 import io.github.vocabhunter.gui.common.SequencedWord;
 import io.github.vocabhunter.gui.model.SearchModel;
 import io.github.vocabhunter.gui.model.SessionModel;
