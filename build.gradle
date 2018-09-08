@@ -6,7 +6,7 @@ import org.gradle.internal.os.OperatingSystem
 
 ext {
     operatingSystem = OperatingSystem.current()
-    isIncludeMacExtensions = operatingSystem.isMacOsX()
+    isIncludeMacExtensions = operatingSystem.isMacOsX() && JavaVersion.current() == JavaVersion.VERSION_1_8
 }
 
 allprojects {
