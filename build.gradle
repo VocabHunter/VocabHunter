@@ -15,7 +15,7 @@ allprojects {
 
 wrapper {
     description 'Setup the Gradle wrapper'
-    gradleVersion = '4.9'
+    gradleVersion = '4.10.1'
     distributionUrl = "https://services.gradle.org/distributions/gradle-${gradleVersion}-all.zip"
 }
 
