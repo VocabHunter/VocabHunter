@@ -5,7 +5,6 @@
 package io.github.vocabhunter.analysis.grid;
 
 import io.github.vocabhunter.analysis.core.VocabHunterException;
-import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.ss.usermodel.Row.MissingCellPolicy;
 
@@ -29,7 +28,7 @@ public class ExcelGridReaderImpl implements ExcelGridReader {
             return StreamSupport.stream(sheet.spliterator(), false)
                 .map(r -> row(r, filter))
                 .collect(toList());
-        } catch (IOException | InvalidFormatException e) {
+        } catch (IOException e) {
             throw new VocabHunterException("Unable to read spreadsheet " + file, e);
         }
     }
