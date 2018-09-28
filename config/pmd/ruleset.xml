@@ -12,13 +12,9 @@
     <description>VocabHunter PMD Configuration</description>
 
     <rule ref="category/java/bestpractices.xml">
-        <exclude name="JUnit4TestShouldUseBeforeAnnotation"/>
-        <exclude name="JUnit4TestShouldUseAfterAnnotation"/>
-        <exclude name="JUnit4TestShouldUseTestAnnotation"/>
         <exclude name="JUnitAssertionsShouldIncludeMessage"/>
         <exclude name="JUnitTestsShouldIncludeAssert"/>
         <exclude name="JUnitTestContainsTooManyAsserts"/>
-        <exclude name="AccessorMethodGeneration"/>
     </rule>
 
     <rule ref="category/java/codestyle.xml">
@@ -61,6 +57,7 @@
         <exclude name="AvoidDuplicateLiterals"/>
         <exclude name="AvoidLiteralsInIfCondition"/>
         <exclude name="NullAssignment"/>
+        <exclude name="MissingSerialVersionUID"/>
     </rule>
 
     <rule ref="category/java/multithreading.xml">
