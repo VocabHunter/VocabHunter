@@ -40,7 +40,7 @@ dependencies {
     compile 'com.gluonhq:ignite-guice:1.0.2'
 
     // This is required for the conditional logic in the logback setup
-    runtime 'org.codehaus.janino:janino:3.0.9'
+    runtime 'org.codehaus.janino:janino:3.0.10'
 
     testCompile project(path: ':core', configuration: 'tests')
 
