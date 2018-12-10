@@ -56,10 +56,10 @@ subprojects {
     }
 
     dependencies {
-        testCompile 'org.junit.jupiter:junit-jupiter-api:5.3.1'
-        testCompile 'org.junit.jupiter:junit-jupiter-params:5.3.1'
-        testRuntime 'org.junit.jupiter:junit-jupiter-engine:5.3.1'
-        testCompile 'org.mockito:mockito-junit-jupiter:2.23.0'
+        testCompile 'org.junit.jupiter:junit-jupiter-api:5.3.2'
+        testCompile 'org.junit.jupiter:junit-jupiter-params:5.3.2'
+        testRuntime 'org.junit.jupiter:junit-jupiter-engine:5.3.2'
+        testCompile 'org.mockito:mockito-junit-jupiter:2.23.4'
         runtime 'ch.qos.logback:logback-classic:1.2.3'
     }
 
@@ -74,7 +74,7 @@ subprojects {
     }
 
     checkstyle {
-        toolVersion = '8.14'
+        toolVersion = '8.15'
         configFile = file("$rootProject.projectDir/config/checkstyle/checkstyle.xml")
     }
 
@@ -83,7 +83,7 @@ subprojects {
     }
 
     spotbugs {
-        toolVersion = '3.1.8'
+        toolVersion = '3.1.9'
         effort = 'max'
         reportLevel = 'medium'
     }
