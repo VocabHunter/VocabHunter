@@ -88,5 +88,5 @@ If you'd like to know more about how VocabHunter works and the technologies used
 [Read (Almost) Any Document in Java]:https://vocabhunter.github.io/2017/04/30/Read-Any-Document-Format.html
 [Migrating to JUnit 5]:https://vocabhunter.github.io/2017/10/17/migrating-to-junit-5.html
 
-[VocabHunter – A tool for learners of foreign languages]:https://techblog.king.com/vocabhunter-a-tool-for-learners-of-foreign-languages/
-[How JavaFX was used to build a desktop application]:https://techblog.king.com/javafx-used-build-desktop-application/
+[VocabHunter – A tool for learners of foreign languages]:https://medium.com/techking/vocabhunter-a-tool-for-learners-of-foreign-languages-55c467a6250c
+[How JavaFX was used to build a desktop application]:https://medium.com/techking/how-javafx-was-used-to-build-a-desktop-application-7d4c680d8dc
