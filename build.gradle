@@ -29,9 +29,9 @@ buildscript {
 
     dependencies {
         classpath 'com.github.ben-manes:gradle-versions-plugin:0.20.0'
-        classpath 'net.researchgate:gradle-release:2.7.0'
+        classpath 'net.researchgate:gradle-release:2.8.0'
         classpath 'org.sonarsource.scanner.gradle:sonarqube-gradle-plugin:2.6.2'
-        classpath 'gradle.plugin.com.github.spotbugs:spotbugs-gradle-plugin:1.6.5'
+        classpath 'gradle.plugin.com.github.spotbugs:spotbugs-gradle-plugin:1.6.8'
     }
 }
 
@@ -74,7 +74,7 @@ subprojects {
     }
 
     checkstyle {
-        toolVersion = '8.15'
+        toolVersion = '8.16'
         configFile = file("$rootProject.projectDir/config/checkstyle/checkstyle.xml")
     }
 
@@ -83,7 +83,7 @@ subprojects {
     }
 
     spotbugs {
-        toolVersion = '3.1.9'
+        toolVersion = '3.1.10'
         effort = 'max'
         reportLevel = 'medium'
     }
