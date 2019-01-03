@@ -40,7 +40,7 @@ public class AnalysisSystemTest {
 
     @Test
     public void testWordThe() {
-        validate("the", 14922, 8325);
+        validate("the", 14_922, 8_325);
     }
 
     @Test

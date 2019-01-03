@@ -23,7 +23,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class SettingsManagerTest {
-    private static final int UPDATE_INT_VALUE = 12345;
+    private static final int UPDATE_INT_VALUE = 12_345;
 
     private final Path home = Paths.get(System.getProperty("user.home"));
 
