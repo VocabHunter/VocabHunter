@@ -1,53 +1,21 @@
 # Build setup for Travis CI
 
-language:
-  - java
+language: java
 
-jdk:
-  - oraclejdk8
+jdk: openjdk11
 
-os:
-  - linux
-
-sudo: false
-
-addons:
-  sonarcloud:
-    organization: vocabhunter
-    token:
-        secure: "tzjZpESSyrtvh6OV9C30QbIUCmyG7E04qnJ5rjB1rVlnzfds8y7IXBpyqL17lCCXWirwj+0wGopWQNzcF3wmKTqu4c77jOuh3ANxOr4fSTgoEi5GxHJ2FWlJndirK3REORP1nGl/l50izbe10QcM5bT5UAfImOot7ZEgG9799++0Z0SW9DiFfhrD0ojjTNHOldCKDAilxUE2O4lGoUdBn3CkZIyA8es4YjiVk9AcKIQcZQhLqZ9nGyN+K/p/ICp7IRG9TMTKrAj7e5LQ/7qgaaKPgR+dGVGzadu2+bpPFgJNRabjd1vyd36vXRgCLA0DHb+KCUHeO59e8uXTPQLvCoBJ6t4OPzYkzAnTv5nWWcbtSSl+IqsL27ojK08+Eg4Ds8/CRWY6uDFB6BtSgkRj52jU7j8MldjLvk/BVOmvKZPWonrogXQggQSmR94u6oT48xLeXn9Pf1/MrrvwHEZ2kEeNDekHmLAEBht0Wq9kLgYxSxA5cFfzv2nePLT71rISTMA9O8T/qdFurhm0balSg9EDqtZJFazO+c/lDnpo7kSgb/AOPPqxY+exoSOdeEWu34w/AckxmgzpgHf9Cjby3DFZ76q7pJQKNDiejhhk6v9NybgTr+qjCFFugk3KgV15u+gNX56hEfC58kNF9iTBAt6zfoGo5S1BxfypTSrkmK4="
-    branches:
-      - master
-  apt:
-    packages:
-      - oracle-java8-installer
-      - fakeroot
+dist: xenial
 
 before_cache:
-  - rm -f $HOME/.gradle/caches/modules-2/modules-2.lock
-
+    - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
+    - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
 cache:
-  directories:
-    - $HOME/.gradle/caches/
-    - $HOME/.gradle/wrapper/
-    - $HOME/.sonar/cache
-
-install: true
+    directories:
+        - $HOME/.gradle/caches/
+        - $HOME/.gradle/wrapper/
 
 script:
-  - ./gradlew clean build jacocoTestReport jfxNative sonarqube -info
+    - ./gradlew clean build jacocoTestReport -info
 
 after_success:
-  - bash <(curl -s https://codecov.io/bash)
-
-deploy:
-  provider: releases
-  api_key:
-    secure: Wlf91YmRm+lGVe3KtUb8n1RGGgRGmCalgc0K2q1OphmgSAsMHGj5xtohHPTDL4pY7t4MbvC6X4fzrhVIs/BytweMXXp4nzHFL4RAs5NLxdyQ4DYsI6kIWm6qqUjSudrZ2nbuXu2RS1guzQbvUq9qqgGDGhDVkcQVqkq0K5vmoNh5IMPdxtJ3BzJAdD/99zkh1RIfeoVw1sbmUBhRI888yfpIJ1JcTDWUtDXwrWCPAgpjkT6J15+0LdrTgekwfO+SaWlRalReVrubXYRo8mH6auwwiocTwKoJYNAoYQgX7YQSyVbMjx1YTnU2+v5K/V4MRrmPc9TiphETcHCvJWCTDvjMJ1GUOZoJmMmQ7548iyJkTaLvZX6z0NfwsJZ9FIGxFdWjKFD2FEW9uM0DfJCr6Zi8PzCUob/Db4Yt5/kN8QdRs1uYH09n8BxEjh9fOlHZh3BxUznMV/g7iqRARo7Wg8JLk0/FmLggL9ZfnKyXv9HphY2YRbeWW0/MHW03/O6UQVwWEIFZuQwVzNHxUZEDmh8Gj29YalTQv8EzOOhtRDgiXNTtGNPp9qgHGP0pxu6dX+Hr8Q84EUvKPJQdxXkcs0j36kAWE5/X/07BIcC8rnsNACjCzMeXqGJP+1u1T6nvZ9HNAQMCOHFbi+wXyz7FrVO3zYDN66YfWkMDNJ8OQ9A=
-  file:
-    - "gui/build/distributions/VocabHunter-${TRAVIS_TAG}.zip"
-    - "package/build/jfx/native/vocabhunter-${TRAVIS_TAG}.deb"
-  skip_cleanup: true
-  on:
-    tags: true
-    repo: VocabHunter/VocabHunter
+    - bash <(curl -s https://codecov.io/bash)
