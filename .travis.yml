@@ -21,7 +21,7 @@ cache:
         - $HOME/.gradle/wrapper/
 
 script:
-    - ./gradlew clean build jacocoTestReport -info
+    - ./gradlew clean build jacocoTestReport sonarqube -info
 
 after_success:
     - bash <(curl -s https://codecov.io/bash)
