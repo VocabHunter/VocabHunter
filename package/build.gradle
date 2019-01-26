@@ -7,7 +7,7 @@ import org.apache.tools.ant.filters.ReplaceTokens
 ext {
     publishedVersion = project.version
     bundlerScript = file('bin/build-package.sh')
-    vocabhunterLibraryPath = file("${rootProject.project('gui').buildDir}/libraries")
+    applicationLibraryPath = file("${rootProject.project('gui').buildDir}/libraries")
     mainJar = project(':gui').jar.outputs.files[0].name
     bundlePath = file("${buildDir}/bundle")
     fileAssociations = file("${buildDir}/resources/main/file-associations.properties")
@@ -25,7 +25,7 @@ ext {
         appIcon = file('icons/windows/VocabHunter.ico')
         sessionIcon = file('icons/windows/VocabHunterSession.ico')
         bundlerScript = file('bin/build-package.bat')
-        generatedInnoSetupFile = file("${buildDir}/resources/main/vocabhunter.iss")
+        generatedInnoSetupFile = file("${buildDir}/resources/main/application.iss")
         windowsExecutable = file("${bundlePath}/VocabHunter/VocabHunter.exe")
         bundleContent = file("${bundlePath}/VocabHunter/*")
         // Locations for the DLL workaround
@@ -130,7 +130,7 @@ task createBundle(type: Exec, dependsOn: [processResources, checkBundlingEnviron
         commandLine 'cmd', '/c',
             bundlerScript,
             "${-> javafxJmodsPath}",
-            vocabhunterLibraryPath,
+            applicationLibraryPath,
             bundlePath,
             mainJar,
             publishedVersion,
@@ -141,7 +141,7 @@ task createBundle(type: Exec, dependsOn: [processResources, checkBundlingEnviron
            "${-> file("${javaPackagerPath}/jpackager")}",
             packageType,
            "${-> file("${javafxJmodsPath}")}",
-            vocabhunterLibraryPath,
+            applicationLibraryPath,
             bundlePath,
             mainJar,
             publishedVersion,
@@ -155,7 +155,7 @@ createBundle.dependsOn ':gui:copyDependencies'
 
 if (operatingSystem.isWindows()) {
     processResources {
-        filesMatching('vocabhunter.iss') {
+        filesMatching('application.iss') {
             filter ReplaceTokens, tokens: [
                 'bundle.version': publishedVersion,
                 'executable.location': windowsExecutable.toString(),
