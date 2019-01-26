@@ -5,12 +5,13 @@
 package io.github.vocabhunter.analysis.core;
 
 import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.util.Locale;
 
 public final class CoreConstants {
     public static final Locale LOCALE = Locale.ENGLISH;
 
-    public static final Charset CHARSET = Charset.forName("UTF-8");
+    public static final Charset CHARSET = StandardCharsets.UTF_8;
 
     private CoreConstants() {
         // Prevent instantiation - only constants are defined.
