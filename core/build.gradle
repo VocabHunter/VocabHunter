@@ -21,6 +21,6 @@ dependencies {
     compile 'commons-io:commons-io:2.6'
     compile 'org.apache.tika:tika-parsers:1.20'
     compile 'org.slf4j:slf4j-api:1.7.25'
-    compile 'com.github.spotbugs:spotbugs-annotations:3.1.10'
+    compile 'com.github.spotbugs:spotbugs-annotations:3.1.11'
     compile 'javax.inject:javax.inject:1'
 }
