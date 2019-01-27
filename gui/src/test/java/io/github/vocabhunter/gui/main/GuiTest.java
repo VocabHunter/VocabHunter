@@ -171,7 +171,7 @@ public class GuiTest extends FxRobot implements GuiTestValidator {
 
     private String readFile(final Path file) {
         try {
-            return new String(Files.readAllBytes(file), CoreConstants.CHARSET);
+            return Files.readString(file, CoreConstants.CHARSET);
         } catch (final IOException e) {
             throw new VocabHunterException(String.format("Unable to read file %s", file), e);
         }

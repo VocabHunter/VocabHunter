@@ -6,7 +6,6 @@ import org.gradle.internal.os.OperatingSystem
 
 ext {
     operatingSystem = OperatingSystem.current()
-    isIncludeMacExtensions = operatingSystem.isMacOsX() && JavaVersion.current() == JavaVersion.VERSION_1_8
 }
 
 allprojects {
@@ -48,8 +47,8 @@ subprojects {
     apply plugin: 'jacoco'
     apply plugin: 'com.github.ben-manes.versions'
 
-    sourceCompatibility = 1.8
-    targetCompatibility = 1.8
+    sourceCompatibility = 11
+    targetCompatibility = 11
 
     repositories {
         jcenter()
@@ -86,6 +85,7 @@ subprojects {
         toolVersion = '3.1.10'
         effort = 'max'
         reportLevel = 'medium'
+        excludeFilter = file("$rootProject.projectDir/config/spotbugs/excludeFilter.xml")
     }
 
     tasks.withType(com.github.spotbugs.SpotBugsTask) {

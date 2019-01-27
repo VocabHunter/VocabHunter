@@ -34,10 +34,24 @@ startScripts {
                 .replaceAll(/(set CLASSPATH=%APP_HOME%\\lib\\).*/, { "${it[1]}*" })
     }
 }
+def platform
+if (operatingSystem.isWindows()) {
+    platform = 'win'
+} else if (operatingSystem.isLinux()) {
+    platform = 'linux'
+} else if (operatingSystem.isMacOsX()) {
+    platform = 'mac'
+}
+
+configurations {
+    javafxCompile
+}
 
 dependencies {
     compile project(':core')
     compile 'com.gluonhq:ignite-guice:1.0.2'
+    compile 'org.controlsfx:controlsfx:9.0.0'
+    compile 'de.jensd:fontawesomefx-fontawesome:4.7.0-9.1.2'
 
     // This is required for the conditional logic in the logback setup
     runtime 'org.codehaus.janino:janino:3.0.11'
@@ -45,17 +59,15 @@ dependencies {
     testCompile project(path: ':core', configuration: 'tests')
 
     testCompile 'org.testfx:testfx-core:4.0.15-alpha'
-    if (JavaVersion.current() == JavaVersion.VERSION_1_8) {
-        compile 'org.controlsfx:controlsfx:8.40.14'
-        compile 'de.jensd:fontawesomefx-fontawesome:4.7.0-5'
 
-        testRuntime 'org.testfx:openjfx-monocle:8u76-b04'
-    } else {
-        compile 'org.controlsfx:controlsfx:9.0.0'
-        compile 'de.jensd:fontawesomefx-fontawesome:4.7.0-9.1.2'
+    testRuntime 'org.testfx:openjfx-monocle:jdk-11+26'
 
-        testRuntime 'org.testfx:openjfx-monocle:jdk-9+181'
-    }
+    javafxCompile "org.openjfx:javafx-base:11.0.2:${platform}"
+    javafxCompile "org.openjfx:javafx-graphics:11.0.2:${platform}"
+    javafxCompile "org.openjfx:javafx-controls:11.0.2:${platform}"
+    javafxCompile "org.openjfx:javafx-fxml:11.0.2:${platform}"
+
+    compile configurations.javafxCompile
 }
 
 test {
@@ -65,4 +77,20 @@ test {
     if (!project.hasProperty("noHeadless")) {
         jvmArgs "-Dheadless=true"
     }
+}
+
+run {
+    classpath = classpath - configurations.javafxCompile
+    jvmArgs += [
+        '--module-path', configurations.javafxCompile.asPath,
+        '--add-modules', 'javafx.controls',
+        '--add-modules', 'javafx.fxml',
+        '--add-exports', 'javafx.base/com.sun.javafx.runtime=ALL-UNNAMED'
+    ]
+}
+
+task copyDependencies(type: Copy) {
+    from configurations.runtime - configurations.javafxCompile
+    from jar
+    into "${buildDir}/libraries"
 }

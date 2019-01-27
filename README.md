@@ -1,6 +1,6 @@
 # VocabHunter
 
-[![Build Status](https://img.shields.io/travis/VocabHunter/VocabHunter/master.svg)](https://travis-ci.org/VocabHunter/VocabHunter)
+[![Build Status](https://img.shields.io/travis/VocabHunter/VocabHunter/jdk11.svg)](https://travis-ci.org/VocabHunter/VocabHunter)
 [![Code Coverage](https://img.shields.io/codecov/c/github/VocabHunter/VocabHunter.svg)](https://codecov.io/gh/VocabHunter/VocabHunter)
 [![SonarCloud](/assets/SonarCloud.svg)](https://sonarcloud.io/dashboard?id=io.github.vocabhunter%3Avocabhunter)
 [![Latest Release](https://img.shields.io/github/release/VocabHunter/VocabHunter.svg)](https://github.com/VocabHunter/VocabHunter/releases/latest)
@@ -16,9 +16,7 @@ To get all the latest news about VocabHunter including announcements of new rele
 
 # Prerequisites
 
-You will need Java 8 to build and run VocabHunter.  You can download it from the [Oracle Website](http://www.oracle.com/technetwork/java/javase/downloads/index.html).  Everything else, including Gradle, will be downloaded by the build process.
-
-VocabHunter is built for Java 8.  For more information on the ongoing work to adapt to newer versions of Java, see the [Java 9 and Java 10](#java-9-and-java-10) section below.
+You will need Java 11 to build and run VocabHunter.  The version provided by [AdoptOpenJDK](https://adoptopenjdk.net/) is an excellent choice for this.  Everything else, including Gradle, will be downloaded by the build process.
 
 # How To Run VocabHunter
 
@@ -38,17 +36,6 @@ You can build the entire system with the following command:
 $ ./gradlew clean build
 ~~~
 
-# How To Build An Installable Bundle
-
-VocabHunter is distributed as an installable bundle, with everything the user needs packed into the file.  On Mac this is a `.dmg` file, on Windows an `.exe` installer and on Linux a `.deb` package.  On Windows you need to install [Inno Setup](http://www.jrsoftware.org/isdl.php).
-
-You can launch the following command to create the bundle:
-~~~
-$ ./gradlew clean build jfxNative
-~~~
-
-When the build is complete, you will find the bundle file in the directory `package/build/jfx/native`.
-
 # How To Run The GUI Test
 
 By default the GUI test runs as part of the standard Gradle build, in headless mode.  If you'd like to run the GUI test in a non-headless mode so that you can see what is happening, use the following command:
@@ -56,17 +43,13 @@ By default the GUI test runs as part of the standard Gradle build, in headless m
 $ ./gradlew :gui:test --tests io.github.vocabhunter.gui.main.GuiTest --rerun-tasks -PnoHeadless
 ~~~
 
-# Using the OpenJDK
+# How to Build The Installable Bundle
 
-VocabHunter works well if you choose the OpenJDK 8 instead of the Oracle JDK.  If you choose the OpenJDK you may find you need to install JavaFX separately.  For example, on Ubuntu 16.04 you can install the OpenJDK 8 and JavaFX as follows:
-~~~
-$ sudo apt-get install openjdk-8-jdk
-$ sudo apt-get install openjfx
-~~~
+[![Using the Java Packager with JDK 11](/assets/Using-The-Java-Packager-With-JDK-11.png)][Using the Java Packager with JDK 11]
 
-# Java 9 and Java 10
+In the article [Using the Java Packager with JDK 11] you can read about how installable bundles for Mac, Windows and Linux are created and how you can do this in your own project.  These self-contained installers allow users to setup VocabHunter on their computer without the need to first install Java.
 
-VocabHunter is built for Java 8.  However work has started to adapt the software for Java 9 and Java 10.  You can find more details of this in the [associated milestone](https://github.com/VocabHunter/VocabHunter/milestone/1) and the experimental [JDK9 branch](https://github.com/VocabHunter/VocabHunter/tree/jdk9).
+You can also find full, step-by-step instructions for creating the VocabHunter installable bundle in [PACKAGING.md](package/PACKAGING.md).
 
 # Technical Articles
 
@@ -90,3 +73,4 @@ If you'd like to know more about how VocabHunter works and the technologies used
 
 [VocabHunter – A tool for learners of foreign languages]:https://medium.com/techking/vocabhunter-a-tool-for-learners-of-foreign-languages-55c467a6250c
 [How JavaFX was used to build a desktop application]:https://medium.com/techking/how-javafx-was-used-to-build-a-desktop-application-7d4c680d8dc
+[Using the Java Packager with JDK 11]:https://medium.com/@adam_carroll/java-packager-with-jdk11-31b3d620f4a8

@@ -1,58 +1,40 @@
+import org.apache.tools.ant.filters.ReplaceTokens
+
 /*
  * Open Source Software published under the Apache Licence, Version 2.0.
  */
 
-buildscript {
-    repositories {
-        jcenter()
-    }
-
-    dependencies {
-        classpath 'de.dynamicfiles.projects.gradle.plugins:javafx-gradle-plugin:8.8.2'
-    }
-}
-
-apply plugin: 'javafx-gradle-plugin'
-
 ext {
     publishedVersion = project.version
-    bundleMainClass = 'io.github.vocabhunter.gui.distribution.PackagedVocabHunter'
+    bundlerScript = file('bin/build-package.sh')
+    applicationLibraryPath = file("${rootProject.project('gui').buildDir}/libraries")
+    mainJar = project(':gui').jar.outputs.files[0].name
+    bundlePath = file("${buildDir}/bundle")
+    fileAssociations = file("${buildDir}/resources/main/file-associations.properties")
+    extraBundlerArguments = []
     if (operatingSystem.isMacOsX()) {
-        packageType = 'dmg'
-        if (isIncludeMacExtensions) {
-            bundleMainClass = 'io.github.vocabhunter.osx.distribution.OsxPackagedVocabHunter'
-        }
+        packageType = 'pkg'
         appIcon = file('icons/mac/VocabHunter.icns')
         sessionIcon = file('icons/mac/VocabHunterSession.icns')
+        extraBundlerArguments = ['--mac-sign']
     } else if (operatingSystem.isLinux()) {
         packageType = 'deb'
         appIcon = file('icons/App1024.png')
         sessionIcon = file('icons/Doc1024.png')
     } else if (operatingSystem.isWindows()) {
-        packageType = 'exe'
         appIcon = file('icons/windows/VocabHunter.ico')
         sessionIcon = file('icons/windows/VocabHunterSession.ico')
+        bundlerScript = file('bin/build-package.bat')
+        generatedInnoSetupFile = file("${buildDir}/resources/main/application.iss")
+        windowsExecutable = file("${bundlePath}/VocabHunter/VocabHunter.exe")
+        bundleContent = file("${bundlePath}/VocabHunter/*")
+        // Locations for the DLL workaround
+        windowsDllDirectory = file('C:\\Windows\\System32')
+        windowsDllMSVCP140 = file("${windowsDllDirectory}/MSVCP140.dll")
+        windowsDllVCRUNTIME140 = file("${windowsDllDirectory}/VCRUNTIME140.dll")
     }
     if (publishedVersion.endsWith('-SNAPSHOT')) {
-        publishedVersion = '1.0.0'
-    }
-}
-
-dependencies {
-    compile project(':gui')
-    if (isIncludeMacExtensions) {
-        compile project(':osx')
-    }
-}
-
-if (isIncludeMacExtensions) {
-    sourceSets {
-        main {
-            java {
-                srcDir 'src/main/java'
-                srcDir 'src/osx/java'
-            }
-        }
+        publishedVersion = '0.0.1'
     }
 }
 
@@ -80,43 +62,124 @@ task recreateIcons(dependsOn: [recreateIconMacApp, recreateIconMacSession, recre
     description 'Regenerate all the application bundle icons'
 }
 
-jfx {
-    mainClass = bundleMainClass
-    vendor = 'vocabhunter.github.io'
-    appName = 'VocabHunter'
-    nativeReleaseVersion = publishedVersion
-    bundler = packageType
-    bundleArguments = [
-        icon: appIcon,
-        runtime: null,
-        installdirChooser: true
-    ]
-    fileAssociations = [
-        [
-            description: 'VocabHunter session',
-            extensions: 'wordy',
-            contentType: 'application/x-vnd.VocabHunterSession',
-            icon: sessionIcon
+processResources {
+    filesMatching('file-associations.properties') {
+        filter ReplaceTokens, tokens: [
+            'vocabhunter.session.icon': sessionIcon.toString()
         ]
-    ]
+    }
 }
 
-task checkBundle {
+task checkBundlingEnvironment {
+    description 'Check the environment for building the installable bundle'
     doLast {
-        String bundle = "VocabHunter-${publishedVersion}.${packageType}"
-        FileTree tree = fileTree('build/jfx/native') {
-            include {
-                it.file.name.equalsIgnoreCase(bundle)
+        if (project.hasProperty('javafxJmodsPath')) {
+            def modsPath = file("${javafxJmodsPath}")
+
+            if (modsPath.exists() && modsPath.isDirectory()) {
+                if (!modsPath.list({ d, f -> f ==~ /.*.jmod/ } as FilenameFilter)) {
+                    throw new GradleException("JavaFX modules directory '$modsPath' does not contain any '*.jmod' files")
+                }
+            } else {
+                throw new GradleException("JavaFX modules directory '$modsPath' not found")
             }
-        }
-        if (tree.isEmpty()) {
-            throw new GradleException("Unable to create bundle file '$bundle'")
         } else {
-            tree.each {File f ->
-                println "Created bundle '$f'"
+            throw new GradleException("Use -PjavafxJmodsPath=... to specify the directory containing the OpenJFX 11 JMod files")
+        }
+        if (operatingSystem.isWindows()) {
+            def javaHome = System.env.JAVA_HOME
+
+            if (javaHome) {
+                def javaExecutable = file("${javaHome}/bin/java.exe")
+                def packagerFile = file("${javaHome}/bin/jpackager.exe")
+                def jmodFile = file("${javaHome}/jmods/jdk.packager.jar")
+
+                if (!javaExecutable.exists()) {
+                    throw new GradleException("Unable to find Java executable '${javaExecutable}'")
+                }
+                if (!packagerFile.exists()) {
+                    throw new GradleException("Unable to find Java packager executable at '${packagerFile}'")
+                }
+                if (!jmodFile.exists()) {
+                    throw new GradleException("Unable to find Java packager module at '${jmodFile}'")
+                }
+                // Check existence of files for DLL workaround
+                if (!windowsDllMSVCP140.exists() || !windowsDllVCRUNTIME140.exists()) {
+                    throw new GradleException("Unable to find '${windowsDllMSVCP140}' and '${windowsDllVCRUNTIME140}'")
+                }
+            } else {
+                throw new GradleException("JAVA_HOME must be set")
+            }
+        } else {
+            if (project.hasProperty('javaPackagerPath')) {
+                def packagerFile = file("${javaPackagerPath}/jpackager")
+
+                if (!packagerFile.exists() || !packagerFile.isFile()) {
+                    throw new GradleException("The Java Packager '$packagerFile' is missing")
+                }
+            } else {
+                throw new GradleException("Use -PjavaPackagerPath=... to specify the directory containing the Java Packager")
             }
         }
     }
 }
 
-jfxNative.finalizedBy checkBundle
+task createBundle(type: Exec, dependsOn: [processResources, checkBundlingEnvironment]) {
+    description 'Build the installable bundle'
+    if (operatingSystem.isWindows()) {
+        commandLine 'cmd', '/c',
+            bundlerScript,
+            "${-> javafxJmodsPath}",
+            applicationLibraryPath,
+            bundlePath,
+            mainJar,
+            publishedVersion,
+            appIcon
+    } else {
+        commandLine = ['sh',
+            bundlerScript,
+           "${-> file("${javaPackagerPath}/jpackager")}",
+            packageType,
+           "${-> file("${javafxJmodsPath}")}",
+            applicationLibraryPath,
+            bundlePath,
+            mainJar,
+            publishedVersion,
+            fileAssociations,
+            appIcon,
+            *extraBundlerArguments]
+    }
+}
+
+createBundle.dependsOn ':gui:copyDependencies'
+
+if (operatingSystem.isWindows()) {
+    processResources {
+        filesMatching('application.iss') {
+            filter ReplaceTokens, tokens: [
+                'bundle.version': publishedVersion,
+                'executable.location': windowsExecutable.toString(),
+                'bundle.content': bundleContent.toString()
+            ]
+        }
+    }
+
+    task completeInnoSetup(dependsOn: processResources) {
+        doLast {
+            copy {
+                from 'icons/windows'
+                into "${bundlePath}/VocabHunter"
+                include 'VocabHunterSession.ico'
+            }
+            // Copy files for DLL workaround
+            copy {
+                from windowsDllMSVCP140
+                from windowsDllVCRUNTIME140
+                into "${bundlePath}/VocabHunter"
+            }
+            println("Inno Setup file: ${generatedInnoSetupFile}")
+        }
+    }
+
+    createBundle.finalizedBy completeInnoSetup
+}
