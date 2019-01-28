@@ -4,17 +4,15 @@
 
 package io.github.vocabhunter.gui.common;
 
+import java.util.Objects;
+
 public final class GuiNoteTool {
     private GuiNoteTool() {
         // Prevent instantiation - all methods are static
     }
 
     public static String toGuiNote(final String note) {
-        if (note == null) {
-            return "";
-        } else {
-            return note;
-        }
+        return Objects.requireNonNullElse(note, "");
     }
 
     public static String fromGuiNote(final String note) {

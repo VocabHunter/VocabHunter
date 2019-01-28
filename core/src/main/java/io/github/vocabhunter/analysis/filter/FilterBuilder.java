@@ -7,6 +7,7 @@ package io.github.vocabhunter.analysis.filter;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Objects;
 import java.util.concurrent.Executor;
 import java.util.function.Supplier;
 
@@ -70,11 +71,7 @@ public class FilterBuilder {
     }
 
     private Executor getExecutor() {
-        if (executor == null) {
-            return Runnable::run;
-        } else {
-            return executor;
-        }
+        return Objects.requireNonNullElse(executor, Runnable::run);
     }
 
     private void addIfUsed(final List<WordFilter> filters, final WordFilter filter) {
