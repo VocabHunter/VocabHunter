@@ -15,7 +15,6 @@ import java.nio.file.Paths;
 import java.util.List;
 import java.util.function.Function;
 
-import static io.github.vocabhunter.analysis.core.CoreTool.listOf;
 import static java.util.stream.Collectors.toList;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -28,14 +27,14 @@ public class SessionWordsToolTest {
 
     @Test
     public void testKnown() throws Exception {
-        validate(target::knownWords, listOf(
+        validate(target::knownWords, List.of(
             "is", "a", "aid", "all", "back", "brown", "come", "document", "dog's", "for", "fox", "good", "jumped", "lazy",
             "men", "Now", "of", "over", "party", "quick", "simple", "test", "This", "time"));
     }
 
     @Test
     public void testSeen() throws Exception {
-        validate(target::seenWords, listOf(
+        validate(target::seenWords, List.of(
             "aid", "all", "back", "brown", "come", "document", "dog's", "for", "fox", "good", "jumped", "lazy",
             "men", "Now", "of", "over", "party", "quick", "simple", "test", "This", "time"));
     }

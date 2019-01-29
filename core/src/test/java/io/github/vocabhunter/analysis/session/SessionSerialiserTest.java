@@ -15,11 +15,9 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Collections;
+import java.util.List;
 
-import static io.github.vocabhunter.analysis.core.CoreTool.listOf;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class SessionSerialiserTest {
     private TestFileManager files;
@@ -86,8 +84,8 @@ public class SessionSerialiserTest {
         SessionWord word2 = word("Word2", WordState.UNSEEN, null, 2, 3);
 
         bean.setName(name);
-        bean.setOrderedUses(listOf(word1, word2));
-        bean.setLines(listOf("Use 1", "Use 2", "Use 3", "Use 4"));
+        bean.setOrderedUses(List.of(word1, word2));
+        bean.setLines(List.of("Use 1", "Use 2", "Use 3", "Use 4"));
 
         return bean;
     }
@@ -98,7 +96,7 @@ public class SessionSerialiserTest {
         bean.setWordIdentifier(word);
         bean.setState(state);
         bean.setNote(note);
-        bean.setLineNos(listOf(lineNos));
+        bean.setLineNos(List.of(lineNos));
 
         return bean;
     }

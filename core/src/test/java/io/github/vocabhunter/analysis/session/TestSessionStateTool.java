@@ -10,7 +10,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
 
-import static io.github.vocabhunter.analysis.core.CoreTool.listOf;
 import static io.github.vocabhunter.analysis.marked.WordState.*;
 import static java.util.stream.Collectors.toList;
 
@@ -23,7 +22,7 @@ public final class TestSessionStateTool {
 
     public static final String LINE_3 = "This is a simple test document.";
 
-    private static final List<String> LINES = listOf(LINE_1, LINE_2, LINE_3);
+    private static final List<String> LINES = List.of(LINE_1, LINE_2, LINE_3);
 
     private TestSessionStateTool() {
         // Prevent instantiation - all methods are static

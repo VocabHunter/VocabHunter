@@ -4,7 +4,6 @@
 
 package io.github.vocabhunter.gui.services;
 
-import io.github.vocabhunter.analysis.core.CoreTool;
 import io.github.vocabhunter.analysis.settings.BaseListedFile;
 import io.github.vocabhunter.analysis.settings.DocumentListedFile;
 import io.github.vocabhunter.analysis.settings.ExcelListedFile;
@@ -17,7 +16,6 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Collections;
 import java.util.Set;
-import java.util.TreeSet;
 
 import static java.util.Collections.emptySet;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -29,7 +27,7 @@ public class FilterFileModelTranslatorTest {
 
     private static final Set<Integer> COLUMNS_DOCUMENT = Collections.singleton(0);
 
-    private static final Set<Integer> COLUMNS_EXCEL = new TreeSet<>(CoreTool.listOf(1, 3));
+    private static final Set<Integer> COLUMNS_EXCEL = Set.of(1, 3);
 
     private final FilterFileModelTranslator target = new FilterFileModelTranslatorImpl();
 

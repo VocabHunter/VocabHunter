@@ -12,10 +12,8 @@ import org.junit.jupiter.api.Test;
 import java.nio.file.Path;
 import java.util.List;
 import java.util.Set;
-import java.util.TreeSet;
 import java.util.stream.IntStream;
 
-import static io.github.vocabhunter.analysis.core.CoreTool.listOf;
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -134,6 +132,6 @@ public class FilterGridModelTest extends BaseFilterModelTest {
     }
 
     private Set<Integer> columns(final Integer... columns) {
-        return new TreeSet<>(listOf(columns));
+        return Set.of(columns);
     }
 }

@@ -13,13 +13,11 @@ import io.github.vocabhunter.gui.event.ExternalEventBrokerImpl;
 
 import java.util.List;
 
-import static io.github.vocabhunter.analysis.core.CoreTool.listOf;
-
 public class StandardEventSourceModule extends AbstractModule {
     private final List<String> args;
 
     public StandardEventSourceModule(final String... args) {
-        this.args = listOf(args);
+        this.args = List.of(args);
     }
 
     @Override

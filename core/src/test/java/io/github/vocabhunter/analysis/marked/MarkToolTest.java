@@ -12,13 +12,12 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import static io.github.vocabhunter.analysis.core.CoreTool.listOf;
 import static io.github.vocabhunter.analysis.marked.WordState.*;
 import static java.util.Collections.emptyList;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class MarkToolTest {
-    private final List<MarkedWord> allWords = listOf(
+    private final List<MarkedWord> allWords = List.of(
         word(KNOWN, 1),
         word(KNOWN, 2),
         word(KNOWN, 3),
@@ -38,7 +37,7 @@ public class MarkToolTest {
 
     private final List<MarkedWord> allUnfiltered = allWords.subList(0, allWords.size() - 1);
 
-    private final Set<AnalysisWord> filterSet = new HashSet<>(listOf(
+    private final Set<AnalysisWord> filterSet = new HashSet<>(List.of(
         word(KNOWN, 3),
         word(UNKNOWN, 5),
         word(UNSEEN, 7)

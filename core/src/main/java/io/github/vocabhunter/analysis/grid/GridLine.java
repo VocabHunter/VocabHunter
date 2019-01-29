@@ -8,7 +8,6 @@ import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -18,7 +17,7 @@ public final class GridLine {
     private final List<GridCell> cells;
 
     public GridLine(final GridCell... cells) {
-        this(Arrays.asList(cells));
+        this(List.of(cells));
     }
 
     public GridLine(final List<GridCell> cells) {

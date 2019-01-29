@@ -7,7 +7,8 @@ package io.github.vocabhunter.gui.common;
 import io.github.vocabhunter.analysis.core.VocabHunterException;
 import org.junit.jupiter.api.Test;
 
-import static io.github.vocabhunter.analysis.core.CoreTool.listOf;
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -91,6 +92,6 @@ public class IndexToolTest {
     }
 
     private int findClosest(final Integer... accepted) {
-        return IndexTool.findClosest(REQUESTED, SIZE, listOf(accepted)::contains);
+        return IndexTool.findClosest(REQUESTED, SIZE, List.of(accepted)::contains);
     }
 }

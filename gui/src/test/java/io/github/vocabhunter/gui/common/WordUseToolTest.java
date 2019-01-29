@@ -8,7 +8,6 @@ import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
-import static io.github.vocabhunter.analysis.core.CoreTool.listOf;
 import static java.util.stream.Collectors.toList;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -63,6 +62,6 @@ public class WordUseToolTest {
         List<String> actual = tool.stream()
                 .collect(toList());
 
-        assertEquals(listOf(expected), actual, "Use: " + use);
+        assertEquals(List.of(expected), actual, "Use: " + use);
     }
 }

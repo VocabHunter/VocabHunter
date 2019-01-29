@@ -10,7 +10,6 @@ import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
-import static io.github.vocabhunter.analysis.core.CoreTool.listOf;
 import static io.github.vocabhunter.analysis.grid.GridTestTool.acceptedCell;
 import static io.github.vocabhunter.analysis.grid.GridTestTool.rejectedCell;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -30,38 +29,38 @@ public class GridWordsExtractorTest {
 
     private static final GridLine LINE_TWO_COLUMNS = new GridLine(acceptedCell(WORD_2), acceptedCell(WORD_3));
 
-    private static final List<GridLine> GRID_1 = listOf(LINE_ACCEPTED_WORD, LINE_TWO_COLUMNS);
+    private static final List<GridLine> GRID_1 = List.of(LINE_ACCEPTED_WORD, LINE_TWO_COLUMNS);
 
     private final GridWordsExtractor target = new GridWordsExtractorImpl();
 
     @Test
     public void testEmpty() {
-        validate(listOf(), columns());
+        validate(List.of(), columns());
     }
 
     @Test
     public void testNoLines() {
-        validate(listOf(), columns(0));
+        validate(List.of(), columns(0));
     }
 
     @Test
     public void testEmptyLine() {
-        validate(listOf(LINE_EMPTY), columns(0));
+        validate(List.of(LINE_EMPTY), columns(0));
     }
 
     @Test
     public void testEmptyColumns() {
-        validate(listOf(LINE_ACCEPTED_WORD), columns());
+        validate(List.of(LINE_ACCEPTED_WORD), columns());
     }
 
     @Test
     public void testAcceptedWord() {
-        validate(listOf(LINE_ACCEPTED_WORD), columns(0), WORD_1);
+        validate(List.of(LINE_ACCEPTED_WORD), columns(0), WORD_1);
     }
 
     @Test
     public void testRejectedWord() {
-        validate(listOf(LINE_REJECTED_WORD), columns(0));
+        validate(List.of(LINE_REJECTED_WORD), columns(0));
     }
 
     @Test
@@ -81,12 +80,12 @@ public class GridWordsExtractorTest {
 
     private void validate(final List<GridLine> lines, final Set<Integer> columns, final String... words) {
         Set<String> result = new TreeSet<>(target.words(lines, columns));
-        Set<String> expected = new TreeSet<>(listOf(words));
+        Set<String> expected = new TreeSet<>(List.of(words));
 
         assertEquals(expected, result);
     }
 
     private Set<Integer> columns(final Integer... columns) {
-        return new TreeSet<>(listOf(columns));
+        return Set.of(columns);
     }
 }

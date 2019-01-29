@@ -8,18 +8,18 @@ import io.github.vocabhunter.test.utils.AbstractBeanTest;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Arrays;
+import java.util.List;
 
 public class ExcelListedFileTest extends AbstractBeanTest<ExcelListedFile> {
     private static final Path FILE = Paths.get("file1");
 
     @Override
     protected ExcelListedFile buildPrimary() {
-        return new ExcelListedFile(FILE, Arrays.asList(1, 2));
+        return new ExcelListedFile(FILE, List.of(1, 2));
     }
 
     @Override
     protected ExcelListedFile buildSecondary() {
-        return new ExcelListedFile(FILE, Arrays.asList(1, 2, 3));
+        return new ExcelListedFile(FILE, List.of(1, 2, 3));
     }
 }

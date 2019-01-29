@@ -4,10 +4,11 @@
 
 package io.github.vocabhunter.analysis.simple;
 
-import io.github.vocabhunter.analysis.core.CoreTool;
 import io.github.vocabhunter.analysis.core.VocabHunterException;
 import io.github.vocabhunter.analysis.model.WordUse;
 import org.junit.jupiter.api.Test;
+
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -88,7 +89,7 @@ public class MutableWordUseTest {
     }
 
     public void validate(final String word, final int useCount, final Integer... lineNos) {
-        WordUse expected = new WordUse(word, useCount, CoreTool.listOf(lineNos));
+        WordUse expected = new WordUse(word, useCount, List.of(lineNos));
 
         assertEquals(expected, target.toWordUse());
     }

@@ -6,7 +6,7 @@ package io.github.vocabhunter.analysis.core;
 
 import org.junit.jupiter.api.Test;
 
-import java.util.Arrays;
+import java.util.List;
 import java.util.OptionalInt;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -50,6 +50,6 @@ public class FindLastTest {
     }
 
     private OptionalInt result(final Word... words) {
-        return CoreTool.findLast(Arrays.asList(words), w -> w == Word.MATCH);
+        return CoreTool.findLast(List.of(words), w -> w == Word.MATCH);
     }
 }

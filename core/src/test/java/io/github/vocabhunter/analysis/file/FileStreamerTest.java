@@ -18,11 +18,10 @@ import java.nio.file.Paths;
 import java.util.List;
 import java.util.function.Function;
 
-import static io.github.vocabhunter.analysis.core.CoreTool.listOf;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class FileStreamerTest {
-    private static final List<String> LINES = listOf(
+    private static final List<String> LINES = List.of(
             "The quick brown fox jumped over the lazy dog's back.",
             "Now is the time for all good men to come to the aid of the party.",
             "This is a simple test document.");

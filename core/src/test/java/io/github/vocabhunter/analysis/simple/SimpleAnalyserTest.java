@@ -13,7 +13,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import static io.github.vocabhunter.analysis.core.CoreTool.listOf;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -153,7 +152,7 @@ public class SimpleAnalyserTest {
     }
 
     private AnalysisResult analyse(final String... lines) {
-        return target.analyse(listOf(lines), NAME);
+        return target.analyse(List.of(lines), NAME);
     }
 
     private WordUse use(final String wordIdentifier, final int useCount, final LineReference... lines) {
@@ -165,7 +164,7 @@ public class SimpleAnalyserTest {
     }
 
     private void validate(final AnalysisResult result, final WordUse... expected) {
-        List<WordUse> expectedList = listOf(expected);
+        List<WordUse> expectedList = List.of(expected);
 
         assertEquals(expectedList, result.getOrderedUses(), "Uses");
     }

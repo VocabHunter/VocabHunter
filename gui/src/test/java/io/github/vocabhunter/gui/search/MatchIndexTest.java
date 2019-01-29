@@ -10,7 +10,6 @@ import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
-import static io.github.vocabhunter.analysis.core.CoreTool.listOf;
 import static io.github.vocabhunter.gui.search.SearchTool.getMatchIndex;
 import static io.github.vocabhunter.gui.search.SearchTool.getPreviousMatchIndex;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -26,9 +25,9 @@ public class MatchIndexTest {
 
     private final SequencedWord five = new TestSequencedWord("five", 5);
 
-    private final List<SequencedWord> emptyMatches = listOf();
+    private final List<SequencedWord> emptyMatches = List.of();
 
-    private final List<SequencedWord> matches = listOf(two, four);
+    private final List<SequencedWord> matches = List.of(two, four);
 
     @Test
     public void testEmpty() {

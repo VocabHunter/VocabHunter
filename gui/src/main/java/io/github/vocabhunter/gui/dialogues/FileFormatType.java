@@ -12,7 +12,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Stream;
 
-import static io.github.vocabhunter.analysis.core.CoreTool.listOf;
 import static io.github.vocabhunter.gui.dialogues.FileFormatExtensions.*;
 import static java.util.function.Function.identity;
 import static java.util.stream.Collectors.toMap;
@@ -28,13 +27,13 @@ public enum FileFormatType {
     SESSION("VocabHunter Session Files", "*" + FileNameTool.SESSION_SUFFIX),
     SPREADSHEET("Spreadsheets", EXTENSIONS_SPREADSHEET);
 
-    static final List<FileFormatType> TYPES_INPUT_DOCUMENTS = listOf(DOCUMENT, ANY_TEXT, PDF, OFFICE, EBOOK, ALL);
+    static final List<FileFormatType> TYPES_INPUT_DOCUMENTS = List.of(DOCUMENT, ANY_TEXT, PDF, OFFICE, EBOOK, ALL);
 
-    static final List<FileFormatType> TYPES_SESSIONS = listOf(SESSION);
+    static final List<FileFormatType> TYPES_SESSIONS = List.of(SESSION);
 
-    static final List<FileFormatType> TYPES_EXPORTS = listOf(TEXT);
+    static final List<FileFormatType> TYPES_EXPORTS = List.of(TEXT);
 
-    static final List<FileFormatType> TYPES_WORD_GRIDS = listOf(DOCUMENT, SPREADSHEET);
+    static final List<FileFormatType> TYPES_WORD_GRIDS = List.of(DOCUMENT, SPREADSHEET);
 
     private static final Map<ExtensionFilter, FileFormatType> TYPES = Stream.of(FileFormatType.values())
         .collect(toMap(FileFormatType::getFilter, identity()));

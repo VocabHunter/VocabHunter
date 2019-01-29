@@ -4,14 +4,12 @@
 
 package io.github.vocabhunter.analysis.settings;
 
-import io.github.vocabhunter.analysis.core.CoreTool;
 import io.github.vocabhunter.test.utils.TestFileManager;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.nio.file.Path;
-import java.util.Arrays;
 import java.util.List;
 
 import static io.github.vocabhunter.analysis.settings.FileListManagerImpl.SETTINGS_JSON;
@@ -42,7 +40,7 @@ public class FileListManagerTest {
         file2 = new DocumentListedFile(path2);
 
         Path path3 = files.addFile("file3");
-        file3 = new ExcelListedFile(path3, Arrays.asList(1, 2, 3));
+        file3 = new ExcelListedFile(path3, List.of(1, 2, 3));
     }
 
     @AfterEach
@@ -59,7 +57,7 @@ public class FileListManagerTest {
 
     @Test
     public void testAdd() {
-        List<BaseListedFile> files = CoreTool.listOf(file1, file2, file3);
+        List<BaseListedFile> files = List.of(file1, file2, file3);
 
         target.setFilterFiles(files);
 

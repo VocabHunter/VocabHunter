@@ -9,19 +9,18 @@ import org.junit.jupiter.api.Test;
 import java.util.List;
 import java.util.stream.IntStream;
 
-import static io.github.vocabhunter.analysis.core.CoreTool.listOf;
 import static java.util.Collections.emptyList;
 import static java.util.function.Function.identity;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class LineListToolTest {
-    private static final List<String> LINES_A = listOf("A");
+    private static final List<String> LINES_A = List.of("A");
 
-    private static final List<String> LINES_AB = listOf("A", "B");
+    private static final List<String> LINES_AB = List.of("A", "B");
 
-    private static final List<String> LINES_BC = listOf("B", "C");
+    private static final List<String> LINES_BC = List.of("B", "C");
 
-    private static final List<String> LINES_CD = listOf("C", "D");
+    private static final List<String> LINES_CD = List.of("C", "D");
 
     @Test
     public void testEmpty() {
@@ -30,32 +29,32 @@ public class LineListToolTest {
 
     @Test
     public void testEmptyContent() {
-        validate(listOf(emptyList()));
+        validate(List.of(List.of()));
     }
 
     @Test
     public void testSingle() {
-        validate(listOf(LINES_A), "A");
+        validate(List.of(LINES_A), "A");
     }
 
     @Test
     public void testSubset() {
-        validate(listOf(LINES_A, LINES_AB), "A", "B");
+        validate(List.of(LINES_A, LINES_AB), "A", "B");
     }
 
     @Test
     public void testIntersect() {
-        validate(listOf(LINES_AB, LINES_BC), "A", "B", "C");
+        validate(List.of(LINES_AB, LINES_BC), "A", "B", "C");
     }
 
     @Test
     public void testNoIntersect() {
-        validate(listOf(LINES_AB, LINES_CD), "A", "B", "C", "D");
+        validate(List.of(LINES_AB, LINES_CD), "A", "B", "C", "D");
     }
 
     private void validate(final List<List<String>> input, final String... expected) {
         LineListTool<List<String>> target = new LineListTool<>(input, identity());
-        List<String> expectedList = listOf(expected);
+        List<String> expectedList = List.of(expected);
 
         assertEquals(expectedList, target.getLines(), "Lines");
 
