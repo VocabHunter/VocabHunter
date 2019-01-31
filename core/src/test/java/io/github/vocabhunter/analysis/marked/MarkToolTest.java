@@ -8,7 +8,6 @@ import io.github.vocabhunter.analysis.filter.WordFilter;
 import io.github.vocabhunter.analysis.model.AnalysisWord;
 import org.junit.jupiter.api.Test;
 
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -37,11 +36,11 @@ public class MarkToolTest {
 
     private final List<MarkedWord> allUnfiltered = allWords.subList(0, allWords.size() - 1);
 
-    private final Set<AnalysisWord> filterSet = new HashSet<>(List.of(
+    private final Set<AnalysisWord> filterSet = Set.of(
         word(KNOWN, 3),
         word(UNKNOWN, 5),
         word(UNSEEN, 7)
-    ));
+    );
 
     private final WordFilter filter = w -> !filterSet.contains(w);
 

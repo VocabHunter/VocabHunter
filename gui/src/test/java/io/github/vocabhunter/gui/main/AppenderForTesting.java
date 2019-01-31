@@ -19,6 +19,6 @@ public class AppenderForTesting extends AppenderBase<ILoggingEvent> {
     }
 
     public List<String> getMessages() {
-        return new ArrayList<>(messages);
+        return List.copyOf(messages);
     }
 }
