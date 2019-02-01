@@ -21,12 +21,14 @@ public abstract class AbstractBeanTest<T> {
         assertEquals(t, t, "Identical");
     }
 
+    @SuppressWarnings("SimplifiableJUnitAssertion")
     @Test
     @SuppressFBWarnings("EC_NULL_ARG")
     public void testNotEqualToNull() {
         assertFalse(buildPrimary().equals(null), "Not equal to null");
     }
 
+    @SuppressWarnings("SimplifiableJUnitAssertion")
     @Test
     public void testNotEqualToDifferentClass() {
         assertFalse(buildPrimary().equals(new Object()), "Not equal to different class");
