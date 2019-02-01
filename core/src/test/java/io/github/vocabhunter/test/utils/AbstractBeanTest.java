@@ -21,7 +21,7 @@ public abstract class AbstractBeanTest<T> {
         assertEquals(t, t, "Identical");
     }
 
-    @SuppressWarnings("SimplifiableJUnitAssertion")
+    @SuppressWarnings({"SimplifiableJUnitAssertion", "ConstantConditions"})
     @Test
     @SuppressFBWarnings("EC_NULL_ARG")
     public void testNotEqualToNull() {
