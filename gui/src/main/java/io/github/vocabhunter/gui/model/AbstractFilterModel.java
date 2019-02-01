@@ -16,7 +16,7 @@ import java.text.NumberFormat;
 import static io.github.vocabhunter.analysis.session.FileNameTool.filename;
 
 public abstract class AbstractFilterModel {
-    public static final String ERROR = "No words selected";
+    public static final String ERROR_MESSAGE = "No words selected";
 
     private final SimpleObjectProperty<Path> file = new SimpleObjectProperty<>();
 
@@ -40,7 +40,7 @@ public abstract class AbstractFilterModel {
         StringBinding filenameText = Bindings.createStringBinding(() -> filename(file.get()), file);
 
         error.bind(Bindings.equal(count, 0));
-        countDescription.bind(Bindings.when(error).then(ERROR).otherwise(countText));
+        countDescription.bind(Bindings.when(error).then(ERROR_MESSAGE).otherwise(countText));
         filename.bind(filenameText);
     }
 

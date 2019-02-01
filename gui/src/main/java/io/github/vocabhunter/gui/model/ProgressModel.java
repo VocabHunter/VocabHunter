@@ -98,12 +98,12 @@ public class ProgressModel {
     }
 
     public ProgressModel() {
-        Map<WordState, SimpleIntegerProperty> properties = new EnumMap<>(WordState.class);
+        Map<WordState, SimpleIntegerProperty> map = new EnumMap<>(WordState.class);
 
-        properties.put(WordState.KNOWN, known);
-        properties.put(WordState.UNKNOWN, unknown);
-        properties.put(WordState.UNSEEN, unseenUnfiltered);
-        this.properties = Collections.unmodifiableMap(properties);
+        map.put(WordState.KNOWN, known);
+        map.put(WordState.UNKNOWN, unknown);
+        map.put(WordState.UNSEEN, unseenUnfiltered);
+        this.properties = Collections.unmodifiableMap(map);
     }
 
     public void updateProgress(final int known, final int unknown, final int unseenUnfiltered, final int unseenFiltered) {

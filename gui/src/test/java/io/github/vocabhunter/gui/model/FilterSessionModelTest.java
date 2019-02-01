@@ -90,7 +90,7 @@ public class FilterSessionModelTest extends BaseFilterModelTest {
     }
 
     private void validateError(final FilterSessionModel target, final int knownCount, final int seenCount, final boolean isIncludeUnknown) {
-        validate(target, FILE_1, FILENAME_1, isIncludeUnknown, AbstractFilterModel.ERROR, true, knownCount, seenCount);
+        validate(target, FILE_1, FILENAME_1, isIncludeUnknown, AbstractFilterModel.ERROR_MESSAGE, true, knownCount, seenCount);
     }
 
     private void validateReplaceOk(final FilterSessionModel target, final int knownCount, final int seenCount, final boolean isIncludeUnknown, final String countDescription) {
@@ -98,7 +98,7 @@ public class FilterSessionModelTest extends BaseFilterModelTest {
     }
 
     private void validateReplaceError(final FilterSessionModel target, final int knownCount, final int seenCount, final boolean isIncludeUnknown) {
-        validate(target, FILE_2, FILENAME_2, isIncludeUnknown, AbstractFilterModel.ERROR, true, knownCount, seenCount);
+        validate(target, FILE_2, FILENAME_2, isIncludeUnknown, AbstractFilterModel.ERROR_MESSAGE, true, knownCount, seenCount);
     }
 
     private void validate(final FilterSessionModel target, final Path file, final String filename, final boolean isIncludeUnknown,

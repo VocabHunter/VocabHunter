@@ -85,7 +85,7 @@ public class FilterGridModelTest extends BaseFilterModelTest {
     }
 
     private void validateError(final FilterGridModel target, final TextGrid grid, final Integer... columns) {
-        validate(target, FILE_1, FILENAME_1, AbstractFilterModel.ERROR, true, grid, FilterFileMode.DOCUMENT, columns(columns));
+        validate(target, FILE_1, FILENAME_1, AbstractFilterModel.ERROR_MESSAGE, true, grid, FilterFileMode.DOCUMENT, columns(columns));
     }
 
     private void validateReplaceOk(final FilterGridModel target, final TextGrid grid, final String countDescription, final FilterFileMode mode, final Integer... columns) {
@@ -93,7 +93,7 @@ public class FilterGridModelTest extends BaseFilterModelTest {
     }
 
     private void validateReplaceError(final FilterGridModel target, final TextGrid grid, final FilterFileMode mode, final Integer... columns) {
-        validate(target, FILE_2, FILENAME_2, AbstractFilterModel.ERROR, true, grid, mode, columns(columns));
+        validate(target, FILE_2, FILENAME_2, AbstractFilterModel.ERROR_MESSAGE, true, grid, mode, columns(columns));
     }
 
     private void validate(
