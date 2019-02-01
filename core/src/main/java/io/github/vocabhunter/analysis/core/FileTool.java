@@ -9,13 +9,12 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.Collections;
 import java.util.List;
 
 public final class FileTool {
     private static final ObjectMapper MAPPER = new ObjectMapper();
 
-    private static final List<String> MINIMAL_JSON = Collections.singletonList("{}");
+    private static final List<String> MINIMAL_JSON = List.of("{}");
 
     private FileTool() {
         // Prevent instantiation - all methods are static

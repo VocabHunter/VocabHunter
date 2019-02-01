@@ -22,8 +22,6 @@ import java.util.List;
 import java.util.Set;
 
 import static io.github.vocabhunter.analysis.grid.GridTestTool.acceptedCell;
-import static java.util.Collections.emptyList;
-import static java.util.Collections.singleton;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.when;
@@ -46,7 +44,7 @@ public class FilterFileWordsExtractorTest {
 
     private static final List<GridLine> LINES = List.of(new GridLine(acceptedCell("test")));
 
-    private static final TextGrid GRID = new TextGrid(LINES, emptyList());
+    private static final TextGrid GRID = new TextGrid(LINES, List.of());
 
     @Mock
     private SessionWordsTool sessionWordsTool;
@@ -88,7 +86,7 @@ public class FilterFileWordsExtractorTest {
     @Test
     public void testDocument() {
         when(textGridManager.readDocument(FILE)).thenReturn(GRID);
-        when(gridWordsExtractor.words(LINES, singleton(0))).thenReturn(WORDS);
+        when(gridWordsExtractor.words(LINES, Set.of(0))).thenReturn(WORDS);
 
         validate(FILE_DOCUMENT);
     }

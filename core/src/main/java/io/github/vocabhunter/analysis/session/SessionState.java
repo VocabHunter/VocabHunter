@@ -11,12 +11,7 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -26,9 +21,9 @@ public class SessionState {
 
     private String name;
 
-    private List<SessionWord> orderedUses = Collections.emptyList();
+    private List<SessionWord> orderedUses = List.of();
 
-    private List<String> lines = Collections.emptyList();
+    private List<String> lines = List.of();
 
     public SessionState() {
         // No argument constructor to allow use as standard Java Bean

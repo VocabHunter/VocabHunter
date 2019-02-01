@@ -15,7 +15,6 @@ import org.slf4j.LoggerFactory;
 
 import java.time.Duration;
 import java.time.Instant;
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -31,7 +30,7 @@ import static java.util.Collections.unmodifiableMap;
 public class FilterFileWordsExtractorImpl implements FilterFileWordsExtractor {
     private static final Logger LOG = LoggerFactory.getLogger(FilterFileWordsExtractorImpl.class);
 
-    private static final Set<Integer> FIRST_COLUMN = Collections.singleton(0);
+    private static final Set<Integer> FIRST_COLUMN = Set.of(0);
 
     private final Map<Class<?>, Function<BaseListedFile, List<String>>> extractors = buildExtractorMap();
 

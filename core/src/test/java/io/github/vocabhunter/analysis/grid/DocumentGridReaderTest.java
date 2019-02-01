@@ -7,7 +7,6 @@ package io.github.vocabhunter.analysis.grid;
 import org.junit.jupiter.api.Test;
 
 import java.nio.file.Path;
-import java.util.Collections;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -19,7 +18,7 @@ public class DocumentGridReaderTest {
 
     @Test
     public void testEmpty() throws Exception {
-        validate("empty.txt", Collections.emptyList());
+        validate("empty.txt", List.of());
     }
 
     @Test

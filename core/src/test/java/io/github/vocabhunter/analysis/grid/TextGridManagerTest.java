@@ -15,7 +15,6 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
 
-import static java.util.Collections.emptyList;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.mockito.Mockito.when;
@@ -24,7 +23,7 @@ import static org.mockito.Mockito.when;
 public class TextGridManagerTest {
     private static final Path FILE = Paths.get("test");
 
-    private static final TextGrid GRID = new TextGrid(emptyList(), emptyList());
+    private static final TextGrid GRID = new TextGrid(List.of(), List.of());
 
     @Mock
     private List<GridLine> lines;

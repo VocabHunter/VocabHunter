@@ -12,7 +12,6 @@ import java.util.List;
 import java.util.Set;
 
 import static io.github.vocabhunter.analysis.marked.WordState.*;
-import static java.util.Collections.emptyList;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class MarkToolTest {
@@ -44,7 +43,7 @@ public class MarkToolTest {
 
     private final WordFilter filter = w -> !filterSet.contains(w);
 
-    private final MarkTool<MarkedWord> emptyTarget = new MarkTool<>(filter, emptyList());
+    private final MarkTool<MarkedWord> emptyTarget = new MarkTool<>(filter, List.of());
 
     private final MarkTool<MarkedWord> target = new MarkTool<>(filter, allWords);
 

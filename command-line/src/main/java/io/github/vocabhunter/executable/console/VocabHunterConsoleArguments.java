@@ -10,7 +10,6 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 
-import static java.util.Collections.emptyList;
 import static java.util.Collections.unmodifiableList;
 
 public class VocabHunterConsoleArguments {
@@ -33,10 +32,10 @@ public class VocabHunterConsoleArguments {
     private boolean isHideUses = false;
 
     @Parameter(names = "-filterknown", description = "Words marked as known are filtered from these session files")
-    private List<Path> filterKnown = emptyList();
+    private List<Path> filterKnown = List.of();
 
     @Parameter(names = "-filterseen", description = "Words marked as known or unknown are filtered from these session files")
-    private List<Path> filterSeen = emptyList();
+    private List<Path> filterSeen = List.of();
 
     @Parameter(names = "-help", help = true, description = "Show command help")
     private boolean isHelpRequested = false;

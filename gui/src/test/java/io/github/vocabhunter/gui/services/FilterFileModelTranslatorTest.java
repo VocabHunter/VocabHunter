@@ -14,18 +14,16 @@ import org.junit.jupiter.api.Test;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Collections;
 import java.util.Set;
 
-import static java.util.Collections.emptySet;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class FilterFileModelTranslatorTest {
     private static final Path FILE = Paths.get("test");
 
-    private static final Set<Integer> COLUMNS_EMPTY = emptySet();
+    private static final Set<Integer> COLUMNS_EMPTY = Set.of();
 
-    private static final Set<Integer> COLUMNS_DOCUMENT = Collections.singleton(0);
+    private static final Set<Integer> COLUMNS_DOCUMENT = Set.of(0);
 
     private static final Set<Integer> COLUMNS_EXCEL = Set.of(1, 3);
 

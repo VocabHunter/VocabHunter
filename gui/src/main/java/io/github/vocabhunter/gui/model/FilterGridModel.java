@@ -15,7 +15,6 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 import java.nio.file.Path;
-import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -24,7 +23,7 @@ import java.util.stream.IntStream;
 import static java.util.stream.Collectors.toList;
 
 public class FilterGridModel extends AbstractFilterModel {
-    public static final Set<Integer> DEFAULT_COLUMNS = Collections.singleton(0);
+    public static final Set<Integer> DEFAULT_COLUMNS = Set.of(0);
 
     private final ObservableList<GridLine> lines = FXCollections.observableArrayList();
 

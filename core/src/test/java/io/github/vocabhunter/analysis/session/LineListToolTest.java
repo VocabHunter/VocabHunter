@@ -9,7 +9,6 @@ import org.junit.jupiter.api.Test;
 import java.util.List;
 import java.util.stream.IntStream;
 
-import static java.util.Collections.emptyList;
 import static java.util.function.Function.identity;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -24,7 +23,7 @@ public class LineListToolTest {
 
     @Test
     public void testEmpty() {
-        validate(emptyList());
+        validate(List.of());
     }
 
     @Test

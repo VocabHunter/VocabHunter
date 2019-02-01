@@ -25,7 +25,7 @@ public class FilterFileModel {
     private Set<Integer> columns;
 
     public FilterFileModel(final Path file, final FilterFileMode mode) {
-        this(file, mode, Collections.emptySet());
+        this(file, mode, Set.of());
     }
 
     public FilterFileModel(final Path file, final FilterFileMode mode, final Set<Integer> columns) {

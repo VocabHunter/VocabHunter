@@ -9,7 +9,6 @@ import io.github.vocabhunter.analysis.marked.WordState;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import static io.github.vocabhunter.analysis.marked.WordState.*;
@@ -69,7 +68,7 @@ public class InitialSelectionToolTest {
         int index = 0;
 
         for (WordState state : states) {
-            WordModel model = new WordModel(index, "word " + index, Collections.emptyList(), 0, state, null);
+            WordModel model = new WordModel(index, "word " + index, List.of(), 0, state, null);
             result.add(model);
             ++index;
         }

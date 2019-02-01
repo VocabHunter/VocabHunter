@@ -14,7 +14,7 @@ import java.util.List;
 public final class FileList {
     private int formatVersion = FileListVersion.LATEST_VERSION;
 
-    private List<BaseListedFile> filterFiles = Collections.emptyList();
+    private List<BaseListedFile> filterFiles = List.of();
 
     public int getFormatVersion() {
         return formatVersion;

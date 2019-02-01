@@ -13,9 +13,9 @@ import io.github.vocabhunter.gui.model.FilterFileMode;
 import io.github.vocabhunter.gui.model.FilterFileModel;
 
 import java.nio.file.Path;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 import java.util.function.Function;
 
 public class FilterFileModelTranslatorImpl implements FilterFileModelTranslator {
@@ -71,7 +71,7 @@ public class FilterFileModelTranslatorImpl implements FilterFileModelTranslator 
             mode = FilterFileMode.SESSION_KNOWN;
         }
 
-        return new FilterFileModel(file.getFile(), mode, Collections.emptySet());
+        return new FilterFileModel(file.getFile(), mode, Set.of());
     }
 
     private static FilterFileModel translateExcel(final BaseListedFile baseListedFile) {
@@ -83,6 +83,6 @@ public class FilterFileModelTranslatorImpl implements FilterFileModelTranslator 
     private static FilterFileModel translateDocument(final BaseListedFile baseListedFile) {
         DocumentListedFile file = (DocumentListedFile) baseListedFile;
 
-        return new FilterFileModel(file.getFile(), FilterFileMode.DOCUMENT, Collections.singleton(0));
+        return new FilterFileModel(file.getFile(), FilterFileMode.DOCUMENT, Set.of(0));
     }
 }

@@ -7,7 +7,6 @@ package io.github.vocabhunter.analysis.grid;
 import java.net.URL;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.IntStream;
 
@@ -19,7 +18,7 @@ public final class GridTestTool {
     }
 
     public static TextGrid emptyGrid() {
-        return new TextGrid(Collections.emptyList(), Collections.emptyList());
+        return new TextGrid(List.of(), List.of());
     }
 
     public static TextGrid grid() {

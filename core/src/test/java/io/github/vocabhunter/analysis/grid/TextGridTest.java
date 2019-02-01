@@ -6,16 +6,16 @@ package io.github.vocabhunter.analysis.grid;
 
 import io.github.vocabhunter.test.utils.AbstractBeanTest;
 
-import static java.util.Collections.singletonList;
+import java.util.List;
 
 public class TextGridTest extends AbstractBeanTest<TextGrid> {
     @Override
     protected TextGrid buildPrimary() {
-        return new TextGrid(singletonList(GridLineTest.PRIMARY), singletonList(GridColumnTest.PRIMARY));
+        return new TextGrid(List.of(GridLineTest.PRIMARY), List.of(GridColumnTest.PRIMARY));
     }
 
     @Override
     protected TextGrid buildSecondary() {
-        return new TextGrid(singletonList(GridLineTest.SECONDARY), singletonList(GridColumnTest.SECONDARY));
+        return new TextGrid(List.of(GridLineTest.SECONDARY), List.of(GridColumnTest.SECONDARY));
     }
 }

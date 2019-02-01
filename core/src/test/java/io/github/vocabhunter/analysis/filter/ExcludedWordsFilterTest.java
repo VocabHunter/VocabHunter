@@ -16,7 +16,6 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.stream.Stream;
 
-import static java.util.Collections.emptyList;
 import static java.util.stream.Collectors.toList;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
@@ -81,7 +80,7 @@ public class ExcludedWordsFilterTest {
             .addExcludedWords(WORDS_1).addExcludedWords(WORDS_2).addExcludedWords(WORDS_3)
             .build();
 
-        validate(filter, emptyList());
+        validate(filter, List.of());
     }
 
     @Test
@@ -127,6 +126,6 @@ public class ExcludedWordsFilterTest {
     }
 
     private static AnalysisWord word(final String word) {
-        return new WordUse(word, 1, emptyList());
+        return new WordUse(word, 1, List.of());
     }
 }

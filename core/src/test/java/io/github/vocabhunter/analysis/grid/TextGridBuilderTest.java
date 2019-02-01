@@ -6,8 +6,9 @@ package io.github.vocabhunter.analysis.grid;
 
 import org.junit.jupiter.api.Test;
 
+import java.util.List;
+
 import static io.github.vocabhunter.analysis.grid.GridTestTool.*;
-import static java.util.Collections.emptyList;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class TextGridBuilderTest {
@@ -16,7 +17,7 @@ public class TextGridBuilderTest {
 
     @Test
     public void testEmpty() {
-        assertEquals(emptyGrid(), target.build(emptyList()));
+        assertEquals(emptyGrid(), target.build(List.of()));
     }
 
     @Test
