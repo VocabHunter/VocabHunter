@@ -45,7 +45,7 @@ Name: "{commondesktop}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"; Tasks: 
 Filename: "{app}\{#MyAppExeName}"; Description: "{cm:LaunchProgram,{#StringChange(MyAppName, '&', '&&')}}"; Flags: nowait postinstall skipifsilent
 
 [Registry]
-Root: HKLM; Subkey: "Software\Classes\.santa"; ValueType: string; ValueName: ""; ValueData: "VocabHunterSession"; Flags: uninsdeletevalue
+Root: HKLM; Subkey: "Software\Classes\.wordy"; ValueType: string; ValueName: ""; ValueData: "VocabHunterSession"; Flags: uninsdeletevalue
 Root: HKLM; Subkey: "Software\Classes\VocabHunterSession"; ValueType: string; ValueName: ""; ValueData: "VocabHunter Session"; Flags: uninsdeletekey
 Root: HKLM; Subkey: "Software\Classes\VocabHunterSession\DefaultIcon"; ValueType: string; ValueName: ""; ValueData: "{app}\VocabHunterSession.ico"
 Root: HKLM; Subkey: "Software\Classes\VocabHunterSession\shell\open\command"; ValueType: string; ValueName: ""; ValueData: """{app}\VocabHunter.exe"" ""%1"""
