@@ -14,10 +14,11 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.IntStream;
 
+import static io.github.vocabhunter.gui.model.FilterModelTestTool.*;
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class FilterGridModelTest extends BaseFilterModelTest {
+public class FilterGridModelTest {
     private static final TextGrid EMPTY_GRID = GridTestTool.emptyGrid();
 
     private static final TextGrid NORMAL_GRID = GridTestTool.grid();

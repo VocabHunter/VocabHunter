@@ -13,11 +13,12 @@ import java.nio.file.Path;
 import java.util.List;
 import java.util.stream.IntStream;
 
+import static io.github.vocabhunter.gui.model.FilterModelTestTool.*;
 import static java.util.stream.Collectors.toList;
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class FilterSessionModelTest extends BaseFilterModelTest {
+public class FilterSessionModelTest {
     @Test
     public void testEmpty() {
         FilterSessionModel target = build(0, 0);

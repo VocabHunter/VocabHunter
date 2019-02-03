@@ -53,7 +53,7 @@ public class UnsavedChangesDialogue {
         return result;
     }
 
-    private Map<ButtonType, UnsavedResponse> unsavedResponseMap() {
+    private static Map<ButtonType, UnsavedResponse> unsavedResponseMap() {
         Map<ButtonType, UnsavedResponse> map = new LinkedHashMap<>();
 
         map.put(new ButtonType("Save"), UnsavedResponse.SAVE);

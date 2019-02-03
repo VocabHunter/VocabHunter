@@ -10,16 +10,20 @@ import java.nio.file.Paths;
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class BaseFilterModelTest {
-    protected static final String FILENAME_1 = "file1";
+public final class FilterModelTestTool {
+    public static final String FILENAME_1 = "file1";
 
-    protected static final String FILENAME_2 = "file2";
+    public static final String FILENAME_2 = "file2";
 
-    protected static final Path FILE_1 = Paths.get("directory", FILENAME_1);
+    public static final Path FILE_1 = Paths.get("directory", FILENAME_1);
 
-    protected static final Path FILE_2 = Paths.get("directory", FILENAME_2);
+    public static final Path FILE_2 = Paths.get("directory", FILENAME_2);
 
-    protected void validateCommon(final AbstractFilterModel target, final Path file, final String filename, final String countDescription, final boolean isError) {
+    private FilterModelTestTool() {
+        // Prevent instantiation - all members are static
+    }
+
+    public static void validateCommon(final AbstractFilterModel target, final Path file, final String filename, final String countDescription, final boolean isError) {
         assertAll(
             () -> assertEquals(file, target.getFile(), "File"),
             () -> assertEquals(filename, target.getFilename(), "Filename"),
