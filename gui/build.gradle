@@ -3,7 +3,10 @@
  */
 import org.apache.tools.ant.filters.*
 
-apply plugin: 'application'
+plugins {
+    id 'application'
+    id 'org.openjfx.javafxplugin' version '0.0.7'
+}
 
 mainClassName = "io.github.vocabhunter.gui.main.VocabHunterGuiExecutable"
 
@@ -34,18 +37,6 @@ startScripts {
                 .replaceAll(/(set CLASSPATH=%APP_HOME%\\lib\\).*/, { "${it[1]}*" })
     }
 }
-def platform
-if (operatingSystem.isWindows()) {
-    platform = 'win'
-} else if (operatingSystem.isLinux()) {
-    platform = 'linux'
-} else if (operatingSystem.isMacOsX()) {
-    platform = 'mac'
-}
-
-configurations {
-    javafxCompile
-}
 
 dependencies {
     compile project(':core')
@@ -61,13 +52,12 @@ dependencies {
     testCompile 'org.testfx:testfx-core:4.0.15-alpha'
 
     testRuntime 'org.testfx:openjfx-monocle:jdk-11+26'
+}
 
-    javafxCompile "org.openjfx:javafx-base:11.0.2:${platform}"
-    javafxCompile "org.openjfx:javafx-graphics:11.0.2:${platform}"
-    javafxCompile "org.openjfx:javafx-controls:11.0.2:${platform}"
-    javafxCompile "org.openjfx:javafx-fxml:11.0.2:${platform}"
-
-    compile configurations.javafxCompile
+javafx {
+    modules = [
+        'javafx.controls', 'javafx.fxml'
+    ]
 }
 
 test {
@@ -80,17 +70,13 @@ test {
 }
 
 run {
-    classpath = classpath - configurations.javafxCompile
     jvmArgs += [
-        '--module-path', configurations.javafxCompile.asPath,
-        '--add-modules', 'javafx.controls',
-        '--add-modules', 'javafx.fxml',
         '--add-exports', 'javafx.base/com.sun.javafx.runtime=ALL-UNNAMED'
     ]
 }
 
 task copyDependencies(type: Copy) {
-    from configurations.runtime - configurations.javafxCompile
+    from configurations.runtime
     from jar
     into "${buildDir}/libraries"
 }
