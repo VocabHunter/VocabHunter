@@ -8,6 +8,7 @@ ext {
     publishedVersion = project.version
     bundlerScript = file('bin/build-package.sh')
     applicationLibraryPath = file("${rootProject.project('gui').buildDir}/libraries")
+    javafxModulePath = file("${rootProject.project('gui').buildDir}/javafx-modules")
     mainJar = project(':gui').jar.outputs.files[0].name
     bundlePath = file("${buildDir}/bundle")
     fileAssociations = file("${buildDir}/resources/main/file-associations.properties")
@@ -129,7 +130,7 @@ task createBundle(type: Exec, dependsOn: [processResources, checkBundlingEnviron
     if (operatingSystem.isWindows()) {
         commandLine 'cmd', '/c',
             bundlerScript,
-            "${-> javafxJmodsPath}",
+            "${javafxModulePath}",
             applicationLibraryPath,
             bundlePath,
             mainJar,
@@ -140,7 +141,7 @@ task createBundle(type: Exec, dependsOn: [processResources, checkBundlingEnviron
             bundlerScript,
            "${-> file("${javaPackagerPath}/jpackager")}",
             packageType,
-           "${-> file("${javafxJmodsPath}")}",
+            "${javafxModulePath}",
             applicationLibraryPath,
             bundlePath,
             mainJar,
@@ -151,7 +152,7 @@ task createBundle(type: Exec, dependsOn: [processResources, checkBundlingEnviron
     }
 }
 
-createBundle.dependsOn ':gui:copyDependencies'
+createBundle.dependsOn ':gui:copyDependencies', ':gui:copyJavafxModules'
 
 if (operatingSystem.isWindows()) {
     processResources {
