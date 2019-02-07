@@ -37,6 +37,7 @@ buildscript {
 apply plugin: 'base'
 apply plugin: 'net.researchgate.release'
 apply plugin: 'org.sonarqube'
+apply plugin: 'com.github.ben-manes.versions'
 
 subprojects {
 
@@ -45,7 +46,6 @@ subprojects {
     apply plugin: 'checkstyle'
     apply plugin: 'com.github.spotbugs'
     apply plugin: 'jacoco'
-    apply plugin: 'com.github.ben-manes.versions'
 
     sourceCompatibility = 11
     targetCompatibility = 11
