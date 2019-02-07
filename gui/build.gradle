@@ -38,10 +38,6 @@ startScripts {
     }
 }
 
-configurations {
-    javafxModules
-}
-
 dependencies {
     compile project(':core')
     compile 'com.gluonhq:ignite-guice:1.0.2'
@@ -56,11 +52,6 @@ dependencies {
     testCompile 'org.testfx:testfx-core:4.0.15-alpha'
 
     testRuntime 'org.testfx:openjfx-monocle:jdk-11+26'
-
-    javafxModules "org.openjfx:javafx-base:${javafx.version}:${javafx.platform.classifier}"
-    javafxModules "org.openjfx:javafx-graphics:${javafx.version}:${javafx.platform.classifier}"
-    javafxModules "org.openjfx:javafx-controls:${javafx.version}:${javafx.platform.classifier}"
-    javafxModules "org.openjfx:javafx-fxml:${javafx.version}:${javafx.platform.classifier}"
 }
 
 javafx {
@@ -91,7 +82,7 @@ task copyDependencies(type: Copy) {
 }
 
 task copyJavafxModules(type: Copy) {
-    from configurations.javafxModules
-    include "*${javafx.platform.classifier}.jar"
+    from configurations.runtimeClasspath
+    include "javafx*${javafx.platform.classifier}.jar"
     into "${buildDir}/javafx-modules"
 }
