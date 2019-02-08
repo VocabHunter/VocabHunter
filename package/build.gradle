@@ -74,19 +74,6 @@ processResources {
 task checkBundlingEnvironment {
     description 'Check the environment for building the installable bundle'
     doLast {
-        if (project.hasProperty('javafxJmodsPath')) {
-            def modsPath = file("${javafxJmodsPath}")
-
-            if (modsPath.exists() && modsPath.isDirectory()) {
-                if (!modsPath.list({ d, f -> f ==~ /.*.jmod/ } as FilenameFilter)) {
-                    throw new GradleException("JavaFX modules directory '$modsPath' does not contain any '*.jmod' files")
-                }
-            } else {
-                throw new GradleException("JavaFX modules directory '$modsPath' not found")
-            }
-        } else {
-            throw new GradleException("Use -PjavafxJmodsPath=... to specify the directory containing the OpenJFX 11 JMod files")
-        }
         if (operatingSystem.isWindows()) {
             def javaHome = System.env.JAVA_HOME
 

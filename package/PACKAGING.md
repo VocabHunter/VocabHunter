@@ -8,10 +8,6 @@ If you'd like to build an installable bundle of VocabHunter for Mac, Linux or Wi
 
 You will need to install JDK 11 to build the installable bundle of VocabHunter.  The version provided by [AdoptOpenJDK](https://adoptopenjdk.net/) is an excellent choice for this.
 
-### OpenJFX 11
-
-Get the JavaFX 11 JMOD files from [the Gluon download page](https://gluonhq.com/products/javafx/).  Choose the right option for your platform.  For example, for Linux pick the file listed as "JavaFX Linux jmods".  Unzip the file and save the resulting directory somewhere on your system.
-
 ### Java Packager
 
 Download the Java Packager.  Choose the right link for your platform from those listed [on this page](https://mail.openjdk.java.net/pipermail/openjfx-dev/2018-September/022500.html).  For Mac and Linux, unpack the zip file store the directory somewhere on your system.  For Windows, copy the two files into the following directories:
@@ -35,9 +31,9 @@ For some background on this, see [Santulator issue #5](https://github.com/Santul
 
 ### Mac & Linux: Creating the Bundle
 
-Assuming that you have installed the JMOD files you downloaded in the above section "[OpenJFX 11](#openjfx-11)" into `/opt/java-modules/javafx-jmods-11` and the [Java Packager](#java-packager) into `/opt/jpackager-11/`, you can run the following command to create the installable bundle:
+Assuming that you have installed the [Java Packager](#java-packager) into `/opt/jpackager-11/`, you can run the following command to create the installable bundle:
 ~~~
-$ ./gradlew clean createBundle -PjavafxJmodsPath=/opt/java-modules/javafx-jmods-11 -PjavaPackagerPath=/opt/jpackager-11
+$ ./gradlew clean createBundle -PjavaPackagerPath=/opt/jpackager-11
 ~~~
 
 You will find the created installable bundle in the directory `package/build/bundle`.
@@ -46,10 +42,10 @@ You will find the created installable bundle in the directory `package/build/bun
 
 #### Windows: Running the Java Packager
 
-Assuming that you have installed the JMOD files you downloaded in the above section "[OpenJFX 11](#openjfx-11)" into `C:\javafx-jmods-11`, you can run the following command to create the installable bundle:
+You can run the following command to create the installable bundle:
 
 ~~~
-gradlew clean -PjavafxJmodsPath=C:\javafx-jmods-11 createBundle
+gradlew clean createBundle
 ~~~
 
 #### Windows: Running Inno Setup
