@@ -10,7 +10,9 @@ You will need to install JDK 11 to build the installable bundle of VocabHunter. 
 
 ### Java Packager
 
-Download the Java Packager.  Choose the right link for your platform from those listed [on this page](https://mail.openjdk.java.net/pipermail/openjfx-dev/2018-September/022500.html).  For Mac and Linux, unpack the zip file store the directory somewhere on your system.  For Windows, copy the two files into the following directories:
+Download the Java Packager.  Choose the right link for your platform from those listed [on this page](https://mail.openjdk.java.net/pipermail/openjfx-dev/2018-September/022500.html).  Note that this is an early access version of the Java Packager, made available for JDK 11 while [JEP 343](https://jdk.java.net/jpackage/) is being developed.
+
+For Mac and Linux, unpack the zip file store the directory somewhere on your system.  For Windows, copy the two files into the following directories:
 
 | File               | Destination Directory |
 |--------------------|-----------------------|
