@@ -8,6 +8,7 @@ ext {
     publishedVersion = project.version
     bundlerScript = file('bin/build-package.sh')
     applicationLibraryPath = file("${rootProject.project('gui').buildDir}/libraries")
+    javafxModulePath = file("${rootProject.project('gui').buildDir}/javafx-modules")
     mainJar = project(':gui').jar.outputs.files[0].name
     bundlePath = file("${buildDir}/bundle")
     fileAssociations = file("${buildDir}/resources/main/file-associations.properties")
@@ -73,19 +74,6 @@ processResources {
 task checkBundlingEnvironment {
     description 'Check the environment for building the installable bundle'
     doLast {
-        if (project.hasProperty('javafxJmodsPath')) {
-            def modsPath = file("${javafxJmodsPath}")
-
-            if (modsPath.exists() && modsPath.isDirectory()) {
-                if (!modsPath.list({ d, f -> f ==~ /.*.jmod/ } as FilenameFilter)) {
-                    throw new GradleException("JavaFX modules directory '$modsPath' does not contain any '*.jmod' files")
-                }
-            } else {
-                throw new GradleException("JavaFX modules directory '$modsPath' not found")
-            }
-        } else {
-            throw new GradleException("Use -PjavafxJmodsPath=... to specify the directory containing the OpenJFX 11 JMod files")
-        }
         if (operatingSystem.isWindows()) {
             def javaHome = System.env.JAVA_HOME
 
@@ -129,7 +117,7 @@ task createBundle(type: Exec, dependsOn: [processResources, checkBundlingEnviron
     if (operatingSystem.isWindows()) {
         commandLine 'cmd', '/c',
             bundlerScript,
-            "${-> javafxJmodsPath}",
+            "${javafxModulePath}",
             applicationLibraryPath,
             bundlePath,
             mainJar,
@@ -140,7 +128,7 @@ task createBundle(type: Exec, dependsOn: [processResources, checkBundlingEnviron
             bundlerScript,
            "${-> file("${javaPackagerPath}/jpackager")}",
             packageType,
-           "${-> file("${javafxJmodsPath}")}",
+            "${javafxModulePath}",
             applicationLibraryPath,
             bundlePath,
             mainJar,
@@ -151,7 +139,7 @@ task createBundle(type: Exec, dependsOn: [processResources, checkBundlingEnviron
     }
 }
 
-createBundle.dependsOn ':gui:copyDependencies'
+createBundle.dependsOn ':gui:copyDependencies', ':gui:copyJavafxModules'
 
 if (operatingSystem.isWindows()) {
     processResources {
