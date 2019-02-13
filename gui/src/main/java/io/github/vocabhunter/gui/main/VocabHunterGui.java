@@ -10,6 +10,7 @@ import io.github.vocabhunter.gui.model.FilterSettingsTool;
 import io.github.vocabhunter.gui.model.MainModel;
 import io.github.vocabhunter.gui.services.PlacementManager;
 import io.github.vocabhunter.gui.view.ViewFxml;
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -78,7 +79,7 @@ public class VocabHunterGui {
         }
         stage.show();
 
-        logStartup(startupTimestampNanos);
+        Platform.runLater(() -> logStartup(startupTimestampNanos));
 
         // We delay starting the async filtering to allow the GUI to start quickly
         filterSettingsTool.beginAsyncFiltering();
