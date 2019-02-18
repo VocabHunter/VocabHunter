@@ -37,7 +37,7 @@ public final class ExternalEventBrokerImpl implements ExternalEventListener, Ext
 
     @Override
     public void setListener(final ExternalEventListener listener) {
-        Executor executor = threadPoolTool.singleDaemonExecutor("External Event Broker");
+        Executor executor = threadPoolTool.guiThreadPool();
 
         executor.execute(() -> refireEvents(listener));
     }

@@ -12,39 +12,22 @@ import java.util.concurrent.Executor;
 import java.util.concurrent.Future;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 public class ThreadPoolToolTest {
     private static final int EXPECTED_RESULT = 123;
 
-    private static final int THREAD_COUNT = 4;
-
     private final ThreadPoolTool target = new ThreadPoolToolImpl();
 
     @Test
-    public void testSingleDaemonExecutor() {
-        Executor service = target.singleDaemonExecutor("test");
-
-        assertNotNull(service, "Executor service");
-    }
-
-    @Test
-    public void testMultipleDaemonExecutor() {
-        Executor service = target.delayedExecutor("test", THREAD_COUNT);
-
-        assertNotNull(service, "Executor service");
-    }
-
-    @Test
-    public void testSingleDaemonThreadRun() throws Exception {
-        Executor service = target.singleDaemonExecutor("test");
+    public void testGuiThreadPool() throws Exception {
+        Executor service = target.guiThreadPool();
 
         validateExecution(service);
     }
 
     @Test
-    public void testMultipleDaemonThreadRun() throws Exception {
-        DelayedExecutor service = target.delayedExecutor("test", THREAD_COUNT);
+    public void testFilterThreadPool() throws Exception {
+        DelayedExecutor service = target.filterThreadPool();
 
         service.beginExecution();
 

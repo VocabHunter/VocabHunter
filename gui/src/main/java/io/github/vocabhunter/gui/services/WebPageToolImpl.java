@@ -29,7 +29,7 @@ public class WebPageToolImpl implements WebPageTool {
     }
 
     public WebPageToolImpl(final ThreadPoolTool threadPoolTool, final Consumer<String> pageOpener) {
-        this.executor = threadPoolTool.singleDaemonExecutor("Web Page Opener");
+        this.executor = threadPoolTool.guiThreadPool();
         this.pageOpener = pageOpener;
     }
 

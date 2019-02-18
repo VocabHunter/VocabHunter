@@ -13,10 +13,9 @@ import org.mockito.Captor;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.util.concurrent.ExecutorService;
+import java.util.concurrent.ScheduledExecutorService;
 import java.util.function.Consumer;
 
-import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -26,7 +25,7 @@ public class GuiTaskHandlerTest {
     private ThreadPoolTool threadPoolTool;
 
     @Mock
-    private ExecutorService executorService;
+    private ScheduledExecutorService executorService;
 
     @Mock
     private Consumer<Runnable> guiThreadRunner;
@@ -41,7 +40,7 @@ public class GuiTaskHandlerTest {
 
     @BeforeEach
     public void setUp() {
-        when(threadPoolTool.singleDaemonExecutor(anyString())).thenReturn(executorService);
+        when(threadPoolTool.guiThreadPool()).thenReturn(executorService);
         target = new GuiTaskHandlerImpl(threadPoolTool, guiThreadRunner);
     }
 

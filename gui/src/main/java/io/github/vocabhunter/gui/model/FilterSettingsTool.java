@@ -16,8 +16,6 @@ import javax.inject.Singleton;
 
 @Singleton
 public class FilterSettingsTool {
-    private static final int FILTER_READER_THREAD_COUNT = 4;
-
     private final FilterFileWordsExtractor extractor;
 
     private final DelayedExecutor executor;
@@ -25,7 +23,7 @@ public class FilterSettingsTool {
     @Inject
     public FilterSettingsTool(final FilterFileWordsExtractor extractor, final ThreadPoolTool threadPoolTool) {
         this.extractor = extractor;
-        this.executor = threadPoolTool.delayedExecutor("Filter File Reader", FILTER_READER_THREAD_COUNT);
+        this.executor = threadPoolTool.filterThreadPool();
     }
 
     public WordFilter filter(final FilterSettings settings) {

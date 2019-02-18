@@ -30,7 +30,7 @@ public class GuiTaskHandlerImpl implements GuiTaskHandler {
     }
 
     public GuiTaskHandlerImpl(final ThreadPoolTool threadPoolTool, final Consumer<Runnable> guiThreadRunner) {
-        this.executor = threadPoolTool.singleDaemonExecutor("GUI Background Task");
+        this.executor = threadPoolTool.guiThreadPool();
         this.guiThreadRunner = guiThreadRunner;
     }
 

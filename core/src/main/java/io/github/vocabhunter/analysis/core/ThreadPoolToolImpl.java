@@ -4,43 +4,41 @@
 
 package io.github.vocabhunter.analysis.core;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.Executor;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.atomic.AtomicInteger;
 import javax.inject.Singleton;
 
 @Singleton
 public class ThreadPoolToolImpl implements ThreadPoolTool {
-    private final List<ExecutorService> services = new ArrayList<>();
+    private static final int GUI_POOL_SIZE = 3;
+
+    private static final int FILTER_POOL_SIZE = 4;
+
+    private final AtomicInteger nextGuiThreadId = new AtomicInteger(1);
+
+    private final AtomicInteger nextFilterThreadId = new AtomicInteger(1);
+
+    private final ScheduledExecutorService guiThreadPool = Executors.newScheduledThreadPool(GUI_POOL_SIZE, r -> newDaemonThread(r, "gui-background-worker-", nextGuiThreadId));
+
+    private final ExecutorService filterThreadPool = Executors.newFixedThreadPool(FILTER_POOL_SIZE, r -> newDaemonThread(r, "filter-file-reader-", nextFilterThreadId));
+
+    private final DelayedExecutor wrappedFilterThreadPool = new DelayedExecutorImpl(filterThreadPool);
 
     @Override
-    public Executor singleDaemonExecutor(final String name) {
-        ExecutorService executor = Executors.newFixedThreadPool(1, r -> newDaemonThread(r, name));
-
-        services.add(executor);
-
-        return executor;
+    public ScheduledExecutorService guiThreadPool() {
+        return guiThreadPool;
     }
 
     @Override
-    public DelayedExecutor delayedExecutor(final String name, final int threadCount) {
-        AtomicInteger idGenerator = new AtomicInteger(1);
-        ExecutorService executor = Executors.newFixedThreadPool(threadCount, r -> newDaemonThread(r, name, idGenerator));
-
-        services.add(executor);
-
-        return new DelayedExecutorImpl(executor);
+    public DelayedExecutor filterThreadPool() {
+        return wrappedFilterThreadPool;
     }
 
-    private Thread newDaemonThread(final Runnable r, final String name, final AtomicInteger nextId) {
-        return newDaemonThread(r, String.format("%s %d", name, nextId.getAndIncrement()));
-    }
-
-    private Thread newDaemonThread(final Runnable r, final String name) {
-        Thread thread = new Thread(r, name);
+    private Thread newDaemonThread(final Runnable r, final String prefix, final AtomicInteger nextId) {
+        int threadNumber = nextId.getAndIncrement();
+        Thread thread = new Thread(r, prefix + threadNumber);
 
         thread.setDaemon(true);
 
@@ -49,6 +47,7 @@ public class ThreadPoolToolImpl implements ThreadPoolTool {
 
     @Override
     public void forceShutdown() {
-        services.forEach(ExecutorService::shutdownNow);
+        guiThreadPool.shutdownNow();
+        filterThreadPool.shutdownNow();
     }
 }
