@@ -7,8 +7,6 @@ package io.github.vocabhunter.analysis.grid;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import static java.util.stream.Collectors.joining;
@@ -21,11 +19,11 @@ public final class GridLine {
     }
 
     public GridLine(final List<GridCell> cells) {
-        this.cells = new ArrayList<>(cells);
+        this.cells = List.copyOf(cells);
     }
 
     public List<GridCell> getCells() {
-        return Collections.unmodifiableList(cells);
+        return cells;
     }
 
     public GridCell getCell(final int index) {
