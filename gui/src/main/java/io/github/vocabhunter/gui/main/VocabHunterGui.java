@@ -16,18 +16,12 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
 @Singleton
 public class VocabHunterGui {
-    private static final Logger LOG = LoggerFactory.getLogger(VocabHunterGui.class);
-
-    private static final int NANOS_PER_MILLI = 1_000_000;
-
     @Inject
     private FXMLLoader mainLoader;
 
@@ -58,7 +52,7 @@ public class VocabHunterGui {
     @Inject
     private FilterSettingsTool filterSettingsTool;
 
-    public void start(final Stage stage, final long startupTimestampNanos) {
+    public void start(final Stage stage, final BootstrapContext bootstrapContext) {
         Parent root = ViewFxml.MAIN.loadNode(mainLoader);
 
         initialise(stage);
@@ -79,7 +73,7 @@ public class VocabHunterGui {
         }
         stage.show();
 
-        Platform.runLater(() -> logStartup(startupTimestampNanos));
+        Platform.runLater(bootstrapContext::logStartup);
 
         // We delay starting the async filtering to allow the GUI to start quickly
         filterSettingsTool.beginAsyncFiltering();
@@ -93,14 +87,6 @@ public class VocabHunterGui {
         filterHandler.initialise();
 
         stage.titleProperty().bind(model.titleProperty());
-    }
-
-    private void logStartup(final long startupTimestampNanos) {
-        long currentTimestampNanos = System.nanoTime();
-        long startupMillis = (currentTimestampNanos - startupTimestampNanos) / NANOS_PER_MILLI;
-        String startupTimeText = String.format("%,d", startupMillis);
-
-        LOG.info("User interface started ({} ms)", startupTimeText);
     }
 
     private void handleKeyEvent(final KeyEvent event) {

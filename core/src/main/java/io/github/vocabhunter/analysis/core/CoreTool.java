@@ -10,6 +10,8 @@ import java.util.function.Predicate;
 import java.util.stream.IntStream;
 
 public final class CoreTool {
+    private static final int NANOS_PER_MILLI = 1_000_000;
+
     private CoreTool() {
         // Prevent instantiation - all methods are static
     }
@@ -26,5 +28,17 @@ public final class CoreTool {
 
     private static IntStream revRange(final int from, final int to) {
         return IntStream.range(from, to).map(i -> to - i + from - 1);
+    }
+
+    public static String millisToNow(final long startNanos) {
+        long endNanos = System.nanoTime();
+
+        return millisBetween(startNanos, endNanos);
+    }
+
+    public static String millisBetween(final long startNanos, final long endNanos) {
+        long millis = (endNanos - startNanos) / NANOS_PER_MILLI;
+
+        return String.format("%,d", millis);
     }
 }

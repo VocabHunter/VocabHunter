@@ -36,7 +36,7 @@ public class VocabHunterGuiExecutable extends Application {
         Thread.currentThread().setUncaughtExceptionHandler((t, e) -> logError(e));
         try {
             context.init();
-            vocabHunterGui.start(stage, STARTUP_NANOS);
+            vocabHunterGui.start(stage, new BootstrapContext(STARTUP_NANOS));
         } catch (final RuntimeException e) {
             logError(e);
             Platform.exit();
