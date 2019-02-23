@@ -16,7 +16,6 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
-import java.util.concurrent.CompletableFuture;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
@@ -49,7 +48,7 @@ public class VocabHunterGui {
     @Inject
     private FilterSettingsTool filterSettingsTool;
 
-    public void start(final Stage stage, final BootstrapContext bootstrapContext, final CompletableFuture<Parent> futureRoot) {
+    public void start(final Stage stage, final BootstrapContext bootstrapContext) {
         initialise(stage);
 
         Scene scene = new Scene(new Pane());
@@ -68,7 +67,7 @@ public class VocabHunterGui {
         }
         stage.show();
 
-        futureRoot.thenAccept(r -> scheduleStartupCompletion(stage, scene, r, bootstrapContext));
+        bootstrapContext.getFutureRoot().thenAccept(r -> scheduleStartupCompletion(stage, scene, r, bootstrapContext));
     }
 
     private void scheduleStartupCompletion(final Stage stage, final Scene scene, final Parent r, final BootstrapContext bootstrapContext) {

@@ -16,11 +16,11 @@ public class ThreadPoolToolImpl implements ThreadPoolTool {
 
     private static final int FILTER_POOL_SIZE = 4;
 
-    private final AtomicInteger nextGuiThreadId = new AtomicInteger(1);
+    private static final AtomicInteger NEXT_GUI_THREAD_ID = new AtomicInteger(1);
 
     private final AtomicInteger nextFilterThreadId = new AtomicInteger(1);
 
-    private final ScheduledExecutorService guiThreadPool = Executors.newScheduledThreadPool(GUI_POOL_SIZE, r -> newDaemonThread(r, "gui-background-worker-", nextGuiThreadId));
+    public static final ScheduledExecutorService GUI_THREAD_POOL = Executors.newScheduledThreadPool(GUI_POOL_SIZE, r -> newDaemonThread(r, "gui-background-worker-", NEXT_GUI_THREAD_ID));
 
     private final ExecutorService filterThreadPool = Executors.newFixedThreadPool(FILTER_POOL_SIZE, r -> newDaemonThread(r, "filter-file-reader-", nextFilterThreadId));
 
@@ -28,7 +28,7 @@ public class ThreadPoolToolImpl implements ThreadPoolTool {
 
     @Override
     public ScheduledExecutorService guiThreadPool() {
-        return guiThreadPool;
+        return GUI_THREAD_POOL;
     }
 
     @Override
@@ -36,7 +36,7 @@ public class ThreadPoolToolImpl implements ThreadPoolTool {
         return wrappedFilterThreadPool;
     }
 
-    private Thread newDaemonThread(final Runnable r, final String prefix, final AtomicInteger nextId) {
+    private static Thread newDaemonThread(final Runnable r, final String prefix, final AtomicInteger nextId) {
         int threadNumber = nextId.getAndIncrement();
         Thread thread = new Thread(r, prefix + threadNumber);
 
@@ -47,7 +47,7 @@ public class ThreadPoolToolImpl implements ThreadPoolTool {
 
     @Override
     public void forceShutdown() {
-        guiThreadPool.shutdownNow();
+        GUI_THREAD_POOL.shutdownNow();
         filterThreadPool.shutdownNow();
     }
 }
