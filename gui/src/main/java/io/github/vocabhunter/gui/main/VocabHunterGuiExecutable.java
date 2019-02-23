@@ -25,7 +25,7 @@ public class VocabHunterGuiExecutable extends Application {
     private final GuiceContext context = new GuiceContext(this, () -> modules);
 
     @Inject
-    private VocabHunterGui vocabHunterGui;
+    private VocabHunterBootstrap vocabHunterBootstrap;
 
     public static void setModules(final Module... m) {
         modules = List.of(m);
@@ -36,7 +36,7 @@ public class VocabHunterGuiExecutable extends Application {
         Thread.currentThread().setUncaughtExceptionHandler((t, e) -> logError(e));
         try {
             context.init();
-            vocabHunterGui.start(stage, new BootstrapContext(STARTUP_NANOS));
+            vocabHunterBootstrap.start(stage, new BootstrapContext(STARTUP_NANOS));
         } catch (final RuntimeException e) {
             logError(e);
             Platform.exit();

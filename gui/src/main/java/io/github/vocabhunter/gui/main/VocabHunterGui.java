@@ -9,22 +9,19 @@ import io.github.vocabhunter.gui.controller.*;
 import io.github.vocabhunter.gui.model.FilterSettingsTool;
 import io.github.vocabhunter.gui.model.MainModel;
 import io.github.vocabhunter.gui.services.PlacementManager;
-import io.github.vocabhunter.gui.view.ViewFxml;
 import javafx.application.Platform;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
+import java.util.concurrent.CompletableFuture;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
 @Singleton
 public class VocabHunterGui {
-    @Inject
-    private FXMLLoader mainLoader;
-
     @Inject
     private MainController mainController;
 
@@ -52,12 +49,10 @@ public class VocabHunterGui {
     @Inject
     private FilterSettingsTool filterSettingsTool;
 
-    public void start(final Stage stage, final BootstrapContext bootstrapContext) {
-        Parent root = ViewFxml.MAIN.loadNode(mainLoader);
-
+    public void start(final Stage stage, final BootstrapContext bootstrapContext, final CompletableFuture<Parent> futureRoot) {
         initialise(stage);
 
-        Scene scene = new Scene(root);
+        Scene scene = new Scene(new Pane());
 
         scene.setOnKeyPressed(this::handleKeyEvent);
         stage.setOnCloseRequest(mainController.getCloseRequestHandler());
@@ -73,14 +68,24 @@ public class VocabHunterGui {
         }
         stage.show();
 
-        Platform.runLater(bootstrapContext::logStartup);
+        futureRoot.thenAccept(r -> scheduleStartupCompletion(stage, scene, r, bootstrapContext));
+    }
+
+    private void scheduleStartupCompletion(final Stage stage, final Scene scene, final Parent r, final BootstrapContext bootstrapContext) {
+        Platform.runLater(() -> completeStartup(stage, scene, r, bootstrapContext));
+    }
+
+    private void completeStartup(final Stage stage, final Scene scene, final Parent r, final BootstrapContext bootstrapContext) {
+        mainController.initialise(stage);
+        scene.setRoot(r);
 
         // We delay starting the async filtering to allow the GUI to start quickly
         filterSettingsTool.beginAsyncFiltering();
+
+        bootstrapContext.logStartup();
     }
 
     private void initialise(final Stage stage) {
-        mainController.initialise(stage);
         guiFileHandler.initialise(stage);
         exitRequestHandler.initialise(stage);
         titleHandler.initialise();
