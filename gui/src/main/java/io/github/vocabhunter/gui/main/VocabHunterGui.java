@@ -13,7 +13,6 @@ import javafx.application.Platform;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 import javax.inject.Inject;
@@ -51,20 +50,22 @@ public class VocabHunterGui {
     public void start(final Stage stage, final BootstrapContext bootstrapContext) {
         initialise(stage);
 
-        Scene scene = new Scene(new Pane());
-
-        scene.setOnKeyPressed(this::handleKeyEvent);
         stage.setOnCloseRequest(mainController.getCloseRequestHandler());
 
         Placement placement = placementManager.getMainWindow();
 
-        stage.setScene(scene);
         stage.setWidth(placement.getWidth());
         stage.setHeight(placement.getHeight());
         if (placement.isPositioned()) {
             stage.setX(placement.getX());
             stage.setY(placement.getY());
         }
+
+        Scene scene = bootstrapContext.getFutureScene().join();
+
+        scene.setOnKeyPressed(this::handleKeyEvent);
+        stage.setScene(scene);
+
         stage.show();
 
         bootstrapContext.getFutureRoot().thenAccept(r -> scheduleStartupCompletion(stage, scene, r, bootstrapContext));

@@ -7,6 +7,7 @@ package io.github.vocabhunter.gui.main;
 import io.github.vocabhunter.analysis.core.CoreTool;
 import io.github.vocabhunter.analysis.core.ThreadPoolToolImpl;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -20,6 +21,8 @@ public class BootstrapContext {
 
     private CompletableFuture<Parent> futureRoot;
 
+    private CompletableFuture<Scene> futureScene;
+
     public BootstrapContext(final long startupNanos) {
         this.startupNanos = startupNanos;
     }
@@ -30,6 +33,14 @@ public class BootstrapContext {
 
     public CompletableFuture<Parent> getFutureRoot() {
         return futureRoot;
+    }
+
+    public void applySceneSupplier(final Supplier<Scene> supplier) {
+        futureScene = CompletableFuture.supplyAsync(supplier, ThreadPoolToolImpl.GUI_THREAD_POOL);
+    }
+
+    public CompletableFuture<Scene> getFutureScene() {
+        return futureScene;
     }
 
     public void logStartup() {

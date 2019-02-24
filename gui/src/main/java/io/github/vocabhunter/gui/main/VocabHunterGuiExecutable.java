@@ -8,6 +8,8 @@ import com.gluonhq.ignite.guice.GuiceContext;
 import com.google.inject.Module;
 import javafx.application.Application;
 import javafx.application.Platform;
+import javafx.scene.Scene;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 import java.util.Collection;
@@ -22,6 +24,8 @@ public class VocabHunterGuiExecutable extends Application {
 
     private static Collection<Module> modules;
 
+    private static BootstrapContext bootstrapContext = new BootstrapContext(STARTUP_NANOS);
+
     private final GuiceContext context = new GuiceContext(this, () -> modules);
 
     @Inject
@@ -35,8 +39,9 @@ public class VocabHunterGuiExecutable extends Application {
     public void start(final Stage stage) {
         Thread.currentThread().setUncaughtExceptionHandler((t, e) -> logError(e));
         try {
+            bootstrapContext.applySceneSupplier(() -> new Scene(new Pane()));
             context.init();
-            vocabHunterBootstrap.start(stage, new BootstrapContext(STARTUP_NANOS));
+            vocabHunterBootstrap.start(stage, bootstrapContext);
         } catch (final RuntimeException e) {
             logError(e);
             Platform.exit();
