@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.concurrent.atomic.AtomicReference;
 
 public class BaseSettingsManager<T> {
     private static final Logger LOG = LoggerFactory.getLogger(BaseSettingsManager.class);
@@ -17,6 +18,8 @@ public class BaseSettingsManager<T> {
     private final Path settingsFile;
 
     private final Class<T> beanClass;
+
+    private final AtomicReference<T> settingsReference = new AtomicReference<>();
 
     protected BaseSettingsManager(final String filename, final Class<T> beanClass) {
         this(SettingsPathTool.obtainSettingsFilePath(filename), beanClass);
@@ -40,20 +43,22 @@ public class BaseSettingsManager<T> {
     }
 
     private T readSettingsIfAvailable() {
+        T result = settingsReference.get();
+
         try {
-            if (Files.isRegularFile(settingsFile)) {
-                return FileTool.readFromJson(beanClass, settingsFile, "Unable to load settings file '%s'");
-            } else {
-                return null;
+            if (result == null && Files.isRegularFile(settingsFile)) {
+                result = FileTool.readFromJson(beanClass, settingsFile, "Unable to load settings file '%s'");
+                settingsReference.set(result);
             }
         } catch (final Exception e) {
             LOG.error("Discarding unreadable settings file '{}'", settingsFile, e);
-
-            return null;
         }
+
+        return result;
     }
 
     protected void writeSettings(final T settings) {
         FileTool.writeAsJson(settingsFile, settings, "Unable to save settings file '%s'");
+        settingsReference.set(settings);
     }
 }
