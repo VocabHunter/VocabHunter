@@ -5,6 +5,8 @@
 package io.github.vocabhunter.analysis.core;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -12,6 +14,8 @@ import java.nio.file.Path;
 import java.util.List;
 
 public final class FileTool {
+    private static final Logger LOG = LoggerFactory.getLogger(FileTool.class);
+
     private static final ObjectMapper MAPPER = new ObjectMapper();
 
     private static final List<String> MINIMAL_JSON = List.of("{}");
@@ -42,7 +46,10 @@ public final class FileTool {
 
     public static void writeAsJson(final Path file, final Object v, final String errorTemplate) {
         try {
+            long start = System.nanoTime();
+
             MAPPER.writeValue(file.toFile(), v);
+            LOG.info("Wrote '{}' in {} ms", file.getFileName(), CoreTool.millisToNow(start));
         } catch (final IOException e) {
             throw buildError(file, errorTemplate, e);
         }
@@ -50,7 +57,12 @@ public final class FileTool {
 
     public static <T> T readFromJson(final Class<T> beanClass, final Path file, final String errorTemplate) {
         try {
-            return MAPPER.readValue(file.toFile(), beanClass);
+            long start = System.nanoTime();
+            T result = MAPPER.readValue(file.toFile(), beanClass);
+
+            LOG.info("Read '{}' in {} ms", file.getFileName(), CoreTool.millisToNow(start));
+
+            return result;
         } catch (final IOException e) {
             throw buildError(file, errorTemplate, e);
         }
