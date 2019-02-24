@@ -39,6 +39,7 @@ public class VocabHunterGuiExecutable extends Application {
     public void start(final Stage stage) {
         Thread.currentThread().setUncaughtExceptionHandler((t, e) -> logError(e));
         try {
+            bootstrapContext.startSettingsLoad();
             bootstrapContext.applySceneSupplier(() -> new Scene(new Pane()));
             context.init();
             vocabHunterBootstrap.start(stage, bootstrapContext);
@@ -49,7 +50,7 @@ public class VocabHunterGuiExecutable extends Application {
     }
 
     public static void main(final String... args) {
-        runApp(args, Application::launch, new CoreGuiModule(), new LiveGuiModule(), new StandardEventSourceModule(args));
+        runApp(args, Application::launch, new CoreGuiModule(), new LiveGuiModule(bootstrapContext), new StandardEventSourceModule(args));
     }
 
     protected static void runApp(final String[] args, final Consumer<String[]> launcher, final Module... modules) {

@@ -31,6 +31,10 @@ public class BaseSettingsManager<T> {
         FileTool.ensureDirectoryExists(settingsFile, "Unable to create directory %s");
     }
 
+    public void initialise() {
+        readSettings();
+    }
+
     protected T readSettings() {
         T result = readSettingsIfAvailable();
 

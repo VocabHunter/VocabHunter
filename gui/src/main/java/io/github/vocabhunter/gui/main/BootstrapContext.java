@@ -6,6 +6,10 @@ package io.github.vocabhunter.gui.main;
 
 import io.github.vocabhunter.analysis.core.CoreTool;
 import io.github.vocabhunter.analysis.core.ThreadPoolToolImpl;
+import io.github.vocabhunter.analysis.settings.FileListManager;
+import io.github.vocabhunter.analysis.settings.FileListManagerImpl;
+import io.github.vocabhunter.gui.settings.SettingsManager;
+import io.github.vocabhunter.gui.settings.SettingsManagerImpl;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import org.slf4j.Logger;
@@ -22,6 +26,12 @@ public class BootstrapContext {
     private CompletableFuture<Parent> futureRoot;
 
     private CompletableFuture<Scene> futureScene;
+
+    private CompletableFuture<Void> futureSettingsLoad;
+
+    private SettingsManager settingsManager;
+
+    private FileListManager fileListManager;
 
     public BootstrapContext(final long startupNanos) {
         this.startupNanos = startupNanos;
@@ -41,6 +51,37 @@ public class BootstrapContext {
 
     public CompletableFuture<Scene> getFutureScene() {
         return futureScene;
+    }
+
+    public void startSettingsLoad() {
+        futureSettingsLoad = CompletableFuture.supplyAsync(this::loadSettings, ThreadPoolToolImpl.GUI_THREAD_POOL);
+
+    }
+
+    private Void loadSettings() {
+        SettingsManagerImpl settingsManagerImpl = new SettingsManagerImpl();
+
+        settingsManagerImpl.initialise();
+        settingsManager = settingsManagerImpl;
+
+        FileListManagerImpl fileListManagerImpl = new FileListManagerImpl();
+
+        fileListManagerImpl.initialise();
+        fileListManager = fileListManagerImpl;
+
+        return null;
+    }
+
+    public SettingsManager getSettingsManager() {
+        futureSettingsLoad.join();
+
+        return settingsManager;
+    }
+
+    public FileListManager getFileListManager() {
+        futureSettingsLoad.join();
+
+        return fileListManager;
     }
 
     public void logStartup() {
