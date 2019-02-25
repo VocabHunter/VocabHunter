@@ -29,6 +29,8 @@ public class BootstrapContext {
 
     private CompletableFuture<Void> futureSettingsLoad;
 
+    private CompletableFuture<Void> futureFileListLoad;
+
     private SettingsManager settingsManager;
 
     private FileListManager fileListManager;
@@ -55,7 +57,7 @@ public class BootstrapContext {
 
     public void startSettingsLoad() {
         futureSettingsLoad = CompletableFuture.supplyAsync(this::loadSettings, ThreadPoolToolImpl.GUI_THREAD_POOL);
-
+        futureFileListLoad = CompletableFuture.supplyAsync(this::loadFileList, ThreadPoolToolImpl.GUI_THREAD_POOL);
     }
 
     private Void loadSettings() {
@@ -64,6 +66,10 @@ public class BootstrapContext {
         settingsManagerImpl.initialise();
         settingsManager = settingsManagerImpl;
 
+        return null;
+    }
+
+    private Void loadFileList() {
         FileListManagerImpl fileListManagerImpl = new FileListManagerImpl();
 
         fileListManagerImpl.initialise();
@@ -79,7 +85,7 @@ public class BootstrapContext {
     }
 
     public FileListManager getFileListManager() {
-        futureSettingsLoad.join();
+        futureFileListLoad.join();
 
         return fileListManager;
     }
