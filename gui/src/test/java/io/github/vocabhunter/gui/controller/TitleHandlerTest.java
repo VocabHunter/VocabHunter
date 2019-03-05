@@ -4,6 +4,8 @@
 
 package io.github.vocabhunter.gui.controller;
 
+import io.github.vocabhunter.gui.i18n.I18nManager;
+import io.github.vocabhunter.gui.i18n.I18nManagerImpl;
 import io.github.vocabhunter.gui.model.MainModel;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -20,7 +22,9 @@ public class TitleHandlerTest {
 
     private final MainModel model = new MainModel();
 
-    private final TitleHandler target = new TitleHandler(model);
+    private final I18nManager i18nManager = new I18nManagerImpl();
+
+    private final TitleHandler target = new TitleHandler(model, i18nManager);
 
     @BeforeEach
     public void setUp() {

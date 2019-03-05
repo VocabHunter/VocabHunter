@@ -20,14 +20,14 @@
                 </HBox>
             </top>
             <right>
-                <Button fx:id="buttonClose" mnemonicParsing="false" text="Close" BorderPane.alignment="BOTTOM_RIGHT" />
+                <Button fx:id="buttonClose" mnemonicParsing="false" text="%about.close" BorderPane.alignment="BOTTOM_RIGHT" />
             </right>
             <left>
                 <VBox>
                     <children>
-                        <Label text="VocabHunter is Open Source Software,&#10;published under the Apache Licence, Version 2.0." />
-                        <Label fx:id="labelVersion" text="VocabHunter Version: %s." />
-                        <Label text="Copyright (c) 2015 - 2019 Adam Carroll." />
+                        <Label text="%about.licence" />
+                        <Label fx:id="labelVersion" text="VERSION INFORMATION" />
+                        <Label text="%about.copyright" />
                         <Hyperlink fx:id="linkWebsite" text="https://vocabhunter.github.io/" styleClass="website" >
                             <graphic>
                                 <FontAwesomeIconView styleClass="websiteIcon" />

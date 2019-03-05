@@ -6,6 +6,7 @@ package io.github.vocabhunter.gui.main;
 
 import io.github.vocabhunter.gui.common.Placement;
 import io.github.vocabhunter.gui.controller.*;
+import io.github.vocabhunter.gui.i18n.I18nManager;
 import io.github.vocabhunter.gui.model.FilterSettingsTool;
 import io.github.vocabhunter.gui.model.MainModel;
 import io.github.vocabhunter.gui.services.PlacementManager;
@@ -30,6 +31,9 @@ public class VocabHunterGui {
 
     @Inject
     private FXMLLoader mainLoader;
+
+    @Inject
+    private I18nManager i18nManager;
 
     @Inject
     private MainController mainController;
@@ -59,7 +63,9 @@ public class VocabHunterGui {
     private FilterSettingsTool filterSettingsTool;
 
     public void start(final Stage stage, final long startupTimestampNanos) {
-        Parent root = ViewFxml.MAIN.loadNode(mainLoader);
+        i18nManager.initialise();
+
+        Parent root = ViewFxml.MAIN.loadNode(mainLoader, i18nManager);
 
         initialise(stage);
 

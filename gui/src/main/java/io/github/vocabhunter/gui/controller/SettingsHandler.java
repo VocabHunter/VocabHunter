@@ -4,6 +4,7 @@
 
 package io.github.vocabhunter.gui.controller;
 
+import io.github.vocabhunter.gui.i18n.I18nManager;
 import io.github.vocabhunter.gui.view.ViewFxml;
 import io.github.vocabhunter.gui.view.WindowTool;
 import javafx.fxml.FXMLLoader;
@@ -17,10 +18,13 @@ public class SettingsHandler {
     @Inject
     private Provider<FXMLLoader> loaderProvider;
 
+    @Inject
+    private I18nManager i18nManager;
+
     public void show() {
         Stage stage = new Stage();
         FXMLLoader loader = loaderProvider.get();
-        Parent root = ViewFxml.SETTINGS.loadNode(loader);
+        Parent root = ViewFxml.SETTINGS.loadNode(loader, i18nManager);
         SettingsController controller = loader.getController();
 
         controller.initialise(stage);

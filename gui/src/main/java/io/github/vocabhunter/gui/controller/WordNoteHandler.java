@@ -4,6 +4,7 @@
 
 package io.github.vocabhunter.gui.controller;
 
+import io.github.vocabhunter.gui.i18n.I18nManager;
 import io.github.vocabhunter.gui.model.SessionModel;
 import io.github.vocabhunter.gui.model.WordModel;
 import io.github.vocabhunter.gui.view.ViewFxml;
@@ -26,11 +27,14 @@ import static javafx.beans.binding.Bindings.selectString;
 public class WordNoteHandler {
     private final Provider<FXMLLoader> loaderProvider;
 
+    private final I18nManager i18nManager;
+
     private SessionModel sessionModel;
 
     @Inject
-    public WordNoteHandler(final Provider<FXMLLoader> loaderProvider) {
+    public WordNoteHandler(final Provider<FXMLLoader> loaderProvider, final I18nManager i18nManager) {
         this.loaderProvider = loaderProvider;
+        this.i18nManager = i18nManager;
     }
 
     public void initialise(final Button buttonNote, final TextArea textAreaNotePreview, final SessionModel sessionModel) {
@@ -51,7 +55,7 @@ public class WordNoteHandler {
     private void show() {
         Stage stage = new Stage();
         FXMLLoader loader = loaderProvider.get();
-        Parent root = ViewFxml.WORD_NOTE.loadNode(loader);
+        Parent root = ViewFxml.WORD_NOTE.loadNode(loader, i18nManager);
         WordNoteController controller = loader.getController();
 
         controller.initialise(stage, sessionModel);

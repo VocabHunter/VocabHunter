@@ -12,6 +12,8 @@ import io.github.vocabhunter.analysis.model.Analyser;
 import io.github.vocabhunter.analysis.session.SessionWordsTool;
 import io.github.vocabhunter.analysis.session.SessionWordsToolImpl;
 import io.github.vocabhunter.analysis.simple.SimpleAnalyser;
+import io.github.vocabhunter.gui.i18n.I18nManager;
+import io.github.vocabhunter.gui.i18n.I18nManagerImpl;
 import io.github.vocabhunter.gui.services.FilterFileModelTranslator;
 import io.github.vocabhunter.gui.services.FilterFileModelTranslatorImpl;
 import io.github.vocabhunter.gui.status.StatusManager;
@@ -30,6 +32,7 @@ public class CoreGuiModule extends AbstractModule {
         bind(TextGridBuilder.class).to(TextGridBuilderImpl.class);
         bind(TextGridManager.class).to(TextGridManagerImpl.class);
         bind(FilterFileWordsExtractor.class).to(FilterFileWordsExtractorImpl.class);
+        bind(I18nManager.class).to(I18nManagerImpl.class);
 
         bind(StatusManager.class).to(StatusManagerImpl.class);
         bind(FilterFileModelTranslator.class).to(FilterFileModelTranslatorImpl.class);

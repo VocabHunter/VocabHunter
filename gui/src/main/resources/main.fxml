@@ -39,99 +39,99 @@
                         <children>
                             <MenuBar fx:id="menuBar">
                                 <menus>
-                                    <Menu fx:id="menuFile" mnemonicParsing="false" text="File">
+                                    <Menu fx:id="menuFile" mnemonicParsing="false" text="%main.menu.file">
                                         <items>
-                                            <MenuItem fx:id="menuNew" accelerator="Shortcut+N" mnemonicParsing="false" text="New..." />
-                                            <MenuItem fx:id="menuOpen" accelerator="Shortcut+O" mnemonicParsing="false" text="Open..." />
-                                            <MenuItem fx:id="menuSave" accelerator="Shortcut+S" mnemonicParsing="false" text="Save" />
-                                            <MenuItem fx:id="menuSaveAs" accelerator="Shift+Shortcut+S" mnemonicParsing="false" text="Save As..." />
+                                            <MenuItem fx:id="menuNew" accelerator="Shortcut+N" mnemonicParsing="false" text="%main.menu.file.new" />
+                                            <MenuItem fx:id="menuOpen" accelerator="Shortcut+O" mnemonicParsing="false" text="%main.menu.file.open" />
+                                            <MenuItem fx:id="menuSave" accelerator="Shortcut+S" mnemonicParsing="false" text="%main.menu.file.save" />
+                                            <MenuItem fx:id="menuSaveAs" accelerator="Shift+Shortcut+S" mnemonicParsing="false" text="%main.menu.file.save_as" />
                                             <SeparatorMenuItem mnemonicParsing="false" />
-                                            <MenuItem fx:id="menuExit" mnemonicParsing="false" text="Exit VocabHunter" />
+                                            <MenuItem fx:id="menuExit" mnemonicParsing="false" text="%main.menu.file.exit" />
                                         </items>
                                     </Menu>
-                                    <Menu fx:id="menuWords" mnemonicParsing="false" text="Words">
+                                    <Menu fx:id="menuWords" mnemonicParsing="false" text="%main.menu.words">
                                         <items>
-                                            <RadioMenuItem fx:id="menuEditOn" mnemonicParsing="false" text="Select Words" />
-                                            <RadioMenuItem fx:id="menuEditOff" mnemonicParsing="false" text="Show Selection" />
+                                            <RadioMenuItem fx:id="menuEditOn" mnemonicParsing="false" text="%main.menu.words.edit.on" />
+                                            <RadioMenuItem fx:id="menuEditOff" mnemonicParsing="false" text="%main.menu.words.edit.off" />
                                             <SeparatorMenuItem mnemonicParsing="false" />
-                                            <MenuItem fx:id="menuExport" accelerator="Shortcut+E" mnemonicParsing="false" text="Export Selection..." />
+                                            <MenuItem fx:id="menuExport" accelerator="Shortcut+E" mnemonicParsing="false" text="%main.menu.words.export" />
                                             <SeparatorMenuItem mnemonicParsing="false" />
-                                            <MenuItem fx:id="menuFind" accelerator="Shortcut+F" mnemonicParsing="false" text="Find" />
+                                            <MenuItem fx:id="menuFind" accelerator="Shortcut+F" mnemonicParsing="false" text="%main.menu.words.find" />
                                         </items>
                                     </Menu>
-                                    <Menu mnemonicParsing="false" text="Filters">
+                                    <Menu mnemonicParsing="false" text="%main.menu.filters">
                                         <items>
-                                            <MenuItem fx:id="menuSetupFilters" mnemonicParsing="false" text="Setup Filters..." />
-                                            <CheckMenuItem fx:id="menuEnableFilters" mnemonicParsing="false" selected="true" text="Enable Filters" />
+                                            <MenuItem fx:id="menuSetupFilters" mnemonicParsing="false" text="%main.menu.filters.setup" />
+                                            <CheckMenuItem fx:id="menuEnableFilters" mnemonicParsing="false" selected="true" text="%main.menu.filters.enable" />
                                         </items>
                                     </Menu>
-                                    <Menu fx:id="menuHelp" mnemonicParsing="false" text="Help">
+                                    <Menu fx:id="menuHelp" mnemonicParsing="false" text="%main.menu.help">
                                         <items>
-                                            <MenuItem fx:id="menuWebsite" mnemonicParsing="false" text="VocabHunter Website" />
-                                            <MenuItem fx:id="menuHowTo" mnemonicParsing="false" text="How to Use VocabHunter" />
-                                            <MenuItem fx:id="menuIssue" mnemonicParsing="false" text="How to Report a Bug" />
-                                            <MenuItem fx:id="menuAbout" mnemonicParsing="false" text="About" />
+                                            <MenuItem fx:id="menuWebsite" mnemonicParsing="false" text="%main.menu.help.website" />
+                                            <MenuItem fx:id="menuHowTo" mnemonicParsing="false" text="%main.menu.help.help" />
+                                            <MenuItem fx:id="menuIssue" mnemonicParsing="false" text="%main.menu.help.issue" />
+                                            <MenuItem fx:id="menuAbout" mnemonicParsing="false" text="%main.menu.help.about" />
                                         </items>
                                     </Menu>
                                 </menus>
                             </MenuBar>
                             <ToolBar>
                                 <items>
-                                    <Button fx:id="buttonNew" mnemonicParsing="false" styleClass="buttonNew" text="New">
+                                    <Button fx:id="buttonNew" mnemonicParsing="false" styleClass="buttonNew" text="%main.button.new">
                                         <tooltip>
-                                            <Tooltip text="Analyse a document and start a new session" />
+                                            <Tooltip text="%main.button.new.tip" />
                                         </tooltip>
                                         <graphic>
                                           <FontAwesomeIconView styleClass="buttonNewIcon" />
                                         </graphic>
                                     </Button>
-                                    <Button fx:id="buttonOpen" mnemonicParsing="false" styleClass="buttonOpen" text="Open">
+                                    <Button fx:id="buttonOpen" mnemonicParsing="false" styleClass="buttonOpen" text="%main.button.open">
                                         <tooltip>
-                                            <Tooltip text="Open a saved session" />
+                                            <Tooltip text="%main.button.open.tip" />
                                         </tooltip>
                                         <graphic>
                                             <FontAwesomeIconView styleClass="buttonOpenIcon" />
                                         </graphic>
                                     </Button>
-                                    <Button fx:id="buttonSave" mnemonicParsing="false" styleClass="buttonSave" text="Save">
+                                    <Button fx:id="buttonSave" mnemonicParsing="false" styleClass="buttonSave" text="%main.button.save">
                                         <tooltip>
-                                            <Tooltip text="Save the session" />
+                                            <Tooltip text="%main.button.save.tip" />
                                         </tooltip>
                                         <graphic>
                                             <FontAwesomeIconView styleClass="buttonSaveIcon" />
                                         </graphic>
                                     </Button>
-                                    <Button fx:id="buttonExport" mnemonicParsing="false" styleClass="buttonExport" text="Export Selection">
+                                    <Button fx:id="buttonExport" mnemonicParsing="false" styleClass="buttonExport" text="%main.button.export">
                                         <tooltip>
-                                            <Tooltip text="Export the list of words marked as unknown to a file" />
+                                            <Tooltip text="%main.button.export.tip" />
                                         </tooltip>
                                         <graphic>
                                             <FontAwesomeIconView styleClass="buttonExportIcon" />
                                         </graphic>
                                     </Button>
                                     <Separator orientation="VERTICAL" />
-                                    <Button fx:id="buttonSetupFilters" mnemonicParsing="false" styleClass="buttonSetupFilters" text="Setup Filters">
+                                    <Button fx:id="buttonSetupFilters" mnemonicParsing="false" styleClass="buttonSetupFilters" text="%main.button.filters.setup">
                                         <tooltip>
-                                            <Tooltip text="Define the filters that are used to hide words" />
+                                            <Tooltip text="%main.button.filters.setup.tip" />
                                         </tooltip>
                                         <graphic>
                                             <FontAwesomeIconView styleClass="buttonSetupFiltersIcon" />
                                         </graphic>
                                     </Button>
-                                    <CheckBox fx:id="buttonEnableFilters" mnemonicParsing="false" selected="true" text="Enable Filters">
+                                    <CheckBox fx:id="buttonEnableFilters" mnemonicParsing="false" selected="true" text="%main.button.filters.enable">
                                         <tooltip>
-                                            <Tooltip text="Hide words using the filters" />
+                                            <Tooltip text="%main.button.filters.enable.tip" />
                                         </tooltip>
                                     </CheckBox>
                                     <Separator orientation="VERTICAL" />
-                                    <RadioButton fx:id="buttonEditOn" mnemonicParsing="false" text="Select Words">
+                                    <RadioButton fx:id="buttonEditOn" mnemonicParsing="false" text="%main.button.filters.edit.on">
                                         <tooltip>
-                                            <Tooltip text="Mark words as known and unknown" />
+                                            <Tooltip text="%main.button.filters.edit.on.tip" />
                                         </tooltip>
                                     </RadioButton>
-                                    <RadioButton fx:id="buttonEditOff" mnemonicParsing="false" text="Show Selection">
+                                    <RadioButton fx:id="buttonEditOff" mnemonicParsing="false" text="%main.button.filters.edit.off">
                                         <tooltip>
-                                            <Tooltip text="Show a list of all the words marked as unknown" />
+                                            <Tooltip text="%main.button.filters.edit.off.tip" />
                                         </tooltip>
                                     </RadioButton>
                                 </items>
@@ -165,13 +165,13 @@
                                                   <FontAwesomeIconView styleClass="buttonNewIcon" />
                                               </graphic>
                                           </Label>
-                                           <Label styleClass="new" text="Choose 'New' to analyse a document and start a new session." GridPane.columnIndex="1" />
+                                           <Label styleClass="new" text="%main.session.new" GridPane.columnIndex="1" />
                                           <Label styleClass="open" GridPane.rowIndex="1" >
                                               <graphic>
                                                   <FontAwesomeIconView styleClass="buttonOpenIcon" />
                                               </graphic>
                                           </Label>
-                                           <Label styleClass="open" text="Choose 'Open' to load a saved session." GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                           <Label styleClass="open" text="%main.session.open" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                                        </children>
                                     </GridPane>
                                </children>

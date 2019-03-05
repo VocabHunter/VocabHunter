@@ -5,6 +5,7 @@
 package io.github.vocabhunter.gui.controller;
 
 import io.github.vocabhunter.gui.dialogues.FileErrorTool;
+import io.github.vocabhunter.gui.i18n.I18nManager;
 import io.github.vocabhunter.gui.model.FilterFileModel;
 import io.github.vocabhunter.gui.view.ViewFxml;
 import io.github.vocabhunter.gui.view.WindowTool;
@@ -17,12 +18,15 @@ import javax.inject.Provider;
 public class BaseFilterHandler<T extends AbstractFilterController<?>> {
     private final Provider<FXMLLoader> loaderProvider;
 
+    private final I18nManager i18nManager;
+
     private final ViewFxml viewFxml;
 
     private final String windowTitle;
 
-    protected BaseFilterHandler(final Provider<FXMLLoader> loaderProvider, final ViewFxml viewFxml, final String windowTitle) {
+    protected BaseFilterHandler(final Provider<FXMLLoader> loaderProvider, final I18nManager i18nManager, final ViewFxml viewFxml, final String windowTitle) {
         this.loaderProvider = loaderProvider;
+        this.i18nManager = i18nManager;
         this.viewFxml = viewFxml;
         this.windowTitle = windowTitle;
     }
@@ -30,7 +34,7 @@ public class BaseFilterHandler<T extends AbstractFilterController<?>> {
     public void show(final FilterFileModel model, final Runnable onSave) {
         Stage stage = new Stage();
         FXMLLoader loader = loaderProvider.get();
-        Parent root = viewFxml.loadNode(loader);
+        Parent root = viewFxml.loadNode(loader, i18nManager);
         T controller = loader.getController();
 
         try {

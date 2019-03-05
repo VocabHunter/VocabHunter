@@ -5,6 +5,7 @@
 package io.github.vocabhunter.gui.common;
 
 public final class GuiConstants {
+    // TODO Remove this once text in UnsavedChangesDialogue has been replaced
     public static final String UNTITLED = "Untitled";
 
     public static final String WEBSITE = "https://vocabhunter.github.io/";

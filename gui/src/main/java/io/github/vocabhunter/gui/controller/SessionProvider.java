@@ -5,6 +5,7 @@
 package io.github.vocabhunter.gui.controller;
 
 import io.github.vocabhunter.gui.common.ControllerAndView;
+import io.github.vocabhunter.gui.i18n.I18nManager;
 import io.github.vocabhunter.gui.view.ViewFxml;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -18,10 +19,13 @@ public class SessionProvider implements Provider<ControllerAndView<SessionContro
     @Inject
     private Provider<FXMLLoader> loaderProvider;
 
+    @Inject
+    private I18nManager i18nManager;
+
     @Override
     public ControllerAndView<SessionController, Node> get() {
         FXMLLoader loader = loaderProvider.get();
-        Node root = ViewFxml.SESSION.loadNode(loader);
+        Node root = ViewFxml.SESSION.loadNode(loader, i18nManager);
         SessionController controller = loader.getController();
 
         return new ControllerAndView<>(controller, root);

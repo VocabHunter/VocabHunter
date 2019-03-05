@@ -4,7 +4,8 @@
 
 package io.github.vocabhunter.gui.controller;
 
-import io.github.vocabhunter.gui.common.GuiConstants;
+import io.github.vocabhunter.gui.i18n.I18nKey;
+import io.github.vocabhunter.gui.i18n.I18nManager;
 import io.github.vocabhunter.gui.model.MainModel;
 import javafx.beans.value.ChangeListener;
 
@@ -17,9 +18,12 @@ public class TitleHandler {
 
     private final MainModel model;
 
+    private final I18nManager i18nManager;
+
     @Inject
-    public TitleHandler(final MainModel model) {
+    public TitleHandler(final MainModel model, final I18nManager i18nManager) {
         this.model = model;
+        this.i18nManager = i18nManager;
     }
 
     public void initialise() {
@@ -38,7 +42,7 @@ public class TitleHandler {
         if (model.hasSessionFile()) {
             title.append(model.getSessionFile().getFileName());
         } else {
-            title.append(GuiConstants.UNTITLED);
+            title.append(i18nManager.text(I18nKey.MAIN_WINDOW_UNTITLED));
         }
 
         String documentName = model.documentNameProperty().get();
@@ -48,7 +52,7 @@ public class TitleHandler {
         }
 
         if (!model.changesSavedProperty().get()) {
-            title.append(" - Unsaved Changes");
+            title.append(" - ").append(i18nManager.text(I18nKey.MAIN_WINDOW_UNSAVED));
         }
 
         title.append(" - VocabHunter");
