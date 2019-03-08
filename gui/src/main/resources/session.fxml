@@ -56,9 +56,9 @@
                                           <Label fx:id="useCountLabel" styleClass="useCount" text="(110 uses)" />
                                           <HBox alignment="CENTER" BorderPane.alignment="CENTER">
                                               <children>
-                                                  <Button fx:id="buttonUnknown" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" styleClass="buttonUnknown" text="Don't Know">
+                                                  <Button fx:id="buttonUnknown" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" styleClass="buttonUnknown" text="%session.button.unknown">
                                                       <tooltip>
-                                                          <Tooltip text="I don't know this word (press x)" />
+                                                          <Tooltip text="%session.button.unknown.tip" />
                                                       </tooltip>
                                                       <graphic>
                                                           <FontAwesomeIconView styleClass="buttonUnknownIcon" />
@@ -67,9 +67,9 @@
                                                           <Insets bottom="0" left="10" right="10" top="0" />
                                                       </HBox.margin>
                                                   </Button>
-                                                  <Button fx:id="buttonKnown" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" styleClass="buttonKnown" text="Know">
+                                                  <Button fx:id="buttonKnown" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" styleClass="buttonKnown" text="%session.button.known">
                                                       <tooltip>
-                                                          <Tooltip text="I know this word (press k)" />
+                                                          <Tooltip text="%session.button.known.tip" />
                                                       </tooltip>
                                                       <graphic>
                                                           <FontAwesomeIconView styleClass="buttonKnownIcon" />
@@ -87,7 +87,7 @@
                               <left>
                                   <Button fx:id="buttonUnseen" mnemonicParsing="false" styleClass="buttonUnseen" BorderPane.alignment="TOP_LEFT">
                                       <tooltip>
-                                          <Tooltip text="Reset word (press r)" />
+                                          <Tooltip text="%session.button.unseen.tip" />
                                       </tooltip>
                                       <graphic>
                                           <FontAwesomeIconView styleClass="buttonUnseenIcon" />
@@ -97,7 +97,7 @@
                               <right>
                                   <Button fx:id="buttonNote" mnemonicParsing="false" styleClass="buttonNote" BorderPane.alignment="BOTTOM_LEFT">
                                       <tooltip>
-                                          <Tooltip text="Add a note to this word (press n)" />
+                                          <Tooltip text="%session.button.note.tip" />
                                       </tooltip>
                                       <graphic>
                                           <FontAwesomeIconView styleClass="buttonNoteIcon" />

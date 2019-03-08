@@ -17,8 +17,8 @@
     <bottom>
         <ButtonBar styleClass="buttonBar" BorderPane.alignment="CENTER">
             <buttons>
-                <Button fx:id="buttonOk" mnemonicParsing="false" text="Add Note" />
-                <Button fx:id="buttonCancel" mnemonicParsing="false" text="Cancel" />
+                <Button fx:id="buttonOk" mnemonicParsing="false" text="%note.button.ok" />
+                <Button fx:id="buttonCancel" mnemonicParsing="false" text="%note.button.cancel" />
             </buttons>
         </ButtonBar>
     </bottom>

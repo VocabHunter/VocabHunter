@@ -20,47 +20,47 @@
     <bottom>
         <ButtonBar styleClass="buttonBar" BorderPane.alignment="CENTER">
             <buttons>
-                <Button fx:id="buttonAddFilterFile" mnemonicParsing="false" text="Add Filter" />
-                <Button fx:id="buttonCancel" mnemonicParsing="false" text="Cancel" />
+                <Button fx:id="buttonAddFilterFile" mnemonicParsing="false" text="%filter.session.button.ok" />
+                <Button fx:id="buttonCancel" mnemonicParsing="false" text="%filter.session.button.cancel" />
             </buttons>
         </ButtonBar>
     </bottom>
    <top>
-      <Label styleClass="description" text="Choose the words to filter" BorderPane.alignment="CENTER" />
+      <Label styleClass="description" text="%filter.session.title" BorderPane.alignment="CENTER" />
    </top>
    <center>
       <VBox styleClass="mainContent" BorderPane.alignment="CENTER">
          <children>
             <HBox alignment="CENTER_LEFT">
                <children>
-                  <Label text="Session file: " />
+                  <Label text="%filter.session.file.prompt" />
                   <TextField fx:id="fieldFile" editable="false" text="my-session.wordy" HBox.hgrow="ALWAYS" />
-                  <Button fx:id="buttonChangeFile" mnemonicParsing="false" text="Change file..." />
+                  <Button fx:id="buttonChangeFile" mnemonicParsing="false" text="%filter.session.file.button.change" />
                </children>
             </HBox>
             <TableView fx:id="tableWords" editable="false" prefHeight="300.0" prefWidth="600.0" styleClass="wordList" VBox.vgrow="ALWAYS">
                 <placeholder>
-                    <Label styleClass="error" text="File doesn't contain any words marked as known/unknown" />
+                    <Label styleClass="error" text="%filter.session.error.empty" />
                 </placeholder>
                <columnResizePolicy>
                   <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                </columnResizePolicy>
                <columns>
-                  <TableColumn fx:id="columnType" maxWidth="150.0" minWidth="150.0" styleClass="filterSessionStateColumn" text="Known / Unknown" />
-                  <TableColumn fx:id="columnWord" styleClass="filterSessionWordColumn" text="Word" />
+                  <TableColumn fx:id="columnType" maxWidth="150.0" minWidth="150.0" styleClass="filterSessionStateColumn" text="%filter.session.column.type" />
+                  <TableColumn fx:id="columnWord" styleClass="filterSessionWordColumn" text="%filter.session.column.word" />
                </columns>
             </TableView>
             <VBox styleClass="filterInclusionBox">
                <children>
-                  <Label text="Select the words to filter:" />
-                   <RadioButton fx:id="buttonKnown" mnemonicParsing="false" selected="true" text="Known words">
+                  <Label text="%filter.session.mode.prompt" />
+                   <RadioButton fx:id="buttonKnown" mnemonicParsing="false" selected="true" text="%filter.session.mode.known">
                        <graphic>
                            <HBox styleClass="iconBoxSmall">
                                <FontAwesomeIconView styleClass="filterKnownIconSmall" />
                            </HBox>
                        </graphic>
                    </RadioButton>
-                   <RadioButton fx:id="buttonSeen" mnemonicParsing="false" text="Known &amp; unknown words">
+                   <RadioButton fx:id="buttonSeen" mnemonicParsing="false" text="%filter.session.mode.both">
                        <graphic>
                            <HBox styleClass="iconBoxSmall">
                                <FontAwesomeIconView styleClass="filterKnownIconSmall" />
@@ -70,7 +70,7 @@
                    </RadioButton>
                   <HBox>
                      <children>
-                        <Label text="Total words: " />
+                        <Label text="%filter.session.words.count" />
                         <Label fx:id="labelTotalWords" text="1,234" styleClass="wordCount" />
                      </children>
                   </HBox>

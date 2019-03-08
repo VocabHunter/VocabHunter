@@ -20,27 +20,27 @@
     <bottom>
         <ButtonBar styleClass="buttonBar" BorderPane.alignment="CENTER">
             <buttons>
-                <Button fx:id="buttonAddFilterFile" mnemonicParsing="false" text="Add Filter" />
-                <Button fx:id="buttonCancel" mnemonicParsing="false" text="Cancel" />
+                <Button fx:id="buttonAddFilterFile" mnemonicParsing="false" text="%filter.grid.button.ok" />
+                <Button fx:id="buttonCancel" mnemonicParsing="false" text="%filter.grid.button.cancel" />
             </buttons>
         </ButtonBar>
     </bottom>
    <top>
-      <Label styleClass="description" text="Choose the words to filter" BorderPane.alignment="CENTER" />
+      <Label styleClass="description" text="%filter.grid.title" BorderPane.alignment="CENTER" />
    </top>
    <center>
       <VBox styleClass="mainContent" BorderPane.alignment="CENTER">
          <children>
             <HBox alignment="CENTER_LEFT">
                <children>
-                  <Label text="Words file: " />
+                  <Label text="%filter.grid.file.prompt" />
                   <TextField fx:id="fieldFile" editable="false" text="words.txt" HBox.hgrow="ALWAYS" />
-                  <Button fx:id="buttonChangeFile" mnemonicParsing="false" text="Change file..." />
+                  <Button fx:id="buttonChangeFile" mnemonicParsing="false" text="%filter.grid.file.button.change" />
                </children>
             </HBox>
             <TableView fx:id="tableWords" prefHeight="300.0" prefWidth="600.0" styleClass="wordList" VBox.vgrow="ALWAYS">
                 <placeholder>
-                    <Label styleClass="error" text="File doesn't contain any words" />
+                    <Label styleClass="error" text="%filter.grid.error.empty" />
                 </placeholder>
                <columnResizePolicy>
                   <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
@@ -52,7 +52,7 @@
             </TableView>
             <VBox styleClass="filterInclusionBox">
                <children>
-                  <Label text="Select columns to include:" />
+                  <Label text="%filter.grid.columns.prompt" />
                   <ScrollPane fx:id="columnSelectionBoxScrollPane" hbarPolicy="NEVER" styleClass="columnSelectionBoxScrollPane">
                      <content>
                         <VBox fx:id="columnSelectionBox" styleClass="columnSelectionBox">
@@ -66,7 +66,7 @@
                   </ScrollPane>
                   <HBox>
                      <children>
-                        <Label text="Total words: " />
+                        <Label text="%filter.grid.words.count" />
                         <Label fx:id="labelTotalWords" styleClass="wordCount" text="1,234" />
                      </children>
                   </HBox>
