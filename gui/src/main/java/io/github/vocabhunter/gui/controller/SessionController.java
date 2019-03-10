@@ -9,6 +9,7 @@ import io.github.vocabhunter.analysis.filter.WordFilter;
 import io.github.vocabhunter.analysis.marked.MarkTool;
 import io.github.vocabhunter.analysis.marked.WordState;
 import io.github.vocabhunter.gui.common.GuiTaskHandler;
+import io.github.vocabhunter.gui.i18n.I18nManager;
 import io.github.vocabhunter.gui.model.PositionModel;
 import io.github.vocabhunter.gui.model.SessionModel;
 import io.github.vocabhunter.gui.model.WordModel;
@@ -85,6 +86,9 @@ public class SessionController {
 
     @FXML
     private TextArea textAreaNotePreview;
+
+    @Inject
+    private I18nManager i18nManager;
 
     @Inject
     private FilterService filterService;
@@ -203,7 +207,7 @@ public class SessionController {
             if (e == null) {
                 filterErrorAlert();
             } else {
-                filterErrorAlert(e);
+                filterErrorAlert(i18nManager, e);
             }
         });
     }

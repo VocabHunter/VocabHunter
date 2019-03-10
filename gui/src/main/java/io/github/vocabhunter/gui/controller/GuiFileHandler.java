@@ -9,6 +9,7 @@ import io.github.vocabhunter.analysis.session.FileNameTool;
 import io.github.vocabhunter.analysis.session.SessionState;
 import io.github.vocabhunter.gui.common.GuiTaskHandler;
 import io.github.vocabhunter.gui.dialogues.*;
+import io.github.vocabhunter.gui.i18n.I18nManager;
 import io.github.vocabhunter.gui.model.MainModel;
 import io.github.vocabhunter.gui.model.SessionModel;
 import io.github.vocabhunter.gui.services.SessionFileService;
@@ -27,6 +28,9 @@ public class GuiFileHandler {
     private static final Logger LOG = LoggerFactory.getLogger(GuiFileHandler.class);
 
     private Stage stage;
+
+    @Inject
+    private I18nManager i18nManager;
 
     @Inject
     private FileDialogueFactory fileDialogueFactory;
@@ -70,7 +74,7 @@ public class GuiFileHandler {
                 guiTaskHandler,
                 statusManager,
                 () -> processExport(fileWithSuffix, sessionState),
-                e -> FileErrorTool.export(fileWithSuffix, e)
+                e -> FileErrorTool.export(i18nManager, fileWithSuffix, e)
             );
 
             guiTaskHandler.executeInBackground(task);
@@ -99,7 +103,7 @@ public class GuiFileHandler {
                 statusManager,
                 () -> sessionFileService.createOrOpenSession(file),
                 this::finishOpen,
-                e -> FileErrorTool.open(file, e));
+                e -> FileErrorTool.open(i18nManager, file, e));
 
             guiTaskHandler.executeInBackground(task);
         } else {
@@ -127,7 +131,7 @@ public class GuiFileHandler {
                 statusManager,
                 () -> sessionFileService.read(file),
                 this::finishOpen,
-                e -> FileErrorTool.open(file, e));
+                e -> FileErrorTool.open(i18nManager, file, e));
 
             guiTaskHandler.executeInBackground(task);
         }
@@ -153,7 +157,7 @@ public class GuiFileHandler {
                 statusManager,
                 () -> sessionFileService.createNewSession(file),
                 this::finishOpen,
-                e -> FileErrorTool.open(file, e));
+                e -> FileErrorTool.open(i18nManager, file, e));
 
             guiTaskHandler.executeInBackground(task);
         }
@@ -207,7 +211,7 @@ public class GuiFileHandler {
             statusManager,
             () -> saveFile(file, sessionState),
             b -> model.setChangesSaved(true),
-            e -> FileErrorTool.save(file, e)
+            e -> FileErrorTool.save(i18nManager, file, e)
         );
 
         guiTaskHandler.executeInBackground(task);
@@ -242,7 +246,7 @@ public class GuiFileHandler {
         if (model.isChangesSaved()) {
             return true;
         } else {
-            UnsavedChangesDialogue dialogue = new UnsavedChangesDialogue(model.getSessionFile());
+            UnsavedChangesDialogue dialogue = new UnsavedChangesDialogue(model.getSessionFile(), i18nManager);
 
             dialogue.showDialogue();
 
@@ -291,7 +295,7 @@ public class GuiFileHandler {
 
             return true;
         } catch (final RuntimeException e) {
-            FileErrorTool.save(file, e);
+            FileErrorTool.save(i18nManager, file, e);
 
             return false;
         }

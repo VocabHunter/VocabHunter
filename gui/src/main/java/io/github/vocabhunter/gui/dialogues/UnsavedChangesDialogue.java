@@ -5,8 +5,9 @@
 package io.github.vocabhunter.gui.dialogues;
 
 import io.github.vocabhunter.analysis.session.FileNameTool;
-import io.github.vocabhunter.gui.common.GuiConstants;
 import io.github.vocabhunter.gui.common.UnsavedResponse;
+import io.github.vocabhunter.gui.i18n.I18nKey;
+import io.github.vocabhunter.gui.i18n.I18nManager;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 
@@ -19,19 +20,22 @@ public class UnsavedChangesDialogue {
 
     private final Path file;
 
+    private final I18nManager i18nManager;
+
     private final Map<ButtonType, UnsavedResponse> map = unsavedResponseMap();
 
     private UnsavedResponse result;
 
-    public UnsavedChangesDialogue(final Path file) {
+    public UnsavedChangesDialogue(final Path file, final I18nManager i18nManager) {
         this.file = file;
+        this.i18nManager = i18nManager;
     }
 
     public void showDialogue() {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        String message = String.format("'%s' has been modified.  Do you want to save your changes?", filename());
+        String message = i18nManager.text(I18nKey.FILE_MODIFIED, filename());
 
-        alert.setTitle("Unsaved Changes");
+        alert.setTitle(i18nManager.text(I18nKey.FILE_UNSAVED));
         alert.setHeaderText(message);
         alert.getButtonTypes().setAll(map.keySet());
         alert.getDialogPane().setId(ALERT_ID);
@@ -43,7 +47,7 @@ public class UnsavedChangesDialogue {
 
     private String filename() {
         if (file == null) {
-            return GuiConstants.UNTITLED;
+            return i18nManager.text(I18nKey.MAIN_WINDOW_UNTITLED);
         } else {
             return FileNameTool.filename(file);
         }

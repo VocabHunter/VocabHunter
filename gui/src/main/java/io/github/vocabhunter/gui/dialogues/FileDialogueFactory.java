@@ -4,8 +4,8 @@
 
 package io.github.vocabhunter.gui.dialogues;
 
-import javafx.stage.Stage;
+import javafx.stage.Window;
 
 public interface FileDialogueFactory {
-    FileDialogue create(final FileDialogueType type, final Stage stage);
+    FileDialogue create(final FileDialogueType type, final Window stage);
 }

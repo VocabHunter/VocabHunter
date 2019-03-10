@@ -4,6 +4,7 @@
 
 package io.github.vocabhunter.gui.dialogues;
 
+import io.github.vocabhunter.gui.i18n.I18nManager;
 import javafx.scene.control.Alert;
 
 public final class AlertTool {
@@ -15,8 +16,8 @@ public final class AlertTool {
         // Prevent instantiation - all methods are static
     }
 
-    public static void filterErrorAlert(final Exception e) {
-        ErrorDialogue dialogue = new ErrorDialogue(TITLE, e, e.getMessage(), FILTERS_DISABLED);
+    public static void filterErrorAlert(final I18nManager i18nManager, final Exception e) {
+        ErrorDialogue dialogue = new ErrorDialogue(i18nManager, TITLE, e, e.getMessage(), FILTERS_DISABLED);
 
         dialogue.showError();
     }

@@ -41,7 +41,7 @@ public class BaseFilterHandler<T extends AbstractFilterController<?>> {
             controller.initialise(stage, model, onSave);
             WindowTool.setupModal(stage, root, windowTitle);
         } catch (final RuntimeException e) {
-            FileErrorTool.open(model.getFile(), e);
+            FileErrorTool.open(i18nManager, model.getFile(), e);
         }
     }
 }
