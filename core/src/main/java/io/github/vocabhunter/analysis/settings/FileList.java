@@ -6,8 +6,6 @@ package io.github.vocabhunter.analysis.settings;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
@@ -25,10 +23,10 @@ public final class FileList {
     }
 
     public List<BaseListedFile> getFilterFiles() {
-        return Collections.unmodifiableList(filterFiles);
+        return List.copyOf(filterFiles);
     }
 
     public void setFilterFiles(final List<BaseListedFile> filterFiles) {
-        this.filterFiles = new ArrayList<>(filterFiles);
+        this.filterFiles = List.copyOf(filterFiles);
     }
 }

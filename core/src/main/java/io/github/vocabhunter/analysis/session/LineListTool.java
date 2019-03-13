@@ -4,12 +4,14 @@
 
 package io.github.vocabhunter.analysis.session;
 
-import java.util.*;
+import java.util.List;
+import java.util.Map;
 import java.util.function.Function;
-import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 import static java.util.function.Function.identity;
+import static java.util.stream.Collectors.toUnmodifiableList;
+import static java.util.stream.Collectors.toUnmodifiableMap;
 
 public class LineListTool<T> {
     private final List<String> lines;
@@ -17,18 +19,17 @@ public class LineListTool<T> {
     private final Map<String, Integer> indices;
 
     public LineListTool(final List<T> raw, final Function<T, List<String>> extractor) {
-        Set<String> set = raw.stream()
+        lines = raw.stream()
             .flatMap(w -> extractor.apply(w).stream())
-            .collect(Collectors.toCollection(LinkedHashSet::new));
-
-        lines = new ArrayList<>(set);
+            .distinct()
+            .collect(toUnmodifiableList());
         indices = IntStream.range(0, lines.size())
             .boxed()
-            .collect(Collectors.toMap(lines::get, identity()));
+            .collect(toUnmodifiableMap(lines::get, identity()));
     }
 
     public List<String> getLines() {
-        return Collections.unmodifiableList(lines);
+        return lines;
     }
 
     public int getLineNo(final String line) {

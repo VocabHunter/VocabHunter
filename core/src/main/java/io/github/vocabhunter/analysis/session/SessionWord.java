@@ -13,8 +13,6 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.function.Function;
 
@@ -38,7 +36,7 @@ public class SessionWord implements MarkedWord {
 
     public SessionWord(final WordUse use) {
         wordIdentifier = use.getWordIdentifier();
-        lineNos = new ArrayList<>(use.getLineNos());
+        lineNos = List.copyOf(use.getLineNos());
         useCount = use.getUseCount();
     }
 
@@ -55,12 +53,12 @@ public class SessionWord implements MarkedWord {
         if (uses == null) {
             return null;
         } else {
-            return Collections.unmodifiableList(uses);
+            return List.copyOf(uses);
         }
     }
 
     public List<Integer> getLineNos() {
-        return Collections.unmodifiableList(lineNos);
+        return List.copyOf(lineNos);
     }
 
     @Override
@@ -73,11 +71,11 @@ public class SessionWord implements MarkedWord {
     }
 
     public void setUses(final List<String> uses) {
-        this.uses = new ArrayList<>(uses);
+        this.uses = List.copyOf(uses);
     }
 
     public void setLineNos(final List<Integer> lineNos) {
-        this.lineNos = new ArrayList<>(lineNos);
+        this.lineNos = List.copyOf(lineNos);
     }
 
     @Override

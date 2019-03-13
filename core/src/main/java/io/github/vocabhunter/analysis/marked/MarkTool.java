@@ -9,7 +9,6 @@ import io.github.vocabhunter.analysis.filter.WordFilter;
 import java.util.List;
 import java.util.Map;
 
-import static java.util.Collections.emptyMap;
 import static java.util.stream.Collectors.*;
 
 public final class MarkTool<T extends MarkedWord> {
@@ -56,7 +55,7 @@ public final class MarkTool<T extends MarkedWord> {
     }
 
     private Map<Boolean, Long> extractSubGroups(final Map<WordState, Map<Boolean, Long>> groups, final WordState state) {
-        return groups.getOrDefault(state, emptyMap());
+        return groups.getOrDefault(state, Map.of());
     }
 
     public List<T> getShownWords() {

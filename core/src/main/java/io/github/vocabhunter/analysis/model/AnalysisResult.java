@@ -4,10 +4,7 @@
 
 package io.github.vocabhunter.analysis.model;
 
-import java.util.ArrayList;
 import java.util.List;
-
-import static java.util.Collections.unmodifiableList;
 
 public final class AnalysisResult {
     private final String name;
@@ -18,8 +15,8 @@ public final class AnalysisResult {
 
     public AnalysisResult(final String name, final List<WordUse> orderedUses, final List<String> lines) {
         this.name = name;
-        this.orderedUses = new ArrayList<>(orderedUses);
-        this.lines = lines;
+        this.orderedUses = List.copyOf(orderedUses);
+        this.lines = List.copyOf(lines);
     }
 
     public String getName() {
@@ -27,10 +24,10 @@ public final class AnalysisResult {
     }
 
     public List<WordUse> getOrderedUses() {
-        return unmodifiableList(orderedUses);
+        return orderedUses;
     }
 
     public List<String> getLines() {
-        return unmodifiableList(lines);
+        return lines;
     }
 }

@@ -9,8 +9,6 @@ import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public final class FilterSettings {
@@ -26,7 +24,7 @@ public final class FilterSettings {
         this.minimumLetters = minimumLetters;
         this.minimumOccurrences = minimumOccurrences;
         this.allowInitialCapitals = allowInitialCapitals;
-        this.filterFiles = new ArrayList<>(filterFiles);
+        this.filterFiles = List.copyOf(filterFiles);
     }
 
     public int getMinimumLetters() {
@@ -42,7 +40,7 @@ public final class FilterSettings {
     }
 
     public List<BaseListedFile> getFilterFiles() {
-        return Collections.unmodifiableList(filterFiles);
+        return filterFiles;
     }
 
     @Override

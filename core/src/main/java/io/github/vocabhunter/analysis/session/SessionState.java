@@ -34,8 +34,8 @@ public class SessionState {
 
         orderedUses = model.getOrderedUses().stream()
                 .map(SessionWord::new)
-                .collect(Collectors.toList());
-        lines = new ArrayList<>(model.getLines());
+                .collect(Collectors.toUnmodifiableList());
+        lines = List.copyOf(model.getLines());
     }
 
     public int getFormatVersion() {
@@ -55,19 +55,19 @@ public class SessionState {
     }
 
     public List<SessionWord> getOrderedUses() {
-        return Collections.unmodifiableList(orderedUses);
+        return List.copyOf(orderedUses);
     }
 
     public void setOrderedUses(final List<SessionWord> orderedUses) {
-        this.orderedUses = new ArrayList<>(orderedUses);
+        this.orderedUses = List.copyOf(orderedUses);
     }
 
     public List<String> getLines() {
-        return Collections.unmodifiableList(lines);
+        return List.copyOf(lines);
     }
 
     public void setLines(final List<String> lines) {
-        this.lines = new ArrayList<>(lines);
+        this.lines = List.copyOf(lines);
     }
 
     @Override

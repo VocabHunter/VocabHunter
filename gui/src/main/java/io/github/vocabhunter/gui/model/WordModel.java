@@ -12,8 +12,6 @@ import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.util.Callback;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class WordModel implements MarkedWord, SequencedWord {
@@ -33,7 +31,7 @@ public class WordModel implements MarkedWord, SequencedWord {
     private final SimpleStringProperty note;
 
     public WordModel(final int sequenceNo, final String word, final List<Integer> lineNos, final int useCount, final WordState state, final String note) {
-        this.lineNos = new ArrayList<>(lineNos);
+        this.lineNos = List.copyOf(lineNos);
         this.useCount = useCount;
         this.identifier = new SimpleStringProperty(word);
         this.sequenceNo = sequenceNo;
@@ -65,7 +63,7 @@ public class WordModel implements MarkedWord, SequencedWord {
     }
 
     public List<Integer> getLineNos() {
-        return Collections.unmodifiableList(lineNos);
+        return lineNos;
     }
 
     @Override

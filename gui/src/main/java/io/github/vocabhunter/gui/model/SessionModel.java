@@ -17,7 +17,6 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.TreeSet;
 
-import static java.util.Collections.unmodifiableList;
 import static java.util.stream.Collectors.toList;
 
 public final class SessionModel {
@@ -65,7 +64,7 @@ public final class SessionModel {
         this.filterSettings = new SimpleObjectProperty<>(filterSettings);
         this.progress = progress;
         this.position = position;
-        allWords = words;
+        allWords = List.copyOf(words);
         selectedWords.addAll(words.stream()
                 .filter(w -> w.getState().equals(WordState.UNKNOWN))
                 .collect(toList()));
@@ -160,7 +159,7 @@ public final class SessionModel {
     }
 
     public List<WordModel> getAllWords() {
-        return unmodifiableList(allWords);
+        return allWords;
     }
 
     public int getAllWordsSize() {
