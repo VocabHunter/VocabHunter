@@ -8,13 +8,18 @@ import io.github.vocabhunter.test.utils.TestFileManager;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
+import java.io.IOException;
 import java.nio.file.Path;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class ExcelGridReaderTest {
+    private static final Logger LOG = LoggerFactory.getLogger(ExcelGridReaderTest.class);
+
     private static final List<GridLine> EXPECTED = GridTestTool.normalisedGridLines();
 
     private TestFileManager files;
@@ -27,8 +32,12 @@ public class ExcelGridReaderTest {
     }
 
     @AfterEach
-    public void tearDown() throws Exception {
-        files.cleanup();
+    public void tearDown() {
+        try {
+            files.cleanup();
+        } catch (IOException e) {
+            LOG.error("Failed to cleanup temp directory", e);
+        }
     }
 
     @Test
