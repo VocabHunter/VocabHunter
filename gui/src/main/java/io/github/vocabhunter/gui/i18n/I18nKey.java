@@ -34,7 +34,14 @@ public enum I18nKey {
     FILE_TYPE_OFFICE("file.type.office"),
     FILE_TYPE_EBOOK("file.type.ebook"),
     FILE_TYPE_SESSION("file.type.session"),
-    FILE_TYPE_SPREADSHEET("file.type.spreadsheet");
+    FILE_TYPE_SPREADSHEET("file.type.spreadsheet"),
+
+    STATUS_ACTION_NEW("status.action.new"),
+    STATUS_ACTION_OPEN("status.action.open"),
+    STATUS_ACTION_SAVE("status.action.save"),
+    STATUS_ACTION_EXPORT("status.action.export"),
+    STATUS_ACTION_EXIT("status.action.exit"),
+    STATUS_ACTION_ABOUT("status.action.about");
 
     private final String key;
 

@@ -5,6 +5,8 @@
 package io.github.vocabhunter.gui.status;
 
 import io.github.vocabhunter.analysis.session.FileNameTool;
+import io.github.vocabhunter.gui.i18n.I18nKey;
+import io.github.vocabhunter.gui.i18n.I18nManager;
 import io.github.vocabhunter.gui.model.PositionModel;
 import io.github.vocabhunter.gui.model.ProgressModel;
 import io.github.vocabhunter.gui.model.StatusModel;
@@ -17,31 +19,21 @@ import org.slf4j.LoggerFactory;
 import java.nio.file.Path;
 import java.text.MessageFormat;
 import java.util.concurrent.atomic.AtomicBoolean;
-
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
+import static io.github.vocabhunter.gui.i18n.I18nKey.*;
 import static javafx.beans.binding.Bindings.*;
 
 @Singleton
 public class StatusManagerImpl implements StatusManager {
     private static final Logger LOG = LoggerFactory.getLogger(StatusManagerImpl.class);
 
-    private static final String NAME_NEW_SESSION = "Start a new VocabHunter session";
+    private final I18nManager i18nManager;
 
-    private static final String NAME_OPEN_SESSION = "Open a saved VocabHunter session";
-
-    private static final String NAME_SAVE_SESSION = "Save the VocabHunter session";
-
-    private static final String NAME_EXPORT = "Export the words marked as unknown";
-
-    private static final String NAME_EXIT = "Exit VocabHunter";
-
-    private static final String NAME_ABOUT = "About VocabHunter";
+    private I18nKey currentAction;
 
     private static final int POSITION_BUFFER_SIZE = 100;
-
-    private String name;
 
     private final SimpleBooleanProperty sessionAvailable = new SimpleBooleanProperty();
 
@@ -58,6 +50,11 @@ public class StatusManagerImpl implements StatusManager {
     private final AtomicBoolean gatekeeper = new AtomicBoolean();
 
     @Inject
+    public StatusManagerImpl(final I18nManager i18nManager) {
+        this.i18nManager = i18nManager;
+    }
+
+    @Inject
     public void setStatusModel(final StatusModel model) {
         model.textProperty().bind(when(busy).then(actionDescription).otherwise(positionDescription));
         model.busyProperty().bind(busy);
@@ -69,39 +66,39 @@ public class StatusManagerImpl implements StatusManager {
 
     @Override
     public boolean beginNewSession() {
-        return begin(NAME_NEW_SESSION);
+        return begin(STATUS_ACTION_NEW);
     }
 
     @Override
     public boolean beginOpenSession() {
-        return begin(NAME_OPEN_SESSION);
+        return begin(STATUS_ACTION_OPEN);
     }
 
     @Override
     public boolean beginSaveSession() {
-        return begin(NAME_SAVE_SESSION);
+        return begin(STATUS_ACTION_SAVE);
     }
 
     @Override
     public boolean beginExport() {
-        return begin(NAME_EXPORT);
+        return begin(STATUS_ACTION_EXPORT);
     }
 
     @Override
     public boolean beginExit() {
-        return begin(NAME_EXIT);
+        return begin(STATUS_ACTION_EXIT);
     }
 
     @Override
     public boolean beginAbout() {
-        return begin(NAME_ABOUT);
+        return begin(STATUS_ACTION_ABOUT);
     }
 
-    private boolean begin(final String name) {
+    private boolean begin(final I18nKey key) {
         if (gatekeeper.compareAndSet(false, true)) {
-            this.name = name;
-            LOG.debug("Begin: {}", name);
-            actionDescription.setValue(name);
+            currentAction = key;
+            LOG.debug("Begin: {}", currentAction);
+            actionDescription.setValue(i18nManager.text(key));
             busy.setValue(true);
 
             return true;
@@ -112,18 +109,18 @@ public class StatusManagerImpl implements StatusManager {
 
     @Override
     public void performAction(final Path file) {
-        LOG.debug("Perform: {}", name);
-        actionDescription.setValue(String.format("%s: '%s'...", name, FileNameTool.filename(file)));
+        LOG.debug("Perform: {}", currentAction);
+        actionDescription.setValue(String.format("%s: '%s'...", i18nManager.text(currentAction), FileNameTool.filename(file)));
     }
 
     @Override
     public void markSuccess() {
-        LOG.debug("Success: {}", name);
+        LOG.debug("Success: {}", currentAction);
     }
 
     @Override
     public void completeAction() {
-        LOG.debug("Complete: {}", name);
+        LOG.debug("Complete: {}", currentAction);
         busy.setValue(false);
         gatekeeper.set(false);
     }
