@@ -24,6 +24,10 @@ public class PositionModel {
         return positionIndex.get();
     }
 
+    public void setPositionIndex(final int positionIndex) {
+        this.positionIndex.set(positionIndex);
+    }
+
     public SimpleIntegerProperty sizeProperty() {
         return size;
     }
@@ -32,8 +36,16 @@ public class PositionModel {
         return size.get();
     }
 
+    public void setSize(final int size) {
+        this.size.set(size);
+    }
+
     public SimpleBooleanProperty analysisModeProperty() {
         return analysisMode;
+    }
+
+    public void setAnalysisMode(final boolean analysisMode) {
+        this.analysisMode.set(analysisMode);
     }
 
     public boolean isAnalysisMode() {
@@ -46,5 +58,9 @@ public class PositionModel {
 
     public boolean isEditable() {
         return editable.get();
+    }
+
+    public void setEditable(final boolean editable) {
+        this.editable.set(editable);
     }
 }

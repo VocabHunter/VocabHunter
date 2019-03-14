@@ -17,7 +17,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.nio.file.Path;
-import java.text.MessageFormat;
 import java.util.concurrent.atomic.AtomicBoolean;
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -31,9 +30,9 @@ public class StatusManagerImpl implements StatusManager {
 
     private final I18nManager i18nManager;
 
-    private I18nKey currentAction;
+    private final PositionDescriptionTool positionDescriptionTool;
 
-    private static final int POSITION_BUFFER_SIZE = 100;
+    private I18nKey currentAction;
 
     private final SimpleBooleanProperty sessionAvailable = new SimpleBooleanProperty();
 
@@ -50,8 +49,9 @@ public class StatusManagerImpl implements StatusManager {
     private final AtomicBoolean gatekeeper = new AtomicBoolean();
 
     @Inject
-    public StatusManagerImpl(final I18nManager i18nManager) {
+    public StatusManagerImpl(final I18nManager i18nManager, final PositionDescriptionTool positionDescriptionTool) {
         this.i18nManager = i18nManager;
+        this.positionDescriptionTool = positionDescriptionTool;
     }
 
     @Inject
@@ -128,7 +128,7 @@ public class StatusManagerImpl implements StatusManager {
     @Override
     public void replaceSession(final PositionModel position, final ProgressModel progress) {
         positionDescription.unbind();
-        positionDescription.bind(createStringBinding(() -> positionDescription(position, progress),
+        positionDescription.bind(createStringBinding(() -> positionDescriptionTool.describe(position, progress),
             position.positionIndexProperty(), position.sizeProperty(), position.analysisModeProperty(), position.editableProperty(), progress.unseenFilteredProperty()));
 
         markedPercentage.unbind();
@@ -138,26 +138,5 @@ public class StatusManagerImpl implements StatusManager {
         graphText.bind(format("%.0f%% of words marked", markedPercentage));
 
         sessionAvailable.set(true);
-    }
-
-    private String positionDescription(final PositionModel position, final ProgressModel progress) {
-        if (position.isAnalysisMode()) {
-            StringBuilder buffer = new StringBuilder(POSITION_BUFFER_SIZE);
-
-            buffer.append(MessageFormat.format("Word {0} of {1} {1,choice,0#words|1#word|1<words}", position.getPositionIndex() + 1, position.getSize()));
-            if (position.isEditable()) {
-                int filtered = progress.unseenFilteredProperty().get();
-
-                if (filtered > 0) {
-                    buffer.append(MessageFormat.format(" ({0} {0,choice,0#words|1#word|1<words} hidden by filter)", filtered));
-                }
-            } else {
-                buffer.append(" marked as unknown");
-            }
-
-            return buffer.toString();
-        } else {
-            return "";
-        }
     }
 }
