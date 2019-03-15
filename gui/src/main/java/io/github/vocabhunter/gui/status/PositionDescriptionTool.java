@@ -4,32 +4,47 @@
 
 package io.github.vocabhunter.gui.status;
 
+import io.github.vocabhunter.gui.i18n.I18nKey;
+import io.github.vocabhunter.gui.i18n.I18nManager;
 import io.github.vocabhunter.gui.model.PositionModel;
 import io.github.vocabhunter.gui.model.ProgressModel;
+import javafx.beans.value.ObservableStringValue;
 
-import java.text.MessageFormat;
+import javax.inject.Inject;
 import javax.inject.Singleton;
+
+import static javafx.beans.binding.Bindings.createStringBinding;
 
 @Singleton
 public class PositionDescriptionTool {
-    private static final int POSITION_BUFFER_SIZE = 100;
+    private final I18nManager i18nManager;
 
-    public String describe(final PositionModel position, final ProgressModel progress) {
+    @Inject
+    public PositionDescriptionTool(final I18nManager i18nManager) {
+        this.i18nManager = i18nManager;
+    }
+
+    public ObservableStringValue createBinding(final PositionModel position, final ProgressModel progress) {
+        return createStringBinding(
+            () -> describe(position, progress),
+            position.positionIndexProperty(),
+            position.sizeProperty(),
+            position.analysisModeProperty(),
+            position.editableProperty(),
+            progress.unseenFilteredProperty());
+    }
+
+    private String describe(final PositionModel position, final ProgressModel progress) {
         if (position.isAnalysisMode()) {
-            StringBuilder buffer = new StringBuilder(POSITION_BUFFER_SIZE);
-
-            buffer.append(MessageFormat.format("Word {0} of {1} {1,choice,0#words|1#word|1<words}", position.getPositionIndex() + 1, position.getSize()));
+            int wordNumber = position.getPositionIndex() + 1;
+            int size = position.getSize();
             if (position.isEditable()) {
                 int filtered = progress.unseenFilteredProperty().get();
 
-                if (filtered > 0) {
-                    buffer.append(MessageFormat.format(" ({0} {0,choice,0#words|1#word|1<words} hidden by filter)", filtered));
-                }
+                return i18nManager.text(I18nKey.STATUS_POSITION_EDIT_ON, wordNumber, size, filtered);
             } else {
-                buffer.append(" marked as unknown");
+                return i18nManager.text(I18nKey.STATUS_POSITION_EDIT_OFF, wordNumber, size);
             }
-
-            return buffer.toString();
         } else {
             return "";
         }

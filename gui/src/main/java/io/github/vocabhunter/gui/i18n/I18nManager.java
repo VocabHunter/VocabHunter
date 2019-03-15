@@ -5,9 +5,13 @@
 package io.github.vocabhunter.gui.i18n;
 
 import io.github.vocabhunter.analysis.core.I18nBundleProvider;
+import javafx.beans.binding.StringExpression;
+import javafx.beans.value.ObservableValue;
 
 public interface I18nManager extends I18nBundleProvider {
     void initialise();
 
     String text(I18nKey key, Object... arguments);
+
+    StringExpression textBinding(I18nKey key, ObservableValue<?>... arguments);
 }

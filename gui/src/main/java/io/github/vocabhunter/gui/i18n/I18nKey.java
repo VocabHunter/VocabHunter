@@ -41,7 +41,11 @@ public enum I18nKey {
     STATUS_ACTION_SAVE("status.action.save"),
     STATUS_ACTION_EXPORT("status.action.export"),
     STATUS_ACTION_EXIT("status.action.exit"),
-    STATUS_ACTION_ABOUT("status.action.about");
+    STATUS_ACTION_ABOUT("status.action.about"),
+
+    STATUS_MARKED_PERCENTAGE("status.marked.percentage"),
+    STATUS_POSITION_EDIT_ON("status.position.edit.on"),
+    STATUS_POSITION_EDIT_OFF("status.position.edit.off");
 
     private final String key;
 

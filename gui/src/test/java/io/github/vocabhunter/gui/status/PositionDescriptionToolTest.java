@@ -4,24 +4,27 @@
 
 package io.github.vocabhunter.gui.status;
 
+import io.github.vocabhunter.gui.i18n.I18nManager;
+import io.github.vocabhunter.gui.i18n.I18nManagerImpl;
 import io.github.vocabhunter.gui.model.PositionModel;
 import io.github.vocabhunter.gui.model.ProgressModel;
+import javafx.beans.value.ObservableStringValue;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class PositionDescriptionToolTest {
     private final PositionModel position = new PositionModel();
 
     private final ProgressModel progress = new ProgressModel();
 
-    private final PositionDescriptionTool target = new PositionDescriptionTool();
+    private final I18nManager i18nManager = new I18nManagerImpl();
+
+    private final PositionDescriptionTool target = new PositionDescriptionTool(i18nManager);
 
     @Test
     public void testAnalysisModeOff() {
-        String result = target.describe(position, progress);
-
-        assertEquals("", result);
+        validate("");
     }
 
     @Test
@@ -31,9 +34,7 @@ public class PositionDescriptionToolTest {
         position.setPositionIndex(0);
         position.setSize(1);
 
-        String result = target.describe(position, progress);
-
-        assertEquals("Word 1 of 1 word", result);
+        validate("Word 1 of 1 word");
     }
 
     @Test
@@ -43,9 +44,7 @@ public class PositionDescriptionToolTest {
         position.setPositionIndex(9);
         position.setSize(20);
 
-        String result = target.describe(position, progress);
-
-        assertEquals("Word 10 of 20 words", result);
+        validate("Word 10 of 20 words");
     }
 
     @Test
@@ -56,9 +55,7 @@ public class PositionDescriptionToolTest {
         position.setSize(20);
         progress.updateProgress(0, 0, 0, 1);
 
-        String result = target.describe(position, progress);
-
-        assertEquals("Word 10 of 20 words (1 word hidden by filter)", result);
+        validate("Word 10 of 20 words (1 word hidden by filter)");
     }
 
     @Test
@@ -69,9 +66,7 @@ public class PositionDescriptionToolTest {
         position.setSize(20);
         progress.updateProgress(0, 0, 0, 5);
 
-        String result = target.describe(position, progress);
-
-        assertEquals("Word 10 of 20 words (5 words hidden by filter)", result);
+        validate("Word 10 of 20 words (5 words hidden by filter)");
     }
 
     @Test
@@ -81,8 +76,12 @@ public class PositionDescriptionToolTest {
         position.setPositionIndex(2);
         position.setSize(5);
 
-        String result = target.describe(position, progress);
+        validate("Word 3 of 5 words marked as unknown");
+    }
 
-        assertEquals("Word 3 of 5 words marked as unknown", result);
+    private void validate(final String s) {
+        ObservableStringValue result = target.createBinding(position, progress);
+
+        assertEquals(s, result.getValue());
     }
 }

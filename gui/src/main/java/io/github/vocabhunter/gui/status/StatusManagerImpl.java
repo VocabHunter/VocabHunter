@@ -128,14 +128,13 @@ public class StatusManagerImpl implements StatusManager {
     @Override
     public void replaceSession(final PositionModel position, final ProgressModel progress) {
         positionDescription.unbind();
-        positionDescription.bind(createStringBinding(() -> positionDescriptionTool.describe(position, progress),
-            position.positionIndexProperty(), position.sizeProperty(), position.analysisModeProperty(), position.editableProperty(), progress.unseenFilteredProperty()));
+        positionDescription.bind(positionDescriptionTool.createBinding(position, progress));
 
         markedPercentage.unbind();
         markedPercentage.bind(progress.markedPercentVisibleProperty());
 
         graphText.unbind();
-        graphText.bind(format("%.0f%% of words marked", markedPercentage));
+        graphText.bind(i18nManager.textBinding(STATUS_MARKED_PERCENTAGE, markedPercentage));
 
         sessionAvailable.set(true);
     }
