@@ -10,6 +10,14 @@ public enum I18nKey {
 
     ABOUT_VERSION("about.version"),
 
+    PROGRESS_SLICE_MARKED("progress.slice.marked"),
+    PROGRESS_SLICE_UNMARKED("progress.slice.unmarked"),
+    PROGRESS_SLICE_KNOWN("progress.slice.known"),
+    PROGRESS_SLICE_UNKNOWN("progress.slice.unknown"),
+    PROGRESS_SLICE_FILTERED("progress.slice.filtered"),
+    PROGRESS_WORD_COUNT("progress.word.count"),
+    PROGRESS_WORD_PERCENTAGE("progress.word.percentage"),
+
     ERROR_DETAILS("error.details"),
     ERROR_SESSION_OPEN_DETAILS("error.session.open.details"),
     ERROR_SESSION_OPEN_TITLE("error.session.open.title"),

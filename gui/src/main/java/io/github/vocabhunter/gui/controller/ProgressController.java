@@ -4,9 +4,10 @@
 
 package io.github.vocabhunter.gui.controller;
 
+import io.github.vocabhunter.gui.i18n.I18nKey;
+import io.github.vocabhunter.gui.i18n.I18nManager;
 import io.github.vocabhunter.gui.model.ProgressModel;
-import javafx.beans.binding.Bindings;
-import javafx.beans.binding.StringBinding;
+import javafx.beans.binding.StringExpression;
 import javafx.beans.value.ObservableNumberValue;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
@@ -14,7 +15,9 @@ import javafx.scene.chart.PieChart;
 import javafx.scene.chart.PieChart.Data;
 import javafx.scene.control.Label;
 
-import java.text.MessageFormat;
+import javax.inject.Inject;
+
+import static io.github.vocabhunter.gui.i18n.I18nKey.*;
 
 public class ProgressController {
     @FXML
@@ -59,14 +62,21 @@ public class ProgressController {
     @FXML
     private Label labelPercentFiltered;
 
+    private final I18nManager i18nManager;
+
+    @Inject
+    public ProgressController(final I18nManager i18nManager) {
+        this.i18nManager = i18nManager;
+    }
+
     public void initialise(final ProgressModel model) {
         buildChartResults(model);
         buildChartProgress(model);
     }
 
     private void buildChartProgress(final ProgressModel model) {
-        Data done = slice("Marked as\nKnown/Unknown", model.markedProperty());
-        Data remaining = slice("Unmarked", model.unseenUnfilteredProperty());
+        Data done = slice(PROGRESS_SLICE_MARKED, model.markedProperty());
+        Data remaining = slice(PROGRESS_SLICE_UNMARKED, model.unseenUnfilteredProperty());
 
         chartProgress.setData(FXCollections.observableArrayList(
             done, remaining
@@ -79,10 +89,10 @@ public class ProgressController {
     }
 
     private void buildChartResults(final ProgressModel model) {
-        Data known = slice("Marked as\nKnown", model.knownProperty());
-        Data unknown = slice("Marked as\nUnknown", model.unknownProperty());
-        Data unmarked = slice("Unmarked", model.unseenUnfilteredProperty());
-        Data filtered = slice("Filtered", model.unseenFilteredProperty());
+        Data known = slice(PROGRESS_SLICE_KNOWN, model.knownProperty());
+        Data unknown = slice(PROGRESS_SLICE_UNKNOWN, model.unknownProperty());
+        Data unmarked = slice(PROGRESS_SLICE_UNMARKED, model.unseenUnfilteredProperty());
+        Data filtered = slice(PROGRESS_SLICE_FILTERED, model.unseenFilteredProperty());
 
         chartResults.setData(FXCollections.observableArrayList(
             known, unknown, unmarked, filtered
@@ -98,9 +108,9 @@ public class ProgressController {
         bindPercentLabel(labelPercentFiltered, model.unseenFilteredPercentProperty());
     }
 
-    private Data slice(final String name, final ObservableNumberValue property) {
+    private Data slice(final I18nKey key, final ObservableNumberValue property) {
         double value = property.getValue().intValue();
-        Data slice = new Data(name, value);
+        Data slice = new Data(i18nManager.text(key), value);
 
         slice.pieValueProperty().bind(property);
 
@@ -108,16 +118,12 @@ public class ProgressController {
     }
 
     private void bindValueLabel(final Label valueLabel, final ObservableNumberValue property) {
-        StringBinding binding = Bindings.createStringBinding(() -> formatWords(property), property);
+        StringExpression binding = i18nManager.textBinding(PROGRESS_WORD_COUNT, property);
 
         valueLabel.textProperty().bind(binding);
     }
 
-    private String formatWords(final ObservableNumberValue property) {
-        return MessageFormat.format("{0} {0,choice,0#Words|1#Word|1<Words}", property.intValue());
-    }
-
     private void bindPercentLabel(final Label valueLabel, final ObservableNumberValue property) {
-        valueLabel.textProperty().bind(Bindings.format("%.0f%%", property));
+        valueLabel.textProperty().bind(i18nManager.textBinding(PROGRESS_WORD_PERCENTAGE, property));
     }
 }
