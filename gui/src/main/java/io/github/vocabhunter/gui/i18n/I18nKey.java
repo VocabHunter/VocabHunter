@@ -8,6 +8,8 @@ public enum I18nKey {
     MAIN_WINDOW_UNSAVED("main.window.unsaved"),
     MAIN_WINDOW_UNTITLED("main.window.untitled"),
 
+    SESSION_WORD_USES("session.word.uses"),
+
     SESSION_TAB_ANALYSIS("session.tab.analysis"),
     SESSION_TAB_PROGRESS("session.tab.progress"),
 

@@ -144,7 +144,7 @@ public class SessionController {
     }
 
     private void prepareMainWord() {
-        mainWordHandler = new MainWordHandler(mainWord, useCountLabel, mainWordPane, sessionModel, wordStateProperty);
+        mainWordHandler = new MainWordHandler(i18nManager, mainWord, useCountLabel, mainWordPane, sessionModel, wordStateProperty);
         mainWordHandler.prepare();
     }
 

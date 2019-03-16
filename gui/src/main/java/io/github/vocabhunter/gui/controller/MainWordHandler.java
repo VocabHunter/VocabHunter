@@ -5,6 +5,8 @@
 package io.github.vocabhunter.gui.controller;
 
 import io.github.vocabhunter.analysis.marked.WordState;
+import io.github.vocabhunter.gui.i18n.I18nKey;
+import io.github.vocabhunter.gui.i18n.I18nManager;
 import io.github.vocabhunter.gui.model.SessionModel;
 import io.github.vocabhunter.gui.model.WordModel;
 import io.github.vocabhunter.gui.view.StateClassTool;
@@ -16,6 +18,8 @@ import javafx.scene.layout.Pane;
 import static javafx.beans.binding.Bindings.selectString;
 
 public class MainWordHandler {
+    private final I18nManager i18nManager;
+
     private final Label mainWord;
 
     private final Label useCountLabel;
@@ -26,7 +30,10 @@ public class MainWordHandler {
 
     private final ObjectBinding<WordState> wordStateProperty;
 
-    public MainWordHandler(final Label mainWord, final Label useCountLabel, final Pane mainWordPane, final SessionModel sessionModel, final ObjectBinding<WordState> wordStateProperty) {
+    public MainWordHandler(
+        final I18nManager i18nManager, final Label mainWord, final Label useCountLabel, final Pane mainWordPane, final SessionModel sessionModel,
+        final ObjectBinding<WordState> wordStateProperty) {
+        this.i18nManager = i18nManager;
         this.mainWord = mainWord;
         this.useCountLabel = useCountLabel;
         this.mainWordPane = mainWordPane;
@@ -41,7 +48,7 @@ public class MainWordHandler {
         mainWord.textProperty().bind(selectString(currentWordProperty, "wordIdentifier"));
         currentWordProperty.addListener(o -> updateMainWordStateClasses());
         wordStateProperty.addListener((o, old, state) -> updateMainWordStateClasses());
-        useCountLabel.textProperty().bind(sessionModel.useCountProperty());
+        useCountLabel.textProperty().bind(i18nManager.textBinding(I18nKey.SESSION_WORD_USES, sessionModel.useCountProperty()));
         updateMainWordStateClasses();
     }
 

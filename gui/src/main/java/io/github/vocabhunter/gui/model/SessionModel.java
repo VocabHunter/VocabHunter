@@ -34,7 +34,7 @@ public final class SessionModel {
 
     private final SimpleObjectProperty<WordModel> currentWord;
 
-    private final SimpleStringProperty useCount = new SimpleStringProperty();
+    private final SimpleIntegerProperty useCount = new SimpleIntegerProperty();
 
     private final SimpleBooleanProperty editable = new SimpleBooleanProperty(true);
 
@@ -91,7 +91,7 @@ public final class SessionModel {
 
         useList.clear();
         useList.addAll(uses);
-        useCount.set(String.format("(%d uses)", word.getUseCount()));
+        useCount.set(word.getUseCount());
     }
 
     public void updateWordList(final boolean isEditable, final MarkTool<WordModel> markTool) {
@@ -122,7 +122,7 @@ public final class SessionModel {
         return currentWord;
     }
 
-    public SimpleStringProperty useCountProperty() {
+    public SimpleIntegerProperty useCountProperty() {
         return useCount;
     }
 
