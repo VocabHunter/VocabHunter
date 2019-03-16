@@ -23,6 +23,8 @@ public enum I18nKey {
     PROGRESS_WORD_COUNT("progress.word.count"),
     PROGRESS_WORD_PERCENTAGE("progress.word.percentage"),
 
+    NOTE_TITLE("note.title"),
+
     ERROR_DETAILS("error.details"),
     ERROR_SESSION_OPEN_DETAILS("error.session.open.details"),
     ERROR_SESSION_OPEN_TITLE("error.session.open.title"),

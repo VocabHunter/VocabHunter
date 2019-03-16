@@ -5,6 +5,7 @@
 package io.github.vocabhunter.gui.controller;
 
 import io.github.vocabhunter.gui.common.WordNoteTool;
+import io.github.vocabhunter.gui.i18n.I18nManager;
 import io.github.vocabhunter.gui.model.SessionModel;
 import io.github.vocabhunter.gui.model.WordModel;
 import javafx.fxml.FXML;
@@ -13,11 +14,14 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.stage.Stage;
 
+import javax.inject.Inject;
 import javax.inject.Singleton;
+
+import static io.github.vocabhunter.gui.i18n.I18nKey.NOTE_TITLE;
 
 @Singleton
 public class WordNoteController {
-    private static final String TITLE_TEMPLATE = "Note for word: %s";
+    private final I18nManager i18nManager;
 
     @FXML
     private Label labelTitle;
@@ -35,6 +39,11 @@ public class WordNoteController {
 
     private SessionModel sessionModel;
 
+    @Inject
+    public WordNoteController(final I18nManager i18nManager) {
+        this.i18nManager = i18nManager;
+    }
+
     public void initialise(final Stage stage, final SessionModel sessionModel) {
         this.stage = stage;
         this.sessionModel = sessionModel;
@@ -47,7 +56,7 @@ public class WordNoteController {
     }
 
     private String titleText() {
-        return String.format(TITLE_TEMPLATE, sessionModel.getCurrentWord().getWordIdentifier());
+        return i18nManager.text(NOTE_TITLE, sessionModel.getCurrentWord().getWordIdentifier());
     }
 
     private void exit(final boolean isSaveRequested) {
