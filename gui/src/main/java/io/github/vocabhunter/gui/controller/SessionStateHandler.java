@@ -8,6 +8,7 @@ import io.github.vocabhunter.analysis.core.VocabHunterException;
 import io.github.vocabhunter.analysis.session.SessionState;
 import io.github.vocabhunter.gui.common.ControllerAndView;
 import io.github.vocabhunter.gui.common.GuiTaskHandler;
+import io.github.vocabhunter.gui.i18n.I18nManager;
 import io.github.vocabhunter.gui.model.MainModel;
 import io.github.vocabhunter.gui.model.SessionModel;
 import io.github.vocabhunter.gui.settings.SettingsManager;
@@ -23,6 +24,9 @@ import javax.inject.Singleton;
 
 @Singleton
 public class SessionStateHandler {
+    @Inject
+    private I18nManager i18nManager;
+
     @Inject
     private SettingsManager settingsManager;
 
@@ -51,7 +55,7 @@ public class SessionStateHandler {
     }
 
     public SessionModel addSession(final SessionState state) {
-        SessionViewTool viewTool = new SessionViewTool();
+        SessionViewTool viewTool = new SessionViewTool(i18nManager);
         SessionModelTool sessionTool = new SessionModelTool(state, model.getFilterSettings(), viewTool.selectedProperty(), settingsManager.getWindowSettings().orElseGet(WindowSettings::new));
         SessionModel sessionModel = sessionTool.buildModel();
         ControllerAndView<SessionController, Node> cav = sessionProvider.get();

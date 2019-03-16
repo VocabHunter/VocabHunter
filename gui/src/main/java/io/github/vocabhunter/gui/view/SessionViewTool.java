@@ -4,6 +4,7 @@
 
 package io.github.vocabhunter.gui.view;
 
+import io.github.vocabhunter.gui.i18n.I18nManager;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.ObservableList;
@@ -24,11 +25,11 @@ public class SessionViewTool {
 
     private final SimpleObjectProperty<SessionTab> selected = new SimpleObjectProperty<>();
 
-    public SessionViewTool() {
+    public SessionViewTool(final I18nManager i18nManager) {
         ObservableList<Tab> tabs = tabPane.getTabs();
 
         for (SessionTab tabDescription : SessionTab.values()) {
-            Tab tab = new Tab(tabDescription.getName());
+            Tab tab = new Tab(i18nManager.text(tabDescription.getKey()));
 
             tab.setId(tabDescription.getId());
             tab.setClosable(false);
