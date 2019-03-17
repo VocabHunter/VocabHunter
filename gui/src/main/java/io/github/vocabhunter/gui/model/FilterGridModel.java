@@ -68,7 +68,7 @@ public class FilterGridModel extends AbstractFilterModel {
     }
 
     @Override
-    protected ObservableIntegerValue countValue() {
+    public ObservableIntegerValue wordCountProperty() {
         return count;
     }
 

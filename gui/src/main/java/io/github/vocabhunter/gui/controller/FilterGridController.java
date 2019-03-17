@@ -13,6 +13,7 @@ import io.github.vocabhunter.gui.dialogues.FileDialogue;
 import io.github.vocabhunter.gui.dialogues.FileDialogueFactory;
 import io.github.vocabhunter.gui.dialogues.FileDialogueType;
 import io.github.vocabhunter.gui.dialogues.FileFormatType;
+import io.github.vocabhunter.gui.i18n.I18nManager;
 import io.github.vocabhunter.gui.model.FilterFileMode;
 import io.github.vocabhunter.gui.model.FilterFileModel;
 import io.github.vocabhunter.gui.model.FilterGridModel;
@@ -62,8 +63,8 @@ public class FilterGridController extends AbstractFilterController<FilterGridMod
     private final Map<GridCell, ReadOnlyObjectWrapper<GridCell>> cellCache = new HashMap<>();
 
     @Inject
-    public FilterGridController(final FileDialogueFactory factory, final TextGridManager textGridManager) {
-        super(factory);
+    public FilterGridController(final I18nManager i18nManager, final FileDialogueFactory factory, final TextGridManager textGridManager) {
+        super(i18nManager, factory);
         this.textGridManager = textGridManager;
     }
 

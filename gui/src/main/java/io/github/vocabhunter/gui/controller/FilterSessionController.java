@@ -9,6 +9,7 @@ import io.github.vocabhunter.analysis.session.SessionWordsTool;
 import io.github.vocabhunter.gui.dialogues.FileDialogue;
 import io.github.vocabhunter.gui.dialogues.FileDialogueFactory;
 import io.github.vocabhunter.gui.dialogues.FileDialogueType;
+import io.github.vocabhunter.gui.i18n.I18nManager;
 import io.github.vocabhunter.gui.model.FilterFileMode;
 import io.github.vocabhunter.gui.model.FilterFileModel;
 import io.github.vocabhunter.gui.model.FilterSessionModel;
@@ -51,8 +52,8 @@ public class FilterSessionController extends AbstractFilterController<FilterSess
     private TableColumn<FilterSessionWord, FilterSessionWord> columnWord;
 
     @Inject
-    public FilterSessionController(final FileDialogueFactory factory, final SessionWordsTool sessionWordsTool) {
-        super(factory);
+    public FilterSessionController(final I18nManager i18nManager, final FileDialogueFactory factory, final SessionWordsTool sessionWordsTool) {
+        super(i18nManager, factory);
         this.sessionWordsTool = sessionWordsTool;
     }
 

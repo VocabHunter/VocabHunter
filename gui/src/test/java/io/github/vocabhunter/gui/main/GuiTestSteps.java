@@ -176,13 +176,13 @@ public class GuiTestSteps {
             robot.clickOn("#buttonAddFilterFile");
             robot.clickOn("#buttonEdit");
             verifyThat("#buttonAddFilterFile", isEnabled());
-            verifyThat("#labelTotalWords", hasText("1"));
+            verifyThat("#labelTotalWords", hasText("Total words: 1"));
         });
 
         step("Include unknown words in filter", () -> {
             robot.clickOn("#buttonSeen");
             verifyThat("#buttonAddFilterFile", isEnabled());
-            verifyThat("#labelTotalWords", hasText("3"));
+            verifyThat("#labelTotalWords", hasText("Total words: 3"));
         });
 
         step("Add session to filter", () -> {
@@ -202,13 +202,13 @@ public class GuiTestSteps {
             validator.setUpFileDialogue(FileDialogueType.OPEN_WORD_LIST, FileFormatType.SPREADSHEET, FILTER_SPREADSHEET);
             robot.clickOn("#buttonChangeFile");
             verifyThat("#buttonAddFilterFile", isEnabled());
-            verifyThat("#labelTotalWords", hasText("1"));
+            verifyThat("#labelTotalWords", hasText("Total words: 1"));
         });
 
         step("Select second column of spreadsheet", () -> {
             robot.clickOn("#checkBoxColumn1");
             verifyThat("#buttonAddFilterFile", isEnabled());
-            verifyThat("#labelTotalWords", hasText("3"));
+            verifyThat("#labelTotalWords", hasText("Total words: 3"));
         });
 
         step("Apply spreadsheet filter", () -> {

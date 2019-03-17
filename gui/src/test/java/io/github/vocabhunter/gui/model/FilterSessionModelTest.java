@@ -30,7 +30,7 @@ public class FilterSessionModelTest {
     public void testSimple() {
         FilterSessionModel target = build(1000, 100);
 
-        validateOk(target, 1000, 1100, false, "1,000");
+        validateOk(target, 1000, 1100, false, 1000);
     }
 
     @Test
@@ -39,7 +39,7 @@ public class FilterSessionModelTest {
 
         target.setIncludeUnknown(true);
 
-        validateOk(target, 1000, 1100, true, "1,100");
+        validateOk(target, 1000, 1100, true, 1100);
     }
 
     @Test
@@ -55,7 +55,7 @@ public class FilterSessionModelTest {
 
         target.setIncludeUnknown(true);
 
-        validateOk(target, 0, 100, true, "100");
+        validateOk(target, 0, 100, true, 100);
     }
 
     @Test
@@ -64,7 +64,7 @@ public class FilterSessionModelTest {
 
         target.replaceContent(FILE_2, words(1000, 100));
 
-        validateReplaceOk(target, 1000, 1100, false, "1,000");
+        validateReplaceOk(target, 1000, 1100, false, 1000);
     }
 
     @Test
@@ -83,29 +83,29 @@ public class FilterSessionModelTest {
         target.setIncludeUnknown(true);
         target.replaceContent(FILE_2, words(1000, 100));
 
-        validateReplaceOk(target, 1000, 1100, true, "1,100");
+        validateReplaceOk(target, 1000, 1100, true, 1100);
     }
 
-    private void validateOk(final FilterSessionModel target, final int knownCount, final int seenCount, final boolean isIncludeUnknown, final String countDescription) {
-        validate(target, FILE_1, FILENAME_1, isIncludeUnknown, countDescription, false, knownCount, seenCount);
+    private void validateOk(final FilterSessionModel target, final int knownCount, final int seenCount, final boolean isIncludeUnknown, final int count) {
+        validate(target, FILE_1, FILENAME_1, isIncludeUnknown, count, false, knownCount, seenCount);
     }
 
     private void validateError(final FilterSessionModel target, final int knownCount, final int seenCount, final boolean isIncludeUnknown) {
-        validate(target, FILE_1, FILENAME_1, isIncludeUnknown, AbstractFilterModel.ERROR_MESSAGE, true, knownCount, seenCount);
+        validate(target, FILE_1, FILENAME_1, isIncludeUnknown, 0, true, knownCount, seenCount);
     }
 
-    private void validateReplaceOk(final FilterSessionModel target, final int knownCount, final int seenCount, final boolean isIncludeUnknown, final String countDescription) {
-        validate(target, FILE_2, FILENAME_2, isIncludeUnknown, countDescription, false, knownCount, seenCount);
+    private void validateReplaceOk(final FilterSessionModel target, final int knownCount, final int seenCount, final boolean isIncludeUnknown, final int count) {
+        validate(target, FILE_2, FILENAME_2, isIncludeUnknown, count, false, knownCount, seenCount);
     }
 
     private void validateReplaceError(final FilterSessionModel target, final int knownCount, final int seenCount, final boolean isIncludeUnknown) {
-        validate(target, FILE_2, FILENAME_2, isIncludeUnknown, AbstractFilterModel.ERROR_MESSAGE, true, knownCount, seenCount);
+        validate(target, FILE_2, FILENAME_2, isIncludeUnknown, 0, true, knownCount, seenCount);
     }
 
     private void validate(final FilterSessionModel target, final Path file, final String filename, final boolean isIncludeUnknown,
-                          final String countDescription, final boolean isError, final int knownCount, final int seenCount) {
+                          final int count, final boolean isError, final int knownCount, final int seenCount) {
         assertAll(
-            () -> validateCommon(target, file, filename, countDescription, isError),
+            () -> validateCommon(target, file, filename, count, isError),
             () -> assertEquals(knownCount, target.getKnownCount(), "Known count"),
             () -> assertEquals(seenCount, target.getSeenCount(), "Seen count"),
             () -> assertEquals(isIncludeUnknown, target.isIncludeUnknown(), "Include unknown"),

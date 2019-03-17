@@ -34,14 +34,14 @@ public class FilterGridModelTest {
     public void testFirstColumn() {
         FilterGridModel target = build(NORMAL_GRID, 0);
 
-        validateOk(target, NORMAL_GRID, "2", 0);
+        validateOk(target, NORMAL_GRID, 2, 0);
     }
 
     @Test
     public void testAllColumns() {
         FilterGridModel target = build(NORMAL_GRID, 0, 1, 2);
 
-        validateOk(target, NORMAL_GRID, "3", 0, 1, 2);
+        validateOk(target, NORMAL_GRID, 3, 0, 1, 2);
     }
 
     @Test
@@ -50,7 +50,7 @@ public class FilterGridModelTest {
 
         target.getColumnSelections().get(0).set(true);
 
-        validateOk(target, NORMAL_GRID, "2", 0);
+        validateOk(target, NORMAL_GRID, 2, 0);
     }
 
     @Test
@@ -59,7 +59,7 @@ public class FilterGridModelTest {
 
         target.replaceContent(FILE_2, NORMAL_GRID, FilterFileMode.EXCEL, columns(0));
 
-        validateReplaceOk(target, NORMAL_GRID, "2", FilterFileMode.EXCEL, 0);
+        validateReplaceOk(target, NORMAL_GRID, 2, FilterFileMode.EXCEL, 0);
     }
 
     @Test
@@ -69,7 +69,7 @@ public class FilterGridModelTest {
         target.replaceContent(FILE_2, NORMAL_GRID, FilterFileMode.EXCEL, columns());
         target.getColumnSelections().get(0).set(true);
 
-        validateReplaceOk(target, NORMAL_GRID, "2", FilterFileMode.EXCEL, 0);
+        validateReplaceOk(target, NORMAL_GRID, 2, FilterFileMode.EXCEL, 0);
     }
 
     @Test
@@ -81,25 +81,25 @@ public class FilterGridModelTest {
         validateReplaceError(target, EMPTY_GRID, FilterFileMode.EXCEL);
     }
 
-    private void validateOk(final FilterGridModel target, final TextGrid grid, final String countDescription, final Integer... columns) {
-        validate(target, FILE_1, FILENAME_1, countDescription, false, grid, FilterFileMode.DOCUMENT, columns(columns));
+    private void validateOk(final FilterGridModel target, final TextGrid grid, final int count, final Integer... columns) {
+        validate(target, FILE_1, FILENAME_1, count, false, grid, FilterFileMode.DOCUMENT, columns(columns));
     }
 
     private void validateError(final FilterGridModel target, final TextGrid grid, final Integer... columns) {
-        validate(target, FILE_1, FILENAME_1, AbstractFilterModel.ERROR_MESSAGE, true, grid, FilterFileMode.DOCUMENT, columns(columns));
+        validate(target, FILE_1, FILENAME_1, 0, true, grid, FilterFileMode.DOCUMENT, columns(columns));
     }
 
-    private void validateReplaceOk(final FilterGridModel target, final TextGrid grid, final String countDescription, final FilterFileMode mode, final Integer... columns) {
-        validate(target, FILE_2, FILENAME_2, countDescription, false, grid, mode, columns(columns));
+    private void validateReplaceOk(final FilterGridModel target, final TextGrid grid, final int count, final FilterFileMode mode, final Integer... columns) {
+        validate(target, FILE_2, FILENAME_2, count, false, grid, mode, columns(columns));
     }
 
     private void validateReplaceError(final FilterGridModel target, final TextGrid grid, final FilterFileMode mode, final Integer... columns) {
-        validate(target, FILE_2, FILENAME_2, AbstractFilterModel.ERROR_MESSAGE, true, grid, mode, columns(columns));
+        validate(target, FILE_2, FILENAME_2, 0, true, grid, mode, columns(columns));
     }
 
     private void validate(
         final FilterGridModel target, final Path file, final String filename,
-        final String countDescription, final boolean isError,
+        final int count, final boolean isError,
         final TextGrid grid, final FilterFileMode mode, final Set<Integer> columns) {
 
         assertAll(
@@ -114,7 +114,7 @@ public class FilterGridModelTest {
             () -> assertEquals(grid.getLines(), target.getLines(), "Lines"),
             () -> assertEquals(mode, target.getMode(), "Mode"),
             () -> assertEquals(columns, target.getColumns(), "Columns"),
-            () -> validateCommon(target, file, filename, countDescription, isError)
+            () -> validateCommon(target, file, filename, count, isError)
         );
     }
 

@@ -5,6 +5,7 @@
 package io.github.vocabhunter.gui.controller;
 
 import io.github.vocabhunter.gui.dialogues.FileDialogueFactory;
+import io.github.vocabhunter.gui.i18n.I18nManager;
 import io.github.vocabhunter.gui.model.AbstractFilterModel;
 import io.github.vocabhunter.gui.model.FilterFileModel;
 import io.github.vocabhunter.gui.view.ErrorClassTool;
@@ -14,7 +15,11 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
+import static io.github.vocabhunter.gui.i18n.I18nKey.FILTER_GRID_WORDS_COUNT;
+
 public abstract class AbstractFilterController<T extends AbstractFilterModel> {
+    private final I18nManager i18nManager;
+
     private final FileDialogueFactory factory;
 
     @FXML
@@ -32,7 +37,8 @@ public abstract class AbstractFilterController<T extends AbstractFilterModel> {
     @FXML
     private Label labelTotalWords;
 
-    protected AbstractFilterController(final FileDialogueFactory factory) {
+    protected AbstractFilterController(final I18nManager i18nManager, final FileDialogueFactory factory) {
+        this.i18nManager = i18nManager;
         this.factory = factory;
     }
 
@@ -45,7 +51,8 @@ public abstract class AbstractFilterController<T extends AbstractFilterModel> {
         buttonAddFilterFile.setOnAction(e -> exit(stage, model, onSave, parentModel, true));
         buttonCancel.setOnAction(e -> exit(stage, model, onSave, parentModel, false));
 
-        labelTotalWords.textProperty().bind(model.countDescriptionProperty());
+        labelTotalWords.textProperty().bind(i18nManager.textBinding(FILTER_GRID_WORDS_COUNT, model.wordCountProperty()));
+
         buttonAddFilterFile.disableProperty().bind(model.errorProperty());
 
         ErrorClassTool.updateClass(labelTotalWords, model.isError());

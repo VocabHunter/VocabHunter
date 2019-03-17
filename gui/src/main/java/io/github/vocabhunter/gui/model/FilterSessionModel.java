@@ -52,7 +52,7 @@ public class FilterSessionModel extends AbstractFilterModel {
     }
 
     @Override
-    protected ObservableNumberValue countValue() {
+    public ObservableNumberValue wordCountProperty() {
         return Bindings.when(includeUnknown).then(seenCount).otherwise(knownCount);
     }
 

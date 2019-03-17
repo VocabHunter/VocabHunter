@@ -5,17 +5,8 @@
   -->
 
 <?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ButtonBar?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.RadioButton?>
-<?import javafx.scene.control.TableColumn?>
-<?import javafx.scene.control.TableView?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.VBox?>
-
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
 <BorderPane styleClass="filter" stylesheets="@main.css" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="io.github.vocabhunter.gui.controller.FilterSessionController">
     <bottom>
         <ButtonBar styleClass="buttonBar" BorderPane.alignment="CENTER">
@@ -68,12 +59,7 @@
                            </HBox>
                        </graphic>
                    </RadioButton>
-                  <HBox>
-                     <children>
-                        <Label text="%filter.session.words.count" />
-                        <Label fx:id="labelTotalWords" text="1,234" styleClass="wordCount" />
-                     </children>
-                  </HBox>
+                   <Label fx:id="labelTotalWords" styleClass="wordCount" text="Total Words: 1,234" />
                </children>
             </VBox>
          </children>

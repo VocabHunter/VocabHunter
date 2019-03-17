@@ -4,18 +4,8 @@
   ~ Open Source Software published under the Apache Licence, Version 2.0.
   -->
 
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ButtonBar?>
-<?import javafx.scene.control.CheckBox?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ScrollPane?>
-<?import javafx.scene.control.TableColumn?>
-<?import javafx.scene.control.TableView?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.VBox?>
-
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
 <BorderPane styleClass="filter" stylesheets="@main.css" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="io.github.vocabhunter.gui.controller.FilterGridController">
     <bottom>
         <ButtonBar styleClass="buttonBar" BorderPane.alignment="CENTER">
@@ -64,12 +54,7 @@
                         </VBox>
                      </content>
                   </ScrollPane>
-                  <HBox>
-                     <children>
-                        <Label text="%filter.grid.words.count" />
-                        <Label fx:id="labelTotalWords" styleClass="wordCount" text="1,234" />
-                     </children>
-                  </HBox>
+                  <Label fx:id="labelTotalWords" styleClass="wordCount" text="Total Words: 1,234" />
                </children>
             </VBox>
          </children>

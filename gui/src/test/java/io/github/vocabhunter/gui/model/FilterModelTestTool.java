@@ -23,12 +23,12 @@ public final class FilterModelTestTool {
         // Prevent instantiation - all members are static
     }
 
-    public static void validateCommon(final AbstractFilterModel target, final Path file, final String filename, final String countDescription, final boolean isError) {
+    public static void validateCommon(final AbstractFilterModel target, final Path file, final String filename, final int count, final boolean isError) {
         assertAll(
             () -> assertEquals(file, target.getFile(), "File"),
             () -> assertEquals(filename, target.getFilename(), "Filename"),
             () -> assertEquals(isError, target.isError(), "Error state"),
-            () -> assertEquals(countDescription, target.getCountDescription(), "Count description")
+            () -> assertEquals(count, target.getWordCount(), "Count")
         );
     }
 }
