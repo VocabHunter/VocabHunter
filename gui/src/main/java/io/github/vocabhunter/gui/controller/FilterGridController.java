@@ -48,6 +48,8 @@ public class FilterGridController extends AbstractFilterController<FilterGridMod
 
     private final TextGridManager textGridManager;
 
+    private final ColumnNameTool columnNameTool;
+
     @FXML
     private TableView<GridLine> tableWords;
 
@@ -63,9 +65,10 @@ public class FilterGridController extends AbstractFilterController<FilterGridMod
     private final Map<GridCell, ReadOnlyObjectWrapper<GridCell>> cellCache = new HashMap<>();
 
     @Inject
-    public FilterGridController(final I18nManager i18nManager, final FileDialogueFactory factory, final TextGridManager textGridManager) {
+    public FilterGridController(final I18nManager i18nManager, final FileDialogueFactory factory, final TextGridManager textGridManager, final ColumnNameTool columnNameTool) {
         super(i18nManager, factory);
         this.textGridManager = textGridManager;
+        this.columnNameTool = columnNameTool;
     }
 
     @Override
@@ -164,7 +167,7 @@ public class FilterGridController extends AbstractFilterController<FilterGridMod
     }
 
     private CheckBox buildAndBindCheckBox(final FilterGridModel filterModel, final int columnNo) {
-        String name = ColumnNameTool.columnName(columnNo);
+        String name = columnNameTool.columnName(columnNo);
         CheckBox box = new CheckBox(name);
         BooleanProperty property = getColumnSelection(filterModel, columnNo);
 
@@ -182,7 +185,7 @@ public class FilterGridController extends AbstractFilterController<FilterGridMod
     }
 
     private TableColumn<GridLine, GridCell> buildColumn(final FilterGridModel filterModel, final int index) {
-        TableColumn<GridLine, GridCell> column = new TableColumn<>(ColumnNameTool.columnName(index));
+        TableColumn<GridLine, GridCell> column = new TableColumn<>(columnNameTool.columnName(index));
 
         column.setSortable(false);
         column.setCellValueFactory(features -> extractValue(features, index));

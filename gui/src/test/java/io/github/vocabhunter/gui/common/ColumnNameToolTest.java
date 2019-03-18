@@ -4,54 +4,32 @@
 
 package io.github.vocabhunter.gui.common;
 
-import org.junit.jupiter.api.Test;
+import io.github.vocabhunter.gui.i18n.I18nManager;
+import io.github.vocabhunter.gui.i18n.I18nManagerImpl;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class ColumnNameToolTest {
-    @Test
-    public void testA() {
-        validate(0, "A");
-    }
+    private final I18nManager i18nManager = new I18nManagerImpl();
 
-    @Test
-    public void testB() {
-        validate(1, "B");
-    }
+    private final ColumnNameTool target = new ColumnNameTool(i18nManager);
 
-    @Test
-    public void testZ() {
-        validate(25, "Z");
-    }
+    @ParameterizedTest
+    @CsvSource({
+        "0,    Column A",
+        "1,    Column B",
+        "25,   Column Z",
+        "26,   Column AA",
+        "27,   Column AB",
+        "701,  Column ZZ",
+        "702,  Column AAA",
+        "1023, Column AMJ",
+    })
+    public void testColumn(final int index, final String expected) {
+        String actual = target.columnName(index);
 
-    @Test
-    public void testAa() {
-        validate(26, "AA");
-    }
-
-    @Test
-    public void testAb() {
-        validate(27, "AB");
-    }
-
-    @Test
-    public void testZz() {
-        validate(701, "ZZ");
-    }
-
-    @Test
-    public void testAaa() {
-        validate(702, "AAA");
-    }
-
-    @Test
-    public void testAmj() {
-        validate(1023, "AMJ");
-    }
-
-    private void validate(final int index, final String name) {
-        String actual = ColumnNameTool.columnName(index);
-
-        assertEquals(actual, "Column " + name);
+        assertEquals(expected, actual);
     }
 }

@@ -16,6 +16,7 @@ public enum I18nKey {
     ABOUT_VERSION("about.version"),
 
     FILTER_GRID_WORDS_COUNT("filter.grid.words.count"),
+    FILTER_GRID_COLUMN("filter.grid.column"),
 
     PROGRESS_SLICE_MARKED("progress.slice.marked"),
     PROGRESS_SLICE_UNMARKED("progress.slice.unmarked"),
