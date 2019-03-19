@@ -11,9 +11,11 @@ import javafx.fxml.FXMLLoader;
 import javax.inject.Inject;
 import javax.inject.Provider;
 
+import static io.github.vocabhunter.gui.i18n.I18nKey.FILTER_GRID_WINDOW_TITLE;
+
 public class FilterGridHandler extends BaseFilterHandler<FilterGridController> {
     @Inject
     public FilterGridHandler(final Provider<FXMLLoader> loaderProvider, final I18nManager i18nManager) {
-        super(loaderProvider, i18nManager, ViewFxml.FILTER_GRID, "Filter Using Word File");
+        super(loaderProvider, i18nManager, ViewFxml.FILTER_GRID, FILTER_GRID_WINDOW_TITLE);
     }
 }
