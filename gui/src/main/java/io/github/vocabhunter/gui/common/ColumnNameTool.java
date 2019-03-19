@@ -22,7 +22,7 @@ public class ColumnNameTool {
     }
 
     public String columnName(final int index) {
-        return i18nManager.text(I18nKey.FILTER_GRID_COLUMN, letters(index));
+        return i18nManager.text(I18nKey.FILTER_COLUMN, letters(index));
     }
 
     private String letters(final int index) {

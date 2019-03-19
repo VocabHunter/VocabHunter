@@ -15,7 +15,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
-import static io.github.vocabhunter.gui.i18n.I18nKey.FILTER_GRID_WORDS_COUNT;
+import static io.github.vocabhunter.gui.i18n.I18nKey.FILTER_WORDS_COUNT;
 
 public abstract class AbstractFilterController<T extends AbstractFilterModel> {
     private final I18nManager i18nManager;
@@ -51,7 +51,7 @@ public abstract class AbstractFilterController<T extends AbstractFilterModel> {
         buttonAddFilterFile.setOnAction(e -> exit(stage, model, onSave, parentModel, true));
         buttonCancel.setOnAction(e -> exit(stage, model, onSave, parentModel, false));
 
-        labelTotalWords.textProperty().bind(i18nManager.textBinding(FILTER_GRID_WORDS_COUNT, model.wordCountProperty()));
+        labelTotalWords.textProperty().bind(i18nManager.textBinding(FILTER_WORDS_COUNT, model.wordCountProperty()));
 
         buttonAddFilterFile.disableProperty().bind(model.errorProperty());
 
