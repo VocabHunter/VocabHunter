@@ -14,6 +14,8 @@ import javafx.stage.Stage;
 import javax.inject.Inject;
 import javax.inject.Provider;
 
+import static io.github.vocabhunter.gui.i18n.I18nKey.FILTER_WINDOW_TITLE;
+
 public class SettingsHandler {
     @Inject
     private Provider<FXMLLoader> loaderProvider;
@@ -28,6 +30,6 @@ public class SettingsHandler {
         SettingsController controller = loader.getController();
 
         controller.initialise(stage);
-        WindowTool.setupModal(stage, root, "Word Filter Settings");
+        WindowTool.setupModal(stage, root, i18nManager.text(FILTER_WINDOW_TITLE));
     }
 }

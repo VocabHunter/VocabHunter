@@ -15,6 +15,7 @@ public enum I18nKey {
 
     ABOUT_VERSION("about.version"),
 
+    FILTER_WINDOW_TITLE("filter.window.title"),
     FILTER_WORDS_COUNT("filter.words.count"),
     FILTER_COLUMN("filter.column"),
 
