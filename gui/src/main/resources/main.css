@@ -292,7 +292,15 @@
 .twitterIcon {
     -glyph-name: TWITTER;
 }
-.websiteIcon, .twitterIcon {
+.githubIcon {
+    -glyph-name: GITHUB;
+}
+.starIcon {
+    -glyph-name: STAR;
+    -fx-fill: yellow;
+    -glyph-size: 30;
+}
+.websiteIcon, .twitterIcon, .githubIcon {
     -fx-fill: -fx-accent;
     -glyph-size: 30;
 }

@@ -38,6 +38,20 @@
                                 <FontAwesomeIconView styleClass="twitterIcon" />
                             </graphic>
                         </Hyperlink>
+                        <HBox>
+                            <children>
+                                <Hyperlink fx:id="linkGithub" styleClass="github" text="%about.github">
+                                    <graphic>
+                                        <FontAwesomeIconView styleClass="githubIcon" />
+                                    </graphic>
+                                </Hyperlink>
+                                <Hyperlink fx:id="linkGithubStar" styleClass="githubStar">
+                                    <graphic>
+                                        <FontAwesomeIconView styleClass="starIcon" />
+                                    </graphic>
+                                </Hyperlink>
+                            </children>
+                        </HBox>
                     </children>
                 </VBox>
             </left>

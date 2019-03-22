@@ -32,6 +32,12 @@ public class AboutController {
     private Hyperlink linkTwitter;
 
     @FXML
+    private Hyperlink linkGithub;
+
+    @FXML
+    private Hyperlink linkGithubStar;
+
+    @FXML
     private Label labelVersion;
 
     @Inject
@@ -44,6 +50,8 @@ public class AboutController {
         buttonClose.setOnAction(e -> stage.close());
         linkWebsite.setOnAction(e -> webPageTool.showWebPage(GuiConstants.WEBSITE));
         linkTwitter.setOnAction(e -> webPageTool.showWebPage(GuiConstants.TWITTER));
+        linkGithub.setOnAction(e -> webPageTool.showWebPage(GuiConstants.GITHUB));
+        linkGithubStar.setOnAction(e -> webPageTool.showWebPage(GuiConstants.GITHUB));
 
         labelVersion.setText(i18nManager.text(I18nKey.ABOUT_VERSION, BuildInfo.version()));
     }
