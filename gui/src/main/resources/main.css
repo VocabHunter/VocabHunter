@@ -4,6 +4,7 @@
  * Open Source Software published under the Apache Licence, Version 2.0.
  */
 
+@import "about.css"
 @import "colours.css"
 
 .mainWord {
@@ -184,37 +185,12 @@
 .iconBox, .iconBoxSmall {
     -fx-alignment: center;
 }
-.about BorderPane {
-    -fx-padding: 10 20 10 10;
-    -fx-border-insets: 10 10 10 10;
-    -fx-border-style: dashed;
-}
-.about Label, .about Hyperlink {
-    -fx-font-size: 20;
-    -fx-padding: 7 0 7 0;
-}
 .noteEditor {
     -fx-padding: 10;
 }
 .noteEditor TextArea {
     -fx-pref-width: 1000;
     -fx-pref-height: 400;
-}
-.websiteIcon {
-    -glyph-name: HOME;
-}
-.twitterIcon {
-    -glyph-name: TWITTER;
-}
-.githubIcon {
-    -glyph-name: GITHUB;
-}
-.starIcon {
-    -glyph-name: STAR;
-    -glyph-size: 30;
-}
-.websiteIcon, .twitterIcon, .githubIcon {
-    -glyph-size: 30;
 }
 .noSession .new {
     -fx-padding: 10 0 10 5;
