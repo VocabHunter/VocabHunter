@@ -6,7 +6,7 @@
 
 .about BorderPane {
     -fx-padding: 10 20 10 10;
-    -fx-border-insets: 10 10 10 10;
+    -fx-border-insets: 10 4 10 10;
     -fx-border-style: dashed;
 }
 .about Label, .about Hyperlink {
@@ -24,8 +24,11 @@
 }
 .starIcon {
     -glyph-name: STAR;
-    -glyph-size: 30;
+    -glyph-size: 20;
 }
 .websiteIcon, .twitterIcon, .githubIcon {
     -glyph-size: 30;
+}
+.about .boxAboutLabels {
+    -fx-padding: 0 10 0 0;
 }

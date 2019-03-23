@@ -185,6 +185,7 @@
 
 .starIcon {
     -fx-fill: yellow;
+    -fx-stroke: goldenrod;
 }
 .websiteIcon, .twitterIcon, .githubIcon {
     -fx-fill: -fx-accent;

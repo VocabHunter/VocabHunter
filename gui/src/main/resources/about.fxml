@@ -23,7 +23,7 @@
                 <Button fx:id="buttonClose" mnemonicParsing="false" text="%about.close" BorderPane.alignment="BOTTOM_RIGHT" />
             </right>
             <left>
-                <VBox>
+                <VBox styleClass="boxAboutLabels">
                     <children>
                         <Label text="%about.licence" />
                         <Label fx:id="labelVersion" text="VERSION INFORMATION" />
@@ -38,7 +38,7 @@
                                 <FontAwesomeIconView styleClass="twitterIcon" />
                             </graphic>
                         </Hyperlink>
-                        <HBox>
+                        <HBox alignment="CENTER_LEFT">
                             <children>
                                 <Hyperlink fx:id="linkGithub" styleClass="github" text="%about.github">
                                     <graphic>
