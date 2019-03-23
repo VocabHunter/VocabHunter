@@ -1,0 +1,242 @@
+/*
+ * Colours.
+ *
+ * Open Source Software published under the Apache Licence, Version 2.0.
+ */
+
+* {
+   -colour-unseen: #F5F9FF;
+   -colour-unseen-dark1: derive(-colour-unseen, -20%);
+   -colour-unseen-dark2: derive(-colour-unseen, -40%);
+   -colour-known: #EBFFF0;
+   -colour-known-end: #008000;
+   -colour-known-dark1: derive(-colour-known, -20%);
+   -colour-known-dark2: derive(-colour-known, -40%);
+   -gradient-known: linear-gradient(from 0% 0% to 100% 200%, repeat, -colour-known 0%, -colour-known-end 90%);
+   -colour-unknown: #FFF0ED;
+   -colour-unknown-end: #a43030;
+   -colour-unknown-dark1: derive(-colour-unknown, -20%);
+   -colour-unknown-dark2: derive(-colour-unknown, -40%);
+   -gradient-unknown: linear-gradient(from 0% 0% to 100% 200%, repeat, -colour-unknown 0%, -colour-unknown-end 90%);
+   -colour-word-use: darkblue;
+   -colour-filtered: lightgrey;
+   -colour-done: royalblue;
+   -colour-remaining: lightcoral;
+   -colour-unseen-unfiltered: powderblue;
+   -colour-search-fail: lightcoral;
+}
+
+/*
+ * Common elements.
+ */
+
+.masker {
+    -fx-background-color: black;
+}
+
+/*
+ * Title.
+ */
+
+.title {
+    -fx-stroke: black;
+}
+.title.left {
+    -fx-fill: -gradient-known;
+}
+.title.right {
+    -fx-fill: -gradient-unknown;
+}
+
+/*
+ * Main Word Pane.
+ */
+
+.buttonKnown {
+    -fx-base: -colour-known;
+}
+.buttonUnknown {
+    -fx-base: -colour-unknown;
+}
+.buttonKnownIcon, .filterKnownIcon, .filterKnownIconSmall {
+    -fx-fill: -colour-known-end;
+}
+.buttonUnknownIcon, .filterUnknownIcon, .filterUnknownIconSmall {
+    -fx-fill: -colour-unknown-end;
+}
+
+.buttonNoteIcon {
+    -fx-fill: -colour-unseen-dark2;  /* This corresponds to the pseudo-class "unseen" */
+}
+.mainWordPane:known .buttonNoteIcon {
+    -fx-fill: -colour-known-dark2;
+}
+.mainWordPane:unknown .buttonNoteIcon {
+    -fx-fill: -colour-unknown-dark2;
+}
+
+.mainWordPane { /* This corresponds to the pseudo-class "unseen" */
+    -fx-background-color: -colour-unseen;
+}
+.mainWordPane:known {
+    -fx-background-color: -colour-known;
+}
+.mainWordPane:unknown {
+    -fx-background-color: -colour-unknown;
+}
+
+.mainWordPane:known .textAreaWordNote {
+    -fx-background-color: -colour-known-dark1;
+}
+.mainWordPane:unknown .textAreaWordNote {
+    -fx-background-color: -colour-unknown-dark1;
+}
+.textAreaWordNote .content { /* This corresponds to the pseudo-class "unseen" */
+    -fx-background-color: -colour-unseen;
+}
+.mainWordPane:known .textAreaWordNote .content {
+    -fx-background-color: -colour-known;
+}
+.mainWordPane:unknown .textAreaWordNote .content {
+    -fx-background-color: -colour-unknown;
+}
+
+.textAreaWordNote {
+    -fx-background-color: -colour-unseen-dark1; /* This corresponds to the pseudo-class "unseen" */
+}
+
+/*
+ * Word List.
+ */
+
+.wordList .list-cell:selected {
+    -fx-text-fill: black;
+    -fx-border-color: black;
+}
+
+.wordList .list-cell, .wordList .table-cell {
+    -fx-border-color: white;
+}
+
+.wordList .list-cell:unseen, .wordList .table-cell:unseen {
+    -fx-background-color: -colour-unseen;
+}
+.wordList .list-cell:known, .wordList .table-cell:known {
+    -fx-background-color: -gradient-known;
+}
+.wordList .list-cell:unknown, .wordList .table-cell:unknown {
+    -fx-background-color: -gradient-unknown;
+}
+.wordList .table-cell:excluded {
+    -fx-background-color: lightgrey;
+}
+
+.wordList .table-cell:excluded .text {
+    -fx-fill: red;
+}
+
+.wordList .error {
+    -fx-text-fill: red;
+}
+
+.wordCount:fail {
+    -fx-text-fill: red;
+}
+
+/*
+ * Other session items.
+ */
+
+.wordUse {
+    -fx-fill: -colour-word-use;
+}
+
+.miniGraph {
+  -fx-control-inner-background: -colour-remaining;
+  -fx-accent: -colour-done;
+}
+
+.searchField:fail {
+    -fx-background-color: -colour-search-fail;
+}
+
+/*
+ * Filters.
+ */
+
+.buttonFilterSessionIcon {
+    -fx-fill: -colour-known-end;
+}
+
+.settings .settingsGroup {
+    -fx-border-color: lightgrey;
+}
+.filter .filterInclusionBox {
+    -fx-border-color: lightgrey;
+}
+
+/*
+ * About dialogue.
+ */
+
+.about BorderPane {
+    -fx-border-color: lightgrey;
+}
+
+.starIcon {
+    -fx-fill: yellow;
+}
+.websiteIcon, .twitterIcon, .githubIcon {
+    -fx-fill: -fx-accent;
+}
+
+/*
+ * Progress chart.
+ */
+
+/* Done */
+.chartProgress .default-color0.chart-pie {
+    -fx-pie-color: -colour-done;
+}
+/* Remaining */
+.chartProgress .default-color1.chart-pie {
+    -fx-pie-color: -colour-remaining;
+}
+/* Known */
+.chartResults .default-color0.chart-pie {
+    -fx-pie-color: -colour-known-end;
+}
+/* Unknown */
+.chartResults .default-color1.chart-pie {
+    -fx-pie-color: -colour-unknown-end;
+}
+/* Unseen & unfiltered */
+.chartResults .default-color2.chart-pie {
+    -fx-pie-color: -colour-unseen-unfiltered;
+}
+/* Unseen & filtered */
+.chartResults .default-color3.chart-pie {
+    -fx-pie-color: -colour-filtered;
+}
+
+.chartLegend .keyDone {
+    -fx-fill: -colour-done;
+}
+.chartLegend .keyRemaining {
+    -fx-fill: -colour-remaining;
+}
+.chartLegend .keyKnown {
+    -fx-fill: -colour-known-end;
+}
+.chartLegend .keyUnknown {
+    -fx-fill: -colour-unknown-end;
+}
+.chartLegend .keyUnseenUnfiltered {
+    -fx-fill: -colour-unseen-unfiltered;
+}
+.chartLegend .keyFiltered {
+    -fx-fill: -colour-filtered;
+}
+.chartLegend {
+    -fx-border-color: lightgrey;
+}

@@ -1,24 +1,10 @@
-* {
-   -colour-unseen: #F5F9FF;
-   -colour-unseen-dark1: derive(-colour-unseen, -20%);
-   -colour-unseen-dark2: derive(-colour-unseen, -40%);
-   -colour-known: #EBFFF0;
-   -colour-known-end: #008000;
-   -colour-known-dark1: derive(-colour-known, -20%);
-   -colour-known-dark2: derive(-colour-known, -40%);
-   -gradient-known: linear-gradient(from 0% 0% to 100% 200%, repeat, -colour-known 0%, -colour-known-end 90%);
-   -colour-unknown: #FFF0ED;
-   -colour-unknown-end: #a43030;
-   -colour-unknown-dark1: derive(-colour-unknown, -20%);
-   -colour-unknown-dark2: derive(-colour-unknown, -40%);
-   -gradient-unknown: linear-gradient(from 0% 0% to 100% 200%, repeat, -colour-unknown 0%, -colour-unknown-end 90%);
-   -colour-word-use: darkblue;
-   -colour-filtered: lightgrey;
-   -colour-done: royalblue;
-   -colour-remaining: lightcoral;
-   -colour-unseen-unfiltered: powderblue;
-   -colour-search-fail: lightcoral;
-}
+/*
+ * Top-level style sheet for VocabHunter.
+ *
+ * Open Source Software published under the Apache Licence, Version 2.0.
+ */
+
+@import "colours.css"
 
 .mainWord {
     -fx-font-size: 40;
@@ -26,15 +12,6 @@
 .useCount {
     -fx-font-size: 13;
     -fx-padding: 0 0 10 0;
-}
-.mainWordPane { /* This corresponds to the pseudo-class "unseen" */
-    -fx-background-color: -colour-unseen;
-}
-.mainWordPane:known {
-    -fx-background-color: -colour-known;
-}
-.mainWordPane:unknown {
-    -fx-background-color: -colour-unknown;
 }
 .padTopWord {
     -fx-pref-height: 60;
@@ -45,54 +22,20 @@
     -fx-background-insets: 10 0 5 0;
     -fx-min-height: 43;
     -fx-pref-height: 60;
-    -fx-background-color: -colour-unseen-dark1; /* This corresponds to the pseudo-class "unseen" */
-}
-.mainWordPane:known .textAreaWordNote {
-    -fx-background-color: -colour-known-dark1;
-}
-.mainWordPane:unknown .textAreaWordNote {
-    -fx-background-color: -colour-unknown-dark1;
-}
-.textAreaWordNote .content { /* This corresponds to the pseudo-class "unseen" */
-    -fx-background-color: -colour-unseen;
-}
-.mainWordPane:known .textAreaWordNote .content {
-    -fx-background-color: -colour-known;
-}
-.mainWordPane:unknown .textAreaWordNote .content {
-    -fx-background-color: -colour-unknown;
 }
 .wordList .list-cell:selected {
-    -fx-text-fill: black;
     -fx-font-weight: bold;
-    -fx-border-color: black;
 }
 .wordList .list-cell, .wordList .table-cell {
-    -fx-border-color: white;
     -fx-border-width: 1 0 1 0;
-}
-.wordList .list-cell:unseen, .wordList .table-cell:unseen {
-    -fx-background-color: -colour-unseen;
-}
-.wordList .list-cell:known, .wordList .table-cell:known {
-    -fx-background-color: -gradient-known;
-}
-.wordList .list-cell:unknown, .wordList .table-cell:unknown {
-    -fx-background-color: -gradient-unknown;
-}
-.wordList .table-cell:excluded {
-    -fx-background-color: lightgrey;
 }
 .wordList .table-cell:excluded .text {
     -fx-strikethrough: true;
-    -fx-fill: red;
 }
 .wordList .error {
-    -fx-text-fill: red;
     -fx-font-size: 18;
 }
 .wordCount:fail {
-    -fx-text-fill: red;
     -fx-font-weight: bold;
 }
 .filterSessionStateColumn {
@@ -126,7 +69,6 @@
 }
 .buttonFilterSessionIcon {
     -glyph-name: CHECK_SQUARE;
-    -fx-fill: -colour-known-end;
 }
 .buttonFilterGridIcon, .filterGridIcon {
     -glyph-name: TABLE;
@@ -138,19 +80,11 @@
 .buttonFilterSessionIcon, .buttonFilterGridIcon {
     -glyph-size: 20;
 }
-.buttonKnown {
-    -fx-base: -colour-known;
-}
 .buttonKnownIcon, .filterKnownIcon, .filterKnownIconSmall {
     -glyph-name: CHECK_CIRCLE;
-    -fx-fill: -colour-known-end;
-}
-.buttonUnknown {
-    -fx-base: -colour-unknown;
 }
 .buttonUnknownIcon, .filterUnknownIcon, .filterUnknownIconSmall {
     -glyph-name: TIMES_CIRCLE;
-    -fx-fill: -colour-unknown-end;
 }
 .filterKnownIcon, .filterUnknownIcon, .filterGridIcon {
     -glyph-size: 20;
@@ -168,13 +102,6 @@
 .buttonNoteIcon {
     -glyph-size: 40;
     -glyph-name: COMMENT_ALT;
-    -fx-fill: -colour-unseen-dark2;  /* This corresponds to the pseudo-class "unseen" */
-}
-.mainWordPane:known .buttonNoteIcon {
-    -fx-fill: -colour-known-dark2;
-}
-.mainWordPane:unknown .buttonNoteIcon {
-    -fx-fill: -colour-unknown-dark2;
 }
 .buttonUnseen, .buttonNote, .buttonSearchClose, .buttonSearchUp, .buttonSearchDown {
     -fx-background-color: transparent;
@@ -209,9 +136,6 @@
     -glyph-size: 13;
     -glyph-name: SEARCH;
 }
-.searchField:fail {
-    -fx-background-color: -colour-search-fail;
-}
 .noSession {
     -fx-font-size: 16;
 }
@@ -219,14 +143,7 @@
     -fx-font-size: 90;
     -fx-font-family: sans-serif;
     -fx-font-style: italic;
-    -fx-stroke: black;
     -fx-stroke-width: 1;
-}
-.title.left {
-    -fx-fill: -gradient-known;
-}
-.title.right {
-    -fx-fill: -gradient-unknown;
 }
 .settings, .filter {
     -fx-padding: 20 20 20 20;
@@ -242,7 +159,6 @@
     -fx-padding: 20 0 0 0;
 }
 .settings .settingsGroup {
-    -fx-border-color: lightgrey;
     -fx-border-width: 1;
     -fx-padding: 10 10 10 10;
     -fx-border-insets: 5 0 5 0;
@@ -254,7 +170,6 @@
 }
 .filter .filterInclusionBox {
     -fx-spacing: 7;
-    -fx-border-color: lightgrey;
     -fx-border-width: 1;
     -fx-padding: 10;
     -fx-border-insets: 5 0 5 0;
@@ -272,7 +187,6 @@
 .about BorderPane {
     -fx-padding: 10 20 10 10;
     -fx-border-insets: 10 10 10 10;
-    -fx-border-color: lightgrey;
     -fx-border-style: dashed;
 }
 .about Label, .about Hyperlink {
@@ -297,11 +211,9 @@
 }
 .starIcon {
     -glyph-name: STAR;
-    -fx-fill: yellow;
     -glyph-size: 30;
 }
 .websiteIcon, .twitterIcon, .githubIcon {
-    -fx-fill: -fx-accent;
     -glyph-size: 30;
 }
 .noSession .new {
@@ -312,66 +224,17 @@
 }
 .wordUse {
     -fx-font-weight: bold;
-    -fx-fill: -colour-word-use;
-}
-/* Done */
-.chartProgress .default-color0.chart-pie {
-    -fx-pie-color: -colour-done;
-}
-/* Remaining */
-.chartProgress .default-color1.chart-pie {
-    -fx-pie-color: -colour-remaining;
-}
-/* Known */
-.chartResults .default-color0.chart-pie {
-    -fx-pie-color: -colour-known-end;
-}
-/* Unknown */
-.chartResults .default-color1.chart-pie {
-    -fx-pie-color: -colour-unknown-end;
-}
-/* Unseen & unfiltered */
-.chartResults .default-color2.chart-pie {
-    -fx-pie-color: -colour-unseen-unfiltered;
-}
-/* Unseen & filtered */
-.chartResults .default-color3.chart-pie {
-    -fx-pie-color: -colour-filtered;
 }
 .chartLegend {
     -fx-padding: 10;
-    -fx-border-color: lightgrey;
     -fx-border-width: 1;
     -fx-border-insets: 0 0 10 0;
 }
 .chartLegend Label {
     -fx-padding: 5 0 5 5;
 }
-.chartLegend .keyDone {
-    -fx-fill: -colour-done;
-}
-.chartLegend .keyRemaining {
-    -fx-fill: -colour-remaining;
-}
-.chartLegend .keyKnown {
-    -fx-fill: -colour-known-end;
-}
-.chartLegend .keyUnknown {
-    -fx-fill: -colour-unknown-end;
-}
-.chartLegend .keyUnseenUnfiltered {
-    -fx-fill: -colour-unseen-unfiltered;
-}
-.chartLegend .keyFiltered {
-    -fx-fill: -colour-filtered;
-}
 .masker {
-    -fx-background-color: black;
     -fx-opacity: 0.3;
-}
-.miniGraph {
-  -fx-control-inner-background: -colour-remaining;
-  -fx-accent: -colour-done;
 }
 .miniGraph .bar {
     -fx-background-insets: 0;
