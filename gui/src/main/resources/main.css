@@ -212,9 +212,6 @@
 .masker {
     -fx-opacity: 0.3;
 }
-.miniGraph .bar {
-    -fx-background-insets: 0;
-}
-.miniGraph .track {
+.miniGraph .bar, .miniGraph .track {
     -fx-background-insets: 0;
 }
