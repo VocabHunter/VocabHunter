@@ -23,6 +23,9 @@ public class SettingsHandler {
     @Inject
     private I18nManager i18nManager;
 
+    @Inject
+    private WindowTool windowTool;
+
     public void show() {
         Stage stage = new Stage();
         FXMLLoader loader = loaderProvider.get();
@@ -30,6 +33,6 @@ public class SettingsHandler {
         SettingsController controller = loader.getController();
 
         controller.initialise(stage);
-        WindowTool.setupModal(stage, root, i18nManager.text(FILTER_WINDOW_TITLE));
+        windowTool.setupModal(stage, root, FILTER_WINDOW_TITLE);
     }
 }

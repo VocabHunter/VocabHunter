@@ -21,13 +21,16 @@ public class BaseFilterHandler<T extends AbstractFilterController<?>> {
 
     private final I18nManager i18nManager;
 
+    private final WindowTool windowTool;
+
     private final ViewFxml viewFxml;
 
     private final I18nKey windowTitleKey;
 
-    protected BaseFilterHandler(final Provider<FXMLLoader> loaderProvider, final I18nManager i18nManager, final ViewFxml viewFxml, final I18nKey windowTitleKey) {
+    protected BaseFilterHandler(final Provider<FXMLLoader> loaderProvider, final I18nManager i18nManager, final WindowTool windowTool, final ViewFxml viewFxml, final I18nKey windowTitleKey) {
         this.loaderProvider = loaderProvider;
         this.i18nManager = i18nManager;
+        this.windowTool = windowTool;
         this.viewFxml = viewFxml;
         this.windowTitleKey = windowTitleKey;
     }
@@ -37,11 +40,10 @@ public class BaseFilterHandler<T extends AbstractFilterController<?>> {
         FXMLLoader loader = loaderProvider.get();
         Parent root = viewFxml.loadNode(loader, i18nManager);
         T controller = loader.getController();
-        String windowTitle = i18nManager.text(windowTitleKey);
 
         try {
             controller.initialise(stage, model, onSave);
-            WindowTool.setupModal(stage, root, windowTitle);
+            windowTool.setupModal(stage, root, windowTitleKey);
         } catch (final RuntimeException e) {
             FileErrorTool.open(i18nManager, model.getFile(), e);
         }

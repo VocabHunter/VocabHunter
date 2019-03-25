@@ -30,6 +30,7 @@ public enum I18nKey {
     PROGRESS_WORD_COUNT("progress.word.count"),
     PROGRESS_WORD_PERCENTAGE("progress.word.percentage"),
 
+    NOTE_WINDOW_TITLE("note.window.title"),
     NOTE_TITLE("note.title"),
 
     ERROR_DETAILS("error.details"),
