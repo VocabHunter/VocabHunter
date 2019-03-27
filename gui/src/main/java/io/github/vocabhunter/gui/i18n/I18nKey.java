@@ -18,6 +18,9 @@ public enum I18nKey {
     FILTER_WINDOW_TITLE("filter.window.title"),
     FILTER_WORDS_COUNT("filter.words.count"),
     FILTER_COLUMN("filter.column"),
+    FILTER_ERROR_TITLE("filter.error.title"),
+    FILTER_ERROR_ALL("filter.error.all"),
+    FILTER_ERROR_DISABLED("filter.error.disabled"),
 
     FILTER_GRID_WINDOW_TITLE("filter.grid.window.title"),
     FILTER_SESSION_WINDOW_TITLE("filter.session.window.title"),

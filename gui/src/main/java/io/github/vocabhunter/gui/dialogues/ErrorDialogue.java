@@ -4,6 +4,7 @@
 
 package io.github.vocabhunter.gui.dialogues;
 
+import io.github.vocabhunter.gui.i18n.I18nKey;
 import io.github.vocabhunter.gui.i18n.I18nManager;
 import javafx.application.Platform;
 import javafx.scene.control.Alert;
@@ -22,9 +23,9 @@ import static io.github.vocabhunter.gui.i18n.I18nKey.ERROR_DETAILS;
 public class ErrorDialogue {
     private final Alert alert;
 
-    public ErrorDialogue(final I18nManager i18nManager, final String title, final Throwable e, final String... messages) {
+    public ErrorDialogue(final I18nManager i18nManager, final I18nKey titleKey, final Throwable e, final String... messages) {
         alert = new Alert(AlertType.ERROR);
-        alert.setTitle(title);
+        alert.setTitle(i18nManager.text(titleKey));
         alert.setHeaderText(headerText(messages));
 
         TextArea textArea = new TextArea(exceptionText(e));

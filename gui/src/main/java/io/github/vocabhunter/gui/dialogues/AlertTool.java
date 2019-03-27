@@ -7,27 +7,32 @@ package io.github.vocabhunter.gui.dialogues;
 import io.github.vocabhunter.gui.i18n.I18nManager;
 import javafx.scene.control.Alert;
 
-public final class AlertTool {
-    private static final String TITLE = "Filter Error";
-    private static final String FILTER_ALL_WORDS = "The selected filters would hide all of the words.";
-    private static final String FILTERS_DISABLED = "The filters have been disabled.";
+import javax.inject.Inject;
+import javax.inject.Singleton;
 
-    private AlertTool() {
-        // Prevent instantiation - all methods are static
+import static io.github.vocabhunter.gui.i18n.I18nKey.*;
+
+@Singleton
+public class AlertTool {
+    private final I18nManager i18nManager;
+
+    @Inject
+    public AlertTool(final I18nManager i18nManager) {
+        this.i18nManager = i18nManager;
     }
 
-    public static void filterErrorAlert(final I18nManager i18nManager, final Exception e) {
-        ErrorDialogue dialogue = new ErrorDialogue(i18nManager, TITLE, e, e.getMessage(), FILTERS_DISABLED);
+    public void filterErrorAlert(final Exception e) {
+        ErrorDialogue dialogue = new ErrorDialogue(i18nManager, FILTER_ERROR_TITLE, e, e.getMessage(), i18nManager.text(FILTER_ERROR_DISABLED));
 
         dialogue.showError();
     }
 
-    public static void filterErrorAlert() {
+    public void filterErrorAlert() {
         Alert alert = new Alert(Alert.AlertType.ERROR);
 
-        alert.setTitle(TITLE);
-        alert.setHeaderText(FILTER_ALL_WORDS);
-        alert.setContentText(FILTERS_DISABLED);
+        alert.setTitle(i18nManager.text(FILTER_ERROR_TITLE));
+        alert.setHeaderText(i18nManager.text(FILTER_ERROR_ALL));
+        alert.setContentText(i18nManager.text(FILTER_ERROR_DISABLED));
         alert.getDialogPane().setId("filterErrorDialogue");
 
         alert.showAndWait();

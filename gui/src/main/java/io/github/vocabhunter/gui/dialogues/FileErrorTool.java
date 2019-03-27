@@ -35,9 +35,8 @@ public final class FileErrorTool {
     private static void handleFileError(final I18nManager i18nManager, final Path file, final RuntimeException e, final I18nKey titleKey, final I18nKey detailKey, final String log) {
         LOG.info(log, file, e);
 
-        String title = i18nManager.text(titleKey);
         String message = i18nManager.text(detailKey, file.getFileName());
-        ErrorDialogue dialogue = new ErrorDialogue(i18nManager, title, e, message);
+        ErrorDialogue dialogue = new ErrorDialogue(i18nManager, titleKey, e, message);
 
         dialogue.showError();
     }

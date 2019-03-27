@@ -9,6 +9,7 @@ import io.github.vocabhunter.analysis.filter.WordFilter;
 import io.github.vocabhunter.analysis.marked.MarkTool;
 import io.github.vocabhunter.analysis.marked.WordState;
 import io.github.vocabhunter.gui.common.GuiTaskHandler;
+import io.github.vocabhunter.gui.dialogues.AlertTool;
 import io.github.vocabhunter.gui.i18n.I18nManager;
 import io.github.vocabhunter.gui.model.PositionModel;
 import io.github.vocabhunter.gui.model.SessionModel;
@@ -28,7 +29,6 @@ import org.slf4j.LoggerFactory;
 import javax.inject.Inject;
 
 import static io.github.vocabhunter.gui.common.EventHandlerTool.combine;
-import static io.github.vocabhunter.gui.dialogues.AlertTool.filterErrorAlert;
 
 public class SessionController {
     private static final Logger LOG = LoggerFactory.getLogger(SessionController.class);
@@ -98,6 +98,9 @@ public class SessionController {
 
     @Inject
     private WordNoteHandler wordNoteHandler;
+
+    @Inject
+    private AlertTool alertTool;
 
     private SessionModel sessionModel;
 
@@ -202,14 +205,16 @@ public class SessionController {
     }
 
     private void processFilterFailure(final VocabHunterException e) {
-        Platform.runLater(() -> {
-            sessionModel.setEnableFilters(false);
-            if (e == null) {
-                filterErrorAlert();
-            } else {
-                filterErrorAlert(i18nManager, e);
-            }
-        });
+        Platform.runLater(() -> reportFilterFailure(e));
+    }
+
+    private void reportFilterFailure(final VocabHunterException e) {
+        sessionModel.setEnableFilters(false);
+        if (e == null) {
+            alertTool.filterErrorAlert();
+        } else {
+            alertTool.filterErrorAlert(e);
+        }
     }
 
     private void updateCurrentWordProperty(final WordModel word) {
