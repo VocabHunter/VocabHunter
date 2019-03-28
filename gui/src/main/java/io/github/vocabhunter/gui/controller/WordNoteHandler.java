@@ -4,11 +4,11 @@
 
 package io.github.vocabhunter.gui.controller;
 
+import io.github.vocabhunter.gui.dialogues.DialogueTool;
 import io.github.vocabhunter.gui.i18n.I18nManager;
 import io.github.vocabhunter.gui.model.SessionModel;
 import io.github.vocabhunter.gui.model.WordModel;
 import io.github.vocabhunter.gui.view.ViewFxml;
-import io.github.vocabhunter.gui.view.WindowTool;
 import javafx.beans.binding.StringBinding;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.fxml.FXMLLoader;
@@ -30,15 +30,15 @@ public class WordNoteHandler {
 
     private final I18nManager i18nManager;
 
-    private final WindowTool windowTool;
+    private final DialogueTool dialogueTool;
 
     private SessionModel sessionModel;
 
     @Inject
-    public WordNoteHandler(final Provider<FXMLLoader> loaderProvider, final I18nManager i18nManager, final WindowTool windowTool) {
+    public WordNoteHandler(final Provider<FXMLLoader> loaderProvider, final I18nManager i18nManager, final DialogueTool dialogueTool) {
         this.loaderProvider = loaderProvider;
         this.i18nManager = i18nManager;
-        this.windowTool = windowTool;
+        this.dialogueTool = dialogueTool;
     }
 
     public void initialise(final Button buttonNote, final TextArea textAreaNotePreview, final SessionModel sessionModel) {
@@ -63,7 +63,7 @@ public class WordNoteHandler {
         WordNoteController controller = loader.getController();
 
         controller.initialise(stage, sessionModel);
-        windowTool.setupModal(stage, root, NOTE_WINDOW_TITLE);
+        dialogueTool.setupModal(stage, root, NOTE_WINDOW_TITLE);
     }
 
     public void processKeyPress(final KeyEvent event) {

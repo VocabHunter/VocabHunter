@@ -50,6 +50,9 @@ public class GuiFileHandler {
     @Inject
     private GuiTaskHandler guiTaskHandler;
 
+    @Inject
+    private DialogueTool dialogueTool;
+
     public void initialise(final Stage stage) {
         this.stage = stage;
     }
@@ -74,7 +77,7 @@ public class GuiFileHandler {
                 guiTaskHandler,
                 statusManager,
                 () -> processExport(fileWithSuffix, sessionState),
-                e -> FileErrorTool.export(i18nManager, fileWithSuffix, e)
+                e -> dialogueTool.errorOnExport(fileWithSuffix, e)
             );
 
             guiTaskHandler.executeInBackground(task);
@@ -103,7 +106,7 @@ public class GuiFileHandler {
                 statusManager,
                 () -> sessionFileService.createOrOpenSession(file),
                 this::finishOpen,
-                e -> FileErrorTool.open(i18nManager, file, e));
+                e -> dialogueTool.errorOnOpen(file, e));
 
             guiTaskHandler.executeInBackground(task);
         } else {
@@ -131,7 +134,7 @@ public class GuiFileHandler {
                 statusManager,
                 () -> sessionFileService.read(file),
                 this::finishOpen,
-                e -> FileErrorTool.open(i18nManager, file, e));
+                e -> dialogueTool.errorOnOpen(file, e));
 
             guiTaskHandler.executeInBackground(task);
         }
@@ -157,7 +160,7 @@ public class GuiFileHandler {
                 statusManager,
                 () -> sessionFileService.createNewSession(file),
                 this::finishOpen,
-                e -> FileErrorTool.open(i18nManager, file, e));
+                e -> dialogueTool.errorOnOpen(file, e));
 
             guiTaskHandler.executeInBackground(task);
         }
@@ -211,7 +214,7 @@ public class GuiFileHandler {
             statusManager,
             () -> saveFile(file, sessionState),
             b -> model.setChangesSaved(true),
-            e -> FileErrorTool.save(i18nManager, file, e)
+            e -> dialogueTool.errorOnSave(file, e)
         );
 
         guiTaskHandler.executeInBackground(task);
@@ -295,7 +298,7 @@ public class GuiFileHandler {
 
             return true;
         } catch (final RuntimeException e) {
-            FileErrorTool.save(i18nManager, file, e);
+            dialogueTool.errorOnSave(file, e);
 
             return false;
         }

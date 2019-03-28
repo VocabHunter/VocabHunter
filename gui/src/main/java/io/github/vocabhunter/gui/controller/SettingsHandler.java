@@ -4,9 +4,9 @@
 
 package io.github.vocabhunter.gui.controller;
 
+import io.github.vocabhunter.gui.dialogues.DialogueTool;
 import io.github.vocabhunter.gui.i18n.I18nManager;
 import io.github.vocabhunter.gui.view.ViewFxml;
-import io.github.vocabhunter.gui.view.WindowTool;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.stage.Stage;
@@ -24,7 +24,7 @@ public class SettingsHandler {
     private I18nManager i18nManager;
 
     @Inject
-    private WindowTool windowTool;
+    private DialogueTool dialogueTool;
 
     public void show() {
         Stage stage = new Stage();
@@ -33,6 +33,6 @@ public class SettingsHandler {
         SettingsController controller = loader.getController();
 
         controller.initialise(stage);
-        windowTool.setupModal(stage, root, FILTER_WINDOW_TITLE);
+        dialogueTool.setupModal(stage, root, FILTER_WINDOW_TITLE);
     }
 }

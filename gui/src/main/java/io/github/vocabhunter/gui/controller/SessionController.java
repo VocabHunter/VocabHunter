@@ -9,7 +9,7 @@ import io.github.vocabhunter.analysis.filter.WordFilter;
 import io.github.vocabhunter.analysis.marked.MarkTool;
 import io.github.vocabhunter.analysis.marked.WordState;
 import io.github.vocabhunter.gui.common.GuiTaskHandler;
-import io.github.vocabhunter.gui.dialogues.AlertTool;
+import io.github.vocabhunter.gui.dialogues.DialogueTool;
 import io.github.vocabhunter.gui.i18n.I18nManager;
 import io.github.vocabhunter.gui.model.PositionModel;
 import io.github.vocabhunter.gui.model.SessionModel;
@@ -100,7 +100,7 @@ public class SessionController {
     private WordNoteHandler wordNoteHandler;
 
     @Inject
-    private AlertTool alertTool;
+    private DialogueTool dialogueTool;
 
     private SessionModel sessionModel;
 
@@ -211,9 +211,9 @@ public class SessionController {
     private void reportFilterFailure(final VocabHunterException e) {
         sessionModel.setEnableFilters(false);
         if (e == null) {
-            alertTool.filterErrorAlert();
+            dialogueTool.filterErrorAlert();
         } else {
-            alertTool.filterErrorAlert(e);
+            dialogueTool.filterErrorAlert(e);
         }
     }
 
