@@ -75,4 +75,8 @@ public class DialogueTool {
 
         alert.showAndWait();
     }
+
+    public UnsavedChangesDialogue unsavedChangesDialogue(final Path file) {
+        return new UnsavedChangesDialogue(file, i18nManager);
+    }
 }

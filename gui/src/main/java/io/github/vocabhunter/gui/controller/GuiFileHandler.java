@@ -9,7 +9,6 @@ import io.github.vocabhunter.analysis.session.FileNameTool;
 import io.github.vocabhunter.analysis.session.SessionState;
 import io.github.vocabhunter.gui.common.GuiTaskHandler;
 import io.github.vocabhunter.gui.dialogues.*;
-import io.github.vocabhunter.gui.i18n.I18nManager;
 import io.github.vocabhunter.gui.model.MainModel;
 import io.github.vocabhunter.gui.model.SessionModel;
 import io.github.vocabhunter.gui.services.SessionFileService;
@@ -28,9 +27,6 @@ public class GuiFileHandler {
     private static final Logger LOG = LoggerFactory.getLogger(GuiFileHandler.class);
 
     private Stage stage;
-
-    @Inject
-    private I18nManager i18nManager;
 
     @Inject
     private FileDialogueFactory fileDialogueFactory;
@@ -249,7 +245,7 @@ public class GuiFileHandler {
         if (model.isChangesSaved()) {
             return true;
         } else {
-            UnsavedChangesDialogue dialogue = new UnsavedChangesDialogue(model.getSessionFile(), i18nManager);
+            UnsavedChangesDialogue dialogue = dialogueTool.unsavedChangesDialogue(model.getSessionFile());
 
             dialogue.showDialogue();
 
