@@ -34,6 +34,8 @@ public class FilterSessionController extends AbstractFilterController<FilterSess
     private static final Callback<CellDataFeatures<FilterSessionWord, FilterSessionWord>, ObservableValue<FilterSessionWord>> WORD_SELF_FACTORY
         = x -> x.getValue().selfProperty();
 
+    private final I18nManager i18nManager;
+
     private final SessionWordsTool sessionWordsTool;
 
     @FXML
@@ -54,6 +56,8 @@ public class FilterSessionController extends AbstractFilterController<FilterSess
     @Inject
     public FilterSessionController(final I18nManager i18nManager, final FileDialogueFactory factory, final SessionWordsTool sessionWordsTool) {
         super(i18nManager, factory);
+
+        this.i18nManager = i18nManager;
         this.sessionWordsTool = sessionWordsTool;
     }
 
@@ -101,7 +105,7 @@ public class FilterSessionController extends AbstractFilterController<FilterSess
         tableWords.setSelectionModel(null);
 
         columnType.setCellValueFactory(WORD_SELF_FACTORY);
-        columnType.setCellFactory(c -> new FilterSessionStateTableCell());
+        columnType.setCellFactory(c -> new FilterSessionStateTableCell(i18nManager));
         columnType.setSortable(false);
 
         columnWord.setCellValueFactory(WORD_SELF_FACTORY);

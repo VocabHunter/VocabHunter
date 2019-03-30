@@ -22,8 +22,13 @@ public enum I18nKey {
     FILTER_ERROR_ALL("filter.error.all"),
     FILTER_ERROR_DISABLED("filter.error.disabled"),
 
+    FILTER_MAIN_LISTS_BUTTON_EDIT("filter.main.lists.button.edit"),
+    FILTER_MAIN_LISTS_BUTTON_DELETE("filter.main.lists.button.delete"),
+
     FILTER_GRID_WINDOW_TITLE("filter.grid.window.title"),
     FILTER_SESSION_WINDOW_TITLE("filter.session.window.title"),
+    FILTER_SESSION_TYPE_KNOWN_TIP("filter.session.type.known.tip"),
+    FILTER_SESSION_TYPE_UNKNOWN_TIP("filter.session.type.unknown.tip"),
 
     PROGRESS_SLICE_MARKED("progress.slice.marked"),
     PROGRESS_SLICE_UNMARKED("progress.slice.unmarked"),

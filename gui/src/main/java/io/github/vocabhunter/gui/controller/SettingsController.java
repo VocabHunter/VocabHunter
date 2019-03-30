@@ -9,6 +9,7 @@ import io.github.vocabhunter.gui.dialogues.FileDialogue;
 import io.github.vocabhunter.gui.dialogues.FileDialogueFactory;
 import io.github.vocabhunter.gui.dialogues.FileDialogueType;
 import io.github.vocabhunter.gui.dialogues.FileFormatType;
+import io.github.vocabhunter.gui.i18n.I18nManager;
 import io.github.vocabhunter.gui.model.*;
 import io.github.vocabhunter.gui.services.FilterFileModelTranslator;
 import io.github.vocabhunter.gui.services.FilterService;
@@ -56,6 +57,9 @@ public class SettingsController {
     private Button buttonCancel;
 
     @Inject
+    private I18nManager i18nManager;
+
+    @Inject
     private MainModel model;
 
     @Inject
@@ -96,7 +100,7 @@ public class SettingsController {
         listExcludedFiles.setItems(filterFilesModel.getFiles());
         buttonAddGridFile.setOnAction(e -> processAddGridFile());
         buttonAddSessionFile.setOnAction(e -> processAddSessionFile());
-        listExcludedFiles.setCellFactory(p -> new FilterFileCell(filterFilesModel::remove, this::editHandler));
+        listExcludedFiles.setCellFactory(p -> new FilterFileCell(i18nManager, filterFilesModel::remove, this::editHandler));
     }
 
     private void editHandler(final FilterFileModel model) {

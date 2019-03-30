@@ -5,6 +5,7 @@
 package io.github.vocabhunter.gui.view;
 
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
+import io.github.vocabhunter.gui.i18n.I18nManager;
 import io.github.vocabhunter.gui.model.FilterFileModel;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
@@ -13,6 +14,9 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
 
 import java.util.function.Consumer;
+
+import static io.github.vocabhunter.gui.i18n.I18nKey.FILTER_MAIN_LISTS_BUTTON_DELETE;
+import static io.github.vocabhunter.gui.i18n.I18nKey.FILTER_MAIN_LISTS_BUTTON_EDIT;
 
 public class FilterFileCell extends ListCell<FilterFileModel> {
     private static final int SPACING = 5;
@@ -41,7 +45,7 @@ public class FilterFileCell extends ListCell<FilterFileModel> {
 
     private FilterFileModel lastItem;
 
-    public FilterFileCell(final Consumer<FilterFileModel> removalHandler, final Consumer<FilterFileModel> editHandler) {
+    public FilterFileCell(final I18nManager i18nManager, final Consumer<FilterFileModel> removalHandler, final Consumer<FilterFileModel> editHandler) {
         HBox.setHgrow(spacer, Priority.ALWAYS);
         hbox.setAlignment(Pos.CENTER_LEFT);
         iconBox.setAlignment(Pos.CENTER_LEFT);
@@ -49,11 +53,11 @@ public class FilterFileCell extends ListCell<FilterFileModel> {
 
         buttonEdit.setOnAction(e -> editHandler.accept(lastItem));
         buttonEdit.setId("buttonEdit");
-        buttonEdit.setTooltip(new Tooltip("View/change the filter file"));
+        buttonEdit.setTooltip(new Tooltip(i18nManager.text(FILTER_MAIN_LISTS_BUTTON_EDIT)));
         editIcon.setStyleClass("buttonEditIcon");
 
         buttonRemoveList.setOnAction(e -> removalHandler.accept(lastItem));
-        buttonRemoveList.setTooltip(new Tooltip("Remove the filter file"));
+        buttonRemoveList.setTooltip(new Tooltip(i18nManager.text(FILTER_MAIN_LISTS_BUTTON_DELETE)));
         removeListIcon.setStyleClass("buttonDeleteIcon");
     }
 
