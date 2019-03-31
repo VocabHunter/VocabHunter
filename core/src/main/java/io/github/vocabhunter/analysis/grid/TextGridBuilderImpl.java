@@ -69,6 +69,6 @@ public class TextGridBuilderImpl implements TextGridBuilder {
             inc = 0;
         }
 
-        counts.merge(index, inc, (x, y) -> x + y);
+        counts.merge(index, inc, Integer::sum);
     }
 }
