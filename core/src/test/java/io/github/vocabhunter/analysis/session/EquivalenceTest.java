@@ -16,7 +16,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class EquivalenceTest {
-    public final SessionState state1 = buildSession();
+    private final SessionState state1 = buildSession();
 
     @Test
     public void testIdentical() {

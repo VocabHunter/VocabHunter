@@ -17,7 +17,7 @@ import javax.inject.Singleton;
 
 @Singleton
 public class I18nManagerImpl implements I18nManager {
-    public static final String BUNDLE_BASE_NAME = "bundles/VocabHunterBundle";
+    private static final String BUNDLE_BASE_NAME = "bundles/VocabHunterBundle";
 
     private final ResourceBundle bundle = ResourceBundle.getBundle(BUNDLE_BASE_NAME);
 

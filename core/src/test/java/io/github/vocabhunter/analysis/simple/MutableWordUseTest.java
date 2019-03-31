@@ -88,7 +88,7 @@ public class MutableWordUseTest {
         validate("Word", 2, LINE_10, LINE_20);
     }
 
-    public void validate(final String word, final int useCount, final Integer... lineNos) {
+    private void validate(final String word, final int useCount, final Integer... lineNos) {
         WordUse expected = new WordUse(word, useCount, List.of(lineNos));
 
         assertEquals(expected, target.toWordUse());
