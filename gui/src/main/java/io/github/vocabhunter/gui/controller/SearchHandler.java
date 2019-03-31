@@ -6,20 +6,17 @@ package io.github.vocabhunter.gui.controller;
 
 import io.github.vocabhunter.gui.common.GuiTaskHandler;
 import io.github.vocabhunter.gui.common.SequencedWord;
+import io.github.vocabhunter.gui.i18n.I18nManager;
 import io.github.vocabhunter.gui.model.SearchModel;
 import io.github.vocabhunter.gui.model.SessionModel;
 import io.github.vocabhunter.gui.model.WordModel;
 import io.github.vocabhunter.gui.search.SearchTool;
-import io.github.vocabhunter.gui.view.ErrorClassTool;
+import io.github.vocabhunter.gui.search.Searcher;
 import javafx.beans.property.ObjectProperty;
 import javafx.collections.ListChangeListener;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.ToolBar;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import org.apache.commons.lang3.StringUtils;
-import org.controlsfx.control.textfield.CustomTextField;
 
 import java.util.function.Predicate;
 
@@ -30,56 +27,39 @@ public class SearchHandler {
 
     private final WordListHandler wordListHandler;
 
-    private final ToolBar barSearch;
-
-    private final CustomTextField fieldSearch;
-
-    private final Label labelMatches;
-
-    private final Button buttonCloseSearch;
-
-    private final Button buttonSearchUp;
-
-    private final Button buttonSearchDown;
+    private final SearchControls controls;
 
     private SearchModel<WordModel> searchModel;
 
+    private final Searcher<WordModel> searcher;
+
     public SearchHandler(
-        final GuiTaskHandler guiTaskHandler, final SessionModel model, final WordListHandler wordListHandler, final ToolBar barSearch, final CustomTextField fieldSearch,
-        final Label labelMatches, final Button buttonCloseSearch, final Button buttonSearchUp, final Button buttonSearchDown) {
+        final GuiTaskHandler guiTaskHandler, final I18nManager i18nManager, final WordListHandler wordListHandler, final SearchControls controls, final SessionModel model) {
         this.guiTaskHandler = guiTaskHandler;
+        this.controls = controls;
         this.model = model;
         this.wordListHandler = wordListHandler;
-        this.barSearch = barSearch;
-        this.fieldSearch = fieldSearch;
-        this.labelMatches = labelMatches;
-        this.buttonCloseSearch = buttonCloseSearch;
-        this.buttonSearchUp = buttonSearchUp;
-        this.buttonSearchDown = buttonSearchDown;
+        this.searcher = new Searcher<>(i18nManager, SearchTool::matchMaker);
     }
 
 
     public void prepare() {
-        searchModel = new SearchModel<>(SearchTool::matchMaker, fieldSearch.textProperty(), model.currentWordProperty(), model.getWordList());
-        labelMatches.textProperty().bind(searchModel.matchDescriptionProperty());
-        fieldSearch.textProperty().addListener((o, old, v) -> processTextUpdate(v));
+        searchModel = new SearchModel<>(controls.searchFieldTextProperty(), model.currentWordProperty(), model.getWordList());
+        controls.bindMatchText(searchModel.matchDescriptionProperty());
+        controls.searchFieldTextProperty().addListener((o, old, v) -> processTextUpdate(v));
+        controls.setupButtons(
+            e -> closeSearch(),
+            e -> selectWord(searchModel.previousMatchProperty()),
+            e -> selectWord(searchModel.nextMatchProperty()));
+        controls.bindSearchOpenProperty(model.searchOpenProperty());
 
-        buttonCloseSearch.setOnAction(e -> closeSearch());
-        buttonSearchUp.setOnAction(e -> selectWord(searchModel.previousMatchProperty()));
-        buttonSearchDown.setOnAction(e -> selectWord(searchModel.nextMatchProperty()));
+        searchModel.previousButtonDisabledProperty().addListener((o, n, v) -> controls.setButtonUpDisabled(v));
+        searchModel.nextButtonDisabledProperty().addListener((o, n, v) -> controls.setButtonDownDisabled(v));
 
-        barSearch.visibleProperty().bindBidirectional(model.searchOpenProperty());
-        barSearch.managedProperty().bindBidirectional(model.searchOpenProperty());
+        searchModel.searchFailProperty().addListener((o, n, v) -> controls.setSearchFailStatus(v));
 
-        buttonSearchUp.setDisable(true);
-        buttonSearchDown.setDisable(true);
-        searchModel.previousButtonDisabledProperty().addListener((o, n, v) -> buttonSearchUp.setDisable(v));
-        searchModel.nextButtonDisabledProperty().addListener((o, n, v) -> buttonSearchDown.setDisable(v));
-
-        searchModel.searchFailProperty().addListener((o, n, v) -> ErrorClassTool.updateClass(fieldSearch, v));
-
-        fieldSearch.textProperty().addListener((o, n, v) -> updateIfRequired());
-        fieldSearch.setOnKeyPressed(this::processSearchKeyPress);
+        controls.searchFieldTextProperty().addListener((o, n, v) -> updateIfRequired());
+        controls.setKeyPressHandler(this::processSearchKeyPress);
         model.currentWordProperty().addListener((o, n, v) -> updateIfRequired());
         model.getWordList().addListener((ListChangeListener<WordModel>) c -> updateIfRequired());
 
@@ -94,7 +74,7 @@ public class SearchHandler {
 
     private void updateIfRequired() {
         if (model.isSearchOpen()) {
-            searchModel.updateValues();
+            searchModel.updateValues(searcher);
         }
     }
 
@@ -119,11 +99,11 @@ public class SearchHandler {
 
     public void openSearch() {
         model.setSearchOpen(true);
-        guiTaskHandler.pauseThenExecuteOnGuiThread(fieldSearch::requestFocus);
+        guiTaskHandler.pauseThenExecuteOnGuiThread(controls::selectSearchField);
     }
 
     private void closeSearch() {
-        fieldSearch.setText("");
+        controls.clearSearchField();
         searchModel.resetValues();
         model.setSearchOpen(false);
     }

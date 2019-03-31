@@ -152,8 +152,9 @@ public class SessionController {
     }
 
     private void prepareSearchBar(final GuiTaskHandler guiTaskHandler) {
-        searchHandler = new SearchHandler(guiTaskHandler, sessionModel, wordListHandler, barSearch, fieldSearch, labelMatches, buttonCloseSearch, buttonSearchUp, buttonSearchDown);
+        SearchControls controls = new SearchControls(barSearch, fieldSearch, labelMatches, buttonCloseSearch, buttonSearchUp, buttonSearchDown);
 
+        searchHandler = new SearchHandler(guiTaskHandler, i18nManager, wordListHandler, controls, sessionModel);
         searchHandler.prepare();
     }
 

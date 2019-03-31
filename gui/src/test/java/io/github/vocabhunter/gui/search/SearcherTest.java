@@ -5,6 +5,8 @@
 package io.github.vocabhunter.gui.search;
 
 import io.github.vocabhunter.gui.common.TestSequencedWord;
+import io.github.vocabhunter.gui.i18n.I18nManager;
+import io.github.vocabhunter.gui.i18n.I18nManagerImpl;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
@@ -24,7 +26,9 @@ public class SearcherTest {
 
     private static final List<TestSequencedWord> WORDS = List.of(WORD_AA, WORD_AB, WORD_AC, WORD_BC);
 
-    private final Searcher<TestSequencedWord> target = new Searcher<>(SearchTool::matchMaker);
+    private final I18nManager i18nManager = new I18nManagerImpl();
+
+    private final Searcher<TestSequencedWord> target = new Searcher<>(i18nManager, SearchTool::matchMaker);
 
     @Test
     public void testEmptyList() {

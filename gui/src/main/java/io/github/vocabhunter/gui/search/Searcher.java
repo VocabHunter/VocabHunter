@@ -5,19 +5,24 @@
 package io.github.vocabhunter.gui.search;
 
 import io.github.vocabhunter.gui.common.SequencedWord;
+import io.github.vocabhunter.gui.i18n.I18nKey;
+import io.github.vocabhunter.gui.i18n.I18nManager;
 import org.apache.commons.lang3.StringUtils;
 
-import java.text.MessageFormat;
 import java.util.List;
 import java.util.function.Function;
 import java.util.function.Predicate;
 
+import static io.github.vocabhunter.gui.i18n.I18nKey.*;
 import static java.util.stream.Collectors.toList;
 
 public class Searcher<T extends SequencedWord> {
+    private final I18nManager i18nManager;
+
     private final Function<String, Predicate<SequencedWord>> matchMaker;
 
-    public Searcher(final Function<String, Predicate<SequencedWord>> matchMaker) {
+    public Searcher(final I18nManager i18nManager, final Function<String, Predicate<SequencedWord>> matchMaker) {
+        this.i18nManager = i18nManager;
         this.matchMaker = matchMaker;
     }
 
@@ -31,7 +36,7 @@ public class Searcher<T extends SequencedWord> {
                 .collect(toList());
 
             if (matches.isEmpty()) {
-                return new SearchResult<>("No matches", null, null, null, true);
+                return searchResult(true, null, null, null, SEARCH_MATCH_NONE);
             } else {
                 return updateForMatch(matches, currentWord);
             }
@@ -51,26 +56,24 @@ public class Searcher<T extends SequencedWord> {
     private SearchResult<T> updateForMatchWithoutSelection(final List<T> matches, final T currentWord) {
         int matchCount = matches.size();
         int previousIndex = SearchTool.getPreviousMatchIndex(matches, currentWord);
-        String description = MessageFormat.format("{0} {0,choice,0#matches|1#match|1<matches}", matchCount);
         T first = matches.get(0);
 
         if (previousIndex == -1) {
-            return new SearchResult<>(description, null, first, first, false);
+            return searchResult(false, null, first, first, SEARCH_MATCH_SELECTION_OFF, matchCount);
         } else {
             T previous = matches.get(previousIndex);
             if (previousIndex == matchCount - 1) {
-                return new SearchResult<>(description, previous, null, first, false);
+                return searchResult(false, previous, null, first, SEARCH_MATCH_SELECTION_OFF, matchCount);
             } else {
                 T next = matches.get(previousIndex + 1);
 
-                return new SearchResult<>(description, previous, next, next, false);
+                return searchResult(false, previous, next, next, SEARCH_MATCH_SELECTION_OFF, matchCount);
             }
         }
     }
 
     private SearchResult<T> updateForMatchWithSelection(final List<T> matches, final int matchIndex) {
         int matchCount = matches.size();
-        String description = MessageFormat.format("{0} of {1} {1,choice,0#matches|1#match|1<matches}", matchIndex + 1, matchCount);
         T previous;
         T next;
         T wrap;
@@ -88,6 +91,13 @@ public class Searcher<T extends SequencedWord> {
             wrap = next;
         }
 
-        return new SearchResult<>(description, previous, next, wrap, false);
+        return searchResult(false, previous, next, wrap, SEARCH_MATCH_SELECTION_ON, matchIndex + 1, matchCount);
+    }
+
+    private SearchResult<T> searchResult(
+        final boolean isSearchFail, final T previousMatch, final T nextMatch, final T wrapMatch, final I18nKey descriptionKey, final Object... descriptionArgs) {
+        String matchDescription = i18nManager.text(descriptionKey, descriptionArgs);
+
+        return new SearchResult<>(matchDescription, previousMatch, nextMatch, wrapMatch, isSearchFail);
     }
 }

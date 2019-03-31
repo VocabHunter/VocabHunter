@@ -13,6 +13,10 @@ public enum I18nKey {
     SESSION_TAB_ANALYSIS("session.tab.analysis"),
     SESSION_TAB_PROGRESS("session.tab.progress"),
 
+    SEARCH_MATCH_NONE("search.match.none"),
+    SEARCH_MATCH_SELECTION_ON("search.match.selection.on"),
+    SEARCH_MATCH_SELECTION_OFF("search.match.selection.off"),
+
     ABOUT_VERSION("about.version"),
 
     FILTER_WINDOW_TITLE("filter.window.title"),

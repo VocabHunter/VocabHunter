@@ -10,12 +10,7 @@ import io.github.vocabhunter.gui.search.Searcher;
 import javafx.beans.property.*;
 import javafx.collections.ObservableList;
 
-import java.util.function.Function;
-import java.util.function.Predicate;
-
 public class SearchModel<T extends SequencedWord> {
-    private final Searcher<T> searcher;
-
     private final StringProperty searchField;
 
     private final ObjectProperty<T> currentWord;
@@ -36,10 +31,7 @@ public class SearchModel<T extends SequencedWord> {
 
     private final BooleanProperty searchFail = new SimpleBooleanProperty();
 
-    public SearchModel(
-        final Function<String, Predicate<SequencedWord>> matchMaker, final StringProperty searchField, final ObjectProperty<T> currentWord,
-        final ObservableList<T> wordList) {
-        this.searcher = new Searcher<>(matchMaker);
+    public SearchModel(final StringProperty searchField, final ObjectProperty<T> currentWord, final ObservableList<T> wordList) {
         this.searchField = searchField;
         this.currentWord = currentWord;
         this.wordList = wordList;
@@ -49,7 +41,7 @@ public class SearchModel<T extends SequencedWord> {
         updateValues(new SearchResult<>());
     }
 
-    public void updateValues() {
+    public void updateValues(final Searcher<T> searcher) {
         SearchResult<T> result = searcher.buildResult(wordList, currentWord.get(), searchField.get());
 
         updateValues(result);
