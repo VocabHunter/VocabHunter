@@ -18,7 +18,7 @@ public class PositionDescriptionToolTest {
 
     private final ProgressModel progress = new ProgressModel();
 
-    private final I18nManager i18nManager = new I18nManagerImpl();
+    private final I18nManager i18nManager = I18nManagerImpl.createForDefaultLocale();
 
     private final PositionDescriptionTool target = new PositionDescriptionTool(i18nManager);
 

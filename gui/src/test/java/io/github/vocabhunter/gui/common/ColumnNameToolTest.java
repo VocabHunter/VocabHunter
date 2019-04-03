@@ -12,7 +12,7 @@ import org.junit.jupiter.params.provider.CsvSource;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class ColumnNameToolTest {
-    private final I18nManager i18nManager = new I18nManagerImpl();
+    private final I18nManager i18nManager = I18nManagerImpl.createForDefaultLocale();
 
     private final ColumnNameTool target = new ColumnNameTool(i18nManager);
 

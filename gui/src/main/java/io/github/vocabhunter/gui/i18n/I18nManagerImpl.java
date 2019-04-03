@@ -4,7 +4,6 @@
 
 package io.github.vocabhunter.gui.i18n;
 
-import io.github.vocabhunter.analysis.core.CoreConstants;
 import javafx.beans.binding.Bindings;
 import javafx.beans.binding.StringExpression;
 import javafx.beans.value.ObservableValue;
@@ -19,7 +18,15 @@ import javax.inject.Singleton;
 public class I18nManagerImpl implements I18nManager {
     private static final String BUNDLE_BASE_NAME = "bundles/VocabHunterBundle";
 
-    private final ResourceBundle bundle = ResourceBundle.getBundle(BUNDLE_BASE_NAME);
+    private ResourceBundle bundle;
+
+    public static I18nManager createForDefaultLocale() {
+        I18nManager result = new I18nManagerImpl();
+
+        result.setupLocale(SupportedLocale.DEFAULT_LOCALE);
+
+        return result;
+    }
 
     @Override
     public ResourceBundle bundle() {
@@ -27,8 +34,10 @@ public class I18nManagerImpl implements I18nManager {
     }
 
     @Override
-    public void initialise() {
-        Locale.setDefault(CoreConstants.LOCALE);
+    public void setupLocale(final SupportedLocale locale) {
+        Locale.setDefault(locale.getLocale());
+
+        bundle = ResourceBundle.getBundle(BUNDLE_BASE_NAME);
     }
 
     @Override

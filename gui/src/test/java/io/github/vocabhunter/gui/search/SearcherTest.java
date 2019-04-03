@@ -26,7 +26,7 @@ public class SearcherTest {
 
     private static final List<TestSequencedWord> WORDS = List.of(WORD_AA, WORD_AB, WORD_AC, WORD_BC);
 
-    private final I18nManager i18nManager = new I18nManagerImpl();
+    private final I18nManager i18nManager = I18nManagerImpl.createForDefaultLocale();
 
     private final Searcher<TestSequencedWord> target = new Searcher<>(i18nManager, SearchTool::matchMaker);
 

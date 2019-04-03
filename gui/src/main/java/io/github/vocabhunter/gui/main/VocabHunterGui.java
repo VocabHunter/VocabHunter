@@ -23,6 +23,8 @@ import org.slf4j.LoggerFactory;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
+import static io.github.vocabhunter.gui.i18n.SupportedLocale.DEFAULT_LOCALE;
+
 @Singleton
 public class VocabHunterGui {
     private static final Logger LOG = LoggerFactory.getLogger(VocabHunterGui.class);
@@ -63,7 +65,7 @@ public class VocabHunterGui {
     private FilterSettingsTool filterSettingsTool;
 
     public void start(final Stage stage, final long startupTimestampNanos) {
-        i18nManager.initialise();
+        i18nManager.setupLocale(DEFAULT_LOCALE);
 
         Parent root = ViewFxml.MAIN.loadNode(mainLoader, i18nManager);
 

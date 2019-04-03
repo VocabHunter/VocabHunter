@@ -22,7 +22,7 @@ public class TitleHandlerTest {
 
     private final MainModel model = new MainModel();
 
-    private final I18nManager i18nManager = new I18nManagerImpl();
+    private final I18nManager i18nManager = I18nManagerImpl.createForDefaultLocale();
 
     private final TitleHandler target = new TitleHandler(model, i18nManager);
 
