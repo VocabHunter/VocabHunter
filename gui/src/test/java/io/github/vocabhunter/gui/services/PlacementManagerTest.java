@@ -67,7 +67,7 @@ public class PlacementManagerTest {
 
         Placement result = target.getMainWindow();
 
-        assertEquals(result, DEFAULT_WINDOW_SIZE, "Invisible settings");
+        assertEquals(DEFAULT_WINDOW_SIZE, result, "Invisible settings");
     }
 
     @Test
@@ -76,6 +76,6 @@ public class PlacementManagerTest {
 
         Placement result = target.getMainWindow();
 
-        assertEquals(result, DEFAULT_WINDOW_SIZE, "Unspecified settings");
+        assertEquals(DEFAULT_WINDOW_SIZE, result, "Unspecified settings");
     }
 }

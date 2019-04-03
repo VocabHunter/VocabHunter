@@ -71,7 +71,7 @@ public class SimpleAnalyserTest {
     public void testName() {
         AnalysisResult result = analyse();
 
-        assertEquals("Name", NAME, result.getName());
+        assertEquals(NAME, result.getName(), "Name");
     }
 
     @Test

@@ -99,6 +99,6 @@ public class FilterFileWordsExtractorTest {
     private void validate(final BaseListedFile listedFile) {
         List<String> result = target.extract(listedFile);
 
-        assertEquals(result, WORDS);
+        assertEquals(WORDS, result);
     }
 }
