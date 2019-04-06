@@ -6,27 +6,30 @@ package io.github.vocabhunter.gui.view;
 
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import io.github.vocabhunter.analysis.core.VocabHunterException;
+import io.github.vocabhunter.gui.i18n.I18nKey;
 import io.github.vocabhunter.gui.model.FilterFileMode;
 import javafx.scene.control.Label;
 
 import java.util.EnumMap;
 import java.util.Map;
 
+import static io.github.vocabhunter.gui.i18n.I18nKey.*;
+
 public enum FilterFileModeView {
-    SESSION_KNOWN("Known words", null, "filterKnownIcon"),
-    SESSION_SEEN("Known & unknown words", "filterKnownIcon", "filterUnknownIcon"),
-    GRID("Word list", null, "filterGridIcon");
+    SESSION_KNOWN(FILTER_MAIN_LISTS_TYPE_KNOWN, null, "filterKnownIcon"),
+    SESSION_SEEN(FILTER_MAIN_LISTS_TYPE_BOTH, "filterKnownIcon", "filterUnknownIcon"),
+    GRID(FILTER_MAIN_LISTS_TYPE_LIST, null, "filterGridIcon");
 
     private static final Map<FilterFileMode, FilterFileModeView> VIEW_MAP = buildMap();
 
-    private final String name;
+    private final I18nKey nameKey;
 
     private final String firstIconStyle;
 
     private final String secondIconStyle;
 
-    FilterFileModeView(final String name, final String firstIconStyle, final String secondIconStyle) {
-        this.name = name;
+    FilterFileModeView(final I18nKey nameKey, final String firstIconStyle, final String secondIconStyle) {
+        this.nameKey = nameKey;
         this.firstIconStyle = firstIconStyle;
         this.secondIconStyle = secondIconStyle;
     }
@@ -49,9 +52,8 @@ public enum FilterFileModeView {
         }
     }
 
-    @Override
-    public String toString() {
-        return name;
+    public I18nKey getNameKey() {
+        return nameKey;
     }
 
     public static FilterFileModeView getView(final FilterFileMode mode) {

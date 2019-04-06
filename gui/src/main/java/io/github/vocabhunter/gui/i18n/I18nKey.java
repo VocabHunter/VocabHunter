@@ -28,6 +28,9 @@ public enum I18nKey {
 
     FILTER_MAIN_LISTS_BUTTON_EDIT("filter.main.lists.button.edit"),
     FILTER_MAIN_LISTS_BUTTON_DELETE("filter.main.lists.button.delete"),
+    FILTER_MAIN_LISTS_TYPE_KNOWN("filter.main.lists.type.known"),
+    FILTER_MAIN_LISTS_TYPE_BOTH("filter.main.lists.type.both"),
+    FILTER_MAIN_LISTS_TYPE_LIST("filter.main.lists.type.list"),
 
     FILTER_GRID_WINDOW_TITLE("filter.grid.window.title"),
     FILTER_SESSION_WINDOW_TITLE("filter.session.window.title"),

@@ -21,6 +21,8 @@ import static io.github.vocabhunter.gui.i18n.I18nKey.FILTER_MAIN_LISTS_BUTTON_ED
 public class FilterFileCell extends ListCell<FilterFileModel> {
     private static final int SPACING = 5;
 
+    private final I18nManager i18nManager;
+
     private final Label labelName = new Label();
 
     private final Pane spacer = new Pane();
@@ -46,6 +48,8 @@ public class FilterFileCell extends ListCell<FilterFileModel> {
     private FilterFileModel lastItem;
 
     public FilterFileCell(final I18nManager i18nManager, final Consumer<FilterFileModel> removalHandler, final Consumer<FilterFileModel> editHandler) {
+        this.i18nManager = i18nManager;
+
         HBox.setHgrow(spacer, Priority.ALWAYS);
         hbox.setAlignment(Pos.CENTER_LEFT);
         iconBox.setAlignment(Pos.CENTER_LEFT);
@@ -75,7 +79,7 @@ public class FilterFileCell extends ListCell<FilterFileModel> {
             labelName.setTooltip(new Tooltip(item.getFile().toString()));
             FilterFileModeView modeView = FilterFileModeView.getView(item.getMode());
 
-            labelType.setText(modeView.toString());
+            labelType.setText(i18nManager.text(modeView.getNameKey()));
             modeView.updateIcons(firstIcon, secondIcon);
             setGraphic(hbox);
         }
