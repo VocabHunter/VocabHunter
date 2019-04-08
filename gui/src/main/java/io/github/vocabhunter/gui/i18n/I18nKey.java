@@ -64,6 +64,10 @@ public enum I18nKey {
     FILE_MODIFIED("file.modified"),
     FILE_UNSAVED("file.unsaved"),
 
+    FILE_BUTTON_SAVE("file.button.save"),
+    FILE_BUTTON_DISCARD("file.button.discard"),
+    FILE_BUTTON_CANCEL("file.button.cancel"),
+
     FILE_TYPE_ALL("file.type.all"),
     FILE_TYPE_TEXT("file.type.text"),
     FILE_TYPE_DOCUMENT("file.type.document"),

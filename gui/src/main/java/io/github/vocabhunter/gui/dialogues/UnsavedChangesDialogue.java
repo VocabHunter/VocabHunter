@@ -15,14 +15,14 @@ import java.nio.file.Path;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import static io.github.vocabhunter.gui.i18n.I18nKey.*;
+
 public class UnsavedChangesDialogue {
     private static final String ALERT_ID = "unsavedChanges";
 
     private final Path file;
 
     private final I18nManager i18nManager;
-
-    private final Map<ButtonType, UnsavedResponse> map = unsavedResponseMap();
 
     private UnsavedResponse result;
 
@@ -34,6 +34,7 @@ public class UnsavedChangesDialogue {
     public void showDialogue() {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         String message = i18nManager.text(I18nKey.FILE_MODIFIED, filename());
+        Map<ButtonType, UnsavedResponse> map = unsavedResponseMap();
 
         alert.setTitle(i18nManager.text(I18nKey.FILE_UNSAVED));
         alert.setHeaderText(message);
@@ -57,13 +58,17 @@ public class UnsavedChangesDialogue {
         return result;
     }
 
-    private static Map<ButtonType, UnsavedResponse> unsavedResponseMap() {
+    private Map<ButtonType, UnsavedResponse> unsavedResponseMap() {
         Map<ButtonType, UnsavedResponse> map = new LinkedHashMap<>();
 
-        map.put(new ButtonType("Save"), UnsavedResponse.SAVE);
-        map.put(new ButtonType("Discard"), UnsavedResponse.DISCARD);
-        map.put(new ButtonType("Cancel"), UnsavedResponse.CANCEL);
+        addButton(map, FILE_BUTTON_SAVE, UnsavedResponse.SAVE);
+        addButton(map, FILE_BUTTON_DISCARD, UnsavedResponse.DISCARD);
+        addButton(map, FILE_BUTTON_CANCEL, UnsavedResponse.CANCEL);
 
         return map;
+    }
+
+    private void addButton(final Map<ButtonType, UnsavedResponse> map, final I18nKey key, final UnsavedResponse response) {
+        map.put(new ButtonType(i18nManager.text(key)), response);
     }
 }
