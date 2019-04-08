@@ -33,10 +33,10 @@ public class UnsavedChangesDialogue {
 
     public void showDialogue() {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        String message = i18nManager.text(I18nKey.FILE_MODIFIED, filename());
+        String message = i18nManager.text(FILE_MODIFIED, filename());
         Map<ButtonType, UnsavedResponse> map = unsavedResponseMap();
 
-        alert.setTitle(i18nManager.text(I18nKey.FILE_UNSAVED));
+        alert.setTitle(i18nManager.text(FILE_UNSAVED));
         alert.setHeaderText(message);
         alert.getButtonTypes().setAll(map.keySet());
         alert.getDialogPane().setId(ALERT_ID);
@@ -48,7 +48,7 @@ public class UnsavedChangesDialogue {
 
     private String filename() {
         if (file == null) {
-            return i18nManager.text(I18nKey.MAIN_WINDOW_UNTITLED);
+            return i18nManager.text(MAIN_WINDOW_UNTITLED);
         } else {
             return FileNameTool.filename(file);
         }
