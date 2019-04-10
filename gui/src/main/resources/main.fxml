@@ -59,10 +59,13 @@
                                             <MenuItem fx:id="menuFind" accelerator="Shortcut+F" mnemonicParsing="false" text="%main.menu.words.find" />
                                         </items>
                                     </Menu>
-                                    <Menu mnemonicParsing="false" text="%main.menu.filters">
+                                    <Menu mnemonicParsing="false" text="%main.menu.settings">
                                         <items>
-                                            <MenuItem fx:id="menuSetupFilters" mnemonicParsing="false" text="%main.menu.filters.setup" />
-                                            <CheckMenuItem fx:id="menuEnableFilters" mnemonicParsing="false" selected="true" text="%main.menu.filters.enable" />
+                                            <MenuItem fx:id="menuSetupFilters" mnemonicParsing="false" text="%main.menu.settings.filters.setup" />
+                                            <CheckMenuItem fx:id="menuEnableFilters" mnemonicParsing="false" selected="true" text="%main.menu.settings.filters.enable" />
+                                            <SeparatorMenuItem mnemonicParsing="false" />
+                                            <MenuItem fx:id="menuEnglish" mnemonicParsing="false" text="%main.menu.language.english" />
+                                            <MenuItem fx:id="menuSpanish" mnemonicParsing="false" text="%main.menu.language.spanish" />
                                         </items>
                                     </Menu>
                                     <Menu fx:id="menuHelp" mnemonicParsing="false" text="%main.menu.help">
