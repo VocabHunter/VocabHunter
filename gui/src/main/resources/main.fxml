@@ -64,8 +64,12 @@
                                             <MenuItem fx:id="menuSetupFilters" mnemonicParsing="false" text="%main.menu.settings.filters.setup" />
                                             <CheckMenuItem fx:id="menuEnableFilters" mnemonicParsing="false" selected="true" text="%main.menu.settings.filters.enable" />
                                             <SeparatorMenuItem mnemonicParsing="false" />
-                                            <MenuItem fx:id="menuEnglish" mnemonicParsing="false" text="%main.menu.language.english" />
-                                            <MenuItem fx:id="menuSpanish" mnemonicParsing="false" text="%main.menu.language.spanish" />
+                                            <Menu fx:id="menuLanguage" mnemonicParsing="false" text="%main.menu.language.menu">
+                                                <items>
+                                                    <MenuItem fx:id="menuEnglish" mnemonicParsing="false" text="%main.menu.language.english" />
+                                                    <MenuItem fx:id="menuSpanish" mnemonicParsing="false" text="%main.menu.language.spanish" />
+                                                </items>
+                                           </Menu>
                                         </items>
                                     </Menu>
                                     <Menu fx:id="menuHelp" mnemonicParsing="false" text="%main.menu.help">
