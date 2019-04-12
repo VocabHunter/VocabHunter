@@ -66,8 +66,8 @@
                                             <SeparatorMenuItem mnemonicParsing="false" />
                                             <Menu fx:id="menuLanguage" mnemonicParsing="false" text="%main.menu.language.menu">
                                                 <items>
-                                                    <MenuItem fx:id="menuEnglish" mnemonicParsing="false" text="%main.menu.language.english" />
-                                                    <MenuItem fx:id="menuSpanish" mnemonicParsing="false" text="%main.menu.language.spanish" />
+                                                    <RadioMenuItem fx:id="menuEnglish" mnemonicParsing="false" text="%main.menu.language.english" />
+                                                    <RadioMenuItem fx:id="menuSpanish" mnemonicParsing="false" text="%main.menu.language.spanish" />
                                                 </items>
                                            </Menu>
                                         </items>

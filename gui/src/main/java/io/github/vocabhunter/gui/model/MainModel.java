@@ -6,6 +6,7 @@ package io.github.vocabhunter.gui.model;
 
 import io.github.vocabhunter.analysis.filter.WordFilter;
 import io.github.vocabhunter.analysis.session.SessionState;
+import io.github.vocabhunter.gui.i18n.SupportedLocale;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -39,6 +40,8 @@ public class MainModel {
     private final SimpleObjectProperty<FilterSettings> filterSettings = new SimpleObjectProperty<>();
 
     private final SimpleBooleanProperty enableFilters = new SimpleBooleanProperty(true);
+
+    private final SimpleObjectProperty<SupportedLocale> locale = new SimpleObjectProperty<>(SupportedLocale.DEFAULT_LOCALE);
 
     private WordFilter filter;
 
@@ -154,5 +157,9 @@ public class MainModel {
 
     public Optional<SessionModel> getSessionModel() {
         return Optional.ofNullable(sessionModel);
+    }
+
+    public void setLocale(final SupportedLocale locale) {
+        this.locale.set(locale);
     }
 }

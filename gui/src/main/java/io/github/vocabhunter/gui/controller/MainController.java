@@ -56,6 +56,12 @@ public class MainController {
     private CheckMenuItem menuEnableFilters;
 
     @FXML
+    private RadioMenuItem menuEnglish;
+
+    @FXML
+    private RadioMenuItem menuSpanish;
+
+    @FXML
     private MenuItem menuWebsite;
 
     @FXML
@@ -142,11 +148,16 @@ public class MainController {
     @Inject
     private ExitRequestHandler exitRequestHandler;
 
+    @Inject
+    private LanguageHandler languageHandler;
+
     public void initialise(final Stage stage) {
         sessionStateHandler.initialise(mainBorderPane);
+        languageHandler.initialise(menuEnglish, menuSpanish);
 
         buildToggleGroup(buttonEditOn, buttonEditOff);
         buildToggleGroup(menuEditOn, menuEditOff);
+        buildToggleGroup(menuEnglish, menuSpanish);
 
         handler(buttonOpen, menuOpen, guiFileHandler::handleOpenSession);
         handler(buttonNew, menuNew, guiFileHandler::handleNewSession);
