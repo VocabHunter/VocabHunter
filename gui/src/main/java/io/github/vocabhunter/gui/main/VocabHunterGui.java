@@ -10,9 +10,9 @@ import io.github.vocabhunter.gui.i18n.I18nManager;
 import io.github.vocabhunter.gui.model.FilterSettingsTool;
 import io.github.vocabhunter.gui.model.MainModel;
 import io.github.vocabhunter.gui.services.PlacementManager;
+import io.github.vocabhunter.gui.view.FxmlHandler;
 import io.github.vocabhunter.gui.view.ViewFxml;
 import javafx.application.Platform;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyEvent;
@@ -32,7 +32,7 @@ public class VocabHunterGui {
     private static final int NANOS_PER_MILLI = 1_000_000;
 
     @Inject
-    private FXMLLoader mainLoader;
+    private FxmlHandler fxmlHandler;
 
     @Inject
     private I18nManager i18nManager;
@@ -67,7 +67,7 @@ public class VocabHunterGui {
     public void start(final Stage stage, final long startupTimestampNanos) {
         i18nManager.setupLocale(DEFAULT_LOCALE);
 
-        Parent root = ViewFxml.MAIN.loadNode(mainLoader, i18nManager);
+        Parent root = fxmlHandler.loadNode(ViewFxml.MAIN);
 
         initialise(stage);
 

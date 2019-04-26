@@ -13,8 +13,10 @@ import io.github.vocabhunter.gui.model.MainModel;
 import io.github.vocabhunter.gui.model.SessionModel;
 import io.github.vocabhunter.gui.settings.SettingsManager;
 import io.github.vocabhunter.gui.settings.WindowSettings;
+import io.github.vocabhunter.gui.view.FxmlHandler;
 import io.github.vocabhunter.gui.view.SessionTab;
 import io.github.vocabhunter.gui.view.SessionViewTool;
+import io.github.vocabhunter.gui.view.ViewFxml;
 import javafx.scene.Node;
 import javafx.scene.layout.BorderPane;
 
@@ -34,10 +36,7 @@ public class SessionStateHandler {
     private MainModel model;
 
     @Inject
-    private SessionProvider sessionProvider;
-
-    @Inject
-    private ProgressProvider progressProvider;
+    private FxmlHandler fxmlHandler;
 
     @Inject
     private GuiTaskHandler guiTaskHandler;
@@ -58,7 +57,7 @@ public class SessionStateHandler {
         SessionViewTool viewTool = new SessionViewTool(i18nManager);
         SessionModelTool sessionTool = new SessionModelTool(state, model.getFilterSettings(), viewTool.selectedProperty(), settingsManager.getWindowSettings().orElseGet(WindowSettings::new));
         SessionModel sessionModel = sessionTool.buildModel();
-        ControllerAndView<SessionController, Node> cav = sessionProvider.get();
+        ControllerAndView<SessionController, Node> cav = fxmlHandler.loadControllerAndView(ViewFxml.SESSION);
         SessionController controller = cav.getController();
 
         controller.initialise(guiTaskHandler, sessionModel);
@@ -72,7 +71,7 @@ public class SessionStateHandler {
     }
 
     private Node progressView(final SessionModel sessionModel) {
-        ControllerAndView<ProgressController, Node> cav = progressProvider.get();
+        ControllerAndView<ProgressController, Node> cav = fxmlHandler.loadControllerAndView(ViewFxml.PROGRESS);
 
         cav.getController().initialise(sessionModel.getProgress());
 

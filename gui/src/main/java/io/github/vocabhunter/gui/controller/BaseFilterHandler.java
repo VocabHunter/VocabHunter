@@ -4,21 +4,17 @@
 
 package io.github.vocabhunter.gui.controller;
 
+import io.github.vocabhunter.gui.common.ControllerAndView;
 import io.github.vocabhunter.gui.dialogues.DialogueTool;
 import io.github.vocabhunter.gui.i18n.I18nKey;
-import io.github.vocabhunter.gui.i18n.I18nManager;
 import io.github.vocabhunter.gui.model.FilterFileModel;
+import io.github.vocabhunter.gui.view.FxmlHandler;
 import io.github.vocabhunter.gui.view.ViewFxml;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.stage.Stage;
 
-import javax.inject.Provider;
-
 public class BaseFilterHandler<T extends AbstractFilterController<?>> {
-    private final Provider<FXMLLoader> loaderProvider;
-
-    private final I18nManager i18nManager;
+    private final FxmlHandler fxmlHandler;
 
     private final DialogueTool dialogueTool;
 
@@ -26,9 +22,8 @@ public class BaseFilterHandler<T extends AbstractFilterController<?>> {
 
     private final I18nKey windowTitleKey;
 
-    protected BaseFilterHandler(final Provider<FXMLLoader> loaderProvider, final I18nManager i18nManager, final DialogueTool dialogueTool, final ViewFxml viewFxml, final I18nKey windowTitleKey) {
-        this.loaderProvider = loaderProvider;
-        this.i18nManager = i18nManager;
+    protected BaseFilterHandler(final FxmlHandler fxmlHandler, final DialogueTool dialogueTool, final ViewFxml viewFxml, final I18nKey windowTitleKey) {
+        this.fxmlHandler = fxmlHandler;
         this.dialogueTool = dialogueTool;
         this.viewFxml = viewFxml;
         this.windowTitleKey = windowTitleKey;
@@ -36,9 +31,9 @@ public class BaseFilterHandler<T extends AbstractFilterController<?>> {
 
     public void show(final FilterFileModel model, final Runnable onSave) {
         Stage stage = new Stage();
-        FXMLLoader loader = loaderProvider.get();
-        Parent root = viewFxml.loadNode(loader, i18nManager);
-        T controller = loader.getController();
+        ControllerAndView<T, Parent> cav = fxmlHandler.loadControllerAndView(viewFxml);
+        Parent root = cav.getView();
+        T controller = cav.getController();
 
         try {
             controller.initialise(stage, model, onSave);

@@ -4,12 +4,6 @@
 
 package io.github.vocabhunter.gui.view;
 
-import io.github.vocabhunter.analysis.core.VocabHunterException;
-import io.github.vocabhunter.gui.i18n.I18nManager;
-import javafx.fxml.FXMLLoader;
-
-import java.io.IOException;
-
 public enum ViewFxml {
     MAIN("main.fxml"),
     SESSION("session.fxml"),
@@ -26,19 +20,7 @@ public enum ViewFxml {
         this.name = name;
     }
 
-    public <T> T loadNode(final FXMLLoader loader, final I18nManager i18nManager) {
-        try {
-            loader.setLocation(getClass().getResource("/" + name));
-            loader.setResources(i18nManager.bundle());
-
-            return loader.load();
-        } catch (final IOException e) {
-            throw new VocabHunterException(String.format("Unable to load FXML '%s'", name), e);
-        }
-    }
-
-    @Override
-    public String toString() {
+    public String getName() {
         return name;
     }
 }
