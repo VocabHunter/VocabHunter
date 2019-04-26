@@ -34,7 +34,7 @@ public class PositionDescriptionToolTest {
         position.setPositionIndex(0);
         position.setSize(1);
 
-        validate("Word 1 of 1 word");
+        validate("Word 1 of 1");
     }
 
     @Test
@@ -44,7 +44,7 @@ public class PositionDescriptionToolTest {
         position.setPositionIndex(9);
         position.setSize(20);
 
-        validate("Word 10 of 20 words");
+        validate("Word 10 of 20");
     }
 
     @Test
@@ -55,7 +55,7 @@ public class PositionDescriptionToolTest {
         position.setSize(20);
         progress.updateProgress(0, 0, 0, 1);
 
-        validate("Word 10 of 20 words (1 word hidden by filter)");
+        validate("Word 10 of 20 (1 word hidden by filter)");
     }
 
     @Test
@@ -66,7 +66,7 @@ public class PositionDescriptionToolTest {
         position.setSize(20);
         progress.updateProgress(0, 0, 0, 5);
 
-        validate("Word 10 of 20 words (5 words hidden by filter)");
+        validate("Word 10 of 20 (5 words hidden by filter)");
     }
 
     @Test
@@ -76,7 +76,7 @@ public class PositionDescriptionToolTest {
         position.setPositionIndex(2);
         position.setSize(5);
 
-        validate("Word 3 of 5 words marked as unknown");
+        validate("Word 3 of 5 marked as unknown");
     }
 
     private void validate(final String s) {
