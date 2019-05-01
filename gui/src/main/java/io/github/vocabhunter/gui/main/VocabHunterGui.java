@@ -4,18 +4,11 @@
 
 package io.github.vocabhunter.gui.main;
 
-import io.github.vocabhunter.gui.common.Placement;
 import io.github.vocabhunter.gui.controller.*;
 import io.github.vocabhunter.gui.i18n.I18nManager;
 import io.github.vocabhunter.gui.model.FilterSettingsTool;
 import io.github.vocabhunter.gui.model.MainModel;
-import io.github.vocabhunter.gui.services.PlacementManager;
-import io.github.vocabhunter.gui.view.FxmlHandler;
-import io.github.vocabhunter.gui.view.ViewFxml;
 import javafx.application.Platform;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -31,60 +24,41 @@ public class VocabHunterGui {
 
     private static final int NANOS_PER_MILLI = 1_000_000;
 
-    @Inject
-    private FxmlHandler fxmlHandler;
+    private final I18nManager i18nManager;
+
+    private final GuiFileHandler guiFileHandler;
+
+    private final TitleHandler titleHandler;
+
+    private final MainModel model;
+
+    private final FilterHandler filterHandler;
+
+    private final ExitRequestHandler exitRequestHandler;
+
+    private final FilterSettingsTool filterSettingsTool;
+
+    private final MainStageHandler mainStageHandler;
 
     @Inject
-    private I18nManager i18nManager;
-
-    @Inject
-    private MainController mainController;
-
-    @Inject
-    private PlacementManager placementManager;
-
-    @Inject
-    private GuiFileHandler guiFileHandler;
-
-    @Inject
-    private TitleHandler titleHandler;
-
-    @Inject
-    private MainModel model;
-
-    @Inject
-    private FilterHandler filterHandler;
-
-    @Inject
-    private ExitRequestHandler exitRequestHandler;
-
-    @Inject
-    private SessionStateHandler sessionStateHandler;
-
-    @Inject
-    private FilterSettingsTool filterSettingsTool;
+    public VocabHunterGui(final I18nManager i18nManager, final GuiFileHandler guiFileHandler, final TitleHandler titleHandler, final MainModel model,
+        final FilterHandler filterHandler, final ExitRequestHandler exitRequestHandler, final FilterSettingsTool filterSettingsTool, final MainStageHandler mainStageHandler) {
+        this.i18nManager = i18nManager;
+        this.guiFileHandler = guiFileHandler;
+        this.titleHandler = titleHandler;
+        this.model = model;
+        this.filterHandler = filterHandler;
+        this.exitRequestHandler = exitRequestHandler;
+        this.filterSettingsTool = filterSettingsTool;
+        this.mainStageHandler = mainStageHandler;
+    }
 
     public void start(final Stage stage, final long startupTimestampNanos) {
         i18nManager.setupLocale(DEFAULT_LOCALE);
-
-        Parent root = fxmlHandler.loadNode(ViewFxml.MAIN);
-
+        mainStageHandler.initialise(stage);
+        mainStageHandler.applyNewScene();
         initialise(stage);
 
-        Scene scene = new Scene(root);
-
-        scene.setOnKeyPressed(this::handleKeyEvent);
-        stage.setOnCloseRequest(mainController.getCloseRequestHandler());
-
-        Placement placement = placementManager.getMainWindow();
-
-        stage.setScene(scene);
-        stage.setWidth(placement.getWidth());
-        stage.setHeight(placement.getHeight());
-        if (placement.isPositioned()) {
-            stage.setX(placement.getX());
-            stage.setY(placement.getY());
-        }
         stage.show();
 
         Platform.runLater(() -> logStartup(startupTimestampNanos));
@@ -94,7 +68,6 @@ public class VocabHunterGui {
     }
 
     private void initialise(final Stage stage) {
-        mainController.initialise(stage);
         guiFileHandler.initialise(stage);
         exitRequestHandler.initialise(stage);
         titleHandler.initialise();
@@ -109,11 +82,5 @@ public class VocabHunterGui {
         String startupTimeText = String.format("%,d", startupMillis);
 
         LOG.info("User interface started ({} ms)", startupTimeText);
-    }
-
-    private void handleKeyEvent(final KeyEvent event) {
-        sessionStateHandler.getSessionActions()
-            .map(SessionActions::getKeyPressHandler)
-            .ifPresent(k -> k.handle(event));
     }
 }
