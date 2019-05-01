@@ -162,4 +162,8 @@ public class MainModel {
     public void setLocale(final SupportedLocale locale) {
         this.locale.set(locale);
     }
+
+    public SimpleObjectProperty<SupportedLocale> localeProperty() {
+        return locale;
+    }
 }
