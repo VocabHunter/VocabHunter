@@ -47,7 +47,10 @@ public class MainController {
     private RadioMenuItem menuEditOff;
 
     @FXML
-    private MenuItem menuExport;
+    private MenuItem menuExportWithNotes;
+
+    @FXML
+    private MenuItem menuExportWithoutNotes;
 
     @FXML
     private MenuItem menuSetupFilters;
@@ -163,7 +166,8 @@ public class MainController {
         handler(buttonNew, menuNew, guiFileHandler::handleNewSession);
         handler(buttonSave, menuSave, guiFileHandler::handleSave);
         handler(menuSaveAs, guiFileHandler::handleSaveAs);
-        handler(buttonExport, menuExport, guiFileHandler::handleExport);
+        handler(buttonExport, menuExportWithNotes, guiFileHandler::handleExportWithNotes);
+        handler(menuExportWithoutNotes, guiFileHandler::handleExportWithoutNotes);
 
         buttonEditOn.disableProperty().bind(not(model.sessionOpenProperty()));
         menuEditOn.disableProperty().bind(not(model.sessionOpenProperty()));
@@ -178,7 +182,8 @@ public class MainController {
         menuSave.disableProperty().bind(not(model.sessionOpenProperty()));
         menuSaveAs.disableProperty().bind(not(model.sessionOpenProperty()));
         buttonExport.disableProperty().bind(not(model.selectionAvailableProperty()));
-        menuExport.disableProperty().bind(not(model.selectionAvailableProperty()));
+        menuExportWithNotes.disableProperty().bind(not(model.selectionAvailableProperty()));
+        menuExportWithoutNotes.disableProperty().bind(not(model.selectionAvailableProperty()));
 
         handler(buttonSetupFilters, menuSetupFilters, this::processSetupFilters);
 

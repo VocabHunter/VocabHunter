@@ -53,13 +53,21 @@ public class GuiFileHandler {
         this.stage = stage;
     }
 
-    public void handleExport() {
+    public void handleExportWithNotes() {
+        handleExport(true);
+    }
+
+    public void handleExportWithoutNotes() {
+        handleExport(false);
+    }
+
+    private void handleExport(final boolean isNoteIncluded) {
         if (statusManager.beginExport()) {
-            guiTaskHandler.pauseThenExecuteOnGuiThread(this::processExport);
+            guiTaskHandler.pauseThenExecuteOnGuiThread(() -> processExport(isNoteIncluded));
         }
     }
 
-    private void processExport() {
+    private void processExport(final boolean isNoteIncluded) {
         Path file = chooseFile(FileDialogueType.EXPORT_SELECTION);
 
         if (file == null) {
@@ -72,7 +80,7 @@ public class GuiFileHandler {
             GuiTask<Boolean> task = new GuiTask<>(
                 guiTaskHandler,
                 statusManager,
-                () -> processExport(fileWithSuffix, sessionState),
+                () -> processExport(fileWithSuffix, sessionState, isNoteIncluded),
                 e -> dialogueTool.errorOnExport(fileWithSuffix, e)
             );
 
@@ -80,9 +88,9 @@ public class GuiFileHandler {
         }
     }
 
-    private boolean processExport(final Path file, final SessionState sessionState) {
-        LOG.info("Exporting to file '{}'", file);
-        sessionFileService.exportSelection(sessionState, file);
+    private boolean processExport(final Path file, final SessionState sessionState, final boolean isNoteIncluded) {
+        LOG.info("Exporting to file '{}' (Notes included: {})", file, isNoteIncluded);
+        sessionFileService.exportSelection(sessionState, file, isNoteIncluded);
 
         return true;
     }

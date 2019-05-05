@@ -44,10 +44,11 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.List;
 
 import static io.github.vocabhunter.gui.main.GuiTestConstants.WINDOW_HEIGHT;
 import static io.github.vocabhunter.gui.main.GuiTestConstants.WINDOW_WIDTH;
-import static org.hamcrest.CoreMatchers.containsString;
+import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
@@ -160,9 +161,10 @@ public class GuiTest implements GuiTestValidator {
     }
 
     @Override
-    public void validateExportFile(final Path file) {
-        String text = readFile(file);
-        assertThat("Export file content", text, containsString("the"));
+    public void validateExportFile(final Path file, final String... lines) {
+        List<String> document = readFile(file);
+
+        assertThat("Export file content", document, is(List.of(lines)));
     }
 
     @Override
@@ -171,9 +173,9 @@ public class GuiTest implements GuiTestValidator {
         assertEquals(page, webPageCaptor.getValue(), "Website");
     }
 
-    private String readFile(final Path file) {
+    private List<String> readFile(final Path file) {
         try {
-            return Files.readString(file, CoreConstants.CHARSET);
+            return Files.readAllLines(file, CoreConstants.CHARSET);
         } catch (final IOException e) {
             throw new VocabHunterException(String.format("Unable to read file %s", file), e);
         }

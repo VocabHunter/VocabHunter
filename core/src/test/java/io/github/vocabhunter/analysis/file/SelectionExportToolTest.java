@@ -23,6 +23,19 @@ public class SelectionExportToolTest {
 
     private Path file;
 
+    private final SessionState emptyState = state();
+
+    private final SessionState state = state(
+        word("Out1", WordState.KNOWN),
+        word("In1",  WordState.UNKNOWN, "Simple Note"),
+        word("Out2", WordState.UNSEEN, "Ignored Note"),
+        word("In2",  WordState.UNKNOWN, "Line 1\nLine 2"),
+        word("In3",  WordState.UNKNOWN),
+        word("In4",  WordState.UNKNOWN, "\t\n Spaced Note\n \n"),
+        word("In5",  WordState.UNKNOWN, "\n Line 1 \n \n Line 3 "),
+        word("In6",  WordState.UNKNOWN, " ")
+    );
+
     @BeforeEach
     public void setUp() throws Exception {
         files = new TestFileManager(getClass());
@@ -36,24 +49,21 @@ public class SelectionExportToolTest {
 
     @Test
     public void testEmpty() throws Exception {
-        SessionState state = state();
-
-        validate(state);
+        validate(emptyState, false);
     }
 
     @Test
-    public void testSelection() throws Exception {
-        SessionState state = state(
-                word("Out1", WordState.KNOWN),
-                word("In1", WordState.UNKNOWN),
-                word("Out2", WordState.UNSEEN),
-                word("In2", WordState.UNKNOWN));
-
-        validate(state, "In1", "In2");
+    public void testSelectionWithoutNotes() throws Exception {
+        validate(state, false, "In1", "In2", "In3", "In4", "In5", "In6");
     }
 
-    private void validate(final SessionState state, final String... expected) throws Exception {
-        SelectionExportTool.exportSelection(state, file);
+    @Test
+    public void testSelectionWithNotes() throws Exception {
+        validate(state, true, "In1\tSimple Note", "In2\tLine 1", "\tLine 2", "In3", "In4\tSpaced Note", "In5\tLine 1", "", "\tLine 3", "In6");
+    }
+
+    private void validate(final SessionState state, final boolean isNoteIncluded, final String... expected) throws Exception {
+        SelectionExportTool.exportSelection(state, file, isNoteIncluded);
 
         List<String> actual = Files.readAllLines(file);
         assertEquals(List.of(expected), actual, "File content");
@@ -68,10 +78,15 @@ public class SelectionExportToolTest {
     }
 
     private SessionWord word(final String name, final WordState state) {
+        return word(name, state, null);
+    }
+
+    private SessionWord word(final String name, final WordState state, final String note) {
         SessionWord bean = new SessionWord();
 
         bean.setWordIdentifier(name);
         bean.setState(state);
+        bean.setNote(note);
 
         return bean;
     }

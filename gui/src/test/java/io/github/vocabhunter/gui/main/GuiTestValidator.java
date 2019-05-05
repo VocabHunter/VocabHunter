@@ -14,7 +14,7 @@ public interface GuiTestValidator {
 
     void validateSavedSession(Path file, final String name);
 
-    void validateExportFile(Path file);
+    void validateExportFile(Path file, String... lines);
 
     void setUpFileDialogue(FileDialogueType dialogueType, final FileFormatType fileType, String file);
 

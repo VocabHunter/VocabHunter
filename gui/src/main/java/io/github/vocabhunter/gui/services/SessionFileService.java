@@ -39,7 +39,7 @@ public class SessionFileService {
         SessionSerialiser.write(file, state);
     }
 
-    public void exportSelection(final SessionState state, final Path file) {
-        SelectionExportTool.exportSelection(state, file);
+    public void exportSelection(final SessionState state, final Path file, final boolean isNoteIncluded) {
+        SelectionExportTool.exportSelection(state, file, isNoteIncluded);
     }
 }

@@ -74,11 +74,6 @@ public class GuiTestSteps {
             verifyThat("#mainWord", hasText("me"));
         });
 
-        step("Mark word as unknown with keyboard", () -> {
-            robot.type(KeyCode.X);
-            verifyThat("#mainWord", hasText("of"));
-        });
-
         step("Write note and cancel", () -> {
             robot.clickOn("#buttonNote");
             robot.clickOn("#textAreaNoteText").write(WORD_NOTE_1);
@@ -100,6 +95,11 @@ public class GuiTestSteps {
             robot.clickOn("#buttonOk");
         });
 
+        step("Mark word as unknown with keyboard", () -> {
+            robot.type(KeyCode.X);
+            verifyThat("#mainWord", hasText("of"));
+        });
+
         step("Show selection", () -> {
             robot.clickOn("#buttonEditOff");
             verifyThat("#buttonKnown", isInvisible());
@@ -110,10 +110,17 @@ public class GuiTestSteps {
             verifyThat("#buttonKnown", isVisible());
         });
 
-        step("Export the selection", () -> {
+        step("Export the selection (with notes)", () -> {
             validator.setUpFileDialogue(FileDialogueType.EXPORT_SELECTION, FileFormatType.TEXT, exportFile);
             robot.clickOn("#buttonExport");
-            validator.validateExportFile(exportFile);
+            validator.validateExportFile(exportFile, "the", "me\t" + WORD_NOTE_2);
+        });
+
+        step("Export the selection (without notes)", () -> {
+            validator.setUpFileDialogue(FileDialogueType.EXPORT_SELECTION, FileFormatType.TEXT, exportFile);
+            robot.clickOn("#menuWords");
+            robot.clickOn("#menuExportWithoutNotes");
+            validator.validateExportFile(exportFile, "the", "me");
         });
 
         step("Save the session", () -> {

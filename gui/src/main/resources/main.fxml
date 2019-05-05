@@ -54,7 +54,8 @@
                                             <RadioMenuItem fx:id="menuEditOn" mnemonicParsing="false" text="%main.menu.words.edit.on" />
                                             <RadioMenuItem fx:id="menuEditOff" mnemonicParsing="false" text="%main.menu.words.edit.off" />
                                             <SeparatorMenuItem mnemonicParsing="false" />
-                                            <MenuItem fx:id="menuExport" accelerator="Shortcut+E" mnemonicParsing="false" text="%main.menu.words.export" />
+                                            <MenuItem fx:id="menuExportWithNotes" accelerator="Shortcut+E" mnemonicParsing="false" text="%main.menu.words.export.notes.on" />
+                                            <MenuItem fx:id="menuExportWithoutNotes" mnemonicParsing="false" text="%main.menu.words.export.notes.off" />
                                             <SeparatorMenuItem mnemonicParsing="false" />
                                             <MenuItem fx:id="menuFind" accelerator="Shortcut+F" mnemonicParsing="false" text="%main.menu.words.find" />
                                         </items>
