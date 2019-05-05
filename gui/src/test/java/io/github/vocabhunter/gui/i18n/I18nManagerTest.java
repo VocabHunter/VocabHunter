@@ -11,8 +11,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.Locale;
 
-import static io.github.vocabhunter.gui.i18n.I18nKey.SESSION_TAB_ANALYSIS;
-import static io.github.vocabhunter.gui.i18n.I18nKey.STATUS_MARKED_PERCENTAGE;
+import static io.github.vocabhunter.gui.i18n.I18nKey.*;
 import static io.github.vocabhunter.gui.i18n.SupportedLocale.SPANISH;
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -65,7 +64,7 @@ public class I18nManagerTest {
         target.setupLocale(SPANISH);
         assertAll(
             () -> validateDefaultLocale(SPANISH.getLocale()),
-            () -> assertEquals("Analysis De Texto", target.text(SESSION_TAB_ANALYSIS))
+            () -> assertEquals("Informe De Progreso", target.text(SESSION_TAB_PROGRESS))
         );
     }
 
