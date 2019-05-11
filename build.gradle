@@ -55,7 +55,7 @@ subprojects {
     }
 
     dependencies {
-        testCompile 'org.junit.jupiter:junit-jupiter:5.4.1'
+        testCompile 'org.junit.jupiter:junit-jupiter:5.4.2'
         testCompile 'org.mockito:mockito-junit-jupiter:2.25.1'
         runtime 'ch.qos.logback:logback-classic:1.2.3'
     }
