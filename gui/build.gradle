@@ -70,12 +70,6 @@ test {
     }
 }
 
-run {
-    jvmArgs += [
-        '--add-exports', 'javafx.base/com.sun.javafx.runtime=ALL-UNNAMED'
-    ]
-}
-
 task copyDependencies(type: Copy) {
     from configurations.runtime
     from jar

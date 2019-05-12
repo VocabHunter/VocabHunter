@@ -20,6 +20,5 @@ call "%JAVA_HOME%\bin\java.exe" ^
     --name "VocabHunter" ^
     --main-jar "%JAR%" ^
     --version "%VERSION%" ^
-    --jvm-args "--add-opens javafx.base/com.sun.javafx.reflect=ALL-UNNAMED" ^
     --icon "%APP_ICON%" ^
     --class "io.github.vocabhunter.gui.main.VocabHunterGuiExecutable"

@@ -24,7 +24,6 @@ ${PACKAGER} \
   --name VocabHunter \
   --main-jar ${JAR} \
   --version ${VERSION} \
-  --jvm-args '--add-opens javafx.base/com.sun.javafx.reflect=ALL-UNNAMED' \
   --file-associations ${FILE_ASSOCIATIONS} \
   --icon $APP_ICON \
   $EXTRA_BUNDLER_ARGUMENTS \
