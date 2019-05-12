@@ -64,7 +64,7 @@ public class VocabHunterGui {
         Platform.runLater(() -> logStartup(startupTimestampNanos));
 
         // We delay starting the async filtering to allow the GUI to start quickly
-        filterSettingsTool.beginAsyncFiltering();
+        Platform.runLater(filterSettingsTool::beginAsyncFiltering);
     }
 
     private void initialise(final Stage stage) {
