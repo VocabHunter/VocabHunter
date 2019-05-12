@@ -64,11 +64,11 @@
                                         <items>
                                             <MenuItem fx:id="menuSetupFilters" mnemonicParsing="false" text="%main.menu.settings.filters.setup" />
                                             <CheckMenuItem fx:id="menuEnableFilters" mnemonicParsing="false" selected="true" text="%main.menu.settings.filters.enable" />
-                                            <SeparatorMenuItem mnemonicParsing="false" />
-                                            <Menu fx:id="menuLanguage" mnemonicParsing="false" text="%main.menu.language.menu">
+                                            <SeparatorMenuItem mnemonicParsing="false" visible="false" />
+                                            <Menu fx:id="menuLanguage" mnemonicParsing="false" text="%main.menu.language.menu" visible="false">
                                                 <items>
-                                                    <RadioMenuItem fx:id="menuEnglish" mnemonicParsing="false" text="%main.menu.language.english" />
-                                                    <RadioMenuItem fx:id="menuSpanish" mnemonicParsing="false" text="%main.menu.language.spanish" />
+                                                    <RadioMenuItem fx:id="menuEnglish" mnemonicParsing="false" text="%main.menu.language.english" visible="false" />
+                                                    <RadioMenuItem fx:id="menuSpanish" mnemonicParsing="false" text="%main.menu.language.spanish" visible="false" />
                                                 </items>
                                            </Menu>
                                         </items>
