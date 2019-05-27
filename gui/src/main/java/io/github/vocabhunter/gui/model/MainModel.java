@@ -163,7 +163,7 @@ public class MainModel {
         this.locale.set(locale);
     }
 
-    public SimpleObjectProperty<SupportedLocale> localeProperty() {
-        return locale;
+    public SupportedLocale getLocale() {
+        return locale.get();
     }
 }

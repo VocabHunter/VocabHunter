@@ -12,12 +12,16 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
 @Singleton
 public class MainStageHandler {
+    private static final Logger LOG = LoggerFactory.getLogger(MainStageHandler.class);
+
     private final FxmlHandler fxmlHandler;
 
     private final MainController mainController;
@@ -26,14 +30,19 @@ public class MainStageHandler {
 
     private final PlacementManager placementManager;
 
+    private final LanguageHandler languageHandler;
+
     private Stage stage;
 
     @Inject
-    public MainStageHandler(final FxmlHandler fxmlHandler, final MainController mainController, final SessionStateHandler sessionStateHandler, final PlacementManager placementManager) {
+    public MainStageHandler(
+        final FxmlHandler fxmlHandler, final MainController mainController, final SessionStateHandler sessionStateHandler, final PlacementManager placementManager,
+        final LanguageHandler languageHandler) {
         this.fxmlHandler = fxmlHandler;
         this.mainController = mainController;
         this.sessionStateHandler = sessionStateHandler;
         this.placementManager = placementManager;
+        this.languageHandler = languageHandler;
     }
 
     public void initialise(final Stage stage) {
@@ -47,6 +56,7 @@ public class MainStageHandler {
             stage.setX(placement.getX());
             stage.setY(placement.getY());
         }
+        languageHandler.initialise(l -> LOG.info("Language changed to {}", l));
     }
 
     public void applyNewScene() {

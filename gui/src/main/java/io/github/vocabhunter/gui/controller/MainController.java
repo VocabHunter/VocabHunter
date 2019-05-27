@@ -156,11 +156,10 @@ public class MainController {
 
     public void initialise(final Stage stage) {
         sessionStateHandler.initialise(mainBorderPane);
-        languageHandler.initialise(menuEnglish, menuSpanish);
+        languageHandler.setupControls(menuEnglish, menuSpanish);
 
         buildToggleGroup(buttonEditOn, buttonEditOff);
         buildToggleGroup(menuEditOn, menuEditOff);
-        buildToggleGroup(menuEnglish, menuSpanish);
 
         handler(buttonOpen, menuOpen, guiFileHandler::handleOpenSession);
         handler(buttonNew, menuNew, guiFileHandler::handleNewSession);
