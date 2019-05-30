@@ -12,16 +12,12 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
 @Singleton
 public class MainStageHandler {
-    private static final Logger LOG = LoggerFactory.getLogger(MainStageHandler.class);
-
     private final FxmlHandler fxmlHandler;
 
     private final MainController mainController;
@@ -56,7 +52,7 @@ public class MainStageHandler {
             stage.setX(placement.getX());
             stage.setY(placement.getY());
         }
-        languageHandler.initialise(l -> LOG.info("Language changed to {}", l));
+        languageHandler.initialise(this::applyNewScene);
     }
 
     public void applyNewScene() {

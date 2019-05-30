@@ -45,19 +45,31 @@ public class MainModel {
 
     private WordFilter filter;
 
-    public void replaceSessionModel(final SessionState sessionState, final SessionModel sessionModel, final Path sessionFile) {
-        unbindOldSession();
+    public void clearSessionModel() {
+        resetSessionModel(null, null, null, false);
+        selectionAvailable.setValue(false);
+        editMode.setValue(true);
+        documentName.setValue(null);
+        changesSaved.setValue(true);
+    }
 
-        this.sessionState = sessionState;
-        this.sessionModel = sessionModel;
-        this.sessionFile.set(sessionFile);
-        sessionOpen.set(true);
+    public void replaceSessionModel(final SessionState sessionState, final SessionModel sessionModel, final Path sessionFile) {
+        resetSessionModel(sessionState, sessionModel, sessionFile, true);
         selectionAvailable.bind(isNotEmpty(sessionModel.getSelectedWords()));
         editMode.bindBidirectional(sessionModel.editableProperty());
         sessionModel.filterSettingsProperty().bindBidirectional(filterSettings);
         sessionModel.enableFiltersProperty().bindBidirectional(enableFilters);
         documentName.bind(sessionModel.documentNameProperty());
         changesSaved.bindBidirectional(sessionModel.changesSavedProperty());
+    }
+
+    private void resetSessionModel(final SessionState sessionState, final SessionModel sessionModel, final Path sessionFile, final boolean isSessionOpen) {
+        unbindOldSession();
+
+        this.sessionState = sessionState;
+        this.sessionModel = sessionModel;
+        this.sessionFile.set(sessionFile);
+        sessionOpen.set(isSessionOpen);
     }
 
     private void unbindOldSession() {
@@ -165,5 +177,9 @@ public class MainModel {
 
     public SupportedLocale getLocale() {
         return locale.get();
+    }
+
+    public SimpleObjectProperty<SupportedLocale> localeProperty() {
+        return locale;
     }
 }

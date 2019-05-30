@@ -32,6 +32,7 @@ public class TitleHandler {
         model.sessionFileProperty().addListener(listener);
         model.documentNameProperty().addListener(listener);
         model.changesSavedProperty().addListener(listener);
+        model.localeProperty().addListener(listener);
 
         updateTitle();
     }

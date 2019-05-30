@@ -5,6 +5,8 @@
 package io.github.vocabhunter.gui.main;
 
 import io.github.vocabhunter.gui.controller.*;
+import io.github.vocabhunter.gui.event.ExternalEventBroker;
+import io.github.vocabhunter.gui.event.ExternalOpenFileEvent;
 import io.github.vocabhunter.gui.i18n.I18nManager;
 import io.github.vocabhunter.gui.model.FilterSettingsTool;
 import io.github.vocabhunter.gui.model.MainModel;
@@ -40,9 +42,12 @@ public class VocabHunterGui {
 
     private final MainStageHandler mainStageHandler;
 
+    private final ExternalEventBroker externalEventSource;
+
     @Inject
     public VocabHunterGui(final I18nManager i18nManager, final GuiFileHandler guiFileHandler, final TitleHandler titleHandler, final MainModel model,
-        final FilterHandler filterHandler, final ExitRequestHandler exitRequestHandler, final FilterSettingsTool filterSettingsTool, final MainStageHandler mainStageHandler) {
+        final FilterHandler filterHandler, final ExitRequestHandler exitRequestHandler, final FilterSettingsTool filterSettingsTool, final MainStageHandler mainStageHandler,
+        final ExternalEventBroker externalEventSource) {
         this.i18nManager = i18nManager;
         this.guiFileHandler = guiFileHandler;
         this.titleHandler = titleHandler;
@@ -51,6 +56,7 @@ public class VocabHunterGui {
         this.exitRequestHandler = exitRequestHandler;
         this.filterSettingsTool = filterSettingsTool;
         this.mainStageHandler = mainStageHandler;
+        this.externalEventSource = externalEventSource;
     }
 
     public void start(final Stage stage, final long startupTimestampNanos) {
@@ -62,6 +68,7 @@ public class VocabHunterGui {
         stage.show();
 
         Platform.runLater(() -> logStartup(startupTimestampNanos));
+        Platform.runLater(() -> externalEventSource.setListener(this::processOpenOrNew));
 
         // We delay starting the async filtering to allow the GUI to start quickly
         Platform.runLater(filterSettingsTool::beginAsyncFiltering);
@@ -82,5 +89,9 @@ public class VocabHunterGui {
         String startupTimeText = String.format("%,d", startupMillis);
 
         LOG.info("User interface started ({} ms)", startupTimeText);
+    }
+
+    private void processOpenOrNew(final ExternalOpenFileEvent e) {
+        guiFileHandler.processOpenOrNew(e.getFile());
     }
 }

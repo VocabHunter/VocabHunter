@@ -28,5 +28,7 @@ public interface StatusManager {
 
     void completeAction();
 
+    void clearSession();
+
     void replaceSession(PositionModel position, ProgressModel progress);
 }
