@@ -4,6 +4,8 @@
 
 package io.github.vocabhunter.gui.settings;
 
+import io.github.vocabhunter.gui.i18n.SupportedLocale;
+
 import java.nio.file.Path;
 import java.util.Optional;
 
@@ -39,4 +41,8 @@ public interface SettingsManager {
     Optional<WindowSettings> getWindowSettings();
 
     void setWindowSettings(WindowSettings windowSettings);
+
+    Optional<SupportedLocale> getLocale();
+
+    void setLocale(SupportedLocale locale);
 }

@@ -7,7 +7,6 @@ package io.github.vocabhunter.gui.main;
 import io.github.vocabhunter.gui.controller.*;
 import io.github.vocabhunter.gui.event.ExternalEventBroker;
 import io.github.vocabhunter.gui.event.ExternalOpenFileEvent;
-import io.github.vocabhunter.gui.i18n.I18nManager;
 import io.github.vocabhunter.gui.model.FilterSettingsTool;
 import io.github.vocabhunter.gui.model.MainModel;
 import javafx.application.Platform;
@@ -18,15 +17,13 @@ import org.slf4j.LoggerFactory;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
-import static io.github.vocabhunter.gui.i18n.SupportedLocale.DEFAULT_LOCALE;
-
 @Singleton
 public class VocabHunterGui {
     private static final Logger LOG = LoggerFactory.getLogger(VocabHunterGui.class);
 
     private static final int NANOS_PER_MILLI = 1_000_000;
 
-    private final I18nManager i18nManager;
+    private final LanguageHandler languageHandler;
 
     private final GuiFileHandler guiFileHandler;
 
@@ -45,10 +42,10 @@ public class VocabHunterGui {
     private final ExternalEventBroker externalEventSource;
 
     @Inject
-    public VocabHunterGui(final I18nManager i18nManager, final GuiFileHandler guiFileHandler, final TitleHandler titleHandler, final MainModel model,
-        final FilterHandler filterHandler, final ExitRequestHandler exitRequestHandler, final FilterSettingsTool filterSettingsTool, final MainStageHandler mainStageHandler,
-        final ExternalEventBroker externalEventSource) {
-        this.i18nManager = i18nManager;
+    public VocabHunterGui(final LanguageHandler languageHandler, final GuiFileHandler guiFileHandler, final TitleHandler titleHandler, final MainModel model,
+        final FilterHandler filterHandler, final ExitRequestHandler exitRequestHandler, final FilterSettingsTool filterSettingsTool,
+        final MainStageHandler mainStageHandler, final ExternalEventBroker externalEventSource) {
+        this.languageHandler = languageHandler;
         this.guiFileHandler = guiFileHandler;
         this.titleHandler = titleHandler;
         this.model = model;
@@ -60,7 +57,7 @@ public class VocabHunterGui {
     }
 
     public void start(final Stage stage, final long startupTimestampNanos) {
-        i18nManager.setupLocale(DEFAULT_LOCALE);
+        languageHandler.initialise();
         mainStageHandler.initialise(stage);
         mainStageHandler.applyNewScene();
         initialise(stage);

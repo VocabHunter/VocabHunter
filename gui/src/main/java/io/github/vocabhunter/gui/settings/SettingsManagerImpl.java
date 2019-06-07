@@ -5,6 +5,7 @@
 package io.github.vocabhunter.gui.settings;
 
 import io.github.vocabhunter.analysis.settings.BaseSettingsManager;
+import io.github.vocabhunter.gui.i18n.SupportedLocale;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -106,6 +107,18 @@ public class SettingsManagerImpl extends BaseSettingsManager<VocabHunterSettings
     @Override
     public void setWindowSettings(final WindowSettings windowSettings) {
         setValue(VocabHunterSettings::setWindowSettings, windowSettings);
+    }
+
+    @Override
+    public Optional<SupportedLocale> getLocale() {
+        SupportedLocale value = getValue(VocabHunterSettings::getLocale);
+
+        return Optional.ofNullable(value);
+    }
+
+    @Override
+    public void setLocale(final SupportedLocale locale) {
+        setValue(VocabHunterSettings::setLocale, locale);
     }
 
     private <T> T getValue(final Function<VocabHunterSettings, T> getter) {

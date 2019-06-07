@@ -16,11 +16,10 @@ import java.util.Optional;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 
+import static io.github.vocabhunter.gui.i18n.SupportedLocale.SPANISH;
 import static io.github.vocabhunter.gui.settings.SettingsManagerImpl.SETTINGS_JSON;
 import static io.github.vocabhunter.gui.settings.VocabHunterSettings.*;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class SettingsManagerTest {
     private static final int UPDATE_INT_VALUE = 12_345;
@@ -150,6 +149,16 @@ public class SettingsManagerTest {
     @Test
     public void testUpdateWindowSettings() {
         validateOptional(target::getWindowSettings, target::setWindowSettings, windowSettings, windowSettings);
+    }
+
+    @Test
+    public void testMissingLocale() {
+        validateEmpty(target::getLocale);
+    }
+
+    @Test
+    public void testUpdateLocale() {
+        validateOptional(target::getLocale, target::setLocale, SPANISH, SPANISH);
     }
 
     private void validateGetDefaultPath(final Supplier<Path> getter) {

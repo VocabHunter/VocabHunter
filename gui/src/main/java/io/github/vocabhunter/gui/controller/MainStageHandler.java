@@ -52,7 +52,7 @@ public class MainStageHandler {
             stage.setX(placement.getX());
             stage.setY(placement.getY());
         }
-        languageHandler.initialise(this::applyNewScene);
+        languageHandler.initialiseLocaleChangeConsumer(this::applyNewScene);
     }
 
     public void applyNewScene() {

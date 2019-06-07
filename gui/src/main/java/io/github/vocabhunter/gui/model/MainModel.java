@@ -41,7 +41,7 @@ public class MainModel {
 
     private final SimpleBooleanProperty enableFilters = new SimpleBooleanProperty(true);
 
-    private final SimpleObjectProperty<SupportedLocale> locale = new SimpleObjectProperty<>(SupportedLocale.DEFAULT_LOCALE);
+    private final SimpleObjectProperty<SupportedLocale> locale = new SimpleObjectProperty<>();
 
     private WordFilter filter;
 

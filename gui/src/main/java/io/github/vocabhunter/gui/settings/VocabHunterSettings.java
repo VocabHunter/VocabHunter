@@ -5,6 +5,7 @@
 package io.github.vocabhunter.gui.settings;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import io.github.vocabhunter.gui.i18n.SupportedLocale;
 
 import java.nio.file.Path;
 
@@ -31,6 +32,8 @@ public class VocabHunterSettings {
     private boolean isAllowInitialCapitals = DEFAULT_ALLOW_INITIAL_CAPITALS;
 
     private WindowSettings windowSettings;
+
+    private SupportedLocale locale;
 
     public Path getDocumentsPath() {
         return documentsPath;
@@ -94,5 +97,13 @@ public class VocabHunterSettings {
 
     public void setWindowSettings(final WindowSettings windowSettings) {
         this.windowSettings = windowSettings;
+    }
+
+    public SupportedLocale getLocale() {
+        return locale;
+    }
+
+    public void setLocale(final SupportedLocale locale) {
+        this.locale = locale;
     }
 }
