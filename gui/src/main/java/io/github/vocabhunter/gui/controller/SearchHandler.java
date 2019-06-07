@@ -4,6 +4,7 @@
 
 package io.github.vocabhunter.gui.controller;
 
+import io.github.vocabhunter.gui.common.EventHandlerTool;
 import io.github.vocabhunter.gui.common.GuiTaskHandler;
 import io.github.vocabhunter.gui.common.SequencedWord;
 import io.github.vocabhunter.gui.i18n.I18nManager;
@@ -67,7 +68,7 @@ public class SearchHandler {
     }
 
     private void processSearchKeyPress(final KeyEvent event) {
-        if (event.getCode() == KeyCode.ENTER) {
+        if (EventHandlerTool.isSimpleKeyPress(event, KeyCode.ENTER)) {
             selectWord(searchModel.wrapMatchProperty());
         }
     }
@@ -109,7 +110,7 @@ public class SearchHandler {
     }
 
     public void processKeyPress(final KeyEvent event) {
-        if (KeyCode.ESCAPE.equals(event.getCode())) {
+        if (EventHandlerTool.isSimpleKeyPress(event, KeyCode.ESCAPE)) {
             event.consume();
             closeSearch();
         }

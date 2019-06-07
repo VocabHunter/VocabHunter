@@ -5,6 +5,7 @@
 package io.github.vocabhunter.gui.controller;
 
 import io.github.vocabhunter.analysis.marked.WordState;
+import io.github.vocabhunter.gui.common.EventHandlerTool;
 import io.github.vocabhunter.gui.model.SessionModel;
 import io.github.vocabhunter.gui.model.WordModel;
 import javafx.beans.binding.BooleanBinding;
@@ -47,7 +48,7 @@ public class WordStateHandler {
     public void processKeyPress(final KeyEvent event) {
         KeyCode key = event.getCode();
 
-        if (keyHandlers.containsKey(key)) {
+        if (EventHandlerTool.isWithoutModifier(event) && keyHandlers.containsKey(key)) {
             event.consume();
             keyHandlers.get(key).run();
         }

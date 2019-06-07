@@ -6,6 +6,8 @@ package io.github.vocabhunter.gui.common;
 
 import javafx.event.Event;
 import javafx.event.EventHandler;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 
 public final class EventHandlerTool {
     private EventHandlerTool() {
@@ -20,5 +22,13 @@ public final class EventHandlerTool {
         h1.handle(e);
         h2.handle(e);
         h3.handle(e);
+    }
+
+    public static boolean isSimpleKeyPress(final KeyEvent event, final KeyCode keyCode) {
+        return keyCode == event.getCode() && isWithoutModifier(event);
+    }
+
+    public static boolean isWithoutModifier(final KeyEvent event) {
+        return !(event.isAltDown() || event.isControlDown() || event.isMetaDown() || event.isShortcutDown() || event.isShiftDown());
     }
 }

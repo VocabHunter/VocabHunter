@@ -5,6 +5,7 @@
 package io.github.vocabhunter.gui.controller;
 
 import io.github.vocabhunter.gui.common.ControllerAndView;
+import io.github.vocabhunter.gui.common.EventHandlerTool;
 import io.github.vocabhunter.gui.dialogues.DialogueTool;
 import io.github.vocabhunter.gui.model.SessionModel;
 import io.github.vocabhunter.gui.model.WordModel;
@@ -63,7 +64,7 @@ public class WordNoteHandler {
     }
 
     public void processKeyPress(final KeyEvent event) {
-        if (KeyCode.N.equals(event.getCode())) {
+        if (EventHandlerTool.isSimpleKeyPress(event, KeyCode.N)) {
             event.consume();
             show();
         }
