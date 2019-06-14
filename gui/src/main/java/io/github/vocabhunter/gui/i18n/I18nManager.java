@@ -13,5 +13,7 @@ public interface I18nManager extends I18nBundleProvider {
 
     String text(I18nKey key, Object... arguments);
 
+    String text(SupportedLocale locale, I18nKey key, Object... arguments);
+
     StringExpression textBinding(I18nKey key, ObservableValue<?>... arguments);
 }

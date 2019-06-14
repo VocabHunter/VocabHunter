@@ -12,6 +12,7 @@ import org.junit.jupiter.api.Test;
 import java.util.Locale;
 
 import static io.github.vocabhunter.gui.i18n.I18nKey.*;
+import static io.github.vocabhunter.gui.i18n.SupportedLocale.ENGLISH;
 import static io.github.vocabhunter.gui.i18n.SupportedLocale.SPANISH;
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -49,6 +50,20 @@ public class I18nManagerTest {
     @Test
     public void testRoundDownPercent() {
         validatePercentage("8% of words marked", 7.6);
+    }
+
+    @Test
+    public void testLocaleParameterEnglish() {
+        String result = target.text(ENGLISH, FILTER_COLUMN, 1);
+
+        assertEquals("Column 1", result);
+    }
+
+    @Test
+    public void testLocaleParameterSpanish() {
+        String result = target.text(SPANISH, FILTER_COLUMN, 1);
+
+        assertEquals("Columna 1", result);
     }
 
     @Test
