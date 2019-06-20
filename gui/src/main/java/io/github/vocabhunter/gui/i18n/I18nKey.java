@@ -87,7 +87,9 @@ public enum I18nKey {
 
     STATUS_MARKED_PERCENTAGE("status.marked.percentage"),
     STATUS_POSITION_EDIT_ON("status.position.edit.on"),
-    STATUS_POSITION_EDIT_OFF("status.position.edit.off");
+    STATUS_POSITION_EDIT_OFF("status.position.edit.off"),
+
+    LANGUAGE_NAME("language.name");
 
     private final String key;
 

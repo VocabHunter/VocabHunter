@@ -12,7 +12,8 @@ public enum ViewFxml {
     SETTINGS("settings.fxml"),
     FILTER_SESSION("filter-session.fxml"),
     FILTER_GRID("filter-grid.fxml"),
-    WORD_NOTE("word-note.fxml");
+    WORD_NOTE("word-note.fxml"),
+    LANGUAGE("language.fxml");
 
     private final String name;
 
