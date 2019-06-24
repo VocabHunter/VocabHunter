@@ -89,7 +89,8 @@ public enum I18nKey {
     STATUS_POSITION_EDIT_ON("status.position.edit.on"),
     STATUS_POSITION_EDIT_OFF("status.position.edit.off"),
 
-    LANGUAGE_NAME("language.name");
+    LANGUAGE_NAME("language.name"),
+    LANGUAGE_TITLE("language.title");
 
     private final String key;
 
