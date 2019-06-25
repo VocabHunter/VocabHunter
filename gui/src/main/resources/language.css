@@ -1,0 +1,17 @@
+/*
+ * Styles for the language selection dialogue.
+ *
+ * Open Source Software published under the Apache Licence, Version 2.0.
+ */
+
+.languagePane {
+    -fx-font-size: 2em;
+    -fx-padding: 2em;
+}
+.languagePane .boxButtons {
+    -fx-spacing: 2em;
+    -fx-padding: 2em 0 0 0;
+}
+.languagePane .languageButton {
+    -fx-max-width: Infinity;
+}

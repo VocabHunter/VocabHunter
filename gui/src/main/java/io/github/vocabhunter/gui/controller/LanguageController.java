@@ -22,6 +22,8 @@ import static java.util.stream.Collectors.toList;
 
 @Singleton
 public class LanguageController {
+    private static final String STYLE_BUTTON = "languageButton";
+
     private final I18nManager i18nManager;
 
     @FXML
@@ -50,9 +52,17 @@ public class LanguageController {
 
     private void initialiseButtons() {
         List<Button> buttons = Arrays.stream(SupportedLocale.values())
-            .map(l -> new Button(i18nManager.text(l, I18nKey.LANGUAGE_NAME)))
+            .map(this::button)
             .collect(toList());
 
         boxButtons.getChildren().addAll(buttons);
+    }
+
+    private Button button(final SupportedLocale l) {
+        Button button = new Button(i18nManager.text(l, I18nKey.LANGUAGE_NAME));
+
+        button.getStyleClass().add(STYLE_BUTTON);
+
+        return button;
     }
 }

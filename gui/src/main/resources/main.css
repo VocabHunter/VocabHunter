@@ -6,6 +6,7 @@
 
 @import "about.css"
 @import "colours.css"
+@import "language.css"
 
 .mainWord {
     -fx-font-size: 40;

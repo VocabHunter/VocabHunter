@@ -1,14 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.Group?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane prefHeight="400.0" prefWidth="600.0" stylesheets="@main.css" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="io.github.vocabhunter.gui.controller.LanguageController">
+<BorderPane stylesheets="@main.css" styleClass="languagePane" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="io.github.vocabhunter.gui.controller.LanguageController">
    <top>
-      <Label text="LANGUAGE CHOICE" BorderPane.alignment="CENTER" fx:id="labelTitle" />
+      <Label text="LANGUAGE CHOICE" BorderPane.alignment="CENTER" fx:id="labelTitle" styleClass="languageTitle" />
    </top>
    <center>
-      <VBox alignment="CENTER" BorderPane.alignment="CENTER" fx:id="boxButtons" />
+      <Group>
+         <children>
+            <VBox fx:id="boxButtons" styleClass="boxButtons" />
+         </children>
+      </Group>
    </center>
 </BorderPane>
