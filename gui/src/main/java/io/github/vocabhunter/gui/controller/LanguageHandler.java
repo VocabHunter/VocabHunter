@@ -9,6 +9,7 @@ import io.github.vocabhunter.gui.i18n.SupportedLocale;
 import io.github.vocabhunter.gui.model.MainModel;
 import io.github.vocabhunter.gui.settings.SettingsManager;
 import io.github.vocabhunter.gui.status.StatusManager;
+import javafx.scene.control.Button;
 import javafx.scene.control.RadioMenuItem;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -66,6 +67,10 @@ public class LanguageHandler {
         setupLocale(menuEnglish, SupportedLocale.ENGLISH);
         setupLocale(menuSpanish, SupportedLocale.SPANISH);
         updateSelection();
+    }
+
+    public void setupLanguageSelectionControl(final SupportedLocale locale, final Button button) {
+        button.setOnAction(e -> localeSelectionAction(locale));
     }
 
     private void setupLocale(final RadioMenuItem menuItem, final SupportedLocale locale) {

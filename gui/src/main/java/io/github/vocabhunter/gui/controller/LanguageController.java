@@ -26,6 +26,8 @@ public class LanguageController {
 
     private final I18nManager i18nManager;
 
+    private final LanguageHandler languageHandler;
+
     @FXML
     private Label labelTitle;
 
@@ -33,8 +35,9 @@ public class LanguageController {
     private VBox boxButtons;
 
     @Inject
-    public LanguageController(final I18nManager i18nManager) {
+    public LanguageController(final I18nManager i18nManager, final LanguageHandler languageHandler) {
         this.i18nManager = i18nManager;
+        this.languageHandler = languageHandler;
     }
 
     public void initialise() {
@@ -62,6 +65,7 @@ public class LanguageController {
         Button button = new Button(i18nManager.text(l, I18nKey.LANGUAGE_NAME));
 
         button.getStyleClass().add(STYLE_BUTTON);
+        languageHandler.setupLanguageSelectionControl(l, button);
 
         return button;
     }
