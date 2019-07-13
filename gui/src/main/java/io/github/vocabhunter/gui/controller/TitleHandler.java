@@ -40,23 +40,27 @@ public class TitleHandler {
     private void updateTitle() {
         StringBuilder title = new StringBuilder(TITLE_BUFFER_SIZE);
 
-        if (model.hasSessionFile()) {
-            title.append(model.getSessionFile().getFileName());
-        } else {
-            title.append(i18nManager.text(I18nKey.MAIN_WINDOW_UNTITLED));
+        if (model.isSessionOpen()) {
+            if (model.hasSessionFile()) {
+                title.append(model.getSessionFile().getFileName());
+            } else {
+                title.append(i18nManager.text(I18nKey.MAIN_WINDOW_UNTITLED));
+            }
+
+            String documentName = model.getDocumentName();
+
+            if (documentName != null) {
+                title.append(" (").append(documentName).append(')');
+            }
+
+            if (!model.changesSavedProperty().get()) {
+                title.append(" - ").append(i18nManager.text(I18nKey.MAIN_WINDOW_UNSAVED));
+            }
+
+            title.append(" - ");
         }
 
-        String documentName = model.documentNameProperty().get();
-
-        if (documentName != null) {
-            title.append(" (").append(documentName).append(')');
-        }
-
-        if (!model.changesSavedProperty().get()) {
-            title.append(" - ").append(i18nManager.text(I18nKey.MAIN_WINDOW_UNSAVED));
-        }
-
-        title.append(" - VocabHunter");
+        title.append("VocabHunter");
         model.setTitle(title.toString());
     }
 }

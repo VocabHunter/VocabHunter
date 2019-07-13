@@ -99,6 +99,10 @@ public class MainModel {
         return documentName;
     }
 
+    public String getDocumentName() {
+        return documentName.get();
+    }
+
     public SimpleBooleanProperty changesSavedProperty() {
         return changesSaved;
     }
@@ -113,6 +117,14 @@ public class MainModel {
 
     public SimpleBooleanProperty sessionOpenProperty() {
         return sessionOpen;
+    }
+
+    public boolean isSessionOpen() {
+        return sessionOpen.get();
+    }
+
+    public void setSessionOpen(final boolean sessionOpen) {
+        this.sessionOpen.set(sessionOpen);
     }
 
     public SimpleBooleanProperty selectionAvailableProperty() {

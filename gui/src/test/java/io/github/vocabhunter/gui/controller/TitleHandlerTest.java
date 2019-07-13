@@ -33,23 +33,26 @@ public class TitleHandlerTest {
 
     @Test
     public void testInitial() {
-        validate("Untitled - VocabHunter");
+        validate("VocabHunter");
     }
 
     @Test
     public void testInitialUnsaved() {
+        model.setSessionOpen(true);
         model.changesSavedProperty().set(false);
         validate("Untitled - Unsaved Changes - VocabHunter");
     }
 
     @Test
     public void testSessionFile() {
+        model.setSessionOpen(true);
         model.sessionFileProperty().set(SESSION_FILE);
         validate("saved.file - VocabHunter");
     }
 
     @Test
     public void testSessionFileUnsaved() {
+        model.setSessionOpen(true);
         model.sessionFileProperty().set(SESSION_FILE);
         model.changesSavedProperty().set(false);
         validate("saved.file - Unsaved Changes - VocabHunter");
@@ -57,12 +60,14 @@ public class TitleHandlerTest {
 
     @Test
     public void testDocumentName() {
+        model.setSessionOpen(true);
         model.documentNameProperty().set(DOCUMENT_NAME);
         validate("Untitled (My Document) - VocabHunter");
     }
 
     @Test
     public void testDocumentNameUnsaved() {
+        model.setSessionOpen(true);
         model.documentNameProperty().set(DOCUMENT_NAME);
         model.changesSavedProperty().set(false);
         validate("Untitled (My Document) - Unsaved Changes - VocabHunter");
@@ -70,6 +75,7 @@ public class TitleHandlerTest {
 
     @Test
     public void testSessionFileDocumentName() {
+        model.setSessionOpen(true);
         model.sessionFileProperty().set(SESSION_FILE);
         model.documentNameProperty().set(DOCUMENT_NAME);
         validate("saved.file (My Document) - VocabHunter");
@@ -77,6 +83,7 @@ public class TitleHandlerTest {
 
     @Test
     public void testSessionFileDocumentNameUnsaved() {
+        model.setSessionOpen(true);
         model.sessionFileProperty().set(SESSION_FILE);
         model.documentNameProperty().set(DOCUMENT_NAME);
         model.changesSavedProperty().set(false);
