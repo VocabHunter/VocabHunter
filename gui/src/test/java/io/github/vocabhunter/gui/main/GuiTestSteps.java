@@ -47,7 +47,7 @@ public class GuiTestSteps {
         sessionFile = manager.addFile("session.wordy");
     }
 
-    public void part1BasicWalkThrough() {
+    public void part1OpenApplication() {
         step("Open application", () -> {
             verifyThat("#boxLanguageButtons", isVisible());
         });
@@ -56,7 +56,9 @@ public class GuiTestSteps {
             robot.clickOn("English");
             verifyThat("#mainBorderPane", isVisible());
         });
+    }
 
+    public void part2BasicWalkThrough() {
         step("Start new session", () -> {
             validator.setUpFileDialogue(FileDialogueType.NEW_SESSION, FileFormatType.DOCUMENT, BOOK_1);
             robot.clickOn("#buttonNew");
@@ -135,7 +137,7 @@ public class GuiTestSteps {
         });
     }
 
-    public void part2Progress() {
+    public void part3Progress() {
         step("Check progress", () -> {
             robot.clickOn("#tabProgress");
             verifyThat("#labelValueDone", hasText("4 Words"));
@@ -148,7 +150,7 @@ public class GuiTestSteps {
 
     }
 
-    public void part3StartNewSessionAndFilter() {
+    public void part4StartNewSessionAndFilter() {
         step("Open a new session for a different book", () -> {
             validator.setUpFileDialogue(FileDialogueType.NEW_SESSION, FileFormatType.DOCUMENT, BOOK_2);
             robot.clickOn("#buttonNew");
@@ -240,7 +242,7 @@ public class GuiTestSteps {
         });
     }
 
-    public void part4ReopenFirstSession() {
+    public void part5ReopenFirstSession() {
         step("Re-open the old session", () -> {
             validator.setUpFileDialogue(FileDialogueType.OPEN_SESSION, FileFormatType.SESSION, sessionFile);
             robot.clickOn("#buttonOpen");
@@ -249,7 +251,7 @@ public class GuiTestSteps {
         });
     }
 
-    public void part5ErrorHandling() {
+    public void part6ErrorHandling() {
         step("Start session from empty file", () -> {
             validator.setUpFileDialogue(FileDialogueType.NEW_SESSION, FileFormatType.DOCUMENT, EMPTY_FILE);
             robot.clickOn("#buttonNew");
@@ -260,7 +262,7 @@ public class GuiTestSteps {
         });
     }
 
-    public void part6AboutDialogue() {
+    public void part7AboutDialogue() {
         step("Open About dialogue", () -> {
             robot.clickOn("#menuHelp");
             robot.clickOn("#menuAbout");
@@ -277,7 +279,7 @@ public class GuiTestSteps {
         });
     }
 
-    public void part7WebLinks() {
+    public void part8WebLinks() {
         step("Open website", () -> {
             robot.clickOn("#menuHelp");
             robot.clickOn("#menuWebsite");
@@ -297,7 +299,7 @@ public class GuiTestSteps {
         });
     }
 
-    public void part8Search() {
+    public void part9Search() {
         step("Open Search", () -> {
             robot.clickOn("#menuWords");
             robot.clickOn("#menuFind");
@@ -329,7 +331,23 @@ public class GuiTestSteps {
         });
     }
 
-    public void part9Exit() {
+    public void part10SwitchLanguage() {
+        step("Switch to Spanish", () -> {
+            robot.clickOn("#menuSettings");
+            robot.clickOn("#menuLanguage");
+            robot.clickOn("Español");
+            verifyThat("#buttonNew", hasText("Nuevo"));
+        });
+
+        step("Switch to English", () -> {
+            robot.clickOn("#menuSettings");
+            robot.clickOn("#menuLanguage");
+            robot.clickOn("English");
+            verifyThat("#buttonNew", hasText("New"));
+        });
+    }
+
+    public void part11Exit() {
         step("Restart new session", () -> {
             validator.setUpFileDialogue(FileDialogueType.NEW_SESSION, FileFormatType.DOCUMENT, BOOK_2);
             robot.clickOn("#buttonNew");

@@ -60,7 +60,7 @@
                                             <MenuItem fx:id="menuFind" accelerator="Shortcut+F" mnemonicParsing="false" text="%main.menu.words.find" />
                                         </items>
                                     </Menu>
-                                    <Menu mnemonicParsing="false" text="%main.menu.settings">
+                                    <Menu fx:id="menuSettings" mnemonicParsing="false" text="%main.menu.settings">
                                         <items>
                                             <MenuItem fx:id="menuSetupFilters" mnemonicParsing="false" text="%main.menu.settings.filters.setup" />
                                             <CheckMenuItem fx:id="menuEnableFilters" mnemonicParsing="false" selected="true" text="%main.menu.settings.filters.enable" />

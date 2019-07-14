@@ -149,15 +149,17 @@ public class GuiTest implements GuiTestValidator {
     public void testWalkThrough(final FxRobot robot) {
         GuiTestSteps steps = new GuiTestSteps(robot, this, manager);
 
-        steps.part1BasicWalkThrough();
-        steps.part2Progress();
-        steps.part3StartNewSessionAndFilter();
-        steps.part4ReopenFirstSession();
-        steps.part5ErrorHandling();
-        steps.part6AboutDialogue();
-        steps.part7WebLinks();
-        steps.part8Search();
-        steps.part9Exit();
+        steps.part1OpenApplication();
+        steps.part2BasicWalkThrough();
+        steps.part3Progress();
+        steps.part4StartNewSessionAndFilter();
+        steps.part5ReopenFirstSession();
+        steps.part6ErrorHandling();
+        steps.part7AboutDialogue();
+        steps.part8WebLinks();
+        steps.part9Search();
+        steps.part10SwitchLanguage();
+        steps.part11Exit();
     }
 
     @Override
