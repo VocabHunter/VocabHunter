@@ -49,7 +49,6 @@ public class LanguageHandler {
         mainModel.setLocale(locale);
         if (locale == null) {
             locale = SupportedLocale.DEFAULT_LOCALE;
-            settingsManager.setLocale(locale);
         }
 
         i18nManager.setupLocale(locale);
