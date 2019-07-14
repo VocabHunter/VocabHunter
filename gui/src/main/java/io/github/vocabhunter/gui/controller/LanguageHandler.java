@@ -10,12 +10,10 @@ import io.github.vocabhunter.gui.model.MainModel;
 import io.github.vocabhunter.gui.settings.SettingsManager;
 import io.github.vocabhunter.gui.status.StatusManager;
 import javafx.scene.control.Button;
-import javafx.scene.control.RadioMenuItem;
+import javafx.scene.control.MenuItem;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.EnumMap;
-import java.util.Map;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
@@ -33,9 +31,7 @@ public class LanguageHandler {
 
     private final SettingsManager settingsManager;
 
-    private final Map<SupportedLocale, RadioMenuItem> itemMap = new EnumMap<>(SupportedLocale.class);
-
-    private Runnable localeChangeConsumer;
+    private Runnable sceneSwitcher;
 
     @Inject
     public LanguageHandler(final MainModel mainModel, final GuiFileHandler guiFileHandler, final StatusManager statusManager, final I18nManager i18nManager, final SettingsManager settingsManager) {
@@ -50,50 +46,41 @@ public class LanguageHandler {
         SupportedLocale locale = settingsManager.getLocale()
             .orElse(null);
 
+        mainModel.setLocale(locale);
         if (locale == null) {
             locale = SupportedLocale.DEFAULT_LOCALE;
             settingsManager.setLocale(locale);
         }
 
         i18nManager.setupLocale(locale);
-        mainModel.setLocale(locale);
     }
 
-    public void initialiseLocaleChangeConsumer(final Runnable localeChangeConsumer) {
-        this.localeChangeConsumer = localeChangeConsumer;
+    public void initialiseSceneSwitcher(final Runnable sceneSwitcher) {
+        this.sceneSwitcher = sceneSwitcher;
     }
 
-    public void setupControls(final RadioMenuItem menuEnglish, final RadioMenuItem menuSpanish) {
-        setupLocale(menuEnglish, SupportedLocale.ENGLISH);
-        setupLocale(menuSpanish, SupportedLocale.SPANISH);
-        updateSelection();
+    public void setupControl(final MenuItem menuLanguage) {
+        menuLanguage.setOnAction(e -> openChangeLanguageDialogueAction());
+    }
+
+    private void openChangeLanguageDialogueAction() {
+        if (guiFileHandler.unsavedChangesCheck()) {
+            mainModel.clearSessionModel();
+            statusManager.clearSession();
+            mainModel.setLocale(null);
+            sceneSwitcher.run();
+        }
     }
 
     public void setupLanguageSelectionControl(final SupportedLocale locale, final Button button) {
         button.setOnAction(e -> localeSelectionAction(locale));
     }
 
-    private void setupLocale(final RadioMenuItem menuItem, final SupportedLocale locale) {
-        itemMap.put(locale, menuItem);
-        menuItem.setOnAction(e -> localeSelectionAction(locale));
-    }
-
     private void localeSelectionAction(final SupportedLocale locale) {
-        if (mainModel.getLocale() != locale && guiFileHandler.unsavedChangesCheck()) {
-            settingsManager.setLocale(locale);
-            i18nManager.setupLocale(locale);
-            mainModel.setLocale(locale);
-            mainModel.clearSessionModel();
-            statusManager.clearSession();
-            localeChangeConsumer.run();
-            LOG.info("Language changed to {}", locale);
-        }
-        updateSelection();
-    }
-
-    private void updateSelection() {
-        SupportedLocale locale = mainModel.getLocale();
-
-        itemMap.forEach((l, i) -> i.setSelected(l == locale));
+        settingsManager.setLocale(locale);
+        i18nManager.setupLocale(locale);
+        mainModel.setLocale(locale);
+        sceneSwitcher.run();
+        LOG.info("Language set to {}", locale);
     }
 }

@@ -5,6 +5,7 @@
 package io.github.vocabhunter.gui.controller;
 
 import io.github.vocabhunter.gui.common.Placement;
+import io.github.vocabhunter.gui.model.MainModel;
 import io.github.vocabhunter.gui.services.PlacementManager;
 import io.github.vocabhunter.gui.view.FxmlHandler;
 import io.github.vocabhunter.gui.view.ViewFxml;
@@ -22,23 +23,29 @@ public class MainStageHandler {
 
     private final MainController mainController;
 
+    private final LanguageController languageController;
+
     private final SessionStateHandler sessionStateHandler;
 
     private final PlacementManager placementManager;
 
     private final LanguageHandler languageHandler;
 
+    private final MainModel mainModel;
+
     private Stage stage;
 
     @Inject
     public MainStageHandler(
-        final FxmlHandler fxmlHandler, final MainController mainController, final SessionStateHandler sessionStateHandler, final PlacementManager placementManager,
-        final LanguageHandler languageHandler) {
+        final FxmlHandler fxmlHandler, final MainController mainController, final LanguageController languageController, final SessionStateHandler sessionStateHandler,
+        final PlacementManager placementManager, final LanguageHandler languageHandler, final MainModel mainModel) {
         this.fxmlHandler = fxmlHandler;
         this.mainController = mainController;
+        this.languageController = languageController;
         this.sessionStateHandler = sessionStateHandler;
         this.placementManager = placementManager;
         this.languageHandler = languageHandler;
+        this.mainModel = mainModel;
     }
 
     public void initialise(final Stage stage) {
@@ -52,16 +59,24 @@ public class MainStageHandler {
             stage.setX(placement.getX());
             stage.setY(placement.getY());
         }
-        languageHandler.initialiseLocaleChangeConsumer(this::applyNewScene);
+        languageHandler.initialiseSceneSwitcher(this::applyNewScene);
     }
 
     public void applyNewScene() {
-        Parent root = fxmlHandler.loadNode(ViewFxml.MAIN);
+        Parent root;
+
+        if (mainModel.getLocale() == null) {
+            root = fxmlHandler.loadNode(ViewFxml.LANGUAGE);
+            languageController.initialise();
+        } else {
+            root = fxmlHandler.loadNode(ViewFxml.MAIN);
+            mainController.initialise(stage);
+        }
+
         Scene scene = new Scene(root);
 
         scene.setOnKeyPressed(this::handleKeyEvent);
         stage.setScene(scene);
-        mainController.initialise(stage);
     }
 
     private void handleKeyEvent(final KeyEvent event) {

@@ -58,10 +58,7 @@ public class MainController {
     private CheckMenuItem menuEnableFilters;
 
     @FXML
-    private RadioMenuItem menuEnglish;
-
-    @FXML
-    private RadioMenuItem menuSpanish;
+    private MenuItem menuLanguage;
 
     @FXML
     private MenuItem menuWebsite;
@@ -152,7 +149,7 @@ public class MainController {
 
     public void initialise(final Stage stage) {
         sessionStateHandler.initialise(mainBorderPane);
-        languageHandler.setupControls(menuEnglish, menuSpanish);
+        languageHandler.setupControl(menuLanguage);
 
         buildToggleGroup(buttonEditOn, buttonEditOff);
         buildToggleGroup(menuEditOn, menuEditOff);

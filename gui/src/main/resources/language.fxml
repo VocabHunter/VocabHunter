@@ -12,7 +12,7 @@
    <center>
       <Group>
          <children>
-            <VBox fx:id="boxButtons" styleClass="boxButtons" />
+            <VBox fx:id="boxLanguageButtons" styleClass="boxButtons" />
          </children>
       </Group>
    </center>

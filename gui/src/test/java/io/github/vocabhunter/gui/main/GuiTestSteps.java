@@ -49,6 +49,11 @@ public class GuiTestSteps {
 
     public void part1BasicWalkThrough() {
         step("Open application", () -> {
+            verifyThat("#boxLanguageButtons", isVisible());
+        });
+
+        step("Select English", () -> {
+            robot.clickOn("English");
             verifyThat("#mainBorderPane", isVisible());
         });
 

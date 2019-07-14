@@ -32,7 +32,7 @@ public class LanguageController {
     private Label labelTitle;
 
     @FXML
-    private VBox boxButtons;
+    private VBox boxLanguageButtons;
 
     @Inject
     public LanguageController(final I18nManager i18nManager, final LanguageHandler languageHandler) {
@@ -58,7 +58,7 @@ public class LanguageController {
             .map(this::button)
             .collect(toList());
 
-        boxButtons.getChildren().addAll(buttons);
+        boxLanguageButtons.getChildren().addAll(buttons);
     }
 
     private Button button(final SupportedLocale l) {
