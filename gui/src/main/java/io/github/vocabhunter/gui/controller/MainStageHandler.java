@@ -51,21 +51,14 @@ public class MainStageHandler {
     public void initialise(final Stage stage) {
         this.stage = stage;
         stage.setOnCloseRequest(mainController.getCloseRequestHandler());
-        Placement placement = placementManager.getMainWindow();
-
-        stage.setWidth(placement.getWidth());
-        stage.setHeight(placement.getHeight());
-        if (placement.isPositioned()) {
-            stage.setX(placement.getX());
-            stage.setY(placement.getY());
-        }
         languageHandler.initialiseSceneSwitcher(this::applyNewScene);
     }
 
     public void applyNewScene() {
+        boolean isLanguageSwitch = mainModel.getLocale() == null;
         Parent root;
 
-        if (mainModel.getLocale() == null) {
+        if (isLanguageSwitch) {
             root = fxmlHandler.loadNode(ViewFxml.LANGUAGE);
             languageController.initialise();
         } else {
@@ -77,6 +70,30 @@ public class MainStageHandler {
 
         scene.setOnKeyPressed(this::handleKeyEvent);
         stage.setScene(scene);
+
+        positionScene(isLanguageSwitch);
+    }
+
+    private void positionScene(final boolean isLanguageSwitch) {
+        if (isLanguageSwitch) {
+            stage.sizeToScene();
+            stage.centerOnScreen();
+        } else {
+            positionPrincipalScene();
+        }
+    }
+
+    private void positionPrincipalScene() {
+        Placement placement = placementManager.getMainWindow();
+
+        stage.setWidth(placement.getWidth());
+        stage.setHeight(placement.getHeight());
+        if (placement.isPositioned()) {
+            stage.setX(placement.getX());
+            stage.setY(placement.getY());
+        } else {
+            stage.centerOnScreen();
+        }
     }
 
     private void handleKeyEvent(final KeyEvent event) {
