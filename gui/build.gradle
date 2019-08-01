@@ -5,7 +5,7 @@ import org.apache.tools.ant.filters.*
 
 plugins {
     id 'application'
-    id 'org.openjfx.javafxplugin' version '0.0.7'
+    id 'org.openjfx.javafxplugin' version '0.0.8'
 }
 
 mainClassName = "io.github.vocabhunter.gui.main.VocabHunterGuiExecutable"
@@ -45,7 +45,7 @@ dependencies {
     compile 'de.jensd:fontawesomefx-fontawesome:4.7.0-9.1.2'
 
     // This is required for the conditional logic in the logback setup
-    runtime 'org.codehaus.janino:janino:3.0.12'
+    runtime 'org.codehaus.janino:janino:3.0.15'
 
     testCompile project(path: ':core', configuration: 'tests')
 
