@@ -62,6 +62,7 @@
 
     <rule ref="category/java/multithreading.xml">
         <exclude name="DoNotUseThreads"/>
+        <exclude name="AvoidUsingVolatile"/>
         <exclude name="UseConcurrentHashMap"/>
     </rule>
 

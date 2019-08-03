@@ -118,7 +118,7 @@ public class GuiTest implements GuiTestValidator {
                 bind(GuiTaskHandler.class).to(GuiTaskHandlerForTesting.class);
             }
         };
-        VocabHunterGuiExecutable.setModules(coreModule, testModule, new StandardEventSourceModule());
+        VocabHunterGuiExecutable.setModules(coreModule, testModule);
 
         setupApplication(VocabHunterGuiExecutable.class);
     }

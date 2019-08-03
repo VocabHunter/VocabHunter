@@ -6,6 +6,7 @@ package io.github.vocabhunter.gui.controller;
 
 import io.github.vocabhunter.gui.common.Placement;
 import io.github.vocabhunter.gui.model.MainModel;
+import io.github.vocabhunter.gui.services.ExternalEventBroker;
 import io.github.vocabhunter.gui.services.PlacementManager;
 import io.github.vocabhunter.gui.view.FxmlHandler;
 import io.github.vocabhunter.gui.view.ViewFxml;
@@ -33,12 +34,14 @@ public class MainStageHandler {
 
     private final MainModel mainModel;
 
+    private final ExternalEventBroker externalEventBroker;
+
     private Stage stage;
 
     @Inject
     public MainStageHandler(
         final FxmlHandler fxmlHandler, final MainController mainController, final LanguageController languageController, final SessionStateHandler sessionStateHandler,
-        final PlacementManager placementManager, final LanguageHandler languageHandler, final MainModel mainModel) {
+        final PlacementManager placementManager, final LanguageHandler languageHandler, final MainModel mainModel, final ExternalEventBroker externalEventBroker) {
         this.fxmlHandler = fxmlHandler;
         this.mainController = mainController;
         this.languageController = languageController;
@@ -46,6 +49,7 @@ public class MainStageHandler {
         this.placementManager = placementManager;
         this.languageHandler = languageHandler;
         this.mainModel = mainModel;
+        this.externalEventBroker = externalEventBroker;
     }
 
     public void initialise(final Stage stage) {
@@ -72,6 +76,9 @@ public class MainStageHandler {
         stage.setScene(scene);
 
         positionScene(isLanguageSwitch);
+        if (!isLanguageSwitch) {
+            externalEventBroker.markMainDisplayShown();
+        }
     }
 
     private void positionScene(final boolean isLanguageSwitch) {

@@ -5,15 +5,15 @@
 package io.github.vocabhunter.gui.main;
 
 import io.github.vocabhunter.gui.controller.*;
-import io.github.vocabhunter.gui.event.ExternalEventBroker;
-import io.github.vocabhunter.gui.event.ExternalOpenFileEvent;
 import io.github.vocabhunter.gui.model.FilterSettingsTool;
 import io.github.vocabhunter.gui.model.MainModel;
+import io.github.vocabhunter.gui.services.ExternalEventBroker;
 import javafx.application.Platform;
 import javafx.stage.Stage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.nio.file.Path;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
@@ -39,12 +39,12 @@ public class VocabHunterGui {
 
     private final MainStageHandler mainStageHandler;
 
-    private final ExternalEventBroker externalEventSource;
+    private final ExternalEventBroker externalEventBroker;
 
     @Inject
     public VocabHunterGui(final LanguageHandler languageHandler, final GuiFileHandler guiFileHandler, final TitleHandler titleHandler, final MainModel model,
         final FilterHandler filterHandler, final ExitRequestHandler exitRequestHandler, final FilterSettingsTool filterSettingsTool,
-        final MainStageHandler mainStageHandler, final ExternalEventBroker externalEventSource) {
+        final MainStageHandler mainStageHandler, final ExternalEventBroker externalEventBroker) {
         this.languageHandler = languageHandler;
         this.guiFileHandler = guiFileHandler;
         this.titleHandler = titleHandler;
@@ -53,7 +53,7 @@ public class VocabHunterGui {
         this.exitRequestHandler = exitRequestHandler;
         this.filterSettingsTool = filterSettingsTool;
         this.mainStageHandler = mainStageHandler;
-        this.externalEventSource = externalEventSource;
+        this.externalEventBroker = externalEventBroker;
     }
 
     public void start(final Stage stage, final long startupTimestampNanos) {
@@ -65,10 +65,11 @@ public class VocabHunterGui {
         stage.show();
 
         Platform.runLater(() -> logStartup(startupTimestampNanos));
-        Platform.runLater(() -> externalEventSource.setListener(this::processOpenOrNew));
 
         // We delay starting the async filtering to allow the GUI to start quickly
         Platform.runLater(filterSettingsTool::beginAsyncFiltering);
+
+        externalEventBroker.markGuiOpen(this::processOpenOrNew);
     }
 
     private void initialise(final Stage stage) {
@@ -88,7 +89,7 @@ public class VocabHunterGui {
         LOG.info("User interface started ({} ms)", startupTimeText);
     }
 
-    private void processOpenOrNew(final ExternalOpenFileEvent e) {
-        guiFileHandler.processOpenOrNew(e.getFile());
+    private void processOpenOrNew(final Path file) {
+        Platform.runLater(() -> guiFileHandler.processOpenOrNew(file));
     }
 }
