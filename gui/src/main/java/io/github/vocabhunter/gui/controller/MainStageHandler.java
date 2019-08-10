@@ -36,12 +36,15 @@ public class MainStageHandler {
 
     private final ExternalEventBroker externalEventBroker;
 
+    private final ExitRequestHandler exitRequestHandler;
+
     private Stage stage;
 
     @Inject
     public MainStageHandler(
         final FxmlHandler fxmlHandler, final MainController mainController, final LanguageController languageController, final SessionStateHandler sessionStateHandler,
-        final PlacementManager placementManager, final LanguageHandler languageHandler, final MainModel mainModel, final ExternalEventBroker externalEventBroker) {
+        final PlacementManager placementManager, final LanguageHandler languageHandler, final MainModel mainModel, final ExternalEventBroker externalEventBroker,
+        final ExitRequestHandler exitRequestHandler) {
         this.fxmlHandler = fxmlHandler;
         this.mainController = mainController;
         this.languageController = languageController;
@@ -50,24 +53,25 @@ public class MainStageHandler {
         this.languageHandler = languageHandler;
         this.mainModel = mainModel;
         this.externalEventBroker = externalEventBroker;
+        this.exitRequestHandler = exitRequestHandler;
     }
 
     public void initialise(final Stage stage) {
         this.stage = stage;
-        stage.setOnCloseRequest(mainController.getCloseRequestHandler());
+        stage.setOnCloseRequest(exitRequestHandler::handleExitRequest);
         languageHandler.initialiseSceneSwitcher(this::applyNewScene);
     }
 
     public void applyNewScene() {
-        boolean isLanguageSwitch = mainModel.getLocale() == null;
+        boolean isLocaleDefined = mainModel.isLocaleDefined();
         Parent root;
 
-        if (isLanguageSwitch) {
-            root = fxmlHandler.loadNode(ViewFxml.LANGUAGE);
-            languageController.initialise();
-        } else {
+        if (isLocaleDefined) {
             root = fxmlHandler.loadNode(ViewFxml.MAIN);
             mainController.initialise(stage);
+        } else {
+            root = fxmlHandler.loadNode(ViewFxml.LANGUAGE);
+            languageController.initialise();
         }
 
         Scene scene = new Scene(root);
@@ -75,18 +79,18 @@ public class MainStageHandler {
         scene.setOnKeyPressed(this::handleKeyEvent);
         stage.setScene(scene);
 
-        positionScene(isLanguageSwitch);
-        if (!isLanguageSwitch) {
+        positionScene(isLocaleDefined);
+        if (isLocaleDefined) {
             externalEventBroker.markMainDisplayShown();
         }
     }
 
-    private void positionScene(final boolean isLanguageSwitch) {
-        if (isLanguageSwitch) {
+    private void positionScene(final boolean isLocaleDefined) {
+        if (isLocaleDefined) {
+            positionPrincipalScene();
+        } else {
             stage.sizeToScene();
             stage.centerOnScreen();
-        } else {
-            positionPrincipalScene();
         }
     }
 

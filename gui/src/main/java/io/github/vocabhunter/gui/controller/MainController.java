@@ -142,9 +142,6 @@ public class MainController {
     private SettingsHandler settingsHandler;
 
     @Inject
-    private ExitRequestHandler exitRequestHandler;
-
-    @Inject
     private LanguageHandler languageHandler;
 
     public void initialise(final Stage stage) {
@@ -236,22 +233,6 @@ public class MainController {
             try {
                 aboutHandler.show();
                 statusManager.markSuccess();
-            } finally {
-                statusManager.completeAction();
-            }
-        }
-    }
-
-    public EventHandler<WindowEvent> getCloseRequestHandler() {
-        return this::processCloseRequest;
-    }
-
-    private void processCloseRequest(final WindowEvent e) {
-        if (statusManager.beginExit()) {
-            try {
-                if (exitRequestHandler.handleExitRequest(e)) {
-                    statusManager.markSuccess();
-                }
             } finally {
                 statusManager.completeAction();
             }

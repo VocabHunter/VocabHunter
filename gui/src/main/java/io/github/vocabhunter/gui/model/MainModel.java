@@ -187,8 +187,8 @@ public class MainModel {
         this.locale.set(locale);
     }
 
-    public SupportedLocale getLocale() {
-        return locale.get();
+    public boolean isLocaleDefined() {
+        return locale.isNotNull().get();
     }
 
     public SimpleObjectProperty<SupportedLocale> localeProperty() {
