@@ -30,7 +30,7 @@
             </HBox>
             <TableView fx:id="tableWords" prefHeight="300.0" prefWidth="600.0" styleClass="wordList" VBox.vgrow="ALWAYS">
                 <placeholder>
-                    <Label styleClass="error" text="%filter.grid.error.empty" />
+                    <Label styleClass="error" text="%filter.grid.error.empty" wrapText="true" textAlignment="CENTER" />
                 </placeholder>
                <columnResizePolicy>
                   <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
