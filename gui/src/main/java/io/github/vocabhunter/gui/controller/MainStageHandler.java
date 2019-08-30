@@ -67,6 +67,7 @@ public class MainStageHandler {
         Parent root;
 
         if (isLocaleDefined) {
+            languageController.closeView();
             root = fxmlHandler.loadNode(ViewFxml.MAIN);
             mainController.initialise(stage);
         } else {

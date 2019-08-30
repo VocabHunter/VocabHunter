@@ -7,14 +7,16 @@ package io.github.vocabhunter.gui.controller;
 import io.github.vocabhunter.gui.i18n.I18nKey;
 import io.github.vocabhunter.gui.i18n.I18nManager;
 import io.github.vocabhunter.gui.i18n.SupportedLocale;
+import javafx.animation.FadeTransition;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
+import javafx.util.Duration;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
@@ -23,6 +25,8 @@ import static java.util.stream.Collectors.toList;
 @Singleton
 public class LanguageController {
     private static final String STYLE_BUTTON = "languageButton";
+
+    private static final Duration FADE_DURATION = Duration.seconds(1.5);
 
     private final I18nManager i18nManager;
 
@@ -33,6 +37,12 @@ public class LanguageController {
 
     @FXML
     private VBox boxLanguageButtons;
+
+    private final SupportedLocale[] allLocales = SupportedLocale.values();
+
+    private int currentTitleIndex = 0;
+
+    private final FadeTransition titleTransition = new FadeTransition(FADE_DURATION);
 
     @Inject
     public LanguageController(final I18nManager i18nManager, final LanguageHandler languageHandler) {
@@ -46,11 +56,22 @@ public class LanguageController {
     }
 
     private void initialiseTitle() {
-        String title = Arrays.stream(SupportedLocale.values())
-            .map(l -> i18nManager.text(l, I18nKey.LANGUAGE_TITLE))
-            .collect(Collectors.joining(" | "));
+        titleTransition.setFromValue(1);
+        titleTransition.setToValue(0);
+        titleTransition.setNode(labelTitle);
+        titleTransition.setOnFinished(e -> Platform.runLater(this::animationNextStep));
+        applyTitleText();
+        titleTransition.play();
+    }
 
-        labelTitle.setText(title);
+    private void animationNextStep() {
+        currentTitleIndex = (currentTitleIndex + 1) % allLocales.length;
+        applyTitleText();
+        titleTransition.play();
+    }
+
+    private void applyTitleText() {
+        labelTitle.setText(i18nManager.text(allLocales[currentTitleIndex], I18nKey.LANGUAGE_TITLE));
     }
 
     private void initialiseButtons() {
@@ -68,5 +89,15 @@ public class LanguageController {
         languageHandler.setupLanguageSelectionControl(l, button);
 
         return button;
+    }
+
+    public void closeView() {
+        Platform.runLater(this::stopTitleAnimation);
+    }
+
+    private void stopTitleAnimation() {
+        titleTransition.setNode(null);
+        titleTransition.setOnFinished(null);
+        titleTransition.stop();
     }
 }
