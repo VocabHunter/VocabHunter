@@ -15,3 +15,7 @@
 .languagePane .languageButton {
     -fx-max-width: Infinity;
 }
+.languagePane .languageTitle {
+    -fx-pref-width: 30em;
+    -fx-alignment: center;
+}
