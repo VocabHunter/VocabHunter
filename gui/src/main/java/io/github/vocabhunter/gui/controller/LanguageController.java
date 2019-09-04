@@ -57,7 +57,7 @@ public class LanguageController {
 
     private void initialiseTitle() {
         titleTransition.setFromValue(1);
-        titleTransition.setToValue(0);
+        titleTransition.setToValue(1);
         titleTransition.setNode(labelTitle);
         titleTransition.setOnFinished(e -> Platform.runLater(this::animationNextStep));
         applyTitleText();
@@ -65,8 +65,9 @@ public class LanguageController {
     }
 
     private void animationNextStep() {
-        currentTitleIndex = (currentTitleIndex + 1) % allLocales.length;
         applyTitleText();
+        currentTitleIndex = (currentTitleIndex + 1) % allLocales.length;
+        titleTransition.setToValue(0);
         titleTransition.play();
     }
 
