@@ -73,9 +73,6 @@
 
     <rule ref="category/java/security.xml"/>
 
-    <exclude-pattern>.*/VocabHunter.java</exclude-pattern>
-    <exclude-pattern>.*/*PackagedVocabHunter.java</exclude-pattern>
-
     <exclude-pattern>.*/*AbstractBeanTest.java</exclude-pattern>
 
 </ruleset>
