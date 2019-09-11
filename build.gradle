@@ -27,7 +27,7 @@ buildscript {
     }
 
     dependencies {
-        classpath 'com.github.ben-manes:gradle-versions-plugin:0.21.0'
+        classpath 'com.github.ben-manes:gradle-versions-plugin:0.25.0'
         classpath 'net.researchgate:gradle-release:2.8.1'
         classpath 'org.sonarsource.scanner.gradle:sonarqube-gradle-plugin:2.7.1'
         classpath 'gradle.plugin.com.github.spotbugs:spotbugs-gradle-plugin:2.0.0'
@@ -55,7 +55,7 @@ subprojects {
     }
 
     dependencies {
-        testCompile 'org.junit.jupiter:junit-jupiter:5.5.1'
+        testCompile 'org.junit.jupiter:junit-jupiter:5.5.2'
         testCompile 'org.mockito:mockito-junit-jupiter:3.0.0'
         runtime 'ch.qos.logback:logback-classic:1.2.3'
     }
