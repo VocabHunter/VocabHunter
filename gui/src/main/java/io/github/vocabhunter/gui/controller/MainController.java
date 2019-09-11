@@ -4,7 +4,7 @@
 
 package io.github.vocabhunter.gui.controller;
 
-import io.github.vocabhunter.gui.common.GuiConstants;
+import io.github.vocabhunter.gui.i18n.I18nKey;
 import io.github.vocabhunter.gui.model.MainModel;
 import io.github.vocabhunter.gui.model.StatusModel;
 import io.github.vocabhunter.gui.services.EnvironmentManager;
@@ -176,9 +176,9 @@ public class MainController {
 
         handler(buttonSetupFilters, menuSetupFilters, this::processSetupFilters);
 
-        menuWebsite.setOnAction(e -> webPageTool.showWebPage(GuiConstants.WEBSITE));
-        menuHowTo.setOnAction(e -> webPageTool.showWebPage(GuiConstants.WEBPAGE_HELP));
-        menuIssue.setOnAction(e -> webPageTool.showWebPage(GuiConstants.WEBPAGE_ISSUE));
+        menuWebsite.setOnAction(e -> webPageTool.showWebPage(I18nKey.LINK_MAIN));
+        menuHowTo.setOnAction(e -> webPageTool.showWebPage(I18nKey.LINK_HELP));
+        menuIssue.setOnAction(e -> webPageTool.showWebPage(I18nKey.LINK_ISSUE));
         menuAbout.setOnAction(e -> processAbout());
 
         prepareFilterEnable();

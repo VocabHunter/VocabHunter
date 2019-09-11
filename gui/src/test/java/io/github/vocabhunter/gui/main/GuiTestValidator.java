@@ -6,11 +6,12 @@ package io.github.vocabhunter.gui.main;
 
 import io.github.vocabhunter.gui.dialogues.FileDialogueType;
 import io.github.vocabhunter.gui.dialogues.FileFormatType;
+import io.github.vocabhunter.gui.i18n.I18nKey;
 
 import java.nio.file.Path;
 
 public interface GuiTestValidator {
-    void validateWebPage(final String page);
+    void validateWebPage(final I18nKey key);
 
     void validateSavedSession(Path file, final String name);
 

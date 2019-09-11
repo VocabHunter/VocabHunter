@@ -28,7 +28,7 @@
                         <Label text="%about.licence" />
                         <Label fx:id="labelVersion" text="VERSION INFORMATION" />
                         <Label text="%about.copyright" />
-                        <Hyperlink fx:id="linkWebsite" text="https://vocabhunter.github.io/" styleClass="website" >
+                        <Hyperlink fx:id="linkWebsite" text="%link.main" styleClass="website" >
                             <graphic>
                                 <FontAwesomeIconView styleClass="websiteIcon" />
                             </graphic>

@@ -6,6 +6,7 @@ package io.github.vocabhunter.gui.main;
 
 import io.github.vocabhunter.gui.dialogues.FileDialogueType;
 import io.github.vocabhunter.gui.dialogues.FileFormatType;
+import io.github.vocabhunter.gui.i18n.I18nKey;
 import io.github.vocabhunter.test.utils.TestFileManager;
 import javafx.scene.Node;
 import javafx.scene.input.KeyCode;
@@ -16,7 +17,6 @@ import org.testfx.service.query.NodeQuery;
 
 import java.nio.file.Path;
 
-import static io.github.vocabhunter.gui.common.GuiConstants.*;
 import static io.github.vocabhunter.gui.main.GuiTestConstants.*;
 import static org.testfx.api.FxAssert.verifyThat;
 import static org.testfx.matcher.base.NodeMatchers.*;
@@ -271,7 +271,7 @@ public class GuiTestSteps {
 
         step("Open website from About dialogue", () -> {
             robot.clickOn("#linkWebsite");
-            validator.validateWebPage(WEBSITE);
+            validator.validateWebPage(I18nKey.LINK_MAIN);
         });
 
         step("Close About dialogue", () -> {
@@ -283,19 +283,19 @@ public class GuiTestSteps {
         step("Open website", () -> {
             robot.clickOn("#menuHelp");
             robot.clickOn("#menuWebsite");
-            validator.validateWebPage(WEBSITE);
+            validator.validateWebPage(I18nKey.LINK_MAIN);
         });
 
         step("Open VocabHunter How To", () -> {
             robot.clickOn("#menuHelp");
             robot.clickOn("#menuHowTo");
-            validator.validateWebPage(WEBPAGE_HELP);
+            validator.validateWebPage(I18nKey.LINK_HELP);
         });
 
         step("Open Issue Reporting", () -> {
             robot.clickOn("#menuHelp");
             robot.clickOn("#menuIssue");
-            validator.validateWebPage(WEBPAGE_ISSUE);
+            validator.validateWebPage(I18nKey.LINK_ISSUE);
         });
     }
 

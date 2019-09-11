@@ -5,6 +5,8 @@
 package io.github.vocabhunter.gui.services;
 
 import io.github.vocabhunter.analysis.core.ThreadPoolTool;
+import io.github.vocabhunter.gui.i18n.I18nKey;
+import io.github.vocabhunter.gui.i18n.I18nManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -23,19 +25,27 @@ public class WebPageToolImpl implements WebPageTool {
 
     private final Consumer<String> pageOpener;
 
+    private final I18nManager i18nManager;
+
     @Inject
-    public WebPageToolImpl(final ThreadPoolTool threadPoolTool) {
-        this(threadPoolTool, WebPageToolImpl::openPage);
+    public WebPageToolImpl(final ThreadPoolTool threadPoolTool, final I18nManager i18nManager) {
+        this(threadPoolTool.guiThreadPool(), WebPageToolImpl::openPage, i18nManager);
     }
 
-    public WebPageToolImpl(final ThreadPoolTool threadPoolTool, final Consumer<String> pageOpener) {
-        this.executor = threadPoolTool.guiThreadPool();
+    public WebPageToolImpl(final Executor executor, final Consumer<String> pageOpener, final I18nManager i18nManager) {
+        this.executor = executor;
         this.pageOpener = pageOpener;
+        this.i18nManager = i18nManager;
     }
 
     @Override
     public void showWebPage(final String page) {
         executor.execute(() -> pageOpener.accept(page));
+    }
+
+    @Override
+    public void showWebPage(final I18nKey key) {
+        showWebPage(i18nManager.text(key));
     }
 
     private static void openPage(final String page) {

@@ -90,7 +90,11 @@ public enum I18nKey {
     STATUS_POSITION_EDIT_OFF("status.position.edit.off"),
 
     LANGUAGE_NAME("language.name"),
-    LANGUAGE_TITLE("language.title");
+    LANGUAGE_TITLE("language.title"),
+
+    LINK_MAIN("link.main"),
+    LINK_HELP("link.help"),
+    LINK_ISSUE("link.issue");
 
     private final String key;
 

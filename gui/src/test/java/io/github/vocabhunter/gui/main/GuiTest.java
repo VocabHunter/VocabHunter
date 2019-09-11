@@ -19,6 +19,7 @@ import io.github.vocabhunter.gui.dialogues.FileDialogue;
 import io.github.vocabhunter.gui.dialogues.FileDialogueFactory;
 import io.github.vocabhunter.gui.dialogues.FileDialogueType;
 import io.github.vocabhunter.gui.dialogues.FileFormatType;
+import io.github.vocabhunter.gui.i18n.I18nKey;
 import io.github.vocabhunter.gui.services.EnvironmentManager;
 import io.github.vocabhunter.gui.services.PlacementManager;
 import io.github.vocabhunter.gui.services.WebPageTool;
@@ -78,7 +79,7 @@ public class GuiTest implements GuiTestValidator {
     private WebPageTool webPageTool;
 
     @Captor
-    private ArgumentCaptor<String> webPageCaptor;
+    private ArgumentCaptor<I18nKey> webPageCaptor;
 
     @BeforeAll
     public static void setupSpec() throws Exception {
@@ -170,9 +171,9 @@ public class GuiTest implements GuiTestValidator {
     }
 
     @Override
-    public void validateWebPage(final String page) {
+    public void validateWebPage(final I18nKey key) {
         verify(webPageTool, atLeastOnce()).showWebPage(webPageCaptor.capture());
-        assertEquals(page, webPageCaptor.getValue(), "Website");
+        assertEquals(key, webPageCaptor.getValue(), "Website");
     }
 
     private List<String> readFile(final Path file) {

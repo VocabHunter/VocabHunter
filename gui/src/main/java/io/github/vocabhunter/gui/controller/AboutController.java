@@ -48,7 +48,7 @@ public class AboutController {
 
     public void initialise(final Stage stage) {
         buttonClose.setOnAction(e -> stage.close());
-        linkWebsite.setOnAction(e -> webPageTool.showWebPage(GuiConstants.WEBSITE));
+        linkWebsite.setOnAction(e -> webPageTool.showWebPage(I18nKey.LINK_MAIN));
         linkTwitter.setOnAction(e -> webPageTool.showWebPage(GuiConstants.TWITTER));
         linkGithub.setOnAction(e -> webPageTool.showWebPage(GuiConstants.GITHUB));
         linkGithubStar.setOnAction(e -> webPageTool.showWebPage(GuiConstants.GITHUB));
