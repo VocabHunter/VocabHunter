@@ -30,7 +30,7 @@ buildscript {
         classpath 'com.github.ben-manes:gradle-versions-plugin:0.27.0'
         classpath 'net.researchgate:gradle-release:2.8.1'
         classpath 'org.sonarsource.scanner.gradle:sonarqube-gradle-plugin:2.8'
-        classpath 'gradle.plugin.com.github.spotbugs:spotbugs-gradle-plugin:2.0.0'
+        classpath 'com.github.spotbugs:spotbugs-gradle-plugin:3.0.0'
     }
 }
 
@@ -56,7 +56,7 @@ subprojects {
 
     dependencies {
         testCompile 'org.junit.jupiter:junit-jupiter:5.5.2'
-        testCompile 'org.mockito:mockito-junit-jupiter:3.1.0'
+        testCompile 'org.mockito:mockito-junit-jupiter:3.2.0'
         runtime 'ch.qos.logback:logback-classic:1.2.3'
     }
 
@@ -65,13 +65,13 @@ subprojects {
     }
 
     pmd {
-        toolVersion = '6.17.0'
+        toolVersion = '6.20.0'
         ruleSetFiles = files("$rootProject.projectDir/config/pmd/ruleset.xml")
         ruleSets = []
     }
 
     checkstyle {
-        toolVersion = '8.26'
+        toolVersion = '8.27'
         configFile = file("$rootProject.projectDir/config/checkstyle/checkstyle.xml")
     }
 
