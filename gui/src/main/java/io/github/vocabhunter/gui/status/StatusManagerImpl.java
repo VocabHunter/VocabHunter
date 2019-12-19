@@ -38,7 +38,7 @@ public class StatusManagerImpl implements StatusManager {
 
     private final SimpleBooleanProperty busy = new SimpleBooleanProperty();
 
-    private final SimpleStringProperty positionDescription = new SimpleStringProperty();
+    private final SimpleStringProperty positionDescription = new SimpleStringProperty("");
 
     private final SimpleStringProperty actionDescription = new SimpleStringProperty();
 

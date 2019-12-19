@@ -24,12 +24,24 @@ public class StatusModel {
 
     private final SimpleStringProperty graphText = new SimpleStringProperty();
 
+    public String getText() {
+        return text.get();
+    }
+
     public SimpleStringProperty textProperty() {
         return text;
     }
 
+    public double getActivity() {
+        return activity.get();
+    }
+
     public SimpleDoubleProperty activityProperty() {
         return activity;
+    }
+
+    public boolean isBusy() {
+        return busy.get();
     }
 
     public SimpleBooleanProperty busyProperty() {
