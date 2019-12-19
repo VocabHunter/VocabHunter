@@ -44,7 +44,7 @@ public class ErrorDialogue {
 
     private void resizeAlert() {
         alert.getDialogPane().requestLayout();
-        
+
         Stage stage = (Stage)alert.getDialogPane().getScene().getWindow();
         stage.sizeToScene();
     }
