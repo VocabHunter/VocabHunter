@@ -20,6 +20,8 @@ import static java.util.stream.Collectors.toList;
 
 @Singleton
 public class ExcelGridReaderImpl implements ExcelGridReader {
+    private final ThreadLocal<DataFormatter> dataFormatter = ThreadLocal.withInitial(DataFormatter::new);
+
     @Override
     public List<GridLine> readGrid(final Path file, final Predicate<String> filter) {
         try (Workbook workbook = WorkbookFactory.create(file.toFile())) {
@@ -28,7 +30,7 @@ public class ExcelGridReaderImpl implements ExcelGridReader {
             return StreamSupport.stream(sheet.spliterator(), false)
                 .map(r -> row(r, filter))
                 .collect(toList());
-        } catch (IOException e) {
+        } catch (final IOException e) {
             throw new VocabHunterException("Unable to read spreadsheet " + file, e);
         }
     }
@@ -48,9 +50,7 @@ public class ExcelGridReaderImpl implements ExcelGridReader {
         if (original == null) {
             text = "";
         } else {
-            original.setCellType(CellType.STRING);
-
-            text = original.getStringCellValue().trim();
+            text = dataFormatter.get().formatCellValue(original).trim();
         }
 
         return new GridCell(text, filter.test(text));
