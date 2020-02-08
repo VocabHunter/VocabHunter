@@ -57,6 +57,7 @@
                                             <MenuItem fx:id="menuExportWithNotes" accelerator="Shortcut+E" mnemonicParsing="false" text="%main.menu.words.export.notes.on" />
                                             <MenuItem fx:id="menuExportWithoutNotes" mnemonicParsing="false" text="%main.menu.words.export.notes.off" />
                                             <SeparatorMenuItem mnemonicParsing="false" />
+                                            <MenuItem fx:id="menuCopy" accelerator="Shortcut+C" mnemonicParsing="false" text="%main.menu.words.copy" />
                                             <MenuItem fx:id="menuFind" accelerator="Shortcut+F" mnemonicParsing="false" text="%main.menu.words.find" />
                                         </items>
                                     </Menu>

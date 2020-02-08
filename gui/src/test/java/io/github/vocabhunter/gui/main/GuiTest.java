@@ -26,6 +26,8 @@ import io.github.vocabhunter.gui.services.WebPageTool;
 import io.github.vocabhunter.gui.settings.SettingsManager;
 import io.github.vocabhunter.gui.settings.SettingsManagerImpl;
 import io.github.vocabhunter.test.utils.TestFileManager;
+import javafx.application.Platform;
+import javafx.scene.input.Clipboard;
 import javafx.stage.Stage;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
@@ -46,6 +48,8 @@ import java.net.URISyntaxException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.TimeUnit;
 
 import static io.github.vocabhunter.gui.main.GuiTestConstants.WINDOW_HEIGHT;
 import static io.github.vocabhunter.gui.main.GuiTestConstants.WINDOW_WIDTH;
@@ -60,6 +64,7 @@ import static org.testfx.api.FxToolkit.setupApplication;
 @ExtendWith(ApplicationExtension.class)
 @MockitoSettings(strictness = Strictness.LENIENT)
 public class GuiTest implements GuiTestValidator {
+    private static final int CLIPBOARD_WAIT_MILLIS = 500;
 
     private TestFileManager manager;
 
@@ -169,6 +174,21 @@ public class GuiTest implements GuiTestValidator {
         List<String> document = readFile(file);
 
         assertThat("Export file content", document, is(List.of(lines)));
+    }
+
+    @Override
+    public void validateClipboardContent(final String expectedText) {
+        String actualText = CompletableFuture.supplyAsync(this::collectCurrentClipboardText, Platform::runLater)
+            .orTimeout(CLIPBOARD_WAIT_MILLIS, TimeUnit.MILLISECONDS)
+            .join();
+
+        assertEquals(expectedText, actualText, "Validate clipboard content");
+    }
+
+    private String collectCurrentClipboardText() {
+        Clipboard clipboard = Clipboard.getSystemClipboard();
+
+        return clipboard.getString();
     }
 
     @Override

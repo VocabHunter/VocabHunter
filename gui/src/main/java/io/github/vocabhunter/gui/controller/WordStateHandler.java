@@ -12,6 +12,8 @@ import javafx.beans.binding.BooleanBinding;
 import javafx.beans.binding.ObjectBinding;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.scene.control.Button;
+import javafx.scene.input.Clipboard;
+import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 
@@ -77,5 +79,13 @@ public class WordStateHandler {
         map.put(KeyCode.R, () -> processResponse(WordState.UNSEEN, false));
 
         return Collections.unmodifiableMap(map);
+    }
+
+    public void copyCurrentWord() {
+        ClipboardContent content = new ClipboardContent();
+        String currentWord = sessionModel.getCurrentWord().getWordIdentifier();
+        content.putString(currentWord);
+
+        Clipboard.getSystemClipboard().setContent(content);
     }
 }

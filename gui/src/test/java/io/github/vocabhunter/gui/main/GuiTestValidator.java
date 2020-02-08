@@ -17,6 +17,8 @@ public interface GuiTestValidator {
 
     void validateExportFile(Path file, String... lines);
 
+    void validateClipboardContent(String expectedText);
+
     void setUpFileDialogue(FileDialogueType dialogueType, final FileFormatType fileType, String file);
 
     void setUpFileDialogue(FileDialogueType dialogueType, final FileFormatType fileType, Path file);

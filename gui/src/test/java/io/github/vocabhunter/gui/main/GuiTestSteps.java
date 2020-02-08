@@ -81,6 +81,12 @@ public class GuiTestSteps {
             verifyThat("#mainWord", hasText("me"));
         });
 
+        step("Copy Word", () -> {
+            robot.clickOn("#menuWords");
+            robot.clickOn("#menuCopy");
+            validator.validateClipboardContent("me");
+        });
+
         step("Write note and cancel", () -> {
             robot.clickOn("#buttonNote");
             robot.clickOn("#textAreaNoteText").write(WORD_NOTE_1);

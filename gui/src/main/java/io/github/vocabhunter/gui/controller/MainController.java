@@ -109,6 +109,9 @@ public class MainController {
     private Pane maskerPane;
 
     @FXML
+    private MenuItem menuCopy;
+
+    @FXML
     private MenuItem menuFind;
 
     @FXML
@@ -186,6 +189,9 @@ public class MainController {
 
         menuBar.setUseSystemMenuBar(environmentManager.useSystemMenuBar());
 
+        menuCopy.setOnAction(e -> copyWord());
+        menuCopy.disableProperty().bind(not(model.sessionOpenProperty()));
+
         menuFind.setOnAction(e -> openFind());
         menuFind.disableProperty().bind(not(model.sessionOpenProperty()));
 
@@ -242,6 +248,12 @@ public class MainController {
     private void openFind() {
         sessionStateHandler.getSessionActions()
             .map(SessionActions::getOpenSearchAction)
+            .ifPresent(Runnable::run);
+    }
+
+    private void copyWord() {
+        sessionStateHandler.getSessionActions()
+            .map(SessionActions::getCopyWordAction)
             .ifPresent(Runnable::run);
     }
 }

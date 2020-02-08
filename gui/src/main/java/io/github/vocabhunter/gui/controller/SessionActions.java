@@ -12,9 +12,12 @@ public final class SessionActions {
 
     private final Runnable openSearchAction;
 
-    public SessionActions(final EventHandler<KeyEvent> keyPressHandler, final Runnable openSearchAction) {
+    private final Runnable copyWordAction;
+
+    public SessionActions(final EventHandler<KeyEvent> keyPressHandler, final Runnable openSearchAction, final Runnable copyWordAction) {
         this.keyPressHandler = keyPressHandler;
         this.openSearchAction = openSearchAction;
+        this.copyWordAction = copyWordAction;
     }
 
     public EventHandler<KeyEvent> getKeyPressHandler() {
@@ -23,5 +26,9 @@ public final class SessionActions {
 
     public Runnable getOpenSearchAction() {
         return openSearchAction;
+    }
+
+    public Runnable getCopyWordAction() {
+        return copyWordAction;
     }
 }

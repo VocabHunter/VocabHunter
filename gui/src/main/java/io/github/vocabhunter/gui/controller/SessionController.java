@@ -138,7 +138,10 @@ public class SessionController {
         sessionModel.filterSettingsProperty().addListener((p, o, v) -> updateWordListIfFilterEnabled());
         sessionModel.enableFiltersProperty().addListener((p, o, v) -> updateWordList());
 
-        sessionActions = new SessionActions(combine(searchHandler::processKeyPress, wordStateHandler::processKeyPress, wordNoteHandler::processKeyPress), searchHandler::openSearch);
+        sessionActions = new SessionActions(
+            combine(searchHandler::processKeyPress, wordStateHandler::processKeyPress, wordNoteHandler::processKeyPress),
+            searchHandler::openSearch,
+            wordStateHandler::copyCurrentWord);
     }
 
     private void prepareWordListHandler() {
