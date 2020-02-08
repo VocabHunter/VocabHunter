@@ -21,7 +21,7 @@ public final class ExecutableLogTool {
     }
 
     public static void logSystemDetails() {
-        logSystemProperties("Java: {} ({}) - OS: {} ({}, {})", "java.version", "java.vendor", "os.name", "os.version", "os.arch");
+        logSystemProperties("Java: {} ({}) - JavaFX: {} - OS: {} ({}, {})", "java.version", "java.vendor", "javafx.version", "os.name", "os.version", "os.arch");
         logRuntimeDetails();
     }
 
