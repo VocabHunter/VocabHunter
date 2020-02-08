@@ -9,6 +9,7 @@ import com.google.inject.Module;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.stage.Stage;
+import org.slf4j.bridge.SLF4JBridgeHandler;
 
 import java.util.Collection;
 import java.util.List;
@@ -44,7 +45,13 @@ public class VocabHunterGuiExecutable extends Application {
     }
 
     public static void main(final String... args) {
+        installLogBridge();
         runApp(args, Application::launch, new CoreGuiModule(args), new LiveGuiModule());
+    }
+
+    public static void installLogBridge() {
+        SLF4JBridgeHandler.removeHandlersForRootLogger();
+        SLF4JBridgeHandler.install();
     }
 
     protected static void runApp(final String[] args, final Consumer<String[]> launcher, final Module... modules) {

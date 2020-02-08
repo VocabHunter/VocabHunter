@@ -119,6 +119,7 @@ public class GuiTest implements GuiTestValidator {
                 bind(GuiTaskHandler.class).to(GuiTaskHandlerForTesting.class);
             }
         };
+        VocabHunterGuiExecutable.installLogBridge();
         VocabHunterGuiExecutable.setModules(coreModule, testModule);
 
         setupApplication(VocabHunterGuiExecutable.class);

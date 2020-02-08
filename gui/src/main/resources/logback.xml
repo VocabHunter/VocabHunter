@@ -43,6 +43,9 @@
         </encoder>
     </appender>
 
+    <contextListener class="ch.qos.logback.classic.jul.LevelChangePropagator">
+        <resetJUL>true</resetJUL>
+    </contextListener>
 
     <root level="info">
         <appender-ref ref="STDOUT"/>
