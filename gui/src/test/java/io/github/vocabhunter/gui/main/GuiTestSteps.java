@@ -53,7 +53,7 @@ public class GuiTestSteps {
         });
 
         step("Select English", () -> {
-            robot.clickOn("English");
+            robot.clickOn("#ENGLISH");
             verifyThat("#mainBorderPane", isVisible());
         });
     }
@@ -341,14 +341,14 @@ public class GuiTestSteps {
         step("Switch to Spanish", () -> {
             robot.clickOn("#menuSettings");
             robot.clickOn("#menuLanguage");
-            robot.clickOn("Español");
+            robot.clickOn("#SPANISH");
             verifyThat("#buttonNew", hasText("Nuevo"));
         });
 
         step("Switch to English", () -> {
             robot.clickOn("#menuSettings");
             robot.clickOn("#menuLanguage");
-            robot.clickOn("English");
+            robot.clickOn("#ENGLISH");
             verifyThat("#buttonNew", hasText("New"));
         });
     }

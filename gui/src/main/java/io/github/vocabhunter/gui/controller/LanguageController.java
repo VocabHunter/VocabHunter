@@ -86,6 +86,7 @@ public class LanguageController {
     private Button button(final SupportedLocale l) {
         Button button = new Button(i18nManager.text(l, I18nKey.LANGUAGE_NAME));
 
+        button.setId(l.name());
         button.getStyleClass().add(STYLE_BUTTON);
         languageHandler.setupLanguageSelectionControl(l, button);
 
