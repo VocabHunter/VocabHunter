@@ -47,6 +47,8 @@
         <resetJUL>true</resetJUL>
     </contextListener>
 
+    <logger name="org.apache.tika" level="error" />
+
     <root level="info">
         <appender-ref ref="STDOUT"/>
         <appender-ref ref="FILE"/>
