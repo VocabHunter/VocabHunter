@@ -42,7 +42,9 @@ public class FileStreamerTest {
 
     private final Analyser analyser = new SimpleAnalyser();
 
-    private final FileStreamer target = new FileStreamer(analyser);
+    private final TextReader textReader = new TikaTool();
+
+    private final FileStreamer target = new FileStreamer(textReader, analyser);
 
     @Test
     public void testStreamEmpty() {

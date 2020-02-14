@@ -29,7 +29,8 @@ public class AnalysisSystemTest {
     @BeforeAll
     public static void setUpClass() throws Exception {
         Analyser analyser = new SimpleAnalyser();
-        FileStreamer target = new FileStreamer(analyser);
+        TextReader textReader = new TikaTool();
+        FileStreamer target = new FileStreamer(textReader, analyser);
         URL resource = FileStreamerTest.class.getResource("/" + INPUT_DOCUMENT);
         Path file = Paths.get(resource.toURI());
         EnrichedSessionState enrichedSession = target.createNewSession(file);

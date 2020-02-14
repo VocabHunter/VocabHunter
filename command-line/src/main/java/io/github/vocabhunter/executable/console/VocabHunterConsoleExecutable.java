@@ -7,6 +7,8 @@ package io.github.vocabhunter.executable.console;
 import com.beust.jcommander.JCommander;
 import io.github.vocabhunter.analysis.core.CoreConstants;
 import io.github.vocabhunter.analysis.file.FileStreamer;
+import io.github.vocabhunter.analysis.file.TextReader;
+import io.github.vocabhunter.analysis.file.TikaTool;
 import io.github.vocabhunter.analysis.filter.FilterBuilder;
 import io.github.vocabhunter.analysis.filter.WordFilter;
 import io.github.vocabhunter.analysis.model.AnalysisResult;
@@ -75,7 +77,8 @@ public final class VocabHunterConsoleExecutable {
         for (String input : bean.getInput()) {
             Path file = Paths.get(input);
             SimpleAnalyser analyser = new SimpleAnalyser();
-            FileStreamer streamer = new FileStreamer(analyser);
+            TextReader textReader = new TikaTool();
+            FileStreamer streamer = new FileStreamer(textReader, analyser);
             WordFilter wordFilter = buildFilter(bean);
             AnalysisResult model = streamer.analyse(file);
 

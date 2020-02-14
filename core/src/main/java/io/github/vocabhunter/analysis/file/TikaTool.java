@@ -16,17 +16,16 @@ import org.slf4j.LoggerFactory;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Path;
+import javax.inject.Singleton;
 
 import static io.github.vocabhunter.analysis.session.FileNameTool.filename;
 
-public final class TikaTool {
+@Singleton
+public class TikaTool implements TextReader {
     private static final Logger LOG = LoggerFactory.getLogger(TikaTool.class);
 
-    private TikaTool() {
-        // Prevent instantiation - all methods are static
-    }
-
-    public static String read(final Path file) {
+    @Override
+    public String read(final Path file) {
         Metadata metadata = new Metadata();
 
         try (InputStream in = TikaInputStream.get(file, metadata)) {

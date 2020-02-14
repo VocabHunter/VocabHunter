@@ -8,6 +8,8 @@ import com.google.inject.AbstractModule;
 import com.google.inject.Provides;
 import io.github.vocabhunter.analysis.core.ThreadPoolTool;
 import io.github.vocabhunter.analysis.core.ThreadPoolToolImpl;
+import io.github.vocabhunter.analysis.file.TextReader;
+import io.github.vocabhunter.analysis.file.TikaTool;
 import io.github.vocabhunter.analysis.grid.*;
 import io.github.vocabhunter.analysis.model.Analyser;
 import io.github.vocabhunter.analysis.session.SessionWordsTool;
@@ -36,6 +38,7 @@ public class CoreGuiModule extends AbstractModule {
     @Override
     protected void configure() {
         bind(ThreadPoolTool.class).to(ThreadPoolToolImpl.class);
+        bind(TextReader.class).to(TikaTool.class);
         bind(Analyser.class).to(SimpleAnalyser.class);
 
         bind(DocumentGridReader.class).to(DocumentGridReaderImpl.class);

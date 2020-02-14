@@ -4,6 +4,8 @@
 
 package io.github.vocabhunter.analysis.grid;
 
+import io.github.vocabhunter.analysis.file.TextReader;
+import io.github.vocabhunter.analysis.file.TikaTool;
 import org.junit.jupiter.api.Test;
 
 import java.nio.file.Path;
@@ -14,7 +16,9 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class DocumentGridReaderTest {
     private static final List<GridLine> EXPECTED = GridTestTool.documentLines();
 
-    private final GridReader target = new DocumentGridReaderImpl();
+    private final TextReader textReader = new TikaTool();
+
+    private final GridReader target = new DocumentGridReaderImpl(textReader);
 
     @Test
     public void testEmpty() throws Exception {

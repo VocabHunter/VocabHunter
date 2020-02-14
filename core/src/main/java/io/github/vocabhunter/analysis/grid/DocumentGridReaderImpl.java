@@ -4,21 +4,31 @@
 
 package io.github.vocabhunter.analysis.grid;
 
-import io.github.vocabhunter.analysis.file.TikaTool;
+import io.github.vocabhunter.analysis.file.TextReader;
 
 import java.nio.file.Path;
 import java.util.List;
 import java.util.function.Predicate;
 import java.util.regex.Pattern;
+import javax.inject.Inject;
+import javax.inject.Singleton;
 
 import static java.util.stream.Collectors.toList;
 
+@Singleton
 public class DocumentGridReaderImpl implements DocumentGridReader {
     private static final Pattern SPLITTER = Pattern.compile("\\r?\\n");
 
+    private final TextReader textReader;
+
+    @Inject
+    public DocumentGridReaderImpl(final TextReader textReader) {
+        this.textReader = textReader;
+    }
+
     @Override
     public List<GridLine> readGrid(final Path file, final Predicate<String> filter) {
-        String fullText = TikaTool.read(file);
+        String fullText = textReader.read(file);
 
         if ("".equals(fullText)) {
             return List.of();

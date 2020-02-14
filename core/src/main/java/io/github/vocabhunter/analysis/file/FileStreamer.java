@@ -33,15 +33,18 @@ public class FileStreamer {
 
     private static final Pattern SPACE_PATTERN = Pattern.compile("[\\t\\n\\x0B\\f\\r]\\s*|\\s\\s+");
 
+    private final TextReader textReader;
+
     private final Analyser analyser;
 
     @Inject
-    public FileStreamer(final Analyser analyser) {
+    public FileStreamer(final TextReader textReader, final Analyser analyser) {
+        this.textReader = textReader;
         this.analyser = analyser;
     }
 
     public List<String> lines(final Path file) {
-        String fullText = TikaTool.read(file);
+        String fullText = textReader.read(file);
 
         if (StringUtils.isBlank(fullText)) {
             throw new VocabHunterException(String.format("No text in file '%s'", file));
@@ -72,9 +75,9 @@ public class FileStreamer {
 
     public AnalysisResult analyse(final Path file) {
         Instant start = Instant.now();
-        List<String> stream = lines(file);
+        List<String> lines = lines(file);
         String filename = FileNameTool.filename(file);
-        AnalysisResult result = analyser.analyse(stream, filename);
+        AnalysisResult result = analyser.analyse(lines, filename);
         int count = result.getOrderedUses().size();
         Instant end = Instant.now();
         Duration duration = Duration.between(start, end);
