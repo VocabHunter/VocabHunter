@@ -4,8 +4,6 @@
 
 package io.github.vocabhunter.analysis.model;
 
-import java.util.List;
-
 public interface Analyser {
-    AnalysisResult analyse(List<String> lines, String name);
+    AnalysisResult analyse(String text, String name);
 }

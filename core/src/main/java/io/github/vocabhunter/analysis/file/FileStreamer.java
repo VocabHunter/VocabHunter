@@ -16,22 +16,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.nio.file.Path;
-import java.text.BreakIterator;
 import java.time.Duration;
 import java.time.Instant;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.regex.Pattern;
 import javax.inject.Inject;
 import javax.inject.Singleton;
-
-import static io.github.vocabhunter.analysis.core.CoreConstants.LOCALE;
 
 @Singleton
 public class FileStreamer {
     private static final Logger LOG = LoggerFactory.getLogger(FileStreamer.class);
-
-    private static final Pattern SPACE_PATTERN = Pattern.compile("[\\t\\n\\x0B\\f\\r]\\s*|\\s\\s+");
 
     private final TextReader textReader;
 
@@ -43,41 +35,11 @@ public class FileStreamer {
         this.analyser = analyser;
     }
 
-    public List<String> lines(final Path file) {
-        String fullText = textReader.read(file);
-
-        if (StringUtils.isBlank(fullText)) {
-            throw new VocabHunterException(String.format("No text in file '%s'", file));
-        } else {
-            return splitToList(fullText);
-        }
-    }
-
-    private List<String> splitToList(final String text) {
-        List<String> list = new ArrayList<>();
-        BreakIterator iterator = BreakIterator.getSentenceInstance(LOCALE);
-        iterator.setText(text);
-        int start = iterator.first();
-        int end = iterator.next();
-
-        while (end != BreakIterator.DONE) {
-            String line = text.substring(start, end).trim();
-
-            if (!line.isEmpty()) {
-                list.add(SPACE_PATTERN.matcher(line).replaceAll(" "));
-            }
-            start = end;
-            end = iterator.next();
-        }
-
-        return list;
-    }
-
     public AnalysisResult analyse(final Path file) {
         Instant start = Instant.now();
-        List<String> lines = lines(file);
+        String fullText = readText(file);
         String filename = FileNameTool.filename(file);
-        AnalysisResult result = analyser.analyse(lines, filename);
+        AnalysisResult result = analyser.analyse(fullText, filename);
         int count = result.getOrderedUses().size();
         Instant end = Instant.now();
         Duration duration = Duration.between(start, end);
@@ -98,6 +60,16 @@ public class FileStreamer {
             return SessionSerialiser.read(file);
         } else {
             return createNewSession(file);
+        }
+    }
+
+    private String readText(final Path file) {
+        String fullText = textReader.read(file);
+
+        if (StringUtils.isBlank(fullText)) {
+            throw new VocabHunterException(String.format("No text in file '%s'", file));
+        } else {
+            return fullText;
         }
     }
 }

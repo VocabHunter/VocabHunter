@@ -15,26 +15,16 @@ import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.List;
 import java.util.function.Function;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 public class FileStreamerTest {
-    private static final List<String> LINES = List.of(
-            "The quick brown fox jumped over the lazy dog's back.",
-            "Now is the time for all good men to come to the aid of the party.",
-            "This is a simple test document.");
-
     private static final String FILE_EMPTY = "empty.txt";
 
     private static final String FILE_TEXT = "sample.txt";
 
     private static final String FILE_WORD = "sample.doc";
-
-    private static final String FILE_OPEN_OFFICE = "sample.odt";
-
-    private static final String FILE_PDF = "sample.pdf";
 
     private static final String SESSION_FILE = "format1.wordy";
 
@@ -48,7 +38,7 @@ public class FileStreamerTest {
 
     @Test
     public void testStreamEmpty() {
-        assertThrows(VocabHunterException.class, () -> validateStream(FILE_EMPTY));
+        assertThrows(VocabHunterException.class, () -> target.analyse(getFile(FILE_EMPTY)));
     }
 
     @Test
@@ -83,26 +73,6 @@ public class FileStreamerTest {
     }
 
     @Test
-    public void testStreamText() {
-        validateStream(FILE_TEXT);
-    }
-
-    @Test
-    public void testStreamWord() {
-        validateStream(FILE_WORD);
-    }
-
-    @Test
-    public void testStreamOpenOffice() {
-        validateStream(FILE_OPEN_OFFICE);
-    }
-
-    @Test
-    public void testStreamPdf() {
-        validateStream(FILE_PDF);
-    }
-
-    @Test
     public void testCreateNewSessionFromText() {
         validateSession(FILE_TEXT, FILE_TEXT, this::createNewSession);
     }
@@ -115,12 +85,6 @@ public class FileStreamerTest {
     @Test
     public void testCreateOrOpenSessionFromSession() {
         validateSession(SESSION_FILE, SESSION_NAME, this::createOrOpenSession);
-    }
-
-    private void validateStream(final String file) {
-        List<String> result = target.lines(getFile(file));
-
-        assertEquals(LINES, result, "Lines from file");
     }
 
     private void validateSession(final String fileName, final String sessionName, final Function<String, EnrichedSessionState> targetMethod) {
@@ -139,15 +103,11 @@ public class FileStreamerTest {
 
     private Path getFile(final String fileName) {
         try {
-            URL resource = getResource(fileName);
+            URL resource = FileStreamerTest.class.getResource("/" + fileName);
 
             return Paths.get(resource.toURI());
         } catch (final URISyntaxException e) {
             throw new VocabHunterException("Filename error", e);
         }
-    }
-
-    private URL getResource(final String file) {
-        return FileStreamerTest.class.getResource("/" + file);
     }
 }

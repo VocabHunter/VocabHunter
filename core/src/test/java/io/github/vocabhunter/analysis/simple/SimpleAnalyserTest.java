@@ -152,7 +152,9 @@ public class SimpleAnalyserTest {
     }
 
     private AnalysisResult analyse(final String... lines) {
-        return target.analyse(List.of(lines), NAME);
+        String fullText = String.join(".  ", lines);
+
+        return target.analyse(fullText, NAME);
     }
 
     private WordUse use(final String wordIdentifier, final int useCount, final LineReference... lines) {
