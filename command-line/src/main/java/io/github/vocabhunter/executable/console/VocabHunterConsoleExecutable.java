@@ -32,8 +32,6 @@ import java.util.function.Function;
 public final class VocabHunterConsoleExecutable {
     private static final Logger LOG = LoggerFactory.getLogger(VocabHunterConsoleExecutable.class);
 
-    private static final int HELP_BUFFER_SIZE = 100;
-
     private VocabHunterConsoleExecutable() {
         // Prevent instantiation - all methods are static
     }
@@ -48,10 +46,7 @@ public final class VocabHunterConsoleExecutable {
 
             jCommander.parse(args);
             if (bean.isHelpRequested()) {
-                StringBuilder buffer = new StringBuilder(HELP_BUFFER_SIZE);
-
-                jCommander.usage(buffer);
-                LOG.info("{}", buffer);
+                jCommander.usage();
             } else {
                 String output = bean.getOutput();
 
