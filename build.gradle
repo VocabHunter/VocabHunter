@@ -30,7 +30,7 @@ buildscript {
         classpath 'com.github.ben-manes:gradle-versions-plugin:0.28.0'
         classpath 'net.researchgate:gradle-release:2.8.1'
         classpath 'org.sonarsource.scanner.gradle:sonarqube-gradle-plugin:2.8'
-        classpath 'com.github.spotbugs:spotbugs-gradle-plugin:3.0.0'
+        classpath 'gradle.plugin.com.github.spotbugs.snom:spotbugs-gradle-plugin:4.6.2'
     }
 }
 
@@ -80,13 +80,13 @@ subprojects {
     }
 
     spotbugs {
-        toolVersion = '4.0.1'
+        toolVersion = '4.2.1'
         effort = 'max'
         reportLevel = 'medium'
         excludeFilter = file("$rootProject.projectDir/config/spotbugs/excludeFilter.xml")
     }
 
-    tasks.withType(com.github.spotbugs.SpotBugsTask) {
+    tasks.withType(com.github.spotbugs.snom.SpotBugsTask) {
         reports {
             xml.enabled = false
             html.enabled = true
