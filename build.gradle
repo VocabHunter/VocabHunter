@@ -29,7 +29,7 @@ buildscript {
     dependencies {
         classpath 'com.github.ben-manes:gradle-versions-plugin:0.36.0'
         classpath 'net.researchgate:gradle-release:2.8.1'
-        classpath 'org.sonarsource.scanner.gradle:sonarqube-gradle-plugin:2.8'
+        classpath 'org.sonarsource.scanner.gradle:sonarqube-gradle-plugin:3.1.1'
         classpath 'gradle.plugin.com.github.spotbugs.snom:spotbugs-gradle-plugin:4.6.2'
     }
 }
@@ -106,5 +106,18 @@ subprojects {
 
     [compileJava, compileTestJava].each { task ->
         task.options.compilerArgs << "-Xlint:unchecked" << "-Xlint:deprecation" << "-Werror"
+    }
+}
+
+dependencyUpdates.resolutionStrategy {
+    componentSelection { rules ->
+        rules.all { ComponentSelection selection ->
+            boolean rejected = ['alpha', 'beta', 'rc', 'cr', 'm', 'preview', 'b', 'ea'].any { qualifier ->
+                selection.candidate.version ==~ /(?i).*[.-]${qualifier}[.\d-+]*/
+            }
+            if (rejected) {
+                selection.reject('Release candidate')
+            }
+        }
     }
 }
