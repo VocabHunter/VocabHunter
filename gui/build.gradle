@@ -40,7 +40,10 @@ startScripts {
 
 dependencies {
     compile project(':core')
-    compile 'com.gluonhq:ignite-guice:1.0.2'
+    compile ('com.gluonhq:ignite-guice:1.0.2') {
+        exclude group: 'com.google.inject', module: 'guice'
+    }
+    compile 'com.google.inject:guice:5.0.1'
     compile 'org.controlsfx:controlsfx:11.0.1'
     compile 'de.jensd:fontawesomefx-fontawesome:4.7.0-9.1.2'
 
