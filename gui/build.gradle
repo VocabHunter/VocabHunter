@@ -44,7 +44,7 @@ dependencies {
         exclude group: 'com.google.inject', module: 'guice'
     }
     compile 'com.google.inject:guice:5.0.1'
-    compile 'org.controlsfx:controlsfx:11.0.1'
+    compile 'org.controlsfx:controlsfx:11.1.0'
     compile 'de.jensd:fontawesomefx-fontawesome:4.7.0-9.1.2'
 
     // This is required for the conditional logic in the logback setup
