@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
-import static io.github.vocabhunter.analysis.grid.GridTestTool.*;
+import static io.github.vocabhunter.test.analysis.grid.GridTestTool.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class TextGridBuilderTest {

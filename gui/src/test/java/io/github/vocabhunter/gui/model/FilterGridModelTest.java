@@ -4,8 +4,8 @@
 
 package io.github.vocabhunter.gui.model;
 
-import io.github.vocabhunter.analysis.grid.GridTestTool;
 import io.github.vocabhunter.analysis.grid.TextGrid;
+import io.github.vocabhunter.test.analysis.grid.GridTestTool;
 import javafx.beans.property.BooleanProperty;
 import org.junit.jupiter.api.Test;
 

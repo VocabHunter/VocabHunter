@@ -10,8 +10,8 @@ import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
-import static io.github.vocabhunter.analysis.grid.GridTestTool.acceptedCell;
-import static io.github.vocabhunter.analysis.grid.GridTestTool.rejectedCell;
+import static io.github.vocabhunter.test.analysis.grid.GridTestTool.acceptedCell;
+import static io.github.vocabhunter.test.analysis.grid.GridTestTool.rejectedCell;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class GridWordsExtractorTest {

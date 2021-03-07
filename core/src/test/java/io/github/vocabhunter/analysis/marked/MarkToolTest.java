@@ -6,6 +6,7 @@ package io.github.vocabhunter.analysis.marked;
 
 import io.github.vocabhunter.analysis.filter.WordFilter;
 import io.github.vocabhunter.analysis.model.AnalysisWord;
+import io.github.vocabhunter.test.analysis.marked.TestMarkedWord;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;

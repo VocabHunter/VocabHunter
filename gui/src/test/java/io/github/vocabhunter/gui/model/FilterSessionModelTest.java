@@ -5,8 +5,8 @@
 package io.github.vocabhunter.gui.model;
 
 import io.github.vocabhunter.analysis.marked.MarkedWord;
-import io.github.vocabhunter.analysis.marked.TestMarkedWord;
 import io.github.vocabhunter.analysis.marked.WordState;
+import io.github.vocabhunter.test.analysis.marked.TestMarkedWord;
 import org.junit.jupiter.api.Test;
 
 import java.nio.file.Path;

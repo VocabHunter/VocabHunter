@@ -4,7 +4,7 @@
 
 package io.github.vocabhunter.gui.dialogues;
 
-import io.github.vocabhunter.test.utils.AbstractBeanTest;
+import io.github.vocabhunter.test.core.AbstractBeanTest;
 import org.junit.jupiter.api.Test;
 
 import java.nio.file.Path;

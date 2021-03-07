@@ -4,7 +4,7 @@
 
 package io.github.vocabhunter.analysis.grid;
 
-import io.github.vocabhunter.test.utils.AbstractBeanTest;
+import io.github.vocabhunter.test.core.AbstractBeanTest;
 
 public class GridLineTest extends AbstractBeanTest<GridLine> {
     public static final GridLine PRIMARY = new GridLine(GridCellTest.PRIMARY);

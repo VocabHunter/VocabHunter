@@ -5,7 +5,7 @@
 package io.github.vocabhunter.gui.model;
 
 import io.github.vocabhunter.analysis.settings.BaseListedFile;
-import io.github.vocabhunter.test.utils.AbstractBeanTest;
+import io.github.vocabhunter.test.core.AbstractBeanTest;
 
 import java.util.List;
 

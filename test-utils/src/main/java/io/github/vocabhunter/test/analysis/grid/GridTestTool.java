@@ -2,7 +2,12 @@
  * Open Source Software published under the Apache Licence, Version 2.0.
  */
 
-package io.github.vocabhunter.analysis.grid;
+package io.github.vocabhunter.test.analysis.grid;
+
+import io.github.vocabhunter.analysis.grid.GridCell;
+import io.github.vocabhunter.analysis.grid.GridColumn;
+import io.github.vocabhunter.analysis.grid.GridLine;
+import io.github.vocabhunter.analysis.grid.TextGrid;
 
 import java.net.URL;
 import java.nio.file.Path;

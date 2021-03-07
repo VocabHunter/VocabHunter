@@ -1,0 +1,11 @@
+/*
+ * Open Source Software published under the Apache Licence, Version 2.0.
+ */
+
+dependencies {
+    compile project(':core')
+    compile 'com.github.spotbugs:spotbugs-annotations:4.2.1'
+    compile 'org.junit.jupiter:junit-jupiter:5.7.1'
+    compile 'org.apache.commons:commons-lang3:3.11'
+    compile 'commons-io:commons-io:2.8.0'
+}

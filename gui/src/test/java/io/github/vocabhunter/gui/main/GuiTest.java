@@ -25,7 +25,7 @@ import io.github.vocabhunter.gui.services.PlacementManager;
 import io.github.vocabhunter.gui.services.WebPageTool;
 import io.github.vocabhunter.gui.settings.SettingsManager;
 import io.github.vocabhunter.gui.settings.SettingsManagerImpl;
-import io.github.vocabhunter.test.utils.TestFileManager;
+import io.github.vocabhunter.test.core.TestFileManager;
 import javafx.application.Platform;
 import javafx.scene.input.Clipboard;
 import javafx.stage.Stage;

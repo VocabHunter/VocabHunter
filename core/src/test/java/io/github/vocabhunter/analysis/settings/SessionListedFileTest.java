@@ -4,7 +4,7 @@
 
 package io.github.vocabhunter.analysis.settings;
 
-import io.github.vocabhunter.test.utils.AbstractBeanTest;
+import io.github.vocabhunter.test.core.AbstractBeanTest;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;

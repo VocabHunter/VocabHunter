@@ -2,8 +2,10 @@
  * Open Source Software published under the Apache Licence, Version 2.0.
  */
 
-package io.github.vocabhunter.analysis.marked;
+package io.github.vocabhunter.test.analysis.marked;
 
+import io.github.vocabhunter.analysis.marked.MarkedWord;
+import io.github.vocabhunter.analysis.marked.WordState;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;

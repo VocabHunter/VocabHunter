@@ -7,7 +7,7 @@ package io.github.vocabhunter.gui.main;
 import io.github.vocabhunter.gui.dialogues.FileDialogueType;
 import io.github.vocabhunter.gui.dialogues.FileFormatType;
 import io.github.vocabhunter.gui.i18n.I18nKey;
-import io.github.vocabhunter.test.utils.TestFileManager;
+import io.github.vocabhunter.test.core.TestFileManager;
 import javafx.scene.Node;
 import javafx.scene.input.KeyCode;
 import org.slf4j.Logger;

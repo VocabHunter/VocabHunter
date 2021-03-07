@@ -2,7 +2,7 @@
  * Open Source Software published under the Apache Licence, Version 2.0.
  */
 
-package io.github.vocabhunter.test.utils;
+package io.github.vocabhunter.test.core;
 
 import org.apache.commons.io.FileUtils;
 

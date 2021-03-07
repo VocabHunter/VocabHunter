@@ -21,7 +21,7 @@ import java.nio.file.Paths;
 import java.util.List;
 import java.util.Set;
 
-import static io.github.vocabhunter.analysis.grid.GridTestTool.acceptedCell;
+import static io.github.vocabhunter.test.analysis.grid.GridTestTool.acceptedCell;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.when;

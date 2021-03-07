@@ -5,7 +5,7 @@
 package io.github.vocabhunter.gui.search;
 
 import io.github.vocabhunter.gui.common.TestSequencedWord;
-import io.github.vocabhunter.test.utils.AbstractBeanTest;
+import io.github.vocabhunter.test.core.AbstractBeanTest;
 
 public class SearchResultTest extends AbstractBeanTest<SearchResult<TestSequencedWord>> {
 

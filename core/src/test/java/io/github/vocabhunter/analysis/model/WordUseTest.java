@@ -4,7 +4,7 @@
 
 package io.github.vocabhunter.analysis.model;
 
-import io.github.vocabhunter.test.utils.AbstractBeanTest;
+import io.github.vocabhunter.test.core.AbstractBeanTest;
 
 import java.util.List;
 

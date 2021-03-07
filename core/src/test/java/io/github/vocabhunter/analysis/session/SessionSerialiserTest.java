@@ -6,7 +6,7 @@ package io.github.vocabhunter.analysis.session;
 
 import io.github.vocabhunter.analysis.core.VocabHunterException;
 import io.github.vocabhunter.analysis.marked.WordState;
-import io.github.vocabhunter.test.utils.TestFileManager;
+import io.github.vocabhunter.test.core.TestFileManager;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

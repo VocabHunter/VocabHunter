@@ -4,7 +4,7 @@
 
 package io.github.vocabhunter.analysis.core;
 
-import io.github.vocabhunter.test.utils.TestFileManager;
+import io.github.vocabhunter.test.core.TestFileManager;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

@@ -4,7 +4,7 @@
 
 package io.github.vocabhunter.analysis.simple;
 
-import io.github.vocabhunter.test.utils.AbstractBeanTest;
+import io.github.vocabhunter.test.core.AbstractBeanTest;
 
 public class AnalysisRecordTest extends AbstractBeanTest<AnalysisRecord> {
     @Override

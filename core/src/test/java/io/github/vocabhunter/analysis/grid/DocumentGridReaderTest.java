@@ -6,6 +6,7 @@ package io.github.vocabhunter.analysis.grid;
 
 import io.github.vocabhunter.analysis.file.TextReader;
 import io.github.vocabhunter.analysis.file.TikaTool;
+import io.github.vocabhunter.test.analysis.grid.GridTestTool;
 import org.junit.jupiter.api.Test;
 
 import java.nio.file.Path;

@@ -4,7 +4,7 @@
 
 package io.github.vocabhunter.gui.common;
 
-import io.github.vocabhunter.test.utils.AbstractBeanTest;
+import io.github.vocabhunter.test.core.AbstractBeanTest;
 
 public class PlacementTest extends AbstractBeanTest<Placement> {
     @Override
