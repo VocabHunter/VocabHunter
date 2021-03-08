@@ -3,7 +3,7 @@
  */
 
 dependencies {
-    compile project(':core')
+    implementation project(':core')
 
-    compile 'com.beust:jcommander:1.80'
+    implementation 'com.beust:jcommander:1.80'
 }
