@@ -7,14 +7,14 @@ plugins {
 }
 
 dependencies {
-    api 'org.apache.commons:commons-lang3:3.11'
-    api 'com.fasterxml.jackson.core:jackson-databind:2.12.1'
+    api 'org.apache.commons:commons-lang3:3.12.0'
+    api 'com.fasterxml.jackson.core:jackson-databind:2.12.2'
     api 'org.slf4j:slf4j-api:1.7.30'
     api 'org.slf4j:jul-to-slf4j:1.7.30'
 
     implementation 'commons-io:commons-io:2.8.0'
     implementation 'org.apache.tika:tika-parsers:1.25'
-    implementation 'com.github.spotbugs:spotbugs-annotations:4.2.1'
+    implementation 'com.github.spotbugs:spotbugs-annotations:4.2.2'
     implementation 'javax.inject:javax.inject:1'
 
     testImplementation project(':test-utils')
