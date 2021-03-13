@@ -5,7 +5,7 @@ import org.apache.tools.ant.filters.*
 
 plugins {
     id 'application'
-    id 'org.openjfx.javafxplugin' version '0.0.8'
+    id 'org.openjfx.javafxplugin' version '0.0.9'
 }
 
 mainClassName = "io.github.vocabhunter.gui.main.VocabHunterGuiExecutable"
