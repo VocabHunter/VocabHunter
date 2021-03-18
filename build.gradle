@@ -4,6 +4,14 @@
 
 import org.gradle.internal.os.OperatingSystem
 
+plugins {
+    id "base"
+    id "com.github.ben-manes.versions" version "0.38.0"
+    id "net.researchgate.release" version "2.8.1"
+    id "org.sonarqube" version "3.1.1"
+    id "com.github.spotbugs" version "4.7.0" apply false
+}
+
 ext {
     operatingSystem = OperatingSystem.current()
 }
@@ -17,27 +25,6 @@ wrapper {
     gradleVersion = '6.8.3'
     distributionUrl = "https://services.gradle.org/distributions/gradle-${gradleVersion}-all.zip"
 }
-
-buildscript {
-    repositories {
-        mavenCentral()
-        maven {
-            url 'https://plugins.gradle.org/m2/'
-        }
-    }
-
-    dependencies {
-        classpath 'com.github.ben-manes:gradle-versions-plugin:0.38.0'
-        classpath 'net.researchgate:gradle-release:2.8.1'
-        classpath 'org.sonarsource.scanner.gradle:sonarqube-gradle-plugin:3.1.1'
-        classpath 'gradle.plugin.com.github.spotbugs.snom:spotbugs-gradle-plugin:4.7.0'
-    }
-}
-
-apply plugin: 'base'
-apply plugin: 'net.researchgate.release'
-apply plugin: 'org.sonarqube'
-apply plugin: 'com.github.ben-manes.versions'
 
 subprojects {
 
