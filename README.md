@@ -18,6 +18,10 @@ To get all the latest news about VocabHunter including announcements of new rele
 
 You will need Java 11 to build and run VocabHunter.  The version provided by [AdoptOpenJDK](https://adoptopenjdk.net/) is an excellent choice for this.  Everything else, including Gradle, will be downloaded by the build process.
 
+# A Note About Java 16
+
+VocabHunter isn't yet built with Java 16.  However, work is underway to take advantage of the new `jpackage` tool that is now "production-ready" in JDK 16.  Take a look at [this milestone](https://github.com/VocabHunter/VocabHunter/milestone/2) to see details of the work to switch to JDK 16.
+
 # How To Run VocabHunter
 
 Go to the [download](https://vocabhunter.github.io/download/) page of the website to get the latest release of VocabHunter.  Alternatively, you can run the development version from the command line as follows:
@@ -46,6 +50,8 @@ $ ./gradlew :gui:test --tests io.github.vocabhunter.gui.main.GuiTest --rerun-tas
 # How to Build The Installable Bundle
 
 [![Using the Java Packager with JDK 11](/assets/Using-The-Java-Packager-With-JDK-11.png)][Using the Java Packager with JDK 11]
+
+NB: You will need JDK 11 for this.  For details of the work to switch to JDK 16, see [this milestone](https://github.com/VocabHunter/VocabHunter/milestone/2).
 
 In the article [Using the Java Packager with JDK 11] you can read about how installable bundles for Mac, Windows and Linux are created and how you can do this in your own project.  These self-contained installers allow users to setup VocabHunter on their computer without the need to first install Java.
 
