@@ -1,7 +1,6 @@
 # VocabHunter
 
-[![Build Status](https://img.shields.io/travis/VocabHunter/VocabHunter/master.svg)](https://travis-ci.org/VocabHunter/VocabHunter)
-[![Code Coverage](https://img.shields.io/codecov/c/github/VocabHunter/VocabHunter.svg)](https://codecov.io/gh/VocabHunter/VocabHunter)
+[![Build Status](https://img.shields.io/travis/VocabHunter/VocabHunter/jdk-16.svg)](https://travis-ci.org/VocabHunter/VocabHunter)[![Code Coverage](https://img.shields.io/codecov/c/github/VocabHunter/VocabHunter.svg)](https://codecov.io/gh/VocabHunter/VocabHunter)
 [![SonarCloud](/assets/SonarCloud.svg)](https://sonarcloud.io/dashboard?id=io.github.vocabhunter%3Avocabhunter)
 [![Latest Release](https://img.shields.io/github/release/VocabHunter/VocabHunter.svg)](https://github.com/VocabHunter/VocabHunter/releases/latest)
 [![Twitter Follow](https://img.shields.io/twitter/follow/vocabhunterapp.svg?style=social&label=Follow)](https://twitter.com/vocabhunterapp)
