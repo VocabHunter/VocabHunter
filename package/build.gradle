@@ -72,34 +72,7 @@ processResources {
     }
 }
 
-task checkBundlingEnvironment {
-    description 'Check the environment for building the installable bundle'
-    doLast {
-        if (operatingSystem.isWindows()) {
-            def javaHome = System.env.JAVA_HOME
-
-            if (javaHome) {
-                def javaExecutable = file("${javaHome}/bin/java.exe")
-                def jmodFile = file("${javaHome}/jmods/jdk.packager.jar")
-
-                if (!javaExecutable.exists()) {
-                    throw new GradleException("Unable to find Java executable '${javaExecutable}'")
-                }
-                if (!jmodFile.exists()) {
-                    throw new GradleException("Unable to find Java packager module at '${jmodFile}'")
-                }
-                // Check existence of files for DLL workaround
-                if (!windowsDllMSVCP140.exists() || !windowsDllVCRUNTIME140.exists()) {
-                    throw new GradleException("Unable to find '${windowsDllMSVCP140}' and '${windowsDllVCRUNTIME140}'")
-                }
-            } else {
-                throw new GradleException("JAVA_HOME must be set")
-            }
-        }
-    }
-}
-
-task createBundle(type: Exec, dependsOn: [processResources, checkBundlingEnvironment]) {
+task createBundle(type: Exec, dependsOn: [processResources]) {
     description 'Build the installable bundle'
     if (operatingSystem.isWindows()) {
         commandLine 'cmd', '/c',
