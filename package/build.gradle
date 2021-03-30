@@ -27,13 +27,6 @@ ext {
         appIcon = file('icons/windows/VocabHunter.ico')
         sessionIcon = file('icons/windows/VocabHunterSession.ico')
         bundlerScript = file('bin/build-package.bat')
-        generatedInnoSetupFile = file("${buildDir}/resources/main/application.iss")
-        windowsExecutable = file("${bundlePath}/VocabHunter/VocabHunter.exe")
-        bundleContent = file("${bundlePath}/VocabHunter/*")
-        // Locations for the DLL workaround
-        windowsDllDirectory = file('C:\\Windows\\System32')
-        windowsDllMSVCP140 = file("${windowsDllDirectory}/MSVCP140.dll")
-        windowsDllVCRUNTIME140 = file("${windowsDllDirectory}/VCRUNTIME140.dll")
     }
     if (publishedVersion.endsWith('-SNAPSHOT')) {
         publishedVersion = '1.0.0'
@@ -101,34 +94,3 @@ task createBundle(type: Exec, dependsOn: [processResources]) {
 }
 
 createBundle.dependsOn ':gui:copyDependencies', ':gui:copyJavafxModules'
-
-if (operatingSystem.isWindows()) {
-    processResources {
-        filesMatching('application.iss') {
-            filter ReplaceTokens, tokens: [
-                'bundle.version': publishedVersion,
-                'executable.location': windowsExecutable.toString(),
-                'bundle.content': bundleContent.toString()
-            ]
-        }
-    }
-
-    task completeInnoSetup(dependsOn: processResources) {
-        doLast {
-            copy {
-                from 'icons/windows'
-                into "${bundlePath}/VocabHunter"
-                include 'VocabHunterSession.ico'
-            }
-            // Copy files for DLL workaround
-            copy {
-                from windowsDllMSVCP140
-                from windowsDllVCRUNTIME140
-                into "${bundlePath}/VocabHunter"
-            }
-            println("Inno Setup file: ${generatedInnoSetupFile}")
-        }
-    }
-
-    createBundle.finalizedBy completeInnoSetup
-}
