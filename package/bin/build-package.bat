@@ -17,4 +17,7 @@ call "jpackage" ^
     --main-jar "%JAR%" ^
     --app-version "%VERSION%" ^
     --icon "%APP_ICON%" ^
+    --win-dir-chooser ^
+    --win-menu ^
+    --win-menu-group VocabHunter ^
     --main-class "io.github.vocabhunter.gui.main.VocabHunterGuiExecutable"
