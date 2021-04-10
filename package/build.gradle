@@ -80,7 +80,6 @@ task createBundle(type: Exec, dependsOn: [processResources]) {
     } else {
         commandLine = ['sh',
             bundlerScript,
-            "jpackage",
             packageType,
             "${javafxModulePath}",
             applicationLibraryPath,
