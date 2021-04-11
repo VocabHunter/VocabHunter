@@ -4,7 +4,8 @@ set INPUT=%3
 set OUTPUT=%4
 set JAR=%5
 set VERSION=%6
-set APP_ICON=%7
+set FILE_ASSOCIATIONS=%7
+set APP_ICON=%8
 
 call "jpackage" ^
     --type "%INSTALLER_TYPE%" ^

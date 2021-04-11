@@ -76,6 +76,7 @@ task createBundle(type: Exec, dependsOn: [processResources]) {
             bundlePath,
             mainJar,
             publishedVersion,
+            fileAssociations,
             appIcon
     } else {
         commandLine = ['sh',
