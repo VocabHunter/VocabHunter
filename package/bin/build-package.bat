@@ -17,6 +17,7 @@ call "jpackage" ^
     --name "VocabHunter" ^
     --main-jar "%JAR%" ^
     --app-version "%VERSION%" ^
+    --file-associations "%FILE_ASSOCIATIONS%" ^
     --icon "%APP_ICON%" ^
     --win-dir-chooser ^
     --win-menu ^
