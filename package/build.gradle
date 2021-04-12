@@ -25,7 +25,7 @@ ext {
     } else if (operatingSystem.isWindows()) {
         packageType = 'exe'
         appIcon = file('icons/windows/VocabHunter.ico')
-        sessionIcon = file('icons/windows/VocabHunterSession.ico')
+        sessionIcon = file('icons/windows/VocabHunterSession.ico').toString().replace("\\", "\\\\")
         bundlerScript = file('bin/build-package.bat')
     }
     if (publishedVersion.endsWith('-SNAPSHOT')) {
