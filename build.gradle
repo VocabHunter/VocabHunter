@@ -22,7 +22,7 @@ allprojects {
 
 wrapper {
     description 'Setup the Gradle wrapper'
-    gradleVersion = '6.8.3'
+    gradleVersion = '7.0'
     distributionUrl = "https://services.gradle.org/distributions/gradle-${gradleVersion}-all.zip"
 }
 
@@ -62,9 +62,10 @@ subprojects {
         configFile = file("$rootProject.projectDir/config/checkstyle/checkstyle.xml")
     }
 
-    [checkstyleMain, checkstyleTest].each { task ->
-        task.logging.setLevel(LogLevel.LIFECYCLE)
-    }
+    // TODO Restore this for Gradle 7.0
+//    [checkstyleMain, checkstyleTest].each { task ->
+//        task.logging.setLevel(LogLevel.LIFECYCLE)
+//    }
 
     spotbugs {
         toolVersion = '4.2.1'
