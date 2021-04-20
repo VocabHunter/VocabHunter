@@ -1,5 +1,3 @@
-import org.apache.tools.ant.filters.ReplaceTokens
-
 /*
  * Open Source Software published under the Apache Licence, Version 2.0.
  */
@@ -58,11 +56,7 @@ task recreateIcons(dependsOn: [recreateIconMacApp, recreateIconMacSession, recre
 }
 
 processResources {
-    filesMatching('file-associations.properties') {
-        filter ReplaceTokens, tokens: [
-            'vocabhunter.session.icon': sessionIcon.toString()
-        ]
-    }
+    expand(vocabhunterSessionIcon: sessionIcon)
 }
 
 task createBundle(type: Exec, dependsOn: [processResources]) {
