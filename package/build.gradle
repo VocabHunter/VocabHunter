@@ -56,7 +56,7 @@ task recreateIcons(dependsOn: [recreateIconMacApp, recreateIconMacSession, recre
 }
 
 processResources {
-    expand(vocabhunterSessionIcon: sessionIcon)
+    expand(vocabHunterSessionIcon: sessionIcon)
 }
 
 task createBundle(type: Exec, dependsOn: [processResources]) {
