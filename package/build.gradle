@@ -67,6 +67,10 @@ processResources {
 
 task createBundle(type: Exec, dependsOn: [processResources]) {
     description 'Build the installable bundle'
+    inputs.dir("bin")
+    inputs.dir("icons")
+    inputs.file(fileAssociations)
+    outputs.dir(bundlePath)
     if (operatingSystem.isWindows()) {
         commandLine 'cmd', '/c',
             bundlerScript,
