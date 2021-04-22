@@ -23,12 +23,6 @@ processResources {
     }
 }
 
-jar {
-    from(buildDir) {
-        include 'build-info.properties'
-    }
-}
-
 dependencies {
     implementation project(':core')
     implementation ('com.gluonhq:ignite-guice:1.0.2') {
