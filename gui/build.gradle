@@ -1,7 +1,6 @@
 /*
  * Open Source Software published under the Apache Licence, Version 2.0.
  */
-import org.apache.tools.ant.filters.*
 
 plugins {
     id 'application'
@@ -16,10 +15,10 @@ ext.buildTimestamp = new Date().format('yyyy-MM-dd HH:mm:ss')
 
 processResources {
     filesMatching('properties/*.properties') {
-        filter ReplaceTokens, tokens: [
-            'build.version': project.property("version"),
-            'build.timestamp': project.buildTimestamp
-        ]
+        expand(
+            buildVersion: project.property("version"),
+            buildTimestamp: project.buildTimestamp
+        )
     }
 }
 
