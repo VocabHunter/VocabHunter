@@ -10,13 +10,14 @@ JAR=${5}
 VERSION=${6}
 FILE_ASSOCIATIONS=${7}
 APP_ICON=${8}
-EXTRA_BUNDLER_ARGUMENTS=${9}
+MODULES=${9}
+EXTRA_BUNDLER_ARGUMENTS=${10}
 
 jpackage \
   --type ${INSTALLER_TYPE} \
   --module-path ${MODULE_PATH} \
   --verbose \
-  --add-modules java.base,java.datatransfer,java.desktop,java.scripting,java.xml,jdk.jsobject,jdk.unsupported,jdk.unsupported.desktop,jdk.xml.dom,javafx.controls,javafx.fxml,java.naming,java.sql,jdk.charsets \
+  --add-modules "${MODULES}" \
   --input "${INPUT}" \
   --dest "${OUTPUT}" \
   --name VocabHunter \

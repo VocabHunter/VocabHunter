@@ -6,12 +6,13 @@ set JAR=%5
 set VERSION=%6
 set FILE_ASSOCIATIONS=%7
 set APP_ICON=%8
+set MODULES=%8
 
 call "jpackage" ^
     --type "%INSTALLER_TYPE%" ^
     --module-path "%MODULE_PATH%" ^
     --verbose ^
-    --add-modules "java.base,java.datatransfer,java.desktop,java.scripting,java.xml,jdk.jsobject,jdk.unsupported,jdk.unsupported.desktop,jdk.xml.dom,javafx.controls,javafx.fxml,java.naming,java.sql,jdk.charsets" ^
+    --add-modules "%MODULES%" ^
     --input "%INPUT%" ^
     --dest "%OUTPUT%" ^
     --name "VocabHunter" ^

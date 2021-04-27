@@ -10,6 +10,7 @@ ext {
     mainJar = project(':gui').jar.outputs.files[0].name
     bundlePath = file("${buildDir}/bundle")
     fileAssociations = file("${buildDir}/resources/main/file-associations.properties")
+    modules = 'java.base,java.datatransfer,java.desktop,java.scripting,java.xml,jdk.jsobject,jdk.unsupported,jdk.unsupported.desktop,jdk.xml.dom,javafx.controls,javafx.fxml,java.naming,java.sql,jdk.charsets'
     extraBundlerArguments = []
     if (operatingSystem.isMacOsX()) {
         packageType = 'dmg'
@@ -75,7 +76,8 @@ task createBundle(type: Exec, dependsOn: [processResources]) {
             mainJar,
             publishedVersion,
             fileAssociations,
-            appIcon
+            appIcon,
+            modules
     } else {
         commandLine = ['sh',
             bundlerScript,
@@ -87,6 +89,7 @@ task createBundle(type: Exec, dependsOn: [processResources]) {
             publishedVersion,
             fileAssociations,
             appIcon,
+            modules,
             *extraBundlerArguments]
     }
 }
