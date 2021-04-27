@@ -10,7 +10,7 @@ ext {
     mainJar = project(':gui').jar.outputs.files[0].name
     bundlePath = file("${buildDir}/bundle")
     fileAssociations = file("${buildDir}/resources/main/file-associations.properties")
-    modules = 'java.base,java.datatransfer,java.desktop,java.scripting,java.xml,jdk.jsobject,jdk.unsupported,jdk.unsupported.desktop,jdk.xml.dom,javafx.controls,javafx.fxml,java.naming,java.sql,jdk.charsets'
+    modules = 'javafx.controls,javafx.fxml,java.naming,java.sql'
     extraBundlerArguments = []
     if (operatingSystem.isMacOsX()) {
         packageType = 'dmg'
