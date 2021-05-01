@@ -17,6 +17,13 @@
         <exclude name="JUnitTestContainsTooManyAsserts"/>
     </rule>
 
+    <rule ref="category/java/bestpractices.xml/GuardLogStatement">
+        <properties>
+            <property name="logLevels" value="trace,debug" />
+            <property name="guardsMethods" value="isTraceEnabled,isDebugEnabled" />
+        </properties>
+    </rule>
+
     <rule ref="category/java/codestyle.xml">
         <exclude name="ShortVariable"/>
         <exclude name="LocalVariableCouldBeFinal"/>
