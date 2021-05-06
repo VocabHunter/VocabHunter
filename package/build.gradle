@@ -62,7 +62,7 @@ processResources {
     expand(vocabHunterSessionIcon: sessionIcon)
 }
 
-task createBundle(type: Exec, dependsOn: [processResources]) {
+task createBundle(type: Exec, dependsOn: [processResources, ':gui:copyDependencies', ':gui:copyJavafxModules']) {
     description 'Build the installable bundle'
     inputs.dir("bin")
     inputs.dir("icons")
@@ -95,5 +95,3 @@ task createBundle(type: Exec, dependsOn: [processResources]) {
             *extraBundlerArguments]
     }
 }
-
-createBundle.dependsOn ':gui:copyDependencies', ':gui:copyJavafxModules'
