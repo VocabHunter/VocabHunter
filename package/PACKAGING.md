@@ -30,6 +30,8 @@ On Windows, the command is:
 gradlew clean createBundle
 ~~~
 
+By default, the Mac build will sign the created bundle using your Apple Developer ID.  If you want to skip this, pass `-Punsigned` to the Gradle command.
+
 You will find the created installable bundle in the directory `package/build/bundle`.
 
 ## Using the Java Packager with JDK 11

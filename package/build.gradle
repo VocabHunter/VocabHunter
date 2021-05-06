@@ -16,7 +16,9 @@ ext {
         packageType = 'dmg'
         appIcon = file('icons/mac/VocabHunter.icns')
         sessionIcon = file('icons/mac/VocabHunterSession.icns')
-        extraBundlerArguments = ['--mac-sign']
+        if (!project.hasProperty("unsigned")) {
+            extraBundlerArguments = ['--mac-sign']
+        }
     } else if (operatingSystem.isLinux()) {
         packageType = 'deb'
         appIcon = file('icons/App1024.png')
