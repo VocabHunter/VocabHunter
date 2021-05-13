@@ -63,6 +63,9 @@ processResources {
 }
 
 task createBundle(type: Exec, dependsOn: [processResources, ':gui:copyDependencies', ':gui:copyJavafxModules']) {
+    doFirst {
+        delete bundlePath
+    }
     description 'Build the installable bundle'
     inputs.dir("bin")
     inputs.dir("icons")
