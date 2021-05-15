@@ -70,6 +70,8 @@ task createBundle(type: Exec, dependsOn: [processResources, ':gui:copyDependenci
     inputs.dir("bin")
     inputs.dir("icons")
     inputs.file(fileAssociations)
+    inputs.dir(javafxModulePath)
+    inputs.dir(applicationLibraryPath)
     outputs.dir(bundlePath)
     if (operatingSystem.isWindows()) {
         commandLine 'cmd', '/c',
