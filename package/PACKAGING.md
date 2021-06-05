@@ -30,6 +30,8 @@ On Windows, the command is:
 gradlew clean createBundle
 ~~~
 
+If you're building using Windows, you will need to make sure that your path does not have a space in it anywhere.
+
 By default, the Mac build will sign the created bundle using your Apple Developer ID.  If you want to skip this, pass `-Punsigned` to the Gradle command.
 
 You will find the created installable bundle in the directory `package/build/bundle`.
