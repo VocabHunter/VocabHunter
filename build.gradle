@@ -43,7 +43,7 @@ subprojects {
 
     dependencies {
         testImplementation 'org.junit.jupiter:junit-jupiter:5.7.2'
-        testImplementation 'org.mockito:mockito-junit-jupiter:3.10.0'
+        testImplementation 'org.mockito:mockito-junit-jupiter:3.11.0'
         runtimeOnly 'ch.qos.logback:logback-classic:1.2.3'
     }
 
