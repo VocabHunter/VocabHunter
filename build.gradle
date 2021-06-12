@@ -62,11 +62,6 @@ subprojects {
         configFile = file("$rootProject.projectDir/config/checkstyle/checkstyle.xml")
     }
 
-    // TODO Restore this for Gradle 7.0
-//    [checkstyleMain, checkstyleTest].each { task ->
-//        task.logging.setLevel(LogLevel.LIFECYCLE)
-//    }
-
     spotbugs {
         toolVersion = '4.2.3'
         effort = 'max'

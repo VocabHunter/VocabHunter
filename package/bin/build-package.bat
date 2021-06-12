@@ -1,24 +1,26 @@
-set MODULE_PATH=%1
-set INPUT=%2
-set OUTPUT=%3
-set JAR=%4
-set VERSION=%5
-set APP_ICON=%6
+set INSTALLER_TYPE=%1
+set MODULE_PATH=%2
+set INPUT=%3
+set OUTPUT=%4
+set JAR=%5
+set VERSION=%6
+set FILE_ASSOCIATIONS=%7
+set APP_ICON=%8
+set MODULES=%~9
 
-call "%JAVA_HOME%\bin\java.exe" ^
-    -Xmx512M ^
-    --module-path "%JAVA_HOME%\jmods" ^
-    --add-opens jdk.jlink/jdk.tools.jlink.internal.packager=jdk.packager ^
-    -m jdk.packager/jdk.packager.Main ^
-    create-image ^
+call "jpackage" ^
+    --type "%INSTALLER_TYPE%" ^
     --module-path "%MODULE_PATH%" ^
     --verbose ^
-    --echo-mode ^
-    --add-modules "java.base,java.datatransfer,java.desktop,java.scripting,java.xml,jdk.jsobject,jdk.unsupported,jdk.unsupported.desktop,jdk.xml.dom,javafx.controls,javafx.fxml,java.naming,java.sql,jdk.charsets" ^
+    --add-modules "%MODULES%" ^
     --input "%INPUT%" ^
-    --output "%OUTPUT%" ^
+    --dest "%OUTPUT%" ^
     --name "VocabHunter" ^
     --main-jar "%JAR%" ^
-    --version "%VERSION%" ^
+    --app-version "%VERSION%" ^
+    --file-associations "%FILE_ASSOCIATIONS%" ^
     --icon "%APP_ICON%" ^
-    --class "io.github.vocabhunter.gui.main.VocabHunterGuiExecutable"
+    --win-dir-chooser ^
+    --win-menu ^
+    --win-menu-group VocabHunter ^
+    --main-class "io.github.vocabhunter.gui.main.VocabHunterGuiExecutable"
