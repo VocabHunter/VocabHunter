@@ -84,7 +84,7 @@ task createBundle(type: Exec, dependsOn: [processResources, ':gui:copyDependenci
             publishedVersion,
             fileAssociations,
             appIcon,
-            modules
+            "\"${modules}\""
     } else {
         commandLine = ['sh',
             bundlerScript,
