@@ -52,13 +52,13 @@ subprojects {
     }
 
     pmd {
-        toolVersion = '6.34.0'
+        toolVersion = '6.35.0'
         ruleSetFiles = files("$rootProject.projectDir/config/pmd/ruleset.xml")
         ruleSets = []
     }
 
     checkstyle {
-        toolVersion = '8.42'
+        toolVersion = '8.43'
         configFile = file("$rootProject.projectDir/config/checkstyle/checkstyle.xml")
     }
 
@@ -77,7 +77,7 @@ subprojects {
     }
 
     jacoco {
-        toolVersion = '0.8.6'
+        toolVersion = '0.8.7'
     }
 
     jacocoTestReport {

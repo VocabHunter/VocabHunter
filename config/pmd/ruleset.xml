@@ -15,6 +15,7 @@
         <exclude name="JUnitAssertionsShouldIncludeMessage"/>
         <exclude name="JUnitTestsShouldIncludeAssert"/>
         <exclude name="JUnitTestContainsTooManyAsserts"/>
+        <exclude name="JUnit5TestShouldBePackagePrivate"/>
     </rule>
 
     <rule ref="category/java/bestpractices.xml/GuardLogStatement">
