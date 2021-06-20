@@ -45,7 +45,7 @@ $ ./gradlew :gui:test --tests io.github.vocabhunter.gui.main.GuiTest --rerun-tas
 
 # How to Build The Installable Bundle
 
-You can also find full, step-by-step instructions for creating the VocabHunter installable bundle using JDK 16 in [PACKAGING.md](package/PACKAGING.md).
+See [PACKAGING.md](package/PACKAGING.md) for full, step-by-step instructions for creating the VocabHunter installable bundle using JDK 16.
 
 Prior to the release of JDK 16, the VocabHunter installable bundle used to be created using JDK 11.  You can find more information about this in the article [Using the Java Packager with JDK 11].
 
