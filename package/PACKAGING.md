@@ -36,14 +36,14 @@ By default, the Mac build will sign the created bundle using your Apple Develope
 
 You will find the created installable bundle in the directory `package/build/bundle`.
 
-## Using the Java Packager with JDK 11
+## Installable Java Apps with jpackage
 
-Prior to the release of JDK 16, the VocabHunter installable bundle used to be created using JDK 11.  You can find more information about this in the article [Using the Java Packager with JDK 11].
+[![Installable Java Apps with jpackage](/assets/jpackage-installable-java-apps.png)][Installable Java Apps with jpackage]
 
-[![Using the Java Packager with JDK 11](/assets/Using-The-Java-Packager-With-JDK-11.png)][Using the Java Packager with JDK 11]
+For more general information about the approach taken to building the installable bundles for Mac, Linux and Windows and how you could apply this in your own project, see the article [Installable Java Apps with jpackage].
 
 ## Return to VocabHunter README
 
 [Click here](../README.md) to return to the main VocabHunter README file for more information about the project.
 
-[Using the Java Packager with JDK 11]:https://medium.com/@adam_carroll/java-packager-with-jdk11-31b3d620f4a8
+[Installable Java Apps with jpackage]:https://vocabhunter.github.io/2021/07/10/installable-java-apps-with-jpackage.html

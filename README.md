@@ -45,11 +45,11 @@ $ ./gradlew :gui:test --tests io.github.vocabhunter.gui.main.GuiTest --rerun-tas
 
 # How to Build The Installable Bundle
 
-See [PACKAGING.md](package/PACKAGING.md) for full, step-by-step instructions for creating the VocabHunter installable bundle using JDK 16.
+[![Installable Java Apps with jpackage](/assets/jpackage-installable-java-apps.png)][Installable Java Apps with jpackage]
 
-Prior to the release of JDK 16, the VocabHunter installable bundle used to be created using JDK 11.  You can find more information about this in the article [Using the Java Packager with JDK 11].
+In the article [Installable Java Apps with jpackage] you can read about how installable bundles for Mac, Windows and Linux are created and how you can do this in your own project.  These self-contained installers allow users to setup VocabHunter on their computer without the need to first install Java.
 
-[![Using the Java Packager with JDK 11](/assets/Using-The-Java-Packager-With-JDK-11.png)][Using the Java Packager with JDK 11]
+You can also find full, step-by-step instructions for creating the VocabHunter installable bundle in [PACKAGING.md](package/PACKAGING.md).
 
 # Technical Articles
 
@@ -70,7 +70,7 @@ If you'd like to know more about how VocabHunter works and the technologies used
 [Building a JavaFX Search Bar]:https://vocabhunter.github.io/2017/01/15/Search-Bar.html
 [Read (Almost) Any Document in Java]:https://vocabhunter.github.io/2017/04/30/Read-Any-Document-Format.html
 [Migrating to JUnit 5]:https://vocabhunter.github.io/2017/10/17/migrating-to-junit-5.html
+[Installable Java Apps with jpackage]:https://vocabhunter.github.io/2021/07/10/installable-java-apps-with-jpackage.html
 
 [VocabHunter – A tool for learners of foreign languages]:https://medium.com/techking/vocabhunter-a-tool-for-learners-of-foreign-languages-55c467a6250c
 [How JavaFX was used to build a desktop application]:https://medium.com/techking/how-javafx-was-used-to-build-a-desktop-application-7d4c680d8dc
-[Using the Java Packager with JDK 11]:https://medium.com/@adam_carroll/java-packager-with-jdk11-31b3d620f4a8
