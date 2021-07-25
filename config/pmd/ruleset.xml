@@ -82,5 +82,6 @@
     <rule ref="category/java/security.xml"/>
 
     <exclude-pattern>.*/*AbstractBeanTest.java</exclude-pattern>
+    <exclude-pattern>.*/*ExecutableLogToolTest.java</exclude-pattern>
 
 </ruleset>
