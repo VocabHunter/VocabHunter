@@ -43,8 +43,8 @@ subprojects {
 
     dependencies {
         testImplementation 'org.junit.jupiter:junit-jupiter:5.7.2'
-        testImplementation 'org.mockito:mockito-junit-jupiter:3.11.1'
-        runtimeOnly 'ch.qos.logback:logback-classic:1.2.3'
+        testImplementation 'org.mockito:mockito-junit-jupiter:3.11.2'
+        runtimeOnly 'ch.qos.logback:logback-classic:1.2.4'
     }
 
     test {
@@ -58,7 +58,7 @@ subprojects {
     }
 
     checkstyle {
-        toolVersion = '8.43'
+        toolVersion = '8.44'
         configFile = file("$rootProject.projectDir/config/checkstyle/checkstyle.xml")
     }
 
