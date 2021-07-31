@@ -57,8 +57,7 @@ public class FilterGridModel extends AbstractFilterModel {
     }
 
     private BooleanProperty[] selectionsArray() {
-        return columnSelections.stream()
-            .toArray(BooleanProperty[]::new);
+        return columnSelections.toArray(BooleanProperty[]::new);
     }
 
     private List<BooleanProperty> buildColumnProperties(final Set<Integer> columns) {
