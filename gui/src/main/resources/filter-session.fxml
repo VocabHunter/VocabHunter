@@ -4,9 +4,10 @@
   ~ Open Source Software published under the Apache Licence, Version 2.0.
   -->
 
-<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import org.controlsfx.glyphfont.Glyph?>
+
 <BorderPane styleClass="filter" stylesheets="@main.css" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="io.github.vocabhunter.gui.controller.FilterSessionController">
     <bottom>
         <ButtonBar styleClass="buttonBar" BorderPane.alignment="CENTER">
@@ -47,15 +48,15 @@
                    <RadioButton fx:id="buttonKnown" mnemonicParsing="false" selected="true" text="%filter.session.mode.known">
                        <graphic>
                            <HBox styleClass="iconBoxSmall">
-                               <FontAwesomeIconView styleClass="filterKnownIconSmall" />
+                               <Glyph fontFamily="FontAwesome" icon="CHECK_CIRCLE" styleClass="fontAwesomeIcon, filterKnownIconSmall" />
                            </HBox>
                        </graphic>
                    </RadioButton>
                    <RadioButton fx:id="buttonSeen" mnemonicParsing="false" text="%filter.session.mode.both">
                        <graphic>
                            <HBox styleClass="iconBoxSmall">
-                               <FontAwesomeIconView styleClass="filterKnownIconSmall" />
-                               <FontAwesomeIconView styleClass="filterUnknownIconSmall" />
+                               <Glyph fontFamily="FontAwesome" icon="CHECK_CIRCLE" styleClass="fontAwesomeIcon, filterKnownIconSmall" />
+                               <Glyph fontFamily="FontAwesome" icon="TIMES_CIRCLE" styleClass="fontAwesomeIcon, filterUnknownIconSmall" />
                            </HBox>
                        </graphic>
                    </RadioButton>

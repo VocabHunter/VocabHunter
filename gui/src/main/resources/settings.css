@@ -1,0 +1,50 @@
+/*
+ * Styles for the filter settings dialogues.
+ *
+ * Open Source Software published under the Apache Licence, Version 2.0.
+ */
+
+.columnSelectionBox {
+    -fx-spacing: 7;
+}
+.filterSessionStateColumn {
+    -fx-alignment: CENTER;
+}
+.buttonAddIcon {
+    -fx-font-size: 10;
+}
+.buttonAddGridFileIcon, .buttonFilterSessionIcon {
+    -fx-font-size: 20;
+}
+.filterKnownIcon, .filterUnknownIcon, .filterGridIcon {
+    -fx-font-size: 20;
+}
+.filterKnownIconSmall, .filterUnknownIconSmall {
+    -fx-font-size: 15;
+}
+.settings .settingsGroup {
+    -fx-border-width: 1;
+    -fx-padding: 10 10 10 10;
+    -fx-border-insets: 5 0 5 0;
+    -fx-hgap: 5;
+    -fx-vgap: 5;
+}
+.filter .mainContent {
+    -fx-spacing: 7;
+}
+.filter .filterInclusionBox {
+    -fx-spacing: 7;
+    -fx-border-width: 1;
+    -fx-padding: 10;
+    -fx-border-insets: 5 0 5 0;
+}
+.iconBoxSmall {
+    -fx-min-width: 30;
+    -fx-spacing: 2;
+}
+.iconBox, .iconBoxSmall {
+    -fx-alignment: center;
+}
+.settings, .filter {
+    -fx-padding: 20 20 20 20;
+}

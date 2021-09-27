@@ -58,20 +58,20 @@
 .buttonUnknown {
     -fx-base: -colour-unknown;
 }
-.buttonKnownIcon, .filterKnownIcon, .filterKnownIconSmall {
+.buttonKnownIcon *, .filterKnownIcon *, .filterKnownIconSmall * {
     -fx-fill: -colour-known-end;
 }
-.buttonUnknownIcon, .filterUnknownIcon, .filterUnknownIconSmall {
+.buttonUnknownIcon *, .filterUnknownIcon *, .filterUnknownIconSmall * {
     -fx-fill: -colour-unknown-end;
 }
 
-.buttonNoteIcon {
+.buttonNoteIcon * {
     -fx-fill: -colour-unseen-dark2;  /* This corresponds to the pseudo-class "unseen" */
 }
-.mainWordPane:known .buttonNoteIcon {
+.mainWordPane:known .buttonNoteIcon * {
     -fx-fill: -colour-known-dark2;
 }
-.mainWordPane:unknown .buttonNoteIcon {
+.mainWordPane:unknown .buttonNoteIcon * {
     -fx-fill: -colour-unknown-dark2;
 }
 
@@ -164,7 +164,7 @@
  * Filters.
  */
 
-.buttonFilterSessionIcon {
+.buttonFilterSessionIcon * {
     -fx-fill: -colour-known-end;
 }
 
@@ -183,11 +183,11 @@
     -fx-border-color: lightgrey;
 }
 
-.starIcon {
+.starIcon * {
     -fx-fill: yellow;
     -fx-stroke: goldenrod;
 }
-.websiteIcon, .twitterIcon, .githubIcon {
+.websiteIcon *, .twitterIcon *, .githubIcon * {
     -fx-fill: -fx-accent;
 }
 

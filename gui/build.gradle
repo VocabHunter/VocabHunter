@@ -29,7 +29,6 @@ dependencies {
     }
     implementation 'com.google.inject:guice:5.0.1'
     implementation 'org.controlsfx:controlsfx:11.1.0'
-    implementation 'de.jensd:fontawesomefx-fontawesome:4.7.0-9.1.2'
 
     // This is required for the conditional logic in the logback setup
     runtimeOnly 'org.codehaus.janino:janino:3.1.4'

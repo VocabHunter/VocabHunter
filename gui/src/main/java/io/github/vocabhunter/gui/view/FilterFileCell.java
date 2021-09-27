@@ -4,11 +4,14 @@
 
 package io.github.vocabhunter.gui.view;
 
-import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import io.github.vocabhunter.gui.i18n.I18nManager;
 import io.github.vocabhunter.gui.model.FilterFileModel;
 import javafx.geometry.Pos;
-import javafx.scene.control.*;
+import javafx.scene.Node;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.ListCell;
+import javafx.scene.control.Tooltip;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
@@ -17,6 +20,8 @@ import java.util.function.Consumer;
 
 import static io.github.vocabhunter.gui.i18n.I18nKey.FILTER_MAIN_LISTS_BUTTON_DELETE;
 import static io.github.vocabhunter.gui.i18n.I18nKey.FILTER_MAIN_LISTS_BUTTON_EDIT;
+import static org.controlsfx.glyphfont.FontAwesome.Glyph.PENCIL;
+import static org.controlsfx.glyphfont.FontAwesome.Glyph.TRASH;
 
 public class FilterFileCell extends ListCell<FilterFileModel> {
     private static final int SPACING = 5;
@@ -35,11 +40,11 @@ public class FilterFileCell extends ListCell<FilterFileModel> {
 
     private final Label labelType = new Label();
 
-    private final FontAwesomeIconView editIcon = new FontAwesomeIconView();
+    private final Node editIcon = IconTool.icon(PENCIL);
 
     private final Button buttonEdit = new Button(null, editIcon);
 
-    private final FontAwesomeIconView removeListIcon = new FontAwesomeIconView();
+    private final Node removeListIcon = IconTool.icon(TRASH);
 
     private final Button buttonRemoveList = new Button(null, removeListIcon);
 
@@ -58,11 +63,11 @@ public class FilterFileCell extends ListCell<FilterFileModel> {
         buttonEdit.setOnAction(e -> editHandler.accept(lastItem));
         buttonEdit.setId("buttonEdit");
         buttonEdit.setTooltip(new Tooltip(i18nManager.text(FILTER_MAIN_LISTS_BUTTON_EDIT)));
-        editIcon.setStyleClass("buttonEditIcon");
+        editIcon.getStyleClass().add("buttonEditIcon");
 
         buttonRemoveList.setOnAction(e -> removalHandler.accept(lastItem));
         buttonRemoveList.setTooltip(new Tooltip(i18nManager.text(FILTER_MAIN_LISTS_BUTTON_DELETE)));
-        removeListIcon.setStyleClass("buttonDeleteIcon");
+        removeListIcon.getStyleClass().add("buttonDeleteIcon");
     }
 
     @Override

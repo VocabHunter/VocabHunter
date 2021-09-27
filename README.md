@@ -60,7 +60,7 @@ If you'd like to know more about how VocabHunter works and the technologies used
 * [Migrating to JUnit 5] (VocabHunter Blog) - How the VocabHunter project was updated to use JUnit 5 for testing.  This article explains the changes that were made, the problems that were encountered and how they were solved.
 * [Dependency Injection in JavaFX] (VocabHunter Blog) - How Gluon Ignite and Google Guice are used for the Dependency Injection in VocabHunter.
 * [User Interface Testing with TestFX] (VocabHunter Blog) - A guide to automating user interface tests using TestFX.  VocabHunter includes a complete automated GUI test suite and here you can learn how it works.
-* [Building a JavaFX Search Bar] (VocabHunter Blog) - How the user interface for the VocabHunter search bar works with details of the use of ControlsFX and FontAwesomeFX in giving the bar a distinctive style.
+* [Building a JavaFX Search Bar] (VocabHunter Blog) - How the user interface for the VocabHunter search bar works with details of the use of ControlsFX in giving the bar a distinctive style.
 * [VocabHunter – A tool for learners of foreign languages] (King Tech Blog) - An introduction to some of the technologies being used in VocabHunter.
 
 [![VocabHunter](/assets/VocabHunter-Technical-Articles.png)](https://vocabhunter.github.io/blog/)

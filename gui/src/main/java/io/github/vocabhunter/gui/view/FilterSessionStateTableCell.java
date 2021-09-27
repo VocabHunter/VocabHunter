@@ -4,20 +4,22 @@
 
 package io.github.vocabhunter.gui.view;
 
-import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import io.github.vocabhunter.analysis.marked.WordState;
 import io.github.vocabhunter.gui.i18n.I18nManager;
 import io.github.vocabhunter.gui.model.FilterSessionWord;
+import javafx.scene.Node;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.Tooltip;
 
 import static io.github.vocabhunter.gui.i18n.I18nKey.FILTER_SESSION_TYPE_KNOWN_TIP;
 import static io.github.vocabhunter.gui.i18n.I18nKey.FILTER_SESSION_TYPE_UNKNOWN_TIP;
+import static org.controlsfx.glyphfont.FontAwesome.Glyph.CHECK_CIRCLE;
+import static org.controlsfx.glyphfont.FontAwesome.Glyph.TIMES_CIRCLE;
 
 public class FilterSessionStateTableCell extends TableCell<FilterSessionWord, FilterSessionWord> {
-    private final FontAwesomeIconView iconKnown = new FontAwesomeIconView();
+    private final Node iconKnown = IconTool.icon(CHECK_CIRCLE);
 
-    private final FontAwesomeIconView iconUnknown = new FontAwesomeIconView();
+    private final Node iconUnknown = IconTool.icon(TIMES_CIRCLE);
 
     private final Tooltip tooltipKnown;
 
@@ -27,8 +29,8 @@ public class FilterSessionStateTableCell extends TableCell<FilterSessionWord, Fi
         tooltipKnown = new Tooltip(i18nManager.text(FILTER_SESSION_TYPE_KNOWN_TIP));
         tooltipUnknown = new Tooltip(i18nManager.text(FILTER_SESSION_TYPE_UNKNOWN_TIP));
 
-        iconKnown.setStyleClass("filterKnownIcon");
-        iconUnknown.setStyleClass("filterUnknownIcon");
+        iconKnown.getStyleClass().add("filterKnownIcon");
+        iconUnknown.getStyleClass().add("filterUnknownIcon");
     }
 
     @Override

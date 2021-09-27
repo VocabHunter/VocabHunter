@@ -4,11 +4,11 @@
   ~ Open Source Software published under the Apache Licence, Version 2.0.
   -->
 
-<?import de.jensd.fx.glyphs.fontawesome.*?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import org.controlsfx.control.textfield.CustomTextField?>
+<?import org.controlsfx.glyphfont.Glyph?>
 
 <BorderPane prefHeight="500.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="io.github.vocabhunter.gui.controller.SessionController">
    <top>
@@ -16,26 +16,26 @@
          <items>
             <Button fx:id="buttonCloseSearch" mnemonicParsing="false" styleClass="buttonSearchClose">
                 <graphic>
-                    <FontAwesomeIconView styleClass="buttonSearchCloseIcon" />
+                    <Glyph fontFamily="FontAwesome" icon="CLOSE" styleClass="fontAwesomeIcon, buttonSearchCloseIcon" />
                 </graphic>
             </Button>
             <CustomTextField fx:id="fieldSearch" styleClass="searchField">
                 <left>
                     <Label styleClass="searchBoxLabel">
                         <graphic>
-                            <FontAwesomeIconView styleClass="searchBoxLabelIcon" />
+                            <Glyph fontFamily="FontAwesome" icon="SEARCH" styleClass="fontAwesomeIcon, searchBoxLabelIcon" />
                         </graphic>
                     </Label>
                 </left>
             </CustomTextField>
              <Button fx:id="buttonSearchUp" mnemonicParsing="false" styleClass="buttonSearchUp">
                  <graphic>
-                     <FontAwesomeIconView styleClass="buttonSearchUpIcon" />
+                     <Glyph fontFamily="FontAwesome" icon="CHEVRON_UP" styleClass="fontAwesomeIcon, buttonSearchUpIcon" />
                  </graphic>
              </Button>
              <Button fx:id="buttonSearchDown" mnemonicParsing="false" styleClass="buttonSearchDown">
                  <graphic>
-                     <FontAwesomeIconView styleClass="buttonSearchDownIcon" />
+                     <Glyph fontFamily="FontAwesome" icon="CHEVRON_DOWN" styleClass="fontAwesomeIcon, buttonSearchDownIcon" />
                  </graphic>
              </Button>
             <Label fx:id="labelMatches" />
@@ -61,7 +61,7 @@
                                                           <Tooltip text="%session.button.unknown.tip" />
                                                       </tooltip>
                                                       <graphic>
-                                                          <FontAwesomeIconView styleClass="buttonUnknownIcon" />
+                                                          <Glyph fontFamily="FontAwesome" icon="TIMES_CIRCLE" styleClass="fontAwesomeIcon, buttonUnknownIcon" />
                                                       </graphic>
                                                       <HBox.margin>
                                                           <Insets bottom="0" left="10" right="10" top="0" />
@@ -72,7 +72,7 @@
                                                           <Tooltip text="%session.button.known.tip" />
                                                       </tooltip>
                                                       <graphic>
-                                                          <FontAwesomeIconView styleClass="buttonKnownIcon" />
+                                                          <Glyph fontFamily="FontAwesome" icon="TIMES_CIRCLE" styleClass="fontAwesomeIcon, buttonKnownIcon" />
                                                       </graphic>
                                                       <HBox.margin>
                                                           <Insets bottom="0" left="10" right="10" top="0" />
@@ -90,7 +90,7 @@
                                           <Tooltip text="%session.button.unseen.tip" />
                                       </tooltip>
                                       <graphic>
-                                          <FontAwesomeIconView styleClass="buttonUnseenIcon" />
+                                          <Glyph fontFamily="FontAwesome" icon="REFRESH" styleClass="fontAwesomeIcon, buttonUnseenIcon" />
                                       </graphic>
                                   </Button>
                               </left>
@@ -100,7 +100,7 @@
                                           <Tooltip text="%session.button.note.tip" />
                                       </tooltip>
                                       <graphic>
-                                          <FontAwesomeIconView styleClass="buttonNoteIcon" />
+                                          <Glyph fontFamily="FontAwesome" icon="COMMENT_ALT" styleClass="fontAwesomeIcon, buttonNoteIcon" />
                                       </graphic>
                                   </Button>
                               </right>

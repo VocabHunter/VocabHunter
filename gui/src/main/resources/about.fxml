@@ -4,10 +4,11 @@
   ~ Open Source Software published under the Apache Licence, Version 2.0.
   -->
 
-<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Text?>
+<?import org.controlsfx.glyphfont.Glyph?>
+
 <Pane fx:id="aboutDialogue" styleClass="about" stylesheets="@main.css" xmlns="http://javafx.com/javafx/8.0.82-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="io.github.vocabhunter.gui.controller.AboutController">
     <children>
         <BorderPane>
@@ -30,24 +31,24 @@
                         <Label text="%about.copyright" />
                         <Hyperlink fx:id="linkWebsite" text="%link.main" styleClass="website" >
                             <graphic>
-                                <FontAwesomeIconView styleClass="websiteIcon" />
+                                <Glyph fontFamily="FontAwesome" icon="HOME" styleClass="fontAwesomeIcon, websiteIcon" />
                             </graphic>
                         </Hyperlink>
                         <Hyperlink fx:id="linkTwitter" text="\@vocabhunterapp" styleClass="twitter" >
                             <graphic>
-                                <FontAwesomeIconView styleClass="twitterIcon" />
+                                <Glyph fontFamily="FontAwesome" icon="TWITTER" styleClass="fontAwesomeIcon, twitterIcon" />
                             </graphic>
                         </Hyperlink>
                         <HBox alignment="CENTER_LEFT">
                             <children>
                                 <Hyperlink fx:id="linkGithub" styleClass="github" text="%about.github">
                                     <graphic>
-                                        <FontAwesomeIconView styleClass="githubIcon" />
+                                        <Glyph fontFamily="FontAwesome" icon="GITHUB" styleClass="fontAwesomeIcon, githubIcon" />
                                     </graphic>
                                 </Hyperlink>
                                 <Hyperlink fx:id="linkGithubStar" styleClass="githubStar">
                                     <graphic>
-                                        <FontAwesomeIconView styleClass="starIcon" />
+                                        <Glyph fontFamily="FontAwesome" icon="STAR" styleClass="fontAwesomeIcon, starIcon" />
                                     </graphic>
                                 </Hyperlink>
                             </children>

@@ -7,136 +7,14 @@
 @import "about.css"
 @import "colours.css"
 @import "language.css"
+@import "settings.css"
+@import "session.css"
 
-.mainWord {
-    -fx-font-size: 40;
+.fontAwesomeIcon * {
+    -fx-font-family: "FontAwesome";
 }
-.useCount {
-    -fx-font-size: 13;
-    -fx-padding: 0 0 10 0;
-}
-.padTopWord {
-    -fx-pref-height: 60;
-    -fx-max-height: 60;
-}
-.textAreaWordNote {
-    -fx-padding: 10 0 5 0;
-    -fx-background-insets: 10 0 5 0;
-    -fx-min-height: 43;
-    -fx-pref-height: 60;
-}
-.wordList .list-cell:selected {
-    -fx-font-weight: bold;
-}
-.wordList .list-cell, .wordList .table-cell {
-    -fx-border-width: 1 0 1 0;
-}
-.wordList .table-cell:excluded .text {
-    -fx-strikethrough: true;
-}
-.wordList .error {
-    -fx-font-size: 18;
-}
-.wordCount:fail {
-    -fx-font-weight: bold;
-}
-.filterSessionStateColumn {
-    -fx-alignment: CENTER;
-}
-.columnSelectionBoxScrollPane {
-    -fx-max-height: 100;
-    -fx-min-height: 20;
-    -fx-background-color: transparent;
-}
-.columnSelectionBox {
-    -fx-spacing: 7;
-}
-.buttonSaveIcon {
-    -glyph-name: SAVE;
-}
-.buttonOpenIcon {
-    -glyph-name: FOLDER_OPEN_ALT;
-}
-.buttonNewIcon {
-    -glyph-name: FILE_ALT;
-}
-.buttonExportIcon {
-    -glyph-name: SHARE_SQUARE_ALT;
-}
-.buttonSetupFiltersIcon {
-    -glyph-name: FILTER;
-}
-.buttonSaveIcon, .buttonOpenIcon, .buttonNewIcon, .buttonExportIcon, .buttonSetupFiltersIcon {
-    -glyph-size: 24;
-}
-.buttonFilterSessionIcon {
-    -glyph-name: CHECK_SQUARE;
-}
-.buttonFilterGridIcon, .filterGridIcon {
-    -glyph-name: TABLE;
-}
-.buttonAddIcon {
-    -glyph-name: PLUS;
-    -glyph-size: 10;
-}
-.buttonFilterSessionIcon, .buttonFilterGridIcon {
-    -glyph-size: 20;
-}
-.buttonKnownIcon, .filterKnownIcon, .filterKnownIconSmall {
-    -glyph-name: CHECK_CIRCLE;
-}
-.buttonUnknownIcon, .filterUnknownIcon, .filterUnknownIconSmall {
-    -glyph-name: TIMES_CIRCLE;
-}
-.filterKnownIcon, .filterUnknownIcon, .filterGridIcon {
-    -glyph-size: 20;
-}
-.filterKnownIconSmall, .filterUnknownIconSmall {
-    -glyph-size: 15;
-}
-.buttonKnownIcon, .buttonUnknownIcon {
-    -glyph-size: 30;
-}
-.buttonUnseenIcon {
-    -glyph-size: 40;
-    -glyph-name: REFRESH;
-}
-.buttonNoteIcon {
-    -glyph-size: 40;
-    -glyph-name: COMMENT_ALT;
-}
-.buttonUnseen, .buttonNote, .buttonSearchClose, .buttonSearchUp, .buttonSearchDown {
-    -fx-background-color: transparent;
-    -fx-background-insets: 0;
-}
-.buttonSearchCloseIcon {
-    -glyph-size: 15;
-    -glyph-name: CLOSE;
-}
-.buttonSearchUpIcon, .buttonSearchDownIcon {
-    -glyph-size: 15;
-}
-.buttonSearchUpIcon {
-    -glyph-name: CHEVRON_UP;
-}
-.buttonSearchDownIcon {
-    -glyph-name: CHEVRON_DOWN;
-}
-.buttonEditIcon {
-    -glyph-name: PENCIL;
-}
-.buttonDeleteIcon {
-    -glyph-name: TRASH;
-}
-.buttonEditIcon, .buttonDeleteIcon {
-    -glyph-size: 17;
-}
-.searchBoxLabel {
-    -fx-padding: 0 2 0 7;
-}
-.searchBoxLabelIcon {
-    -glyph-size: 13;
-    -glyph-name: SEARCH;
+.buttonNew Glyph *, .buttonOpen Glyph *, .buttonSave Glyph *, .buttonExport Glyph *, .buttonSetupFilters Glyph *, .new Glyph *, .open Glyph * {
+    -fx-font-size: 22;
 }
 .noSession {
     -fx-font-size: 16;
@@ -146,9 +24,6 @@
     -fx-font-family: sans-serif;
     -fx-font-style: italic;
     -fx-stroke-width: 1;
-}
-.settings, .filter {
-    -fx-padding: 20 20 20 20;
 }
 .settings .description, .filter .description, .noteEditor .description {
     -fx-font-size: 18;
@@ -160,47 +35,14 @@
 .settings .buttonBar, .filter .buttonBar, .noteEditor .buttonBar {
     -fx-padding: 20 0 0 0;
 }
-.settings .settingsGroup {
-    -fx-border-width: 1;
-    -fx-padding: 10 10 10 10;
-    -fx-border-insets: 5 0 5 0;
-    -fx-hgap: 5;
-    -fx-vgap: 5;
-}
-.filter .mainContent {
-    -fx-spacing: 7;
-}
-.filter .filterInclusionBox {
-    -fx-spacing: 7;
-    -fx-border-width: 1;
-    -fx-padding: 10;
-    -fx-border-insets: 5 0 5 0;
-}
 .iconBox {
     -fx-min-width: 60;
-}
-.iconBoxSmall {
-    -fx-min-width: 30;
-    -fx-spacing: 2;
-}
-.iconBox, .iconBoxSmall {
-    -fx-alignment: center;
-}
-.noteEditor {
-    -fx-padding: 10;
-}
-.noteEditor TextArea {
-    -fx-pref-width: 1000;
-    -fx-pref-height: 400;
 }
 .noSession .new {
     -fx-padding: 10 0 10 5;
 }
 .noSession .open {
     -fx-padding: 10 0 0 5;
-}
-.wordUse {
-    -fx-font-weight: bold;
 }
 .chartLegend {
     -fx-padding: 10;

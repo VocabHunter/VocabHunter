@@ -1,0 +1,81 @@
+/*
+ * Styles for the main session.
+ *
+ * Open Source Software published under the Apache Licence, Version 2.0.
+ */
+
+.mainWord {
+    -fx-font-size: 40;
+}
+.useCount {
+    -fx-font-size: 13;
+    -fx-padding: 0 0 10 0;
+}
+.padTopWord {
+    -fx-pref-height: 60;
+    -fx-max-height: 60;
+}
+.textAreaWordNote {
+    -fx-padding: 10 0 5 0;
+    -fx-background-insets: 10 0 5 0;
+    -fx-min-height: 43;
+    -fx-pref-height: 60;
+}
+.wordList .list-cell:selected {
+    -fx-font-weight: bold;
+}
+.wordList .list-cell, .wordList .table-cell {
+    -fx-border-width: 1 0 1 0;
+}
+.wordList .table-cell:excluded .text {
+    -fx-strikethrough: true;
+}
+.wordList .error {
+    -fx-font-size: 18;
+}
+.wordCount:fail {
+    -fx-font-weight: bold;
+}
+.columnSelectionBoxScrollPane {
+    -fx-max-height: 100;
+    -fx-min-height: 20;
+    -fx-background-color: transparent;
+}
+.buttonKnownIcon, .buttonUnknownIcon {
+    -fx-font-size: 30;
+}
+.buttonUnseenIcon {
+    -fx-font-size: 40;
+}
+.buttonNoteIcon {
+    -fx-font-size: 40;
+}
+.buttonUnseen, .buttonNote, .buttonSearchClose, .buttonSearchUp, .buttonSearchDown {
+    -fx-background-color: transparent;
+    -fx-background-insets: 0;
+}
+.buttonSearchCloseIcon {
+    -fx-font-size: 15;
+}
+.buttonSearchUpIcon, .buttonSearchDownIcon {
+    -fx-font-size: 15;
+}
+.buttonEditIcon, .buttonDeleteIcon {
+    -fx-font-size: 17;
+}
+.searchBoxLabel {
+    -fx-padding: 0 2 0 7;
+}
+.searchBoxLabelIcon {
+    -fx-font-size: 14;
+}
+.noteEditor {
+    -fx-padding: 10;
+}
+.noteEditor TextArea {
+    -fx-pref-width: 1000;
+    -fx-pref-height: 400;
+}
+.wordUse {
+    -fx-font-weight: bold;
+}
