@@ -8,7 +8,7 @@ plugins {
 
 dependencies {
     api 'org.apache.commons:commons-lang3:3.12.0'
-    api 'com.fasterxml.jackson.core:jackson-databind:2.12.4'
+    api 'com.fasterxml.jackson.core:jackson-databind:2.13.0'
     api 'org.slf4j:slf4j-api:1.7.32'
     api 'org.slf4j:jul-to-slf4j:1.7.32'
 
