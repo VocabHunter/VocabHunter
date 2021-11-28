@@ -26,18 +26,12 @@ public class FilterFileModelTranslatorImpl implements FilterFileModelTranslator 
         FilterFileMode mode = model.getMode();
         Path file = model.getFile();
 
-        switch (mode) {
-            case SESSION_KNOWN:
-                return new SessionListedFile(file, false);
-            case SESSION_SEEN:
-                return new SessionListedFile(file, true);
-            case EXCEL:
-                return new ExcelListedFile(file, model.getColumns());
-            case DOCUMENT:
-                return new DocumentListedFile(file);
-            default:
-                throw new VocabHunterException("Unsupported mode " + mode);
-        }
+        return switch (mode) {
+            case SESSION_KNOWN -> new SessionListedFile(file, false);
+            case SESSION_SEEN -> new SessionListedFile(file, true);
+            case EXCEL -> new ExcelListedFile(file, model.getColumns());
+            case DOCUMENT -> new DocumentListedFile(file);
+        };
     }
 
     @Override
