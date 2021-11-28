@@ -20,8 +20,6 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-import static java.util.stream.Collectors.toList;
-
 public class FilterGridModel extends AbstractFilterModel {
     public static final Set<Integer> DEFAULT_COLUMNS = Set.of(0);
 
@@ -62,8 +60,8 @@ public class FilterGridModel extends AbstractFilterModel {
 
     private List<BooleanProperty> buildColumnProperties(final Set<Integer> columns) {
         return columnIndexStream()
-            .mapToObj(i -> new SimpleBooleanProperty(columns.contains(i)))
-            .collect(toList());
+            .<BooleanProperty>mapToObj(i -> new SimpleBooleanProperty(columns.contains(i)))
+            .toList();
     }
 
     @Override

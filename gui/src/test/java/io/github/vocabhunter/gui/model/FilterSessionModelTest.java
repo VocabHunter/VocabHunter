@@ -14,7 +14,6 @@ import java.util.List;
 import java.util.stream.IntStream;
 
 import static io.github.vocabhunter.gui.model.FilterModelTestTool.*;
-import static java.util.stream.Collectors.toList;
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -127,7 +126,7 @@ public class FilterSessionModelTest {
 
     private List<MarkedWord> words(final int knownCount, final int unknownCount) {
         return IntStream.range(0, knownCount + unknownCount)
-            .mapToObj(i -> new TestMarkedWord("Word " + i, 1, i < knownCount ? WordState.KNOWN : WordState.UNKNOWN))
-            .collect(toList());
+            .<MarkedWord>mapToObj(i -> new TestMarkedWord("Word " + i, 1, i < knownCount ? WordState.KNOWN : WordState.UNKNOWN))
+            .toList();
     }
 }
