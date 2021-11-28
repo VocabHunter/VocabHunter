@@ -16,7 +16,7 @@ To get all the latest news about VocabHunter including announcements of new rele
 
 # Prerequisites
 
-You will need Java 11 (or above) to build and run VocabHunter.  The version provided by [AdoptOpenJDK](https://adoptopenjdk.net/) is an excellent choice for this.  Everything else, including Gradle, will be downloaded by the build process.
+You will need Java 17 (or above) to build and run VocabHunter.  The version provided by [Adoptium](https://adoptium.net) is an excellent choice for this.  Everything else, including Gradle, will be downloaded by the build process.
 
 # How To Run VocabHunter
 

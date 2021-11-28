@@ -34,8 +34,8 @@ subprojects {
     apply plugin: 'com.github.spotbugs'
     apply plugin: 'jacoco'
 
-    sourceCompatibility = 11
-    targetCompatibility = 11
+    sourceCompatibility = 17
+    targetCompatibility = 17
 
     repositories {
         mavenCentral()
