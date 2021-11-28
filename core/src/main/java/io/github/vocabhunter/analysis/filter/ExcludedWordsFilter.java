@@ -78,8 +78,8 @@ public class ExcludedWordsFilter implements WordFilter {
         } catch (final CompletionException e) {
             Throwable cause = e.getCause();
 
-            if (cause instanceof RuntimeException) {
-                throw (RuntimeException) cause;
+            if (cause instanceof RuntimeException runtimeCause) {
+                throw runtimeCause;
             } else {
                 throw new VocabHunterException("Failed to load filter", e);
             }
