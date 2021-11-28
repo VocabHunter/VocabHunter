@@ -16,7 +16,6 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.stream.Stream;
 
-import static java.util.stream.Collectors.toList;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
 
@@ -40,7 +39,7 @@ public class ExcludedWordsFilterTest {
             .flatMap(List::stream)
             .map(CoreTool::toLowerCase)
             .map(ExcludedWordsFilterTest::word)
-            .collect(toList());
+            .toList();
 
     private final ExecutorService executorService = Executors.newSingleThreadExecutor();
 
@@ -116,11 +115,11 @@ public class ExcludedWordsFilterTest {
         List<String> expected = lists.stream()
             .flatMap(List::stream)
             .map(CoreTool::toLowerCase)
-            .collect(toList());
+            .toList();
         List<String> actual = ANALYSIS_WORDS.stream()
             .filter(filter::isShown)
             .map(AnalysisWord::getWordIdentifier)
-            .collect(toList());
+            .toList();
 
         assertEquals(expected, actual, "Filtered words");
     }

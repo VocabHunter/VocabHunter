@@ -11,7 +11,6 @@ import java.util.List;
 import java.util.stream.Stream;
 
 import static io.github.vocabhunter.analysis.marked.WordState.*;
-import static java.util.stream.Collectors.toList;
 
 public final class TestSessionStateTool {
     private static final String DOCUMENT_NAME = "test-sample.txt";
@@ -75,7 +74,7 @@ public final class TestSessionStateTool {
         SessionWord sw = new SessionWord();
         List<Integer> lineNos = Stream.of(usedLines)
             .map(lines::indexOf)
-            .collect(toList());
+            .toList();
 
         sw.setWordIdentifier(word);
         sw.setState(state);

@@ -14,7 +14,6 @@ import java.util.function.Function;
 import java.util.function.Predicate;
 
 import static io.github.vocabhunter.gui.i18n.I18nKey.*;
-import static java.util.stream.Collectors.toList;
 
 public class Searcher<T extends SequencedWord> {
     private final I18nManager i18nManager;
@@ -33,7 +32,7 @@ public class Searcher<T extends SequencedWord> {
             Predicate<SequencedWord> matcher = matchMaker.apply(searchText);
             List<T> matches = wordList.stream()
                 .filter(matcher)
-                .collect(toList());
+                .toList();
 
             if (matches.isEmpty()) {
                 return searchResult(true, null, null, null, SEARCH_MATCH_NONE);

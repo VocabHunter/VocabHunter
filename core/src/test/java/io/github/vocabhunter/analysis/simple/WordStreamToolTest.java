@@ -7,7 +7,6 @@ package io.github.vocabhunter.analysis.simple;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -104,7 +103,7 @@ public class WordStreamToolTest {
 
     private void validate(final String line, final String... expected) {
         List<String> actual = WordStreamTool.words(line)
-            .collect(Collectors.toList());
+            .toList();
 
         assertEquals(List.of(expected), actual, "Words");
     }

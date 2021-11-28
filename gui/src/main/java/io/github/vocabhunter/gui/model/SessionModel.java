@@ -17,8 +17,6 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.TreeSet;
 
-import static java.util.stream.Collectors.toList;
-
 public final class SessionModel {
     private static final Comparator<WordModel> WORD_COMPARATOR = Comparator.comparing(WordModel::getSequenceNo);
 
@@ -66,8 +64,8 @@ public final class SessionModel {
         this.position = position;
         allWords = List.copyOf(words);
         selectedWords.addAll(words.stream()
-                .filter(w -> w.getState().equals(WordState.UNKNOWN))
-                .collect(toList()));
+            .filter(w -> w.getState().equals(WordState.UNKNOWN))
+            .toList());
 
         updateWordList(true, new MarkTool<>(words));
         currentWord = new SimpleObjectProperty<>(InitialSelectionTool.nextWord(allWords));
@@ -87,7 +85,7 @@ public final class SessionModel {
     public void processWordUpdate(final WordModel word) {
         List<String> uses = word.getLineNos().stream()
             .map(lines::get)
-            .collect(toList());
+            .toList();
 
         useList.clear();
         useList.addAll(uses);

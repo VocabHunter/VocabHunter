@@ -10,7 +10,6 @@ import io.github.vocabhunter.analysis.model.WordUse;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -160,7 +159,7 @@ public class SimpleAnalyserTest {
     private WordUse use(final String wordIdentifier, final int useCount, final LineReference... lines) {
         List<Integer> lineNos = Stream.of(lines)
             .map(LineReference::getLineNo)
-            .collect(Collectors.toList());
+            .toList();
 
         return new WordUse(wordIdentifier, useCount, lineNos);
     }

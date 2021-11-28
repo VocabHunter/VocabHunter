@@ -17,7 +17,6 @@ import java.util.Optional;
 import java.util.function.Function;
 
 import static io.github.vocabhunter.analysis.session.TestSessionStateTool.buildSession;
-import static java.util.stream.Collectors.toList;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class FormatHandlingTest {
@@ -100,10 +99,10 @@ public class FormatHandlingTest {
     private void validateMarkedWords(final List<? extends MarkedWord> expected, final List<? extends MarkedWord> actual, final Function<MarkedWord, Object> f) {
         List<Object> expectedValues = expected.stream()
             .map(f)
-            .collect(toList());
+            .toList();
         List<Object> actualValues = actual.stream()
             .map(f)
-            .collect(toList());
+            .toList();
 
         assertEquals(expectedValues, actualValues, "Values");
     }

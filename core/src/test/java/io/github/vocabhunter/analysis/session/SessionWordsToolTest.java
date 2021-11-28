@@ -15,7 +15,6 @@ import java.nio.file.Paths;
 import java.util.List;
 import java.util.function.Function;
 
-import static java.util.stream.Collectors.toList;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class SessionWordsToolTest {
@@ -46,7 +45,7 @@ public class SessionWordsToolTest {
         List<? extends MarkedWord> shownWords = markTool.getShownWords();
         List<String> actual = shownWords.stream()
             .map(MarkedWord::getWordIdentifier)
-            .collect(toList());
+            .toList();
 
         assertEquals(expected, actual, "Filtered words");
     }

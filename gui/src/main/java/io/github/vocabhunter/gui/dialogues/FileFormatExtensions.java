@@ -7,8 +7,6 @@ package io.github.vocabhunter.gui.dialogues;
 import java.util.List;
 import java.util.stream.Stream;
 
-import static java.util.stream.Collectors.toList;
-
 public final class FileFormatExtensions {
     static final List<String> EXTENSIONS_ANY_TEXT = List.of("*.txt", "*.rtf");
 
@@ -20,7 +18,7 @@ public final class FileFormatExtensions {
 
     static final List<String> EXTENSIONS_DOCUMENT = Stream.of(EXTENSIONS_ANY_TEXT, EXTENSIONS_PDF, EXTENSIONS_OFFICE, EXTENSIONS_EBOOK)
         .flatMap(List::stream)
-        .collect(toList());
+        .toList();
 
     static final List<String> EXTENSIONS_SPREADSHEET = List.of( "*.xls", "*.xlsx");
 

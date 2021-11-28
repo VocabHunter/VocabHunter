@@ -122,12 +122,12 @@ public class FilterSessionModelTest {
     private List<FilterSessionWord> filterSessionWords(final int knownCount, final int unknownCount) {
         return words(knownCount, unknownCount).stream()
             .map(FilterSessionWord::new)
-            .collect(toList());
+            .toList();
     }
 
     private List<MarkedWord> words(final int knownCount, final int unknownCount) {
         return IntStream.range(0, knownCount + unknownCount)
-                .mapToObj(i -> new TestMarkedWord("Word " + i, 1, i < knownCount ? WordState.KNOWN : WordState.UNKNOWN))
-                .collect(toList());
+            .mapToObj(i -> new TestMarkedWord("Word " + i, 1, i < knownCount ? WordState.KNOWN : WordState.UNKNOWN))
+            .collect(toList());
     }
 }

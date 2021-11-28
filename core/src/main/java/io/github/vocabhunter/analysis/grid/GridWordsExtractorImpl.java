@@ -6,7 +6,6 @@ package io.github.vocabhunter.analysis.grid;
 
 import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class GridWordsExtractorImpl implements GridWordsExtractor {
@@ -14,7 +13,7 @@ public class GridWordsExtractorImpl implements GridWordsExtractor {
     public List<String> words(final List<GridLine> lines, final Set<Integer> columns) {
         return columns.stream()
             .flatMap(i -> wordStream(lines, i))
-            .collect(Collectors.toList());
+            .toList();
     }
 
     private Stream<String> wordStream(final List<GridLine> lines, final int index) {

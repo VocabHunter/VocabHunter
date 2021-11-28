@@ -16,7 +16,6 @@ import java.net.URL;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -52,7 +51,7 @@ public class AnalysisSystemTest {
     private void validate(final String identifier, final int useCount, final int lineCount) {
         List<SessionWord> found = words.stream()
             .filter(w -> w.getWordIdentifier().equalsIgnoreCase(identifier))
-            .collect(Collectors.toList());
+            .toList();
 
         assertAll(
             () -> assertEquals(1, found.size(), "List size"),
@@ -75,7 +74,7 @@ public class AnalysisSystemTest {
                 List<Integer> orderedDistinct = lines.stream()
                     .sorted()
                     .distinct()
-                    .collect(Collectors.toList());
+                    .toList();
 
                 assertEquals(orderedDistinct, lines, "Distinct ordered lines");
             }

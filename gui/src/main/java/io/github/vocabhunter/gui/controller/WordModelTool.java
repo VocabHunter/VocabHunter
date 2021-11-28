@@ -12,7 +12,6 @@ import java.util.List;
 import java.util.stream.IntStream;
 
 import static io.github.vocabhunter.gui.common.GuiNoteTool.toGuiNote;
-import static java.util.stream.Collectors.toList;
 
 public final class WordModelTool {
     private WordModelTool() {
@@ -25,7 +24,7 @@ public final class WordModelTool {
 
         return IntStream.range(0, useCount)
             .mapToObj(n -> wordModel(n, orderedUses.get(n)))
-            .collect(toList());
+            .toList();
     }
 
     private static WordModel wordModel(final int n, final SessionWord word) {

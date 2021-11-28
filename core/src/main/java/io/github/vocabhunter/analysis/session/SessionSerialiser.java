@@ -15,7 +15,6 @@ import java.util.List;
 import java.util.function.Predicate;
 
 import static io.github.vocabhunter.analysis.session.SessionFormatVersion.*;
-import static java.util.stream.Collectors.toList;
 
 public final class SessionSerialiser {
     private SessionSerialiser() {
@@ -30,7 +29,7 @@ public final class SessionSerialiser {
         return readSessionState(file).getOrderedUses().stream()
             .filter(filter)
             .map(MarkedWord::getWordIdentifier)
-            .collect(toList());
+            .toList();
     }
 
     public static List<SessionWord> readMarkedWords(final Path file) {
@@ -74,7 +73,7 @@ public final class SessionSerialiser {
         List<SessionWord> words = original.getOrderedUses().stream()
             .map(SessionSerialiser::upgradeVersion1And2)
             .sorted(WordStreamTool.WORD_COMPARATOR)
-            .collect(toList());
+            .toList();
 
         state.setFormatVersion(FORMAT_3);
         state.setName(original.getName());
@@ -101,7 +100,7 @@ public final class SessionSerialiser {
         LineListTool<SessionWord> tool = new LineListTool<>(original.getOrderedUses(), SessionWord::getUses);
         List<SessionWord> words = original.getOrderedUses().stream()
             .map(w -> upgradeVersion3(tool, w))
-            .collect(toList());
+            .toList();
 
         state.setFormatVersion(FORMAT_4);
         state.setName(original.getName());
@@ -114,7 +113,7 @@ public final class SessionSerialiser {
     private static SessionWord upgradeVersion3(final LineListTool<SessionWord> tool, final SessionWord original) {
         List<Integer> lineNos = original.getUses().stream()
             .map(tool::getLineNo)
-            .collect(toList());
+            .toList();
         SessionWord word = new SessionWord();
 
         word.setWordIdentifier(original.getWordIdentifier());

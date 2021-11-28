@@ -10,7 +10,6 @@ import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
-import static java.util.stream.Collectors.toList;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class WordFilterTest {
@@ -67,7 +66,7 @@ public class WordFilterTest {
         List<String> actual = WORDS.stream()
             .filter(filter::isShown)
             .map(AnalysisWord::getWordIdentifier)
-            .collect(toList());
+            .toList();
 
         assertEquals(List.of(expected), actual, "Filtered words");
     }

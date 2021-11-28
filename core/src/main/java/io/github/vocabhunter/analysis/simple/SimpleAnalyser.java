@@ -19,7 +19,6 @@ import javax.inject.Singleton;
 
 import static io.github.vocabhunter.analysis.core.CoreConstants.LOCALE;
 import static java.util.stream.Collectors.groupingBy;
-import static java.util.stream.Collectors.toList;
 
 @Singleton
 public class SimpleAnalyser implements Analyser {
@@ -35,7 +34,7 @@ public class SimpleAnalyser implements Analyser {
             .collect(groupingBy(AnalysisRecord::getNormalised, new AnalysisCollector()));
         List<WordUse> uses = map.values().stream()
             .sorted(WordStreamTool.WORD_COMPARATOR)
-            .collect(toList());
+            .toList();
 
         return new AnalysisResult(name, uses, lines);
     }

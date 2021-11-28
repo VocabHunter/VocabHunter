@@ -17,8 +17,6 @@ import java.util.function.BiConsumer;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 
-import static java.util.stream.Collectors.toList;
-
 public class FileDialogueImpl implements FileDialogue {
     private final I18nManager i18nManager;
 
@@ -47,7 +45,7 @@ public class FileDialogueImpl implements FileDialogue {
         this.settingsManager = settingsManager;
         this.filters = formats.stream()
             .map(f -> f.buildFilter(i18nManager))
-            .collect(toList());
+            .toList();
         this.openFunction = openFunction;
         this.pathGetter = pathGetter;
         this.pathSetter = pathSetter;

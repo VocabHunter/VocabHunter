@@ -10,7 +10,6 @@ import java.util.function.Function;
 import java.util.stream.IntStream;
 
 import static java.util.function.Function.identity;
-import static java.util.stream.Collectors.toUnmodifiableList;
 import static java.util.stream.Collectors.toUnmodifiableMap;
 
 public class LineListTool<T> {
@@ -22,7 +21,7 @@ public class LineListTool<T> {
         lines = raw.stream()
             .flatMap(w -> extractor.apply(w).stream())
             .distinct()
-            .collect(toUnmodifiableList());
+            .toList();
         indices = IntStream.range(0, lines.size())
             .boxed()
             .collect(toUnmodifiableMap(lines::get, identity()));

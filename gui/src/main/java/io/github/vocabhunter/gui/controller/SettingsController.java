@@ -26,7 +26,6 @@ import javafx.stage.Stage;
 import java.util.List;
 import java.util.function.BooleanSupplier;
 import java.util.function.Supplier;
-import java.util.stream.Collectors;
 import javax.inject.Inject;
 
 import static io.github.vocabhunter.gui.common.FieldValueTool.*;
@@ -94,7 +93,7 @@ public class SettingsController {
 
         List<FilterFileModel> filterFiles = settings.getFilterFiles().stream()
             .map(translator::toModel)
-            .collect(Collectors.toList());
+            .toList();
 
         filterFilesModel = new FilterFileListModel(filterFiles);
         listExcludedFiles.setItems(filterFilesModel.getFiles());
@@ -163,7 +162,7 @@ public class SettingsController {
             boolean allowInitialCapitals = fieldInitialCapital.isSelected();
             List<BaseListedFile> filterFiles = filterFilesModel.getFiles().stream()
                 .map(translator::fromModel)
-                .collect(Collectors.toList());
+                .toList();
 
             FilterSettings settings = new FilterSettings(minimumLetters, minimumOccurrences, allowInitialCapitals, filterFiles);
 

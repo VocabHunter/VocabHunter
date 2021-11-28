@@ -15,7 +15,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
 import java.util.regex.Pattern;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public final class SelectionExportTool {
@@ -30,7 +29,7 @@ public final class SelectionExportTool {
             List<String> words = state.getOrderedUses().stream()
                 .filter(sessionWord -> sessionWord.getState().equals(WordState.UNKNOWN))
                 .flatMap(w -> wordLines(w, isNoteIncluded))
-                .collect(Collectors.toList());
+                .toList();
 
             Files.write(file, words);
         } catch (final IOException e) {

@@ -8,7 +8,6 @@ import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
-import static java.util.stream.Collectors.toList;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class WordUseToolTest {
@@ -60,7 +59,7 @@ public class WordUseToolTest {
     private void validate(final String use, final String... expected) {
         WordUseTool tool = new WordUseTool("and", use);
         List<String> actual = tool.stream()
-                .collect(toList());
+            .toList();
 
         assertEquals(List.of(expected), actual, "Use: " + use);
     }

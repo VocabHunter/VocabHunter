@@ -21,7 +21,6 @@ import java.util.concurrent.Executor;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.Supplier;
 
-import static java.util.stream.Collectors.toList;
 import static java.util.stream.Collectors.toSet;
 
 public class ExcludedWordsFilter implements WordFilter {
@@ -34,7 +33,7 @@ public class ExcludedWordsFilter implements WordFilter {
     public ExcludedWordsFilter(final Executor executor, final List<Supplier<Collection<String>>> excludedWordsSuppliers) {
         futures = excludedWordsSuppliers.stream()
             .map(s -> CompletableFuture.supplyAsync(s, executor))
-            .collect(toList());
+            .toList();
     }
 
     @Override

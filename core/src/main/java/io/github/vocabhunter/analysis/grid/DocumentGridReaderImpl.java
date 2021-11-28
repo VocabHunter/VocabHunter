@@ -13,8 +13,6 @@ import java.util.regex.Pattern;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
-import static java.util.stream.Collectors.toList;
-
 @Singleton
 public class DocumentGridReaderImpl implements DocumentGridReader {
     private static final Pattern SPLITTER = Pattern.compile("\\r?\\n");
@@ -37,7 +35,7 @@ public class DocumentGridReaderImpl implements DocumentGridReader {
                 .map(String::trim)
                 .map(s -> new GridCell(s, filter.test(s)))
                 .map(GridLine::new)
-                .collect(toList());
+                .toList();
         }
     }
 }

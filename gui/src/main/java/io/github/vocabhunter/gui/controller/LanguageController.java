@@ -20,8 +20,6 @@ import java.util.List;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
-import static java.util.stream.Collectors.toList;
-
 @Singleton
 public class LanguageController {
     private static final String STYLE_BUTTON = "languageButton";
@@ -78,7 +76,7 @@ public class LanguageController {
     private void initialiseButtons() {
         List<Button> buttons = Arrays.stream(SupportedLocale.values())
             .map(this::button)
-            .collect(toList());
+            .toList();
 
         boxLanguageButtons.getChildren().addAll(buttons);
     }

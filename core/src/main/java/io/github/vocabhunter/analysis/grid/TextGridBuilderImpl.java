@@ -11,8 +11,6 @@ import java.util.Map;
 import java.util.TreeMap;
 import java.util.stream.IntStream;
 
-import static java.util.stream.Collectors.toList;
-
 public class TextGridBuilderImpl implements TextGridBuilder {
     @Override
     public TextGrid build(final List<GridLine> lines) {
@@ -20,7 +18,7 @@ public class TextGridBuilderImpl implements TextGridBuilder {
         Map<Integer, Integer> counts = countMap(normalised);
         List<GridColumn> columns = counts.values().stream()
             .map(GridColumn::new)
-            .collect(toList());
+            .toList();
 
         return new TextGrid(normalised, columns);
     }
@@ -28,7 +26,7 @@ public class TextGridBuilderImpl implements TextGridBuilder {
     private List<GridLine> normalise(final List<GridLine> lines) {
         List<GridLine> normalised = lines.stream()
             .map(this::normalise)
-            .collect(toList());
+            .toList();
         int last = CoreTool.findLast(normalised, l -> !l.getCells().isEmpty())
             .orElse(-1) + 1;
 

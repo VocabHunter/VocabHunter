@@ -17,8 +17,6 @@ import java.util.stream.IntStream;
 import java.util.stream.StreamSupport;
 import javax.inject.Singleton;
 
-import static java.util.stream.Collectors.toList;
-
 @Singleton
 public class ExcelGridReaderImpl implements ExcelGridReader {
     @Override
@@ -29,7 +27,7 @@ public class ExcelGridReaderImpl implements ExcelGridReader {
 
             return StreamSupport.stream(sheet.spliterator(), false)
                 .map(r -> row(r, filter, dataFormatter))
-                .collect(toList());
+                .toList();
         } catch (final IOException e) {
             throw new VocabHunterException("Unable to read spreadsheet " + file, e);
         }
@@ -39,7 +37,7 @@ public class ExcelGridReaderImpl implements ExcelGridReader {
         List<GridCell> cells = IntStream.range(0, row.getLastCellNum())
             .mapToObj(i -> row.getCell(i, MissingCellPolicy.RETURN_BLANK_AS_NULL))
             .map(c -> cell(c, filter, dataFormatter))
-            .collect(toList());
+            .toList();
 
         return new GridLine(cells);
     }

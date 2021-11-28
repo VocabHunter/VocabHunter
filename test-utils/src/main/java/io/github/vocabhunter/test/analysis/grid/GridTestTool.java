@@ -15,8 +15,6 @@ import java.nio.file.Paths;
 import java.util.List;
 import java.util.stream.IntStream;
 
-import static java.util.stream.Collectors.toList;
-
 public final class GridTestTool {
     private GridTestTool() {
         // Prevent instantiation - all members are static
@@ -72,7 +70,7 @@ public final class GridTestTool {
     private static List<GridColumn> columns(final int... columns) {
         return IntStream.of(columns)
             .mapToObj(GridColumn::new)
-            .collect(toList());
+            .toList();
     }
 
     public static GridCell acceptedCell(final String content) {

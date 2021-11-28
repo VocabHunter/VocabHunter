@@ -37,8 +37,6 @@ import java.util.Map;
 import java.util.stream.IntStream;
 import javax.inject.Inject;
 
-import static java.util.stream.Collectors.toList;
-
 public class FilterGridController extends AbstractFilterController<FilterGridModel> {
     private static final int MAX_COLUMNS_WITHOUT_SCROLL = 3;
 
@@ -163,7 +161,7 @@ public class FilterGridController extends AbstractFilterController<FilterGridMod
     private List<CheckBox> buildAndBindCheckBoxes(final FilterGridModel filterModel) {
         return IntStream.range(0, filterModel.getColumnCount())
             .mapToObj(i -> buildAndBindCheckBox(filterModel, i))
-            .collect(toList());
+            .toList();
     }
 
     private CheckBox buildAndBindCheckBox(final FilterGridModel filterModel, final int columnNo) {
@@ -181,7 +179,7 @@ public class FilterGridController extends AbstractFilterController<FilterGridMod
     private List<TableColumn<GridLine, GridCell>> buildColumns(final FilterGridModel filterModel) {
         return IntStream.range(0, filterModel.getColumnCount())
             .mapToObj(i -> buildColumn(filterModel, i))
-            .collect(toList());
+            .toList();
     }
 
     private TableColumn<GridLine, GridCell> buildColumn(final FilterGridModel filterModel, final int index) {

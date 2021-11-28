@@ -11,9 +11,11 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
-import java.util.*;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Set;
 import java.util.function.Function;
-import java.util.stream.Collectors;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class SessionState {
@@ -33,8 +35,8 @@ public class SessionState {
         this.name = model.getName();
 
         orderedUses = model.getOrderedUses().stream()
-                .map(SessionWord::new)
-                .collect(Collectors.toUnmodifiableList());
+            .map(SessionWord::new)
+            .toList();
         lines = List.copyOf(model.getLines());
     }
 
@@ -128,8 +130,8 @@ public class SessionState {
 
     private static Function<SessionWord, List<?>> extractor(final List<String> lhsLines) {
         return w -> w.getLineNos().stream()
-                    .map(lhsLines::get)
-                    .collect(Collectors.toList());
+            .map(lhsLines::get)
+            .toList();
     }
 
     @Override
