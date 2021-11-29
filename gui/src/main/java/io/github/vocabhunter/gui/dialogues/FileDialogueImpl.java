@@ -86,11 +86,11 @@ public class FileDialogueImpl implements FileDialogue {
 
     @Override
     public Path getSelectedFile() {
-        return selected.getFile();
+        return selected.file();
     }
 
     @Override
     public FileFormatType getFileFormatType() {
-        return selected.getType();
+        return selected.type();
     }
 }
