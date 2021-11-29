@@ -29,10 +29,10 @@ public class EnvironmentManagerImpl implements EnvironmentManager {
             Screen screen = screens.get(0);
             Rectangle2D bounds = screen.getVisualBounds();
 
-            if (placement.isPositioned()) {
-                return bounds.contains(placement.getX(), placement.getY(), placement.getWidth(), placement.getHeight());
+            if (placement.positioned()) {
+                return bounds.contains(placement.x(), placement.y(), placement.width(), placement.height());
             } else {
-                return bounds.getWidth() >= placement.getWidth() && bounds.getHeight() >= placement.getHeight();
+                return bounds.getWidth() >= placement.width() && bounds.getHeight() >= placement.height();
             }
         } else {
             return false;
@@ -40,10 +40,10 @@ public class EnvironmentManagerImpl implements EnvironmentManager {
     }
 
     private Rectangle2D rectangle(final Placement placement) {
-        if (placement.isPositioned()) {
-            return new Rectangle2D(placement.getX(), placement.getY(), placement.getWidth(), placement.getHeight());
+        if (placement.positioned()) {
+            return new Rectangle2D(placement.x(), placement.y(), placement.width(), placement.height());
         } else {
-            return new Rectangle2D(0, 0, placement.getWidth(), placement.getHeight());
+            return new Rectangle2D(0, 0, placement.width(), placement.height());
         }
     }
 

@@ -98,11 +98,11 @@ public class MainStageHandler {
     private void positionPrincipalScene() {
         Placement placement = placementManager.getMainWindow();
 
-        stage.setWidth(placement.getWidth());
-        stage.setHeight(placement.getHeight());
-        if (placement.isPositioned()) {
-            stage.setX(placement.getX());
-            stage.setY(placement.getY());
+        stage.setWidth(placement.width());
+        stage.setHeight(placement.height());
+        if (placement.positioned()) {
+            stage.setX(placement.x());
+            stage.setY(placement.y());
         } else {
             stage.centerOnScreen();
         }

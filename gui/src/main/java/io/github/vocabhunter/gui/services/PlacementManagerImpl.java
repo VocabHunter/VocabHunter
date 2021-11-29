@@ -41,8 +41,8 @@ public class PlacementManagerImpl implements PlacementManager {
 
     private Placement defaultWindowPlacement() {
         Placement screenSize = environmentManager.getScreenSize();
-        double width = screenSize.getWidth() * WINDOW_SIZE_FACTOR;
-        double height = screenSize.getHeight() * WINDOW_SIZE_FACTOR;
+        double width = screenSize.width() * WINDOW_SIZE_FACTOR;
+        double height = screenSize.height() * WINDOW_SIZE_FACTOR;
 
         return new Placement(width, height);
     }
