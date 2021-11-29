@@ -31,7 +31,7 @@ public class SimpleAnalyser implements Analyser {
             .parallel()
             .boxed()
             .flatMap(i -> lineRecords(lines, i))
-            .collect(groupingBy(AnalysisRecord::getNormalised, new AnalysisCollector()));
+            .collect(groupingBy(AnalysisRecord::normalised, new AnalysisCollector()));
         List<WordUse> uses = map.values().stream()
             .sorted(WordStreamTool.WORD_COMPARATOR)
             .toList();

@@ -18,11 +18,11 @@ public class MutableWordUse {
 
     public void accumulate(final AnalysisRecord record) {
         if (wordIdentifier == null) {
-            wordIdentifier = record.getIdentifier();
+            wordIdentifier = record.identifier();
         } else {
-            wordIdentifier = PreferredFormTool.preferredForm(wordIdentifier, record.getIdentifier());
+            wordIdentifier = PreferredFormTool.preferredForm(wordIdentifier, record.identifier());
         }
-        lineNos.add(record.getLine());
+        lineNos.add(record.line());
     }
 
     public MutableWordUse combine(final MutableWordUse that) {
