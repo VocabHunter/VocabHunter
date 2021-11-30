@@ -13,7 +13,6 @@ import io.github.vocabhunter.gui.model.FilterFileMode;
 import io.github.vocabhunter.gui.model.FilterFileModel;
 
 import java.nio.file.Path;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 import java.util.function.Function;
@@ -46,13 +45,11 @@ public class FilterFileModelTranslatorImpl implements FilterFileModelTranslator 
     }
 
     private static Map<Class<?>, Function<BaseListedFile, FilterFileModel>> buildModeMap() {
-        Map<Class<?>, Function<BaseListedFile, FilterFileModel>> map = new HashMap<>();
-
-        map.put(SessionListedFile.class, FilterFileModelTranslatorImpl::translateSession);
-        map.put(ExcelListedFile.class, FilterFileModelTranslatorImpl::translateExcel);
-        map.put(DocumentListedFile.class, FilterFileModelTranslatorImpl::translateDocument);
-
-        return map;
+        return Map.of(
+            SessionListedFile.class, FilterFileModelTranslatorImpl::translateSession,
+            ExcelListedFile.class, FilterFileModelTranslatorImpl::translateExcel,
+            DocumentListedFile.class, FilterFileModelTranslatorImpl::translateDocument
+        );
     }
 
     private static FilterFileModel translateSession(final BaseListedFile baseListedFile) {
