@@ -27,16 +27,16 @@ dependencies {
     implementation ('com.gluonhq:ignite-guice:1.0.2') {
         exclude group: 'com.google.inject', module: 'guice'
     }
-    implementation 'com.google.inject:guice:5.0.1'
-    implementation 'org.controlsfx:controlsfx:11.1.0'
+    implementation 'com.google.inject:guice:5.1.0'
+    implementation 'org.controlsfx:controlsfx:11.1.2'
 
     // This is required for the conditional logic in the logback setup
-    runtimeOnly 'org.codehaus.janino:janino:3.1.6'
+    runtimeOnly 'org.codehaus.janino:janino:3.1.9'
 
     testImplementation project(':test-utils')
 
     testImplementation 'org.testfx:testfx-junit5:4.0.16-alpha'
-    testImplementation 'ch.qos.logback:logback-classic:1.2.7'
+    testImplementation 'ch.qos.logback:logback-classic:1.4.5'
 
     testRuntimeOnly 'org.testfx:openjfx-monocle:jdk-12.0.1+2'
 }

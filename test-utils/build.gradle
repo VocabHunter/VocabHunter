@@ -5,7 +5,7 @@
 dependencies {
     implementation project(':core')
     implementation 'com.github.spotbugs:spotbugs-annotations:4.2.3'
-    implementation 'org.junit.jupiter:junit-jupiter:5.8.1'
+    implementation 'org.junit.jupiter:junit-jupiter:5.9.2'
     implementation 'org.apache.commons:commons-lang3:3.12.0'
     implementation 'commons-io:commons-io:2.11.0'
 }
