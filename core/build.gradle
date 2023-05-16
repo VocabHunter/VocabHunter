@@ -15,7 +15,7 @@ dependencies {
     implementation 'commons-io:commons-io:2.11.0'
     implementation 'org.apache.tika:tika-core:2.8.0'
     implementation 'org.apache.tika:tika-parsers-standard-package:2.8.0'
-    implementation 'com.github.spotbugs:spotbugs-annotations:4.2.3'
+    implementation 'com.github.spotbugs:spotbugs-annotations:4.7.3'
     implementation 'javax.inject:javax.inject:1'
 
     testImplementation project(':test-utils')

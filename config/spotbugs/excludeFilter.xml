@@ -4,6 +4,6 @@
   -->
 
 <FindBugsFilter>
-    <!-- TODO Fix SpotBugs problem -->
-    <Bug pattern="RCN_REDUNDANT_NULLCHECK_OF_NONNULL_VALUE"/>
+    <Bug pattern="EI_EXPOSE_REP"/>
+    <Bug pattern="EI_EXPOSE_REP2"/>
 </FindBugsFilter>
