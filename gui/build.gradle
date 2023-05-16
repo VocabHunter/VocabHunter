@@ -24,7 +24,7 @@ processResources {
 
 dependencies {
     implementation project(':core')
-    implementation ('com.gluonhq:ignite-guice:1.0.2') {
+    implementation ('com.gluonhq:ignite-guice:1.2.2') {
         exclude group: 'com.google.inject', module: 'guice'
     }
     implementation 'com.google.inject:guice:5.1.0'
