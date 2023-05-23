@@ -45,7 +45,7 @@ javafx {
     modules = [
         'javafx.controls', 'javafx.fxml'
     ]
-    version = '13.0.2'
+    version = '17.0.2'
 }
 
 test {
