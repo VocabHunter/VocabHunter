@@ -22,7 +22,7 @@ allprojects {
 
 wrapper {
     description 'Setup the Gradle wrapper'
-    gradleVersion = '7.4.2'
+    gradleVersion = '8.1.1'
     distributionUrl = "https://services.gradle.org/distributions/gradle-${gradleVersion}-all.zip"
 }
 
