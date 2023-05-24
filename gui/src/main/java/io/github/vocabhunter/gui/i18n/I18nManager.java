@@ -9,7 +9,7 @@ import javafx.beans.binding.StringExpression;
 import javafx.beans.value.ObservableValue;
 
 public interface I18nManager extends I18nBundleProvider {
-    void setupLocale(final SupportedLocale locale);
+    void setupLocale(SupportedLocale locale);
 
     String text(I18nKey key, Object... arguments);
 

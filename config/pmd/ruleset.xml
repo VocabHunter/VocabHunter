@@ -59,13 +59,14 @@
     </rule>
 
     <rule ref="category/java/errorprone.xml">
-        <exclude name="BeanMembersShouldSerialize"/>
         <exclude name="DataflowAnomalyAnalysis"/>
         <exclude name="AvoidFieldNameMatchingMethodName"/>
         <exclude name="AvoidDuplicateLiterals"/>
         <exclude name="AvoidLiteralsInIfCondition"/>
         <exclude name="NullAssignment"/>
         <exclude name="MissingSerialVersionUID"/>
+        <exclude name="TestClassWithoutTestCases"/>
+        <exclude name="ReturnEmptyCollectionRatherThanNull"/>
     </rule>
 
     <rule ref="category/java/multithreading.xml">

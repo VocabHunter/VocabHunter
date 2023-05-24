@@ -67,5 +67,5 @@ public abstract class AbstractFilterController<T extends AbstractFilterModel> {
 
     protected abstract void initialiseInternal(FilterFileModel parentModel, T filterModel);
 
-    protected abstract void exit(Stage stage, T filterModel, final Runnable onSave, FilterFileModel parentModel, boolean isSaveRequested);
+    protected abstract void exit(Stage stage, T filterModel, Runnable onSave, FilterFileModel parentModel, boolean isSaveRequested);
 }

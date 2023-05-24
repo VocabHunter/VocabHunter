@@ -11,15 +11,15 @@ import io.github.vocabhunter.gui.i18n.I18nKey;
 import java.nio.file.Path;
 
 public interface GuiTestValidator {
-    void validateWebPage(final I18nKey key);
+    void validateWebPage(I18nKey key);
 
-    void validateSavedSession(Path file, final String name);
+    void validateSavedSession(Path file, String name);
 
     void validateExportFile(Path file, String... lines);
 
     void validateClipboardContent(String expectedText);
 
-    void setUpFileDialogue(FileDialogueType dialogueType, final FileFormatType fileType, String file);
+    void setUpFileDialogue(FileDialogueType dialogueType, FileFormatType fileType, String file);
 
-    void setUpFileDialogue(FileDialogueType dialogueType, final FileFormatType fileType, Path file);
+    void setUpFileDialogue(FileDialogueType dialogueType, FileFormatType fileType, Path file);
 }

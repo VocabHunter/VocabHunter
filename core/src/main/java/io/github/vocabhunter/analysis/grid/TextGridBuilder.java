@@ -8,5 +8,5 @@ import java.util.List;
 
 @FunctionalInterface
 public interface TextGridBuilder {
-    TextGrid build(final List<GridLine> lines);
+    TextGrid build(List<GridLine> lines);
 }
