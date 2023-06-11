@@ -22,7 +22,7 @@ In addition to the JDK, you will need "FakeRoot" and "BinUtils" installed on you
 
 You can create the installable bundle using the following command on Linux and Mac:
 ~~~
-$ ./gradlew clean createBundle
+./gradlew clean createBundle
 ~~~
 
 On Windows, the command is:

@@ -22,7 +22,7 @@ You will need Java 17 (or above) to build and run VocabHunter.  The version prov
 
 Go to the [download](https://vocabhunter.github.io/download/) page of the website to get the latest release of VocabHunter.  Alternatively, you can run the development version from the command line as follows:
 ~~~
-$ ./gradlew :gui:run
+./gradlew :gui:run
 ~~~
 
 # How to Use VocabHunter
@@ -33,14 +33,14 @@ Do you want to use VocabHunter to help you to learn a foreign language?  You'll 
 
 You can build the entire system with the following command:
 ~~~
-$ ./gradlew clean build
+./gradlew clean build
 ~~~
 
 # How To Run The GUI Test
 
 By default the GUI test runs as part of the standard Gradle build, in headless mode.  If you'd like to run the GUI test in a non-headless mode so that you can see what is happening, use the following command:
 ~~~
-$ ./gradlew :gui:test --tests io.github.vocabhunter.gui.main.GuiTest --rerun-tasks -PnoHeadless
+./gradlew :gui:test --tests io.github.vocabhunter.gui.main.GuiTest --rerun-tasks -PnoHeadless
 ~~~
 
 # How to Build The Installable Bundle
