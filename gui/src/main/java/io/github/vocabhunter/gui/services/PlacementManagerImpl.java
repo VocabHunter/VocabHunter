@@ -7,10 +7,10 @@ package io.github.vocabhunter.gui.services;
 import io.github.vocabhunter.gui.common.Placement;
 import io.github.vocabhunter.gui.settings.SettingsManager;
 import io.github.vocabhunter.gui.settings.WindowSettings;
+import jakarta.inject.Inject;
+import jakarta.inject.Singleton;
 
 import java.util.Optional;
-import javax.inject.Inject;
-import javax.inject.Singleton;
 
 @Singleton
 public class PlacementManagerImpl implements PlacementManager {

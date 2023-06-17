@@ -8,10 +8,9 @@ import io.github.vocabhunter.gui.i18n.I18nKey;
 import io.github.vocabhunter.gui.i18n.I18nManager;
 import io.github.vocabhunter.gui.model.PositionModel;
 import io.github.vocabhunter.gui.model.ProgressModel;
+import jakarta.inject.Inject;
+import jakarta.inject.Singleton;
 import javafx.beans.value.ObservableStringValue;
-
-import javax.inject.Inject;
-import javax.inject.Singleton;
 
 import static javafx.beans.binding.Bindings.createStringBinding;
 

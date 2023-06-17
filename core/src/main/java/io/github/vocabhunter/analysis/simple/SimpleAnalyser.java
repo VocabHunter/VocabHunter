@@ -7,6 +7,7 @@ package io.github.vocabhunter.analysis.simple;
 import io.github.vocabhunter.analysis.model.Analyser;
 import io.github.vocabhunter.analysis.model.AnalysisResult;
 import io.github.vocabhunter.analysis.model.WordUse;
+import jakarta.inject.Singleton;
 
 import java.text.BreakIterator;
 import java.util.ArrayList;
@@ -15,7 +16,6 @@ import java.util.Map;
 import java.util.regex.Pattern;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
-import javax.inject.Singleton;
 
 import static io.github.vocabhunter.analysis.core.CoreConstants.LOCALE;
 import static java.util.stream.Collectors.groupingBy;

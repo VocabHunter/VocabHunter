@@ -4,11 +4,12 @@
 
 package io.github.vocabhunter.analysis.grid;
 
+import jakarta.inject.Inject;
+
 import java.nio.file.Path;
 import java.util.List;
 import java.util.function.Predicate;
 import java.util.regex.Pattern;
-import javax.inject.Inject;
 
 public class TextGridManagerImpl implements TextGridManager {
     private static final Pattern FILTER_PATTERN = Pattern.compile("[^\\s]+\\s+[^\\s]+");

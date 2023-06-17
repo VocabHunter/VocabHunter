@@ -6,9 +6,8 @@ package io.github.vocabhunter.gui.common;
 
 import io.github.vocabhunter.gui.i18n.I18nKey;
 import io.github.vocabhunter.gui.i18n.I18nManager;
-
-import javax.inject.Inject;
-import javax.inject.Singleton;
+import jakarta.inject.Inject;
+import jakarta.inject.Singleton;
 
 @Singleton
 public class ColumnNameTool {

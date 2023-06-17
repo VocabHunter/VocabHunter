@@ -10,9 +10,8 @@ import io.github.vocabhunter.analysis.filter.FilterBuilder;
 import io.github.vocabhunter.analysis.filter.WordFilter;
 import io.github.vocabhunter.analysis.grid.FilterFileWordsExtractor;
 import io.github.vocabhunter.analysis.settings.BaseListedFile;
-
-import javax.inject.Inject;
-import javax.inject.Singleton;
+import jakarta.inject.Inject;
+import jakarta.inject.Singleton;
 
 @Singleton
 public class FilterSettingsTool {

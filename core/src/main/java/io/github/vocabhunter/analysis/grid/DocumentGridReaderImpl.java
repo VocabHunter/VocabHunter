@@ -5,13 +5,13 @@
 package io.github.vocabhunter.analysis.grid;
 
 import io.github.vocabhunter.analysis.file.TextReader;
+import jakarta.inject.Inject;
+import jakarta.inject.Singleton;
 
 import java.nio.file.Path;
 import java.util.List;
 import java.util.function.Predicate;
 import java.util.regex.Pattern;
-import javax.inject.Inject;
-import javax.inject.Singleton;
 
 @Singleton
 public class DocumentGridReaderImpl implements DocumentGridReader {

@@ -7,11 +7,11 @@ package io.github.vocabhunter.analysis.session;
 import io.github.vocabhunter.analysis.core.VocabHunterException;
 import io.github.vocabhunter.analysis.marked.MarkedWord;
 import io.github.vocabhunter.analysis.marked.WordState;
+import jakarta.inject.Singleton;
 
 import java.nio.file.Path;
 import java.util.List;
 import java.util.function.Function;
-import javax.inject.Singleton;
 
 import static io.github.vocabhunter.analysis.session.FileNameTool.filename;
 

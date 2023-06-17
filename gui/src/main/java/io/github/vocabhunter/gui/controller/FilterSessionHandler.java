@@ -7,8 +7,7 @@ package io.github.vocabhunter.gui.controller;
 import io.github.vocabhunter.gui.dialogues.DialogueTool;
 import io.github.vocabhunter.gui.view.FxmlHandler;
 import io.github.vocabhunter.gui.view.ViewFxml;
-
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 
 import static io.github.vocabhunter.gui.i18n.I18nKey.FILTER_SESSION_WINDOW_TITLE;
 

@@ -27,7 +27,6 @@ dependencies {
     implementation ('com.gluonhq:ignite-guice:1.2.2') {
         exclude group: 'com.google.inject', module: 'guice'
     }
-    implementation 'com.google.inject:guice:5.1.0'
     implementation 'org.controlsfx:controlsfx:11.1.2'
 
     // This is required for the conditional logic in the logback setup

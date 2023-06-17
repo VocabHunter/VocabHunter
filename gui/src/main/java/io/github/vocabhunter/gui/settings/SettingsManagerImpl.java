@@ -6,6 +6,7 @@ package io.github.vocabhunter.gui.settings;
 
 import io.github.vocabhunter.analysis.settings.BaseSettingsManager;
 import io.github.vocabhunter.gui.i18n.SupportedLocale;
+import jakarta.inject.Singleton;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -13,7 +14,6 @@ import java.nio.file.Paths;
 import java.util.Optional;
 import java.util.function.BiConsumer;
 import java.util.function.Function;
-import javax.inject.Singleton;
 
 @Singleton
 public class SettingsManagerImpl extends BaseSettingsManager<VocabHunterSettings> implements SettingsManager {

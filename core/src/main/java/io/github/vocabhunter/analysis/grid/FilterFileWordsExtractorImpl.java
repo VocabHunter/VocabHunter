@@ -10,6 +10,8 @@ import io.github.vocabhunter.analysis.settings.BaseListedFile;
 import io.github.vocabhunter.analysis.settings.DocumentListedFile;
 import io.github.vocabhunter.analysis.settings.ExcelListedFile;
 import io.github.vocabhunter.analysis.settings.SessionListedFile;
+import jakarta.inject.Inject;
+import jakarta.inject.Singleton;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -20,8 +22,6 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Function;
-import javax.inject.Inject;
-import javax.inject.Singleton;
 
 import static io.github.vocabhunter.analysis.session.FileNameTool.filename;
 import static java.util.Collections.unmodifiableMap;

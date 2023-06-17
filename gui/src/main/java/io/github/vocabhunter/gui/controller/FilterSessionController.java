@@ -16,6 +16,7 @@ import io.github.vocabhunter.gui.model.FilterSessionModel;
 import io.github.vocabhunter.gui.model.FilterSessionWord;
 import io.github.vocabhunter.gui.view.FilterSessionStateTableCell;
 import io.github.vocabhunter.gui.view.FilterSessionWordTableCell;
+import jakarta.inject.Inject;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.scene.control.RadioButton;
@@ -28,7 +29,6 @@ import javafx.util.Callback;
 
 import java.nio.file.Path;
 import java.util.List;
-import javax.inject.Inject;
 
 public class FilterSessionController extends AbstractFilterController<FilterSessionModel> {
     private static final Callback<CellDataFeatures<FilterSessionWord, FilterSessionWord>, ObservableValue<FilterSessionWord>> WORD_SELF_FACTORY

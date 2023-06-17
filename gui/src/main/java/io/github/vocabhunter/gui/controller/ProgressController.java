@@ -7,6 +7,7 @@ package io.github.vocabhunter.gui.controller;
 import io.github.vocabhunter.gui.i18n.I18nKey;
 import io.github.vocabhunter.gui.i18n.I18nManager;
 import io.github.vocabhunter.gui.model.ProgressModel;
+import jakarta.inject.Inject;
 import javafx.beans.binding.StringExpression;
 import javafx.beans.value.ObservableNumberValue;
 import javafx.collections.FXCollections;
@@ -14,8 +15,6 @@ import javafx.fxml.FXML;
 import javafx.scene.chart.PieChart;
 import javafx.scene.chart.PieChart.Data;
 import javafx.scene.control.Label;
-
-import javax.inject.Inject;
 
 import static io.github.vocabhunter.gui.i18n.I18nKey.*;
 

@@ -4,9 +4,10 @@
 
 package io.github.vocabhunter.analysis.settings;
 
+import jakarta.inject.Singleton;
+
 import java.nio.file.Path;
 import java.util.List;
-import javax.inject.Singleton;
 
 @Singleton
 public class FileListManagerImpl extends BaseSettingsManager<FileList> implements FileListManager {

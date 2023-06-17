@@ -8,10 +8,9 @@ import io.github.vocabhunter.gui.common.ControllerAndView;
 import io.github.vocabhunter.gui.dialogues.DialogueTool;
 import io.github.vocabhunter.gui.view.FxmlHandler;
 import io.github.vocabhunter.gui.view.ViewFxml;
+import jakarta.inject.Inject;
 import javafx.scene.Parent;
 import javafx.stage.Stage;
-
-import javax.inject.Inject;
 
 import static io.github.vocabhunter.gui.i18n.I18nKey.FILTER_WINDOW_TITLE;
 

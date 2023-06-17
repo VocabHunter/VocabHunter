@@ -7,6 +7,8 @@ package io.github.vocabhunter.gui.controller;
 import io.github.vocabhunter.gui.i18n.I18nKey;
 import io.github.vocabhunter.gui.i18n.I18nManager;
 import io.github.vocabhunter.gui.i18n.SupportedLocale;
+import jakarta.inject.Inject;
+import jakarta.inject.Singleton;
 import javafx.animation.FadeTransition;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
@@ -17,8 +19,6 @@ import javafx.util.Duration;
 
 import java.util.Arrays;
 import java.util.List;
-import javax.inject.Inject;
-import javax.inject.Singleton;
 
 @Singleton
 public class LanguageController {

@@ -7,14 +7,13 @@ package io.github.vocabhunter.gui.controller;
 import io.github.vocabhunter.gui.common.ControllerAndView;
 import io.github.vocabhunter.gui.view.FxmlHandler;
 import io.github.vocabhunter.gui.view.ViewFxml;
+import jakarta.inject.Inject;
+import jakarta.inject.Singleton;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-
-import javax.inject.Inject;
-import javax.inject.Singleton;
 
 @Singleton
 public class AboutHandler {

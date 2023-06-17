@@ -7,6 +7,8 @@ package io.github.vocabhunter.gui.services;
 import io.github.vocabhunter.analysis.core.ThreadPoolTool;
 import io.github.vocabhunter.gui.i18n.I18nKey;
 import io.github.vocabhunter.gui.i18n.I18nManager;
+import jakarta.inject.Inject;
+import jakarta.inject.Singleton;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -14,8 +16,6 @@ import java.awt.*;
 import java.net.URI;
 import java.util.concurrent.Executor;
 import java.util.function.Consumer;
-import javax.inject.Inject;
-import javax.inject.Singleton;
 
 @Singleton
 public class WebPageToolImpl implements WebPageTool {

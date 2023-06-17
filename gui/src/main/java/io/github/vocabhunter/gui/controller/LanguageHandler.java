@@ -9,13 +9,12 @@ import io.github.vocabhunter.gui.i18n.SupportedLocale;
 import io.github.vocabhunter.gui.model.MainModel;
 import io.github.vocabhunter.gui.settings.SettingsManager;
 import io.github.vocabhunter.gui.status.StatusManager;
+import jakarta.inject.Inject;
+import jakarta.inject.Singleton;
 import javafx.scene.control.Button;
 import javafx.scene.control.MenuItem;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import javax.inject.Inject;
-import javax.inject.Singleton;
 
 @Singleton
 public class LanguageHandler {

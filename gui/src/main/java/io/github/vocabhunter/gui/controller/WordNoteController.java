@@ -8,14 +8,13 @@ import io.github.vocabhunter.gui.common.WordNoteTool;
 import io.github.vocabhunter.gui.i18n.I18nManager;
 import io.github.vocabhunter.gui.model.SessionModel;
 import io.github.vocabhunter.gui.model.WordModel;
+import jakarta.inject.Inject;
+import jakarta.inject.Singleton;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.stage.Stage;
-
-import javax.inject.Inject;
-import javax.inject.Singleton;
 
 import static io.github.vocabhunter.gui.i18n.I18nKey.NOTE_TITLE;
 

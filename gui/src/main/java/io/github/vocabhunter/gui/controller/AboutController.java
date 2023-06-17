@@ -9,13 +9,12 @@ import io.github.vocabhunter.gui.common.GuiConstants;
 import io.github.vocabhunter.gui.i18n.I18nKey;
 import io.github.vocabhunter.gui.i18n.I18nManager;
 import io.github.vocabhunter.gui.services.WebPageTool;
+import jakarta.inject.Inject;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
-
-import javax.inject.Inject;
 
 public class AboutController {
     private final I18nManager i18nManager;

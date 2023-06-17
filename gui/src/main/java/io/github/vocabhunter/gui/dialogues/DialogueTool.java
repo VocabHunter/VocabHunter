@@ -6,6 +6,8 @@ package io.github.vocabhunter.gui.dialogues;
 
 import io.github.vocabhunter.gui.i18n.I18nKey;
 import io.github.vocabhunter.gui.i18n.I18nManager;
+import jakarta.inject.Inject;
+import jakarta.inject.Singleton;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
@@ -15,8 +17,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.nio.file.Path;
-import javax.inject.Inject;
-import javax.inject.Singleton;
 
 import static io.github.vocabhunter.gui.i18n.I18nKey.*;
 

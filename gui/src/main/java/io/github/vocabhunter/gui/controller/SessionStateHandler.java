@@ -17,12 +17,12 @@ import io.github.vocabhunter.gui.view.FxmlHandler;
 import io.github.vocabhunter.gui.view.SessionTab;
 import io.github.vocabhunter.gui.view.SessionViewTool;
 import io.github.vocabhunter.gui.view.ViewFxml;
+import jakarta.inject.Inject;
+import jakarta.inject.Singleton;
 import javafx.scene.Node;
 import javafx.scene.layout.BorderPane;
 
 import java.util.Optional;
-import javax.inject.Inject;
-import javax.inject.Singleton;
 
 @Singleton
 public class SessionStateHandler {

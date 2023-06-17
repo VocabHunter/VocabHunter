@@ -14,6 +14,7 @@ import io.github.vocabhunter.gui.model.*;
 import io.github.vocabhunter.gui.services.FilterFileModelTranslator;
 import io.github.vocabhunter.gui.services.FilterService;
 import io.github.vocabhunter.gui.view.FilterFileCell;
+import jakarta.inject.Inject;
 import javafx.beans.property.ReadOnlyBooleanProperty;
 import javafx.beans.property.StringProperty;
 import javafx.fxml.FXML;
@@ -26,7 +27,6 @@ import javafx.stage.Stage;
 import java.util.List;
 import java.util.function.BooleanSupplier;
 import java.util.function.Supplier;
-import javax.inject.Inject;
 
 import static io.github.vocabhunter.gui.common.FieldValueTool.*;
 

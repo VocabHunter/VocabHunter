@@ -10,6 +10,8 @@ import io.github.vocabhunter.gui.model.StatusModel;
 import io.github.vocabhunter.gui.services.EnvironmentManager;
 import io.github.vocabhunter.gui.services.WebPageTool;
 import io.github.vocabhunter.gui.status.StatusManager;
+import jakarta.inject.Inject;
+import jakarta.inject.Singleton;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -19,9 +21,6 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import org.controlsfx.control.StatusBar;
-
-import javax.inject.Inject;
-import javax.inject.Singleton;
 
 import static javafx.beans.binding.Bindings.not;
 

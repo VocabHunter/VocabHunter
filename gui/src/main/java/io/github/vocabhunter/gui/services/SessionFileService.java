@@ -9,10 +9,10 @@ import io.github.vocabhunter.analysis.file.SelectionExportTool;
 import io.github.vocabhunter.analysis.session.EnrichedSessionState;
 import io.github.vocabhunter.analysis.session.SessionSerialiser;
 import io.github.vocabhunter.analysis.session.SessionState;
+import jakarta.inject.Inject;
+import jakarta.inject.Singleton;
 
 import java.nio.file.Path;
-import javax.inject.Inject;
-import javax.inject.Singleton;
 
 @Singleton
 public class SessionFileService {

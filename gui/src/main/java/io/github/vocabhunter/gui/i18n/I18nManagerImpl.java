@@ -4,6 +4,7 @@
 
 package io.github.vocabhunter.gui.i18n;
 
+import jakarta.inject.Singleton;
 import javafx.beans.binding.Bindings;
 import javafx.beans.binding.StringExpression;
 import javafx.beans.value.ObservableValue;
@@ -14,7 +15,6 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.stream.Stream;
-import javax.inject.Singleton;
 
 @Singleton
 public class I18nManagerImpl implements I18nManager {

@@ -10,6 +10,8 @@ import io.github.vocabhunter.gui.i18n.I18nManager;
 import io.github.vocabhunter.gui.model.PositionModel;
 import io.github.vocabhunter.gui.model.ProgressModel;
 import io.github.vocabhunter.gui.model.StatusModel;
+import jakarta.inject.Inject;
+import jakarta.inject.Singleton;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -18,8 +20,6 @@ import org.slf4j.LoggerFactory;
 
 import java.nio.file.Path;
 import java.util.concurrent.atomic.AtomicBoolean;
-import javax.inject.Inject;
-import javax.inject.Singleton;
 
 import static io.github.vocabhunter.gui.i18n.I18nKey.*;
 import static javafx.beans.binding.Bindings.*;

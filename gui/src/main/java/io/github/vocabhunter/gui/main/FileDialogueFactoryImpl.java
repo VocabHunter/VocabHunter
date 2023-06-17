@@ -4,17 +4,20 @@
 
 package io.github.vocabhunter.gui.main;
 
-import io.github.vocabhunter.gui.dialogues.*;
+import io.github.vocabhunter.gui.dialogues.FileDialogue;
+import io.github.vocabhunter.gui.dialogues.FileDialogueFactory;
+import io.github.vocabhunter.gui.dialogues.FileDialogueImpl;
+import io.github.vocabhunter.gui.dialogues.FileDialogueType;
 import io.github.vocabhunter.gui.i18n.I18nManager;
 import io.github.vocabhunter.gui.settings.SettingsManager;
+import jakarta.inject.Inject;
+import jakarta.inject.Singleton;
 import javafx.stage.FileChooser;
 import javafx.stage.Window;
 
 import java.util.EnumMap;
 import java.util.Map;
 import java.util.function.Function;
-import javax.inject.Inject;
-import javax.inject.Singleton;
 
 import static io.github.vocabhunter.gui.dialogues.FileDialogueType.*;
 import static io.github.vocabhunter.gui.dialogues.FileFormatType.*;

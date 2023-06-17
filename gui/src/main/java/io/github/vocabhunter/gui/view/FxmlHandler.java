@@ -7,13 +7,13 @@ package io.github.vocabhunter.gui.view;
 import io.github.vocabhunter.analysis.core.VocabHunterException;
 import io.github.vocabhunter.gui.common.ControllerAndView;
 import io.github.vocabhunter.gui.i18n.I18nManager;
+import jakarta.inject.Inject;
+import jakarta.inject.Provider;
+import jakarta.inject.Singleton;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 
 import java.io.IOException;
-import javax.inject.Inject;
-import javax.inject.Provider;
-import javax.inject.Singleton;
 
 @Singleton
 public class FxmlHandler {

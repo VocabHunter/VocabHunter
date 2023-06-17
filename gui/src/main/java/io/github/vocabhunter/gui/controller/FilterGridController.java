@@ -18,6 +18,7 @@ import io.github.vocabhunter.gui.model.FilterFileMode;
 import io.github.vocabhunter.gui.model.FilterFileModel;
 import io.github.vocabhunter.gui.model.FilterGridModel;
 import io.github.vocabhunter.gui.view.FilterGridWordTableCell;
+import jakarta.inject.Inject;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.beans.value.ObservableValue;
@@ -35,7 +36,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.IntStream;
-import javax.inject.Inject;
 
 public class FilterGridController extends AbstractFilterController<FilterGridModel> {
     private static final int MAX_COLUMNS_WITHOUT_SCROLL = 3;

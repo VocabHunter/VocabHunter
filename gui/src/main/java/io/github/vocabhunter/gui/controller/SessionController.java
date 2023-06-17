@@ -16,6 +16,7 @@ import io.github.vocabhunter.gui.model.SessionModel;
 import io.github.vocabhunter.gui.model.WordModel;
 import io.github.vocabhunter.gui.services.FilterService;
 import io.github.vocabhunter.gui.view.UseListCell;
+import jakarta.inject.Inject;
 import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
 import javafx.beans.binding.ObjectBinding;
@@ -25,8 +26,6 @@ import javafx.scene.layout.Pane;
 import org.controlsfx.control.textfield.CustomTextField;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import javax.inject.Inject;
 
 import static io.github.vocabhunter.gui.common.EventHandlerTool.combine;
 

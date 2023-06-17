@@ -23,10 +23,10 @@ import io.github.vocabhunter.gui.services.FilterFileModelTranslator;
 import io.github.vocabhunter.gui.services.FilterFileModelTranslatorImpl;
 import io.github.vocabhunter.gui.status.StatusManager;
 import io.github.vocabhunter.gui.status.StatusManagerImpl;
+import jakarta.inject.Singleton;
 
 import java.nio.file.Paths;
 import java.util.List;
-import javax.inject.Singleton;
 
 public class CoreGuiModule extends AbstractModule {
     private final List<String> args;

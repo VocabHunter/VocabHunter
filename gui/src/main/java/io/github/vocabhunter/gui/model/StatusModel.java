@@ -4,11 +4,10 @@
 
 package io.github.vocabhunter.gui.model;
 
+import jakarta.inject.Singleton;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleStringProperty;
-
-import javax.inject.Singleton;
 
 @Singleton
 public class StatusModel {

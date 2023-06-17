@@ -7,13 +7,13 @@ package io.github.vocabhunter.gui.model;
 import io.github.vocabhunter.analysis.filter.WordFilter;
 import io.github.vocabhunter.analysis.session.SessionState;
 import io.github.vocabhunter.gui.i18n.SupportedLocale;
+import jakarta.inject.Singleton;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 
 import java.nio.file.Path;
 import java.util.Optional;
-import javax.inject.Singleton;
 
 import static javafx.beans.binding.Bindings.isNotEmpty;
 

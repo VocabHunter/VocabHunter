@@ -9,11 +9,10 @@ import io.github.vocabhunter.gui.model.SessionModel;
 import io.github.vocabhunter.gui.settings.SettingsManager;
 import io.github.vocabhunter.gui.settings.WindowSettings;
 import io.github.vocabhunter.gui.status.StatusManager;
+import jakarta.inject.Inject;
+import jakarta.inject.Singleton;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
-
-import javax.inject.Inject;
-import javax.inject.Singleton;
 
 @Singleton
 public class ExitRequestHandler {

@@ -5,6 +5,7 @@
 package io.github.vocabhunter.analysis.file;
 
 import io.github.vocabhunter.analysis.core.VocabHunterException;
+import jakarta.inject.Singleton;
 import org.apache.tika.Tika;
 import org.apache.tika.exception.TikaException;
 import org.apache.tika.exception.ZeroByteFileException;
@@ -16,7 +17,6 @@ import org.slf4j.LoggerFactory;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Path;
-import javax.inject.Singleton;
 
 import static io.github.vocabhunter.analysis.session.FileNameTool.filename;
 

@@ -6,6 +6,7 @@ package io.github.vocabhunter.gui.main;
 
 import com.gluonhq.ignite.guice.GuiceContext;
 import com.google.inject.Module;
+import jakarta.inject.Inject;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.stage.Stage;
@@ -14,7 +15,6 @@ import org.slf4j.bridge.SLF4JBridgeHandler;
 import java.util.Collection;
 import java.util.List;
 import java.util.function.Consumer;
-import javax.inject.Inject;
 
 import static io.github.vocabhunter.gui.main.ExecutableLogTool.*;
 

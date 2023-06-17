@@ -10,10 +10,10 @@ import io.github.vocabhunter.gui.model.FilterSettings;
 import io.github.vocabhunter.gui.model.MainModel;
 import io.github.vocabhunter.gui.services.FilterService;
 import io.github.vocabhunter.gui.settings.SettingsManager;
+import jakarta.inject.Inject;
+import jakarta.inject.Singleton;
 
 import java.util.List;
-import javax.inject.Inject;
-import javax.inject.Singleton;
 
 @Singleton
 public class FilterHandler {

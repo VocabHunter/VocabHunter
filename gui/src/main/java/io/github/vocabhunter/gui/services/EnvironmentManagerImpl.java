@@ -5,12 +5,11 @@
 package io.github.vocabhunter.gui.services;
 
 import io.github.vocabhunter.gui.common.Placement;
+import jakarta.inject.Singleton;
 import javafx.collections.ObservableList;
 import javafx.geometry.Rectangle2D;
 import javafx.stage.Screen;
 import org.apache.commons.lang3.SystemUtils;
-
-import javax.inject.Singleton;
 
 @Singleton
 public class EnvironmentManagerImpl implements EnvironmentManager {

@@ -6,6 +6,7 @@ package io.github.vocabhunter.analysis.grid;
 
 import io.github.vocabhunter.analysis.core.CoreConstants;
 import io.github.vocabhunter.analysis.core.VocabHunterException;
+import jakarta.inject.Singleton;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.ss.usermodel.Row.MissingCellPolicy;
 
@@ -15,7 +16,6 @@ import java.util.List;
 import java.util.function.Predicate;
 import java.util.stream.IntStream;
 import java.util.stream.StreamSupport;
-import javax.inject.Singleton;
 
 @Singleton
 public class ExcelGridReaderImpl implements ExcelGridReader {

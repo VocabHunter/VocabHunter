@@ -11,6 +11,7 @@ import io.github.vocabhunter.gui.model.SessionModel;
 import io.github.vocabhunter.gui.model.WordModel;
 import io.github.vocabhunter.gui.view.FxmlHandler;
 import io.github.vocabhunter.gui.view.ViewFxml;
+import jakarta.inject.Inject;
 import javafx.beans.binding.StringBinding;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.scene.Parent;
@@ -19,8 +20,6 @@ import javafx.scene.control.TextArea;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
-
-import javax.inject.Inject;
 
 import static io.github.vocabhunter.gui.i18n.I18nKey.NOTE_WINDOW_TITLE;
 import static javafx.beans.binding.Bindings.selectString;

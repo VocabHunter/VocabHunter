@@ -14,13 +14,13 @@ import io.github.vocabhunter.gui.model.SessionModel;
 import io.github.vocabhunter.gui.services.SessionFileService;
 import io.github.vocabhunter.gui.status.GuiTask;
 import io.github.vocabhunter.gui.status.StatusManager;
+import jakarta.inject.Inject;
+import jakarta.inject.Singleton;
 import javafx.stage.Stage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.nio.file.Path;
-import javax.inject.Inject;
-import javax.inject.Singleton;
 
 @Singleton
 public class GuiFileHandler {

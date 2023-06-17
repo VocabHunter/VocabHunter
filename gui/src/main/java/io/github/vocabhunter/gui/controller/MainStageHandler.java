@@ -10,13 +10,12 @@ import io.github.vocabhunter.gui.services.ExternalEventBroker;
 import io.github.vocabhunter.gui.services.PlacementManager;
 import io.github.vocabhunter.gui.view.FxmlHandler;
 import io.github.vocabhunter.gui.view.ViewFxml;
+import jakarta.inject.Inject;
+import jakarta.inject.Singleton;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
-
-import javax.inject.Inject;
-import javax.inject.Singleton;
 
 @Singleton
 public class MainStageHandler {
