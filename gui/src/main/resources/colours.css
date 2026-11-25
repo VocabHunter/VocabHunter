@@ -187,7 +187,7 @@
     -fx-fill: yellow;
     -fx-stroke: goldenrod;
 }
-.websiteIcon *, .twitterIcon *, .githubIcon * {
+.websiteIcon *, .githubIcon * {
     -fx-fill: -fx-accent;
 }
 

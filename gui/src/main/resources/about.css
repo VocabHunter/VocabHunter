@@ -16,7 +16,7 @@
 .starIcon {
     -fx-font-size: 20;
 }
-.websiteIcon, .twitterIcon, .githubIcon {
+.websiteIcon, .githubIcon {
     -fx-font-size: 30;
 }
 .about .boxAboutLabels {
