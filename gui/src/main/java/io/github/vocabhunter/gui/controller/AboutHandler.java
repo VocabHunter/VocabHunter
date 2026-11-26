@@ -14,6 +14,7 @@ import javafx.scene.Scene;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import javafx.stage.Window;
 
 @Singleton
 public class AboutHandler {
@@ -24,18 +25,19 @@ public class AboutHandler {
         this.fxmlHandler = fxmlHandler;
     }
 
-    public void show() {
+    public void show(final Window owner) {
         Stage stage = new Stage();
         ControllerAndView<AboutController, Parent> cav = fxmlHandler.loadControllerAndView(ViewFxml.ABOUT);
         Parent root = cav.getView();
         AboutController controller = cav.getController();
 
         controller.initialise(stage);
-        setupStage(stage, root);
+        setupStage(stage, owner, root);
     }
 
-    private void setupStage(final Stage stage, final Parent root) {
+    private void setupStage(final Stage stage, final Window owner, final Parent root) {
         stage.initModality(Modality.APPLICATION_MODAL);
+        stage.initOwner(owner);
         stage.initStyle(StageStyle.UNDECORATED);
         stage.setScene(new Scene(root));
         stage.showAndWait();

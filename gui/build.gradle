@@ -39,14 +39,14 @@ dependencies {
     testImplementation 'org.testfx:testfx-junit5:4.0.16-alpha'
     testImplementation 'ch.qos.logback:logback-classic:1.4.8'
 
-    testRuntimeOnly 'org.testfx:openjfx-monocle:jdk-12.0.1+2'
+    testRuntimeOnly 'org.testfx:openjfx-monocle:17.0.10'
 }
 
 javafx {
     modules = [
         'javafx.controls', 'javafx.fxml'
     ]
-    version = '17.0.2'
+    version = '17.0.21'
 }
 
 test {

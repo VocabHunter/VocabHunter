@@ -31,6 +31,8 @@ public class WordNoteHandler {
 
     private SessionModel sessionModel;
 
+    private Button buttonNote;
+
     @Inject
     public WordNoteHandler(final FxmlHandler fxmlHandler, final DialogueTool dialogueTool) {
         this.fxmlHandler = fxmlHandler;
@@ -39,6 +41,7 @@ public class WordNoteHandler {
 
     public void initialise(final Button buttonNote, final TextArea textAreaNotePreview, final SessionModel sessionModel) {
         this.sessionModel = sessionModel;
+        this.buttonNote = buttonNote;
 
         buttonNote.setOnAction(e -> show());
         bindProperties(textAreaNotePreview, sessionModel);
@@ -59,7 +62,7 @@ public class WordNoteHandler {
         WordNoteController controller = cav.getController();
 
         controller.initialise(stage, sessionModel);
-        dialogueTool.setupModal(stage, root, NOTE_WINDOW_TITLE);
+        dialogueTool.setupModal(stage, buttonNote.getScene().getWindow(), root, NOTE_WINDOW_TITLE);
     }
 
     public void processKeyPress(final KeyEvent event) {
