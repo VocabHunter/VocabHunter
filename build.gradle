@@ -9,7 +9,7 @@ import org.gradle.internal.os.OperatingSystem
 
 plugins {
     id "base"
-    id "com.github.ben-manes.versions" version "0.47.0"
+    id "com.github.ben-manes.versions" version "0.67.0"
     id "net.researchgate.release" version "3.2.0"
     id "org.sonarqube" version "3.5.0.2730"
     id "com.github.spotbugs" version "6.5.15" apply false
@@ -48,9 +48,9 @@ subprojects {
     }
 
     dependencies {
-        testImplementation 'org.junit.jupiter:junit-jupiter:5.9.3'
-        testImplementation 'org.mockito:mockito-junit-jupiter:5.3.1'
-        testRuntimeOnly 'org.junit.platform:junit-platform-launcher:1.9.3'
+        testImplementation 'org.junit.jupiter:junit-jupiter:5.13.4'
+        testImplementation 'org.mockito:mockito-junit-jupiter:5.24.0'
+        testRuntimeOnly 'org.junit.platform:junit-platform-launcher:1.13.4'
         runtimeOnly 'ch.qos.logback:logback-classic:1.4.8'
     }
 
