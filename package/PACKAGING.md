@@ -4,9 +4,9 @@ If you'd like to build an installable bundle of VocabHunter for Mac, Linux or Wi
 
 ## Preparing your Build Environment
 
-### JDK 17
+### JDK 25
 
-You will need to install JDK 17 to build the installable bundle of VocabHunter.  The version provided by [Adoptium](https://adoptium.net) is an excellent choice for this.  The build process uses the [jpackage](https://docs.oracle.com/en/java/javase/17/jpackage/) tool, included as a part of the JDK.
+You will need to install JDK 25 to build the installable bundle of VocabHunter.  The version provided by [Adoptium](https://adoptium.net) is an excellent choice for this.  The build process uses the [jpackage](https://docs.oracle.com/en/java/javase/25/jpackage/) tool, included as a part of the JDK.
 
 ### Windows: WIX Toolset
 
