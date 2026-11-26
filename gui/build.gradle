@@ -7,18 +7,20 @@ plugins {
     id 'org.openjfx.javafxplugin' version '0.0.14'
 }
 
-mainClassName = "io.github.vocabhunter.gui.main.VocabHunterGuiExecutable"
-
-applicationName = "VocabHunter"
+application {
+    mainClass = "io.github.vocabhunter.gui.main.VocabHunterGuiExecutable"
+    applicationName = "VocabHunter"
+}
 
 ext.buildTimestamp = new Date().format('yyyy-MM-dd HH:mm:ss')
 
 processResources {
+    def buildProperties = [
+        buildVersion: project.property("version"),
+        buildTimestamp: project.buildTimestamp
+    ]
     filesMatching('properties/*.properties') {
-        expand(
-            buildVersion: project.property("version"),
-            buildTimestamp: project.buildTimestamp
-        )
+        expand(buildProperties)
     }
 }
 
@@ -56,15 +58,15 @@ test {
     }
 }
 
-task copyDependencies(type: Copy) {
+tasks.register('copyDependencies', Copy) {
     from configurations.runtimeClasspath
     from jar
     exclude "javafx-*.jar"
-    into "${buildDir}/libraries"
+    into layout.buildDirectory.dir('libraries')
 }
 
-task copyJavafxModules(type: Copy) {
+tasks.register('copyJavafxModules', Copy) {
     from configurations.runtimeClasspath
     include "javafx-*${javafx.platform.classifier}.jar"
-    into "${buildDir}/javafx-modules"
+    into layout.buildDirectory.dir('javafx-modules')
 }
