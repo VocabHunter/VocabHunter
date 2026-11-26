@@ -59,18 +59,18 @@ subprojects {
     }
 
     pmd {
-        toolVersion = '6.55.0'
+        toolVersion = '7.29.0'
         ruleSetFiles = files("$rootProject.projectDir/config/pmd/ruleset.xml")
         ruleSets = []
     }
 
     checkstyle {
-        toolVersion = '10.11.0'
+        toolVersion = '14.4.0'
         configFile = file("$rootProject.projectDir/config/checkstyle/checkstyle.xml")
     }
 
     spotbugs {
-        toolVersion = '4.7.3'
+        toolVersion = '4.10.5'
         effort = Effort.MAX
         reportLevel = Confidence.valueOf('MEDIUM')
         excludeFilter = file("$rootProject.projectDir/config/spotbugs/excludeFilter.xml")
@@ -85,7 +85,7 @@ subprojects {
     }
 
     jacoco {
-        toolVersion = '0.8.10'
+        toolVersion = '0.8.16'
     }
 
     jacocoTestReport {

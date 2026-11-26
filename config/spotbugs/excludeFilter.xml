@@ -6,4 +6,6 @@
 <FindBugsFilter>
     <Bug pattern="EI_EXPOSE_REP"/>
     <Bug pattern="EI_EXPOSE_REP2"/>
+    <Bug pattern="CT_CONSTRUCTOR_THROW"/>
+    <Bug pattern="US_USELESS_SUPPRESSION_ON_METHOD"/>
 </FindBugsFilter>
