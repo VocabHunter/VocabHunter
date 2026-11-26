@@ -11,6 +11,7 @@ import io.github.vocabhunter.gui.view.ViewFxml;
 import jakarta.inject.Inject;
 import javafx.scene.Parent;
 import javafx.stage.Stage;
+import javafx.stage.Window;
 
 import static io.github.vocabhunter.gui.i18n.I18nKey.FILTER_WINDOW_TITLE;
 
@@ -25,13 +26,13 @@ public class SettingsHandler {
         this.fxmlHandler = fxmlHandler;
     }
 
-    public void show() {
+    public void show(final Window owner) {
         Stage stage = new Stage();
         ControllerAndView<SettingsController, Parent> cav = fxmlHandler.loadControllerAndView(ViewFxml.SETTINGS);
         Parent root = cav.getView();
         SettingsController controller = cav.getController();
 
         controller.initialise(stage);
-        dialogueTool.setupModal(stage, root, FILTER_WINDOW_TITLE);
+        dialogueTool.setupModal(stage, owner, root, FILTER_WINDOW_TITLE);
     }
 }

@@ -2,14 +2,17 @@
  * Open Source Software published under the Apache Licence, Version 2.0.
  */
 
+import com.github.spotbugs.snom.Confidence
+import com.github.spotbugs.snom.Effort
+import com.github.spotbugs.snom.SpotBugsTask
 import org.gradle.internal.os.OperatingSystem
 
 plugins {
     id "base"
-    id "com.github.ben-manes.versions" version "0.47.0"
-    id "net.researchgate.release" version "3.0.2"
+    id "com.github.ben-manes.versions" version "0.67.0"
+    id "net.researchgate.release" version "3.2.0"
     id "org.sonarqube" version "3.5.0.2730"
-    id "com.github.spotbugs" version "5.0.14" apply false
+    id "com.github.spotbugs" version "6.5.15" apply false
 }
 
 ext {
@@ -17,12 +20,12 @@ ext {
 }
 
 allprojects {
-    group 'io.github.vocabhunter'
+    group = 'io.github.vocabhunter'
 }
 
 wrapper {
-    description 'Setup the Gradle wrapper'
-    gradleVersion = '8.1.1'
+    description = 'Setup the Gradle wrapper'
+    gradleVersion = '9.9.2'
     distributionUrl = "https://services.gradle.org/distributions/gradle-${gradleVersion}-all.zip"
 }
 
@@ -34,16 +37,20 @@ subprojects {
     apply plugin: 'com.github.spotbugs'
     apply plugin: 'jacoco'
 
-    sourceCompatibility = 17
-    targetCompatibility = 17
+    java {
+        toolchain {
+            languageVersion = JavaLanguageVersion.of(25)
+        }
+    }
 
     repositories {
         mavenCentral()
     }
 
     dependencies {
-        testImplementation 'org.junit.jupiter:junit-jupiter:5.9.3'
-        testImplementation 'org.mockito:mockito-junit-jupiter:5.3.1'
+        testImplementation 'org.junit.jupiter:junit-jupiter:5.13.4'
+        testImplementation 'org.mockito:mockito-junit-jupiter:5.24.0'
+        testRuntimeOnly 'org.junit.platform:junit-platform-launcher:1.13.4'
         runtimeOnly 'ch.qos.logback:logback-classic:1.4.8'
     }
 
@@ -52,38 +59,39 @@ subprojects {
     }
 
     pmd {
-        toolVersion = '6.55.0'
+        toolVersion = '7.29.0'
         ruleSetFiles = files("$rootProject.projectDir/config/pmd/ruleset.xml")
         ruleSets = []
     }
 
     checkstyle {
-        toolVersion = '10.11.0'
+        toolVersion = '14.4.0'
         configFile = file("$rootProject.projectDir/config/checkstyle/checkstyle.xml")
     }
 
     spotbugs {
-        toolVersion = '4.7.3'
-        effort = 'max'
-        reportLevel = 'medium'
+        toolVersion = '4.10.5'
+        effort = Effort.MAX
+        reportLevel = Confidence.valueOf('MEDIUM')
         excludeFilter = file("$rootProject.projectDir/config/spotbugs/excludeFilter.xml")
     }
 
-    tasks.withType(com.github.spotbugs.snom.SpotBugsTask) {
+    tasks.withType(SpotBugsTask).configureEach {
         reports {
-            xml.enabled = false
-            html.enabled = true
+            create('html') {
+                required = true
+            }
         }
     }
 
     jacoco {
-        toolVersion = '0.8.10'
+        toolVersion = '0.8.16'
     }
 
     jacocoTestReport {
         reports {
             xml.required = true
-            xml.outputLocation = file("${buildDir}/reports/jacoco/report.xml")
+            xml.outputLocation = layout.buildDirectory.file('reports/jacoco/report.xml')
         }
     }
 

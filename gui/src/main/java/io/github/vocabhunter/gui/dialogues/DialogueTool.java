@@ -13,6 +13,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.Window;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -31,8 +32,9 @@ public class DialogueTool {
         this.i18nManager = i18nManager;
     }
 
-    public void setupModal(final Stage stage, final Parent root, final I18nKey titleKey) {
+    public void setupModal(final Stage stage, final Window owner, final Parent root, final I18nKey titleKey) {
         stage.initModality(Modality.APPLICATION_MODAL);
+        stage.initOwner(owner);
         stage.setTitle(i18nManager.text(titleKey));
         stage.setScene(new Scene(root));
         stage.show();

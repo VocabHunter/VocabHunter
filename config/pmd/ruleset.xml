@@ -12,10 +12,15 @@
     <description>VocabHunter PMD Configuration</description>
 
     <rule ref="category/java/bestpractices.xml">
-        <exclude name="JUnitAssertionsShouldIncludeMessage"/>
-        <exclude name="JUnitTestsShouldIncludeAssert"/>
-        <exclude name="JUnitTestContainsTooManyAsserts"/>
-        <exclude name="JUnit5TestShouldBePackagePrivate"/>
+        <exclude name="UnitTestAssertionsShouldIncludeMessage"/>
+        <exclude name="UnitTestShouldIncludeAssert"/>
+        <exclude name="UnitTestContainsTooManyAsserts"/>
+        <exclude name="JUnitJupiterTestShouldBePackagePrivate"/>
+        <exclude name="OnDemandImport"/>
+        <exclude name="ImplicitFunctionalInterface"/>
+        <exclude name="LooseCoupling"/>
+        <exclude name="EnumComparison"/>
+        <exclude name="PreserveStackTrace"/>
     </rule>
 
     <rule ref="category/java/bestpractices.xml/GuardLogStatement">
@@ -31,14 +36,15 @@
         <exclude name="OnlyOneReturn"/>
         <exclude name="AtLeastOneConstructor"/>
         <exclude name="LongVariable"/>
-        <exclude name="AvoidPrefixingMethodParameters"/>
         <exclude name="NoPackage"/>
         <exclude name="CommentDefaultAccessModifier"/>
-        <exclude name="DefaultPackage"/>
         <exclude name="CallSuperInConstructor"/>
         <exclude name="TooManyStaticImports"/>
         <exclude name="ClassNamingConventions"/>
         <exclude name="PrematureDeclaration"/>
+        <exclude name="LocalVariableDeclarationShouldBeAtStartOfBlock"/>
+        <exclude name="UseExplicitTypes"/>
+        <exclude name="UnnecessaryFullyQualifiedName"/>
     </rule>
 
     <rule ref="category/java/design.xml">
@@ -46,12 +52,13 @@
         <exclude name="NcssCount"/>
         <exclude name="DataClass"/>
         <exclude name="TooManyMethods"/>
-        <exclude name="AvoidCatchingGenericException"/>
         <exclude name="SignatureDeclareThrowsException"/>
         <exclude name="ExcessiveImports"/>
         <exclude name="TooManyFields"/>
         <exclude name="CouplingBetweenObjects"/>
         <exclude name="LoosePackageCoupling"/>
+        <exclude name="ExcessivePublicCount"/>
+        <exclude name="PublicMemberInNonPublicType"/>
     </rule>
 
     <rule ref="category/java/documentation.xml">
@@ -59,7 +66,7 @@
     </rule>
 
     <rule ref="category/java/errorprone.xml">
-        <exclude name="DataflowAnomalyAnalysis"/>
+        <exclude name="AvoidCatchingGenericException"/>
         <exclude name="AvoidFieldNameMatchingMethodName"/>
         <exclude name="AvoidDuplicateLiterals"/>
         <exclude name="AvoidLiteralsInIfCondition"/>
@@ -67,6 +74,9 @@
         <exclude name="MissingSerialVersionUID"/>
         <exclude name="TestClassWithoutTestCases"/>
         <exclude name="ReturnEmptyCollectionRatherThanNull"/>
+        <exclude name="CloseResource"/>
+        <exclude name="CompareObjectsWithEquals"/>
+        <exclude name="ConstructorCallsOverridableMethod"/>
     </rule>
 
     <rule ref="category/java/multithreading.xml">

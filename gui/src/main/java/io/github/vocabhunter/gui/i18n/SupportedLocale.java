@@ -9,7 +9,7 @@ import io.github.vocabhunter.analysis.core.CoreConstants;
 import java.util.Locale;
 
 public enum SupportedLocale {
-    ENGLISH(CoreConstants.LOCALE), SPANISH(new Locale("es"));
+    ENGLISH(CoreConstants.LOCALE), SPANISH(Locale.of("es"));
 
     public static final SupportedLocale DEFAULT_LOCALE = ENGLISH;
 

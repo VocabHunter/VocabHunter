@@ -19,6 +19,7 @@ import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+import javafx.stage.Window;
 import javafx.stage.WindowEvent;
 import org.controlsfx.control.StatusBar;
 
@@ -176,12 +177,12 @@ public class MainController {
         menuExportWithNotes.disableProperty().bind(not(model.selectionAvailableProperty()));
         menuExportWithoutNotes.disableProperty().bind(not(model.selectionAvailableProperty()));
 
-        handler(buttonSetupFilters, menuSetupFilters, this::processSetupFilters);
+        handler(buttonSetupFilters, menuSetupFilters, () -> processSetupFilters(stage));
 
         menuWebsite.setOnAction(e -> webPageTool.showWebPage(I18nKey.LINK_MAIN));
         menuHowTo.setOnAction(e -> webPageTool.showWebPage(I18nKey.LINK_HELP));
         menuIssue.setOnAction(e -> webPageTool.showWebPage(I18nKey.LINK_ISSUE));
-        menuAbout.setOnAction(e -> processAbout());
+        menuAbout.setOnAction(e -> processAbout(stage));
 
         prepareFilterEnable();
         prepareStatusInformation();
@@ -229,14 +230,14 @@ public class MainController {
         editOff.setToggleGroup(editGroup);
     }
 
-    private void processSetupFilters() {
-        settingsHandler.show();
+    private void processSetupFilters(final Window owner) {
+        settingsHandler.show(owner);
     }
 
-    private void processAbout() {
+    private void processAbout(final Window owner) {
         if (statusManager.beginAbout()) {
             try {
-                aboutHandler.show();
+                aboutHandler.show(owner);
                 statusManager.markSuccess();
             } finally {
                 statusManager.completeAction();

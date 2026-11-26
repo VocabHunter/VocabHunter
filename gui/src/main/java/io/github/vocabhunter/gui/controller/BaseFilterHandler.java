@@ -12,6 +12,7 @@ import io.github.vocabhunter.gui.view.FxmlHandler;
 import io.github.vocabhunter.gui.view.ViewFxml;
 import javafx.scene.Parent;
 import javafx.stage.Stage;
+import javafx.stage.Window;
 
 public class BaseFilterHandler<T extends AbstractFilterController<?>> {
     private final FxmlHandler fxmlHandler;
@@ -29,7 +30,7 @@ public class BaseFilterHandler<T extends AbstractFilterController<?>> {
         this.windowTitleKey = windowTitleKey;
     }
 
-    public void show(final FilterFileModel model, final Runnable onSave) {
+    public void show(final Window owner, final FilterFileModel model, final Runnable onSave) {
         Stage stage = new Stage();
         ControllerAndView<T, Parent> cav = fxmlHandler.loadControllerAndView(viewFxml);
         Parent root = cav.getView();
@@ -37,7 +38,7 @@ public class BaseFilterHandler<T extends AbstractFilterController<?>> {
 
         try {
             controller.initialise(stage, model, onSave);
-            dialogueTool.setupModal(stage, root, windowTitleKey);
+            dialogueTool.setupModal(stage, owner, root, windowTitleKey);
         } catch (final RuntimeException e) {
             dialogueTool.errorOnOpen(model.getFile(), e);
         }

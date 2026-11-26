@@ -2,14 +2,16 @@
  * Open Source Software published under the Apache Licence, Version 2.0.
  */
 
+def operatingSystem = rootProject.operatingSystem
+
 ext {
     publishedVersion = project.version
     bundlerScript = file('bin/build-package.sh')
-    applicationLibraryPath = file("${rootProject.project('gui').buildDir}/libraries")
-    javafxModulePath = file("${rootProject.project('gui').buildDir}/javafx-modules")
+    applicationLibraryPath = project(':gui').layout.buildDirectory.dir('libraries').get().asFile
+    javafxModulePath = project(':gui').layout.buildDirectory.dir('javafx-modules').get().asFile
     mainJar = project(':gui').jar.outputs.files[0].name
-    bundlePath = file("${buildDir}/bundle")
-    fileAssociations = file("${buildDir}/resources/main/file-associations.properties")
+    bundlePath = layout.buildDirectory.dir('bundle').get().asFile
+    fileAssociations = layout.buildDirectory.file('resources/main/file-associations.properties').get().asFile
     modules = 'javafx.controls,javafx.fxml,java.naming,java.sql'
     extraBundlerArguments = []
     if (operatingSystem.isMacOsX()) {
@@ -34,39 +36,42 @@ ext {
     }
 }
 
-task recreateIconMacApp(type: Exec) {
-    description 'Regenerate the Mac application icon'
+def recreateIconMacApp = tasks.register('recreateIconMacApp', Exec) {
+    description = 'Regenerate the Mac application icon'
     commandLine 'sh', file('bin/mac-icon.sh'), file('icons/App1024.png'), file('icons/mac'), 'VocabHunter'
 }
 
-task recreateIconMacSession(type: Exec) {
-    description 'Regenerate the Mac session file icon'
+def recreateIconMacSession = tasks.register('recreateIconMacSession', Exec) {
+    description = 'Regenerate the Mac session file icon'
     commandLine 'sh', file('bin/mac-icon.sh'), file('icons/Doc1024.png'), file('icons/mac'), 'VocabHunterSession'
 }
 
-task recreateIconWindowsApp(type: Exec) {
-    description 'Regenerate the Windows application icon'
+def recreateIconWindowsApp = tasks.register('recreateIconWindowsApp', Exec) {
+    description = 'Regenerate the Windows application icon'
     commandLine 'sh', file('bin/windows-icon.sh'), file('icons/App1024.png'), file('icons/windows'), 'VocabHunter'
 }
 
-task recreateIconWindowsSession(type: Exec) {
-    description 'Regenerate the Windows session file icon'
+def recreateIconWindowsSession = tasks.register('recreateIconWindowsSession', Exec) {
+    description = 'Regenerate the Windows session file icon'
     commandLine 'sh', file('bin/windows-icon.sh'), file('icons/Doc1024.png'), file('icons/windows'), 'VocabHunterSession'
 }
 
-task recreateIcons(dependsOn: [recreateIconMacApp, recreateIconMacSession, recreateIconWindowsApp, recreateIconWindowsSession]) {
-    description 'Regenerate all the application bundle icons'
+tasks.register('recreateIcons') {
+    description = 'Regenerate all the application bundle icons'
+    dependsOn recreateIconMacApp, recreateIconMacSession, recreateIconWindowsApp, recreateIconWindowsSession
 }
 
 processResources {
     expand(vocabHunterSessionIcon: sessionIcon)
 }
 
-task createBundle(type: Exec, dependsOn: [processResources, ':gui:copyDependencies', ':gui:copyJavafxModules']) {
+tasks.register('createBundle', Exec) {
+    description = 'Build the installable bundle'
+    dependsOn processResources, ':gui:copyDependencies', ':gui:copyJavafxModules'
+    def bundleDirectory = bundlePath
     doFirst {
-        delete bundlePath
+        bundleDirectory.deleteDir()
     }
-    description 'Build the installable bundle'
     inputs.dir("bin")
     inputs.dir("icons")
     inputs.file(fileAssociations)

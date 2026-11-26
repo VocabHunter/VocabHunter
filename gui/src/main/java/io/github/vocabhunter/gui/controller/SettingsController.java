@@ -105,7 +105,7 @@ public class SettingsController {
     private void editHandler(final FilterFileModel model) {
         BaseFilterHandler<?> handler = getHandler(model);
 
-        handler.show(model, () -> filterFilesModel.removeIfExists(model));
+        handler.show(stage, model, () -> filterFilesModel.removeIfExists(model));
     }
 
     private BaseFilterHandler<?> getHandler(final FilterFileModel model) {
@@ -145,7 +145,7 @@ public class SettingsController {
     }
 
     private void showHandler(final BaseFilterHandler<?> handler, final FilterFileModel fileModel) {
-        handler.show(fileModel, () -> addFile(fileModel));
+        handler.show(stage, fileModel, () -> addFile(fileModel));
     }
 
     private void addFile(final FilterFileModel fileModel) {

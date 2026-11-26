@@ -13,7 +13,7 @@ VocabHunter is a system to help learners of foreign languages.  The best place t
 
 # Prerequisites
 
-You will need Java 17 (or above) to build and run VocabHunter.  The version provided by [Adoptium](https://adoptium.net) is an excellent choice for this.  Everything else, including Gradle, will be downloaded by the build process.
+You will need JDK 25 to build and run VocabHunter.  The version provided by [Adoptium](https://adoptium.net) is an excellent choice for this.  Everything else, including Gradle, will be downloaded by the build process.
 
 # How To Run VocabHunter
 
